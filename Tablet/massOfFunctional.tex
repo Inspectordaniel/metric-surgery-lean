@@ -1,0 +1,24 @@
+\begin{definition}[Mass $\mathbb{M}(T)$, as an infimum]
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra and $T \colon \mathcal{D}^1(E)
+  \to \mathbb{R}$ a functional (\noderef{Form1}). Define
+  \[
+    \mathbb{M}(T) := \inf \{\, \mu(E) : \mu \text{ admissible for } T \,\} \ \in [0,\infty]
+  \]
+  (\noderef{IsAdmissible}), with the convention $\inf \emptyset = \infty$ if $T$ admits no
+  admissible measure at all.
+
+  \paragraph{Modeling choice (interface decision, not a deviation).} The paper defines
+  (paper.tex line 1100) $\mu_T$ to be \emph{the minimum} admissible measure -- an actual measure
+  achieving the pointwise-smallest value on every Borel set among admissible measures -- and then
+  sets $\mathbb{M}(T) := \mu_T(E)$. The existence of this minimum is a nontrivial theorem of
+  Ambrosio--Kirchheim for genuine metric currents $T \in \mathcal{M}_1(E)$, which this tablet does
+  not reprove. We instead define $\mathbb{M}(T)$ directly as the infimum of total masses over the
+  admissible class, without asserting that a pointwise-minimal admissible measure exists. When it
+  does exist (as AK guarantee for $T \in \mathcal{M}_1(E)$), its total mass equals this infimum,
+  since it is itself admissible (so $\mathbb{M}(T) \le \mu_T(E)$) and no admissible measure can have
+  strictly smaller total mass than the pointwise minimum (so $\mathbb{M}(T) \ge \mu_T(E)$); the two
+  notions of mass therefore coincide on every functional the paper actually applies them to. This
+  choice lets every downstream bound on $\mathbb{M}(T)$ (for instance
+  $\mathbb{M}([[\gamma]]) \le \length(\gamma)$, \noderef{EasyEstimateForMass}) be obtained directly
+  from exhibiting a single admissible measure, with no existence theorem required.
+\end{definition}

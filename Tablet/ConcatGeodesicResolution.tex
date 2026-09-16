@@ -1,0 +1,120 @@
+\begin{lemma}[Gluing two geodesic resolutions across a matched endpoint, with the glued resolution named]
+  Let $E$ be a metric space and $\eta_1,\eta_2 \in \Theta(E)$ (\noderef{Curve}) with matching
+  endpoints, $\eta_1(\length(\eta_1)) = \eta_2(0)$, so that the concatenation $\eta_1 * \eta_2 =
+  \mathrm{curveConcat}(\eta_1,\eta_2)$ (\noderef{curveConcat}) is defined. Let $K_1,K_2 \in
+  \mathbb{N}$ and $r_1,r_2 \colon \mathbb{N} \to \mathbb{R}$ satisfy
+  $\mathrm{IsGeodesicResolution}(\eta_1,K_1,r_1)$ and
+  $\mathrm{IsGeodesicResolution}(\eta_2,K_2,r_2)$ (\noderef{IsGeodesicResolution}). Then
+  \[
+    \mathrm{IsGeodesicResolution}\bigl(\eta_1 * \eta_2,\ K_1+K_2,\ r\bigr),
+  \]
+  where $r \colon \mathbb{N} \to \mathbb{R}$ is the explicitly named function
+  \[
+    r(i) \;:=\;
+    \begin{cases}
+      r_1(i), & i \le K_1,\\
+      \length(\eta_1) + r_2(i-K_1), & i > K_1
+    \end{cases}
+  \]
+  (with $i-K_1$ truncated subtraction in $\mathbb{N}$, unambiguous in the second clause since there
+  $i>K_1$).
+
+  \paragraph{Why the named witness is the content.} \noderef{ConcatPiecewiseGeodesic} asserts the
+  \emph{existential} statement $\mathrm{IsPiecewiseGeodesicWith}(\eta_1*\eta_2,K_1+K_2)$, i.e.\ that
+  \emph{some} resolution of the concatenation into $K_1+K_2$ edges exists; the witness is
+  discarded, and the statement carries no information about where the glued breakpoints sit. That
+  is the right strength for a consumer that only needs an edge count (for instance, to feed a
+  Morrey bound of the form $2k$). It is \emph{not} the right strength for a consumer whose own
+  conclusion quantifies over the values of the glued resolution: \noderef{ArcGeodesicResolution}
+  asserts, of the arc's resolution $(k_A,s_A)$, that there is a split index $m$ below which $s_A$
+  is a shift of the ambient $s$ by $-\length$-of-one-window and above which it is a shift by
+  another constant, and that assertion is about the \emph{values} $s_A(i)$, which an existential
+  statement cannot supply. The present lemma is therefore the naming of the glued resolution: it
+  fixes $r$ on the nose as $r_1$ below the seam and as $\length(\eta_1)+r_2(\cdot-K_1)$ above it,
+  which is exactly the form in which the seam index $K_1$ and the additive shift
+  $\length(\eta_1)$ become available to a caller. The two clauses agree at $i=K_1$, both giving
+  $\length(\eta_1)$, so no choice is hidden in the case split.
+
+  This is the mechanization of the gluing step implicit in the paper's treatment of the
+  wrap-around arc $\gamma|_{[t,t']}$ for $t'<t$ (paper.tex 557--568), which is by definition the
+  concatenation $\gamma|_{[t,\length(\gamma)]} * \gamma|_{[0,t']}$
+  (\noderef{curveWrapRestrict}): when the paper says at 895--896 that the arc is ``formed by
+  concatenating those geodesic edges'' of $\gamma$, the concatenated object's edges are precisely
+  the $r_1$-edges followed by the shifted $r_2$-edges named here.
+\end{lemma}
+\begin{proof}
+  Write $L := \length(\eta_1)$ and $C := \eta_1 * \eta_2$. Unfold the two hypotheses
+  (\noderef{IsGeodesicResolution}) into their four conjuncts each:
+  $\mathrm{MonotoneOn}(r_1,\{0,\dots,K_1\})$, $r_1(0)=0$, $r_1(K_1)=L$, and
+  $\mathrm{IsGeodesicOn}(\eta_1,r_1(i),r_1(i+1))$ for $i<K_1$; and similarly
+  $\mathrm{MonotoneOn}(r_2,\{0,\dots,K_2\})$, $r_2(0)=0$, $r_2(K_2)=\length(\eta_2)$, and
+  $\mathrm{IsGeodesicOn}(\eta_2,r_2(j),r_2(j+1))$ for $j<K_2$.
+
+  \paragraph{Preliminaries.} By \noderef{curveConcat}, $\length(C) = L + \length(\eta_2)$ and
+  \begin{equation}\label{eq:Cval}
+    C(t) = \begin{cases} \eta_1(t), & t \le L,\\ \eta_2(t-L), & t > L.\end{cases}
+  \end{equation}
+  From $\mathrm{MonotoneOn}(r_1,\{0,\dots,K_1\})$ and $r_1(K_1)=L$ we get
+  \begin{equation}\label{eq:r1le}
+    i \le K_1 \ \Longrightarrow\ r_1(i) \le L ,
+  \end{equation}
+  and from $\mathrm{MonotoneOn}(r_2,\{0,\dots,K_2\})$ and $r_2(0)=0$ we get
+  \begin{equation}\label{eq:r2nn}
+    j \le K_2 \ \Longrightarrow\ 0 \le r_2(j) .
+  \end{equation}
+  We also record the strengthening of \eqref{eq:Cval} at the seam:
+  \begin{equation}\label{eq:Csecond}
+    t \ge L \ \Longrightarrow\ C(t) = \eta_2(t-L).
+  \end{equation}
+  Indeed, for $t>L$ this is the second clause of \eqref{eq:Cval}; for $t=L$ the first clause gives
+  $C(L)=\eta_1(L)$, which equals $\eta_2(0) = \eta_2(L-L)$ by the hypothesized endpoint match.
+
+  \paragraph{Monotonicity of $r$.} Let $a \le b \le K_1+K_2$; we show $r(a) \le r(b)$.
+  \begin{itemize}
+    \item $a \le K_1$ and $b \le K_1$: then $r(a)=r_1(a)$, $r(b)=r_1(b)$, and
+      $\mathrm{MonotoneOn}(r_1,\{0,\dots,K_1\})$ applies.
+    \item $a \le K_1$ and $b > K_1$: then $r(a)=r_1(a) \le L$ by \eqref{eq:r1le}, and
+      $r(b) = L + r_2(b-K_1) \ge L$ by \eqref{eq:r2nn} (valid since $b-K_1 \le K_2$, from $b \le
+      K_1+K_2$). Hence $r(a) \le L \le r(b)$.
+    \item $a > K_1$ and $b \le K_1$: impossible, since $a \le b$.
+    \item $a > K_1$ and $b > K_1$: then $r(a)=L+r_2(a-K_1)$, $r(b)=L+r_2(b-K_1)$, and $a-K_1 \le
+      b-K_1 \le K_2$, so $\mathrm{MonotoneOn}(r_2,\{0,\dots,K_2\})$ gives $r_2(a-K_1) \le
+      r_2(b-K_1)$, whence $r(a) \le r(b)$.
+  \end{itemize}
+
+  \paragraph{The two boundary values.} $r(0) = r_1(0) = 0$, since $0 \le K_1$. For the top value we
+  distinguish two cases. If $K_2=0$ then $\length(\eta_2) = r_2(K_2) = r_2(0) = 0$, and $K_1+K_2 =
+  K_1 \le K_1$, so $r(K_1+K_2) = r_1(K_1) = L = L + 0 = L + \length(\eta_2) = \length(C)$. If
+  $K_2>0$ then $K_1+K_2 > K_1$, so $r(K_1+K_2) = L + r_2(K_1+K_2-K_1) = L + r_2(K_2) = L +
+  \length(\eta_2) = \length(C)$.
+
+  \paragraph{Each edge is geodesic.} Fix $i < K_1+K_2$; we must show
+  $\mathrm{IsGeodesicOn}(C,r(i),r(i+1))$, i.e.\ (\noderef{IsGeodesicOn}) that
+  $\mathrm{dist}(C(u),C(v)) = |u-v|$ for all $u,v \in [r(i),r(i+1)]$. Two cases.
+
+  \emph{Case $i+1 \le K_1$.} Then also $i \le K_1$, so $r(i)=r_1(i)$ and $r(i+1)=r_1(i+1)$. For $u
+  \in [r_1(i),r_1(i+1)]$ we have $u \le r_1(i+1) \le L$ by \eqref{eq:r1le}, so \eqref{eq:Cval}
+  gives $C(u)=\eta_1(u)$; likewise $C(v)=\eta_1(v)$. Since $i<K_1$, the hypothesis
+  $\mathrm{IsGeodesicOn}(\eta_1,r_1(i),r_1(i+1))$ applies to $u,v$ and gives
+  $\mathrm{dist}(\eta_1(u),\eta_1(v)) = |u-v|$, as required.
+
+  \emph{Case $i+1 > K_1$.} Then $r(i+1) = L + r_2(i+1-K_1)$. We first check that in this case
+  \begin{equation}\label{eq:seam}
+    r(i) = L + r_2(i-K_1)
+  \end{equation}
+  as well: either $i > K_1$, and this is the definition of $r$; or $i = K_1$, in which case $r(i) =
+  r_1(K_1) = L$ while $L + r_2(i-K_1) = L + r_2(0) = L + 0 = L$, so \eqref{eq:seam} again holds.
+  Now let $u,v \in [r(i),r(i+1)]$. By \eqref{eq:r2nn} (valid since $i-K_1 \le K_2$, from $i <
+  K_1+K_2$) we have $r_2(i-K_1) \ge 0$, so $u \ge r(i) = L + r_2(i-K_1) \ge L$, and likewise $v \ge
+  L$; hence \eqref{eq:Csecond} gives $C(u)=\eta_2(u-L)$ and $C(v)=\eta_2(v-L)$. Writing $j :=
+  i-K_1$, we have $j < K_2$ (from $i < K_1+K_2$ and $i \ge K_1$) and $i+1-K_1 = j+1$, so $u-L,v-L
+  \in [r_2(j),r_2(j+1)]$, and the hypothesis $\mathrm{IsGeodesicOn}(\eta_2,r_2(j),r_2(j+1))$ gives
+  \[
+    \mathrm{dist}(C(u),C(v)) = \mathrm{dist}(\eta_2(u-L),\eta_2(v-L)) = |(u-L)-(v-L)| = |u-v| .
+  \]
+
+  The four displayed facts -- monotonicity of $r$ on $\{0,\dots,K_1+K_2\}$, $r(0)=0$,
+  $r(K_1+K_2)=\length(C)$, and geodesicity of every edge -- are exactly the conjuncts of
+  $\mathrm{IsGeodesicResolution}(C,K_1+K_2,r)$ (\noderef{IsGeodesicResolution}), completing the
+  proof.
+\end{proof}

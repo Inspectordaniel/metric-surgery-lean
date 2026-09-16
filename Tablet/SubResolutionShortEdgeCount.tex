@@ -1,0 +1,75 @@
+\begin{lemma}[Short-edge counts transport exactly along a shifted sub-resolution]
+  Let $c,d \in \mathbb{N}$, let $s \colon \mathbb{N} \to \mathbb{R}$ be any sequence of reals, and
+  let $\delta \in \mathbb{R}$. Then
+  \[
+    \#\set{j \in \set{1,\dots,d-c} : \bigl(s(c+j)-s(c)\bigr) - \bigl(s(c+(j-1))-s(c)\bigr) < \delta}
+    \;=\;
+    \#\set{i \in \set{c+1,\dots,d} : s(i)-s(i-1) < \delta}
+    ,
+  \]
+  where $d-c$ denotes truncated subtraction of natural numbers (so the left-hand index set is
+  empty when $d < c$, as is the right-hand one) and likewise $j-1$, $i-1$.
+
+  \paragraph{Why this is needed and where it is used.} \noderef{RestrictPiecewiseGeodesic} resolves
+  the window $\gamma|_{[s(c),s(d)]}$ of a curve $\gamma$ carrying a geodesic resolution $(k,s)$ by
+  the shifted, re-based breakpoint sequence $j \mapsto s(c+j)-s(c)$ into $d-c$ edges. Any
+  consumer that has to compare the number of \emph{short} (length $<\delta$) edges of such a
+  sub-resolution with the number of short edges of $s$ itself -- which is exactly what an upper
+  bound on $\nsmallpieces$ of a cut curve requires, since $\nsmallpieces$ is an infimum over all
+  resolutions (\noderef{smallPieceCount}) and so must be bounded by exhibiting a concrete
+  resolution and counting its short edges -- needs precisely the identity above. This is the
+  bookkeeping step in paper Lemma 3.10's ``the removed part $\gamma|_{[t,t']}$ contains $n+1$
+  geodesic edges of length smaller than $\delta$'' (paper.tex line 957): the edges of the excised
+  sub-resolution are, one for one and with the same lengths, the edges of $s$ with index in the
+  excised index block.
+
+  \paragraph{Why this is not subsumed by an existing node.}
+  \noderef{ShiftedBreakpointShortEdgeCount} and \noderef{SplicedBreakpointShortEdgeCount} are
+  \emph{windowed inequalities}: each bounds the number of short edges of a reindexed sequence that
+  additionally lie inside a prescribed metric window $[a',b']$ by a given bound $n$ on a
+  correspondingly windowed count for $s$. Neither gives an identity, and neither can be used to
+  \emph{add up} the short-edge counts of several sub-resolutions and compare the exact total with
+  $s$'s own count, which is what is needed here. \noderef{RestrictPiecewiseGeodesic} asserts that
+  the shifted sequence \emph{is} a resolution and says nothing about edge lengths or counts.
+\end{lemma}
+\begin{proof}
+  Write
+  \[
+    A := \set{j \in \set{1,\dots,d-c} : \bigl(s(c+j)-s(c)\bigr) - \bigl(s(c+(j-1))-s(c)\bigr) <
+    \delta}, \qquad
+    B := \set{i \in \set{c+1,\dots,d} : s(i)-s(i-1) < \delta}
+    .
+  \]
+  We show that the map $\varphi(j) := c+j$ restricts to a bijection $A \to B$; since a bijection
+  between finite sets preserves cardinality, this proves the lemma.
+
+  \emph{$\varphi$ is injective.} If $c+j_1 = c+j_2$ then $j_1 = j_2$ by cancellation of addition in
+  $\mathbb{N}$. So $\varphi$ is injective on all of $\mathbb{N}$, in particular on $A$.
+
+  \emph{$\varphi$ maps $A$ into $B$.} Let $j \in A$, so $1 \le j \le d-c$. From $1 \le j$ and $j \le
+  d-c$ we get $c < c+j$ and $c+j \le d$: indeed, if $d < c$ then $d-c = 0$ and $1 \le j \le 0$ is
+  impossible, so $A$ is empty and there is nothing to check; and if $c \le d$ then $d-c$ is ordinary
+  subtraction, so $j \le d-c$ gives $c+j \le d$. Hence $c+j \in \set{c+1,\dots,d}$. Next, since
+  $j \ge 1$ we have $c + (j-1) = (c+j)-1$ (both natural-number subtractions are non-truncating
+  here, as $j \ge 1$ and $c+j \ge 1$). Therefore
+  \[
+    s(c+j) - s\bigl((c+j)-1\bigr) = s(c+j) - s\bigl(c+(j-1)\bigr)
+    = \bigl(s(c+j)-s(c)\bigr) - \bigl(s(c+(j-1))-s(c)\bigr) < \delta
+    ,
+  \]
+  the middle equality because the two occurrences of $s(c)$ cancel, and the final inequality being
+  the defining condition of $j \in A$. So $\varphi(j) = c+j \in B$.
+
+  \emph{$\varphi$ maps $A$ onto $B$.} Let $i \in B$, so $c < i \le d$ and $s(i)-s(i-1) < \delta$.
+  Put $j := i-c$; since $c < i$ this is ordinary subtraction and $j \ge 1$, and from $i \le d$ we
+  get $j = i-c \le d-c$, so $j \in \set{1,\dots,d-c}$. Moreover $c+j = i$, and, as $j \ge 1$ and
+  $i > c$, also $c+(j-1) = i-1$. Hence
+  \[
+    \bigl(s(c+j)-s(c)\bigr) - \bigl(s(c+(j-1))-s(c)\bigr) = s(i)-s(i-1) < \delta
+    ,
+  \]
+  again by cancellation of the two copies of $s(c)$. So $j \in A$ and $\varphi(j) = i$.
+
+  Thus $\varphi$ is an injection of $A$ into $B$ whose image is all of $B$, i.e.\ a bijection
+  $A \to B$, and consequently $\#A = \#B$, which is the claimed identity.
+\end{proof}

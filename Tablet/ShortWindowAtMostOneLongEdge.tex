@@ -1,0 +1,60 @@
+\begin{helper}[At most one long edge fits inside a short window]
+  Let $K \in \mathbb{N}$, let $s_A \colon \mathbb{N} \to \mathbb{R}$, and let
+  $\delta \in \mathbb{R}$ with $\delta > 0$. Assume that $s_A$ is monotone (non-decreasing) on
+  $\set{0,1,\dots,K}$, and that the window between the breakpoints $s_A(1)$ and $s_A(K-1)$ is
+  short:
+  \[
+    s_A(K-1) - s_A(1) \le \delta
+    .
+  \]
+  (Here and below, $K-1$ and $i-1$ denote truncated natural-number subtraction, so that $K-1 = 0$
+  when $K = 0$.) Then at most one interior index carries an edge of length at least $\delta$:
+  \[
+    \#\set{ i \in \set{2,\dots,K-1} \colon \delta \le s_A(i) - s_A(i-1) } \le 1
+    .
+  \]
+
+  \paragraph{Role.} This is the half of the edge count in \noderef{ArcShortWindowEdgeCount} that
+  refers to the breakpoint sequence alone and needs no correspondence with any ambient curve. It
+  is what stops a short window of a circular arc from containing two or more \emph{long} geodesic
+  edges; the complementary bound on the number of \emph{short} interior edges is not available
+  from the window length (arbitrarily many edges shorter than $\delta$ fit inside a window of
+  length $\delta$) and must come from the ambient curve's own counting clauses instead.
+\end{helper}
+\begin{proof}
+  Write $S := \set{ i \in \set{2,\dots,K-1} \colon \delta \le s_A(i) - s_A(i-1) }$. It suffices to
+  show that any two elements of $S$ are equal; by trichotomy it is enough to derive a
+  contradiction from the assumption that $x, y \in S$ with $x < y$.
+
+  First we record the form of monotonicity we use: for all $a, b \in \mathbb{N}$ with $a \le b$
+  and $b \le K$, we have $a, b \in \set{0,\dots,K}$ (the lower bound being automatic in
+  $\mathbb{N}$, and $a \le b \le K$), so monotonicity of $s_A$ on $\set{0,\dots,K}$ gives
+  $s_A(a) \le s_A(b)$.
+
+  Now let $x, y \in S$ with $x < y$. From $x \in S$ we have $2 \le x \le K-1$ and
+  $\delta \le s_A(x) - s_A(x-1)$; from $y \in S$ we have $2 \le y \le K-1$ and
+  $\delta \le s_A(y) - s_A(y-1)$. Note that $S$ is nonempty forces $K \ge 3$, and in particular
+  $K - 1 \le K$, $x \le K-1 \le K$ and $y \le K-1 \le K$.
+
+  Apply the recorded monotonicity three times:
+  \begin{itemize}
+    \item $s_A(x) \le s_A(y-1)$: indeed $x < y$ gives $x \le y-1$, and $y - 1 \le y \le K$;
+    \item $s_A(1) \le s_A(x-1)$: indeed $x \ge 2$ gives $1 \le x-1$, and $x - 1 \le x \le K$;
+    \item $s_A(y) \le s_A(K-1)$: indeed $y \le K-1$ and $K-1 \le K$.
+  \end{itemize}
+  Adding the two edge-length inequalities and regrouping,
+  \[
+    2\delta \le \bigl(s_A(x) - s_A(x-1)\bigr) + \bigl(s_A(y) - s_A(y-1)\bigr)
+      = \bigl(s_A(y) - s_A(x-1)\bigr) + \bigl(s_A(x) - s_A(y-1)\bigr)
+      \le s_A(y) - s_A(x-1)
+    ,
+  \]
+  the last step because $s_A(x) - s_A(y-1) \le 0$. Combining with $s_A(1) \le s_A(x-1)$ and
+  $s_A(y) \le s_A(K-1)$, and then with the shortness hypothesis,
+  \[
+    2\delta \le s_A(y) - s_A(x-1) \le s_A(K-1) - s_A(1) \le \delta
+    ,
+  \]
+  hence $\delta \le 0$, contradicting $\delta > 0$. So no such pair $x < y$ exists, and $S$ has at
+  most one element.
+\end{proof}

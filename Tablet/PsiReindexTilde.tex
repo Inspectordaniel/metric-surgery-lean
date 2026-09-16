@@ -1,0 +1,66 @@
+\begin{helper}[Reindexing identity for $\tilde\psi$]
+  Let $E$ be a metric space, $m, l \in \mathbb{N}$ with $m,l \ge 1$, $Q \subset E$ finite,
+  $\epsilon, C \in \mathbb{R}$, and $\gamma \in \Theta(E)$ (\noderef{Curve}) with
+  $\length(\gamma) = l$. Then
+  \[
+    \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma) = \sum_{j=1}^l \tilde\psi_{m,Q,\epsilon,C}\bigl(
+      \gamma|^{\mathrm{tot}}_{[j-1,j]}\bigr)
+    ,
+  \]
+  using the total restriction $\gamma|^{\mathrm{tot}}_{[j-1,j]}$ (\noderef{curveRestrictTot}). This
+  is the $\tilde\psi$ analogue of \noderef{PsiReindex}, isolating the same reindexing computation
+  of paper Corollary~A.6's proof (paper.tex line 1893--1914) for the second display of
+  Lemma~A.2 / Corollary~A.6.
+\end{helper}
+\begin{proof}
+  Fix $j \in \{1,\dotsc,l\}$. Exactly as in \noderef{PsiReindex}: since $1 \le j \le l =
+  \length(\gamma)$, we have $0 \le j-1 \le j \le \length(\gamma)$, so by
+  \noderef{CurveRestrictTotAgrees}, $\delta_j := \gamma|^{\mathrm{tot}}_{[j-1,j]}$ equals the
+  proof-carrying restriction $\gamma|_{[j-1,j]}$ (\noderef{curveRestrict}), with $\length(\delta_j) =
+  1$ and $\delta_j(u) = \gamma(j-1+u)$ for $u \in [0,1]$.
+
+  \emph{Unwinding $\tilde\psi_{m,Q,\epsilon,C}(\delta_j)$.} By \noderef{psiTilde} applied to
+  $\delta_j$, whose length is $1$, the sample points are $s_k = k/m$ for $k=0,\dotsc,m$, all in
+  $[0,1]$, so, using $\length(\delta_j) = 1$ in both the constant prefactor $C\length(\delta_j)/m =
+  C/m$ and the tail term $2C^2\length(\delta_j)^2/m = 2C^2/m$,
+  \[
+    \tilde\psi_{m,Q,\epsilon,C}(\delta_j) = \frac{2C^2}{m}
+      + \frac{C}{m} \sum_{k=1}^m \min\left\{2C,\; \epsilon + 2C\, d(\delta_j(k/m),Q)\right\}
+    = \frac{2C^2}{m} + \frac{C}{m}\sum_{k=1}^m \min\left\{2C,\; \epsilon +
+      2C\,d(\gamma(j-1+\tfrac{k}{m}),Q)\right\}
+    ,
+  \]
+  using $\delta_j(k/m) = \gamma(j-1+k/m)$.
+
+  \emph{Unwinding $\tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma)$.} By \noderef{psiTilde} applied to
+  $\gamma$ with parameter $m\cdot l$, whose length is $l$, the sample points are $s_i = i/m$ for
+  $i=0,\dotsc,ml$, and the constant prefactor is $Cl/(ml) = C/m$, the tail term
+  $2C^2l^2/(ml)=2C^2l/m$, so
+  \[
+    \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma) = \frac{2C^2l}{m}
+      + \frac{C}{m}\sum_{i=1}^{ml}\min\left\{2C,\;\epsilon + 2C\,d(\gamma(i/m),Q)\right\}
+    .
+  \]
+
+  \emph{Matching term by term.} As in \noderef{PsiReindex}, $(j,k)\mapsto i:=(j-1)m+k$ is a
+  bijection $\{1,\dotsc,l\}\times\{1,\dotsc,m\} \to \{1,\dotsc,ml\}$ under which $i/m = j-1+k/m$, so
+  the $i$-th summand of the single sum, $\min\{2C,\epsilon+2Cd(\gamma(i/m),Q)\}$, equals the $k$-th
+  summand of the $j$-th inner sum, $\min\{2C,\epsilon+2Cd(\gamma(j-1+k/m),Q)\}$, term for term.
+  Reindexing the single sum $\sum_{i=1}^{ml}$ as the iterated sum $\sum_{j=1}^l\sum_{k=1}^m$ over
+  this bijection gives
+  \[
+    \frac{C}{m}\sum_{i=1}^{ml}(\cdots) = \sum_{j=1}^l \frac{C}{m}\sum_{k=1}^m(\cdots)
+    = \sum_{j=1}^l \Bigl(\tilde\psi_{m,Q,\epsilon,C}(\delta_j) - \frac{2C^2}{m}\Bigr)
+    ,
+  \]
+  using the unwound form of $\tilde\psi_{m,Q,\epsilon,C}(\delta_j)$ to subtract off its tail term.
+  Adding the tail term $2C^2l/m = \sum_{j=1}^l \tfrac{2C^2}{m}$ to both sides gives
+  \[
+    \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma) = \frac{2C^2l}{m} +
+      \frac{C}{m}\sum_{i=1}^{ml}(\cdots)
+    = \sum_{j=1}^l \tilde\psi_{m,Q,\epsilon,C}(\delta_j)
+    = \sum_{j=1}^l \tilde\psi_{m,Q,\epsilon,C}\bigl(\gamma|^{\mathrm{tot}}_{[j-1,j]}\bigr)
+    ,
+  \]
+  which is the claimed identity.
+\end{proof}

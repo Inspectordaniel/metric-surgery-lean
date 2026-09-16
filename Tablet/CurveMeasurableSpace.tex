@@ -1,0 +1,40 @@
+\begin{lemma}[$\Theta(E)$ carries the evaluation $\sigma$-algebra]
+  Let $E$ be a metric space equipped with a $\sigma$-algebra. Then $\Theta(E)$
+  (\noderef{Curve}) carries a canonical $\sigma$-algebra structure, namely the coarsest one making
+  the evaluation map $\gamma \mapsto (\length(\gamma), \gamma)$ -- length together with the full
+  trajectory $\gamma \colon \mathbb{R} \to E$ -- measurable into the product $\sigma$-algebra on
+  $\mathbb{R} \times (\mathbb{R} \to E)$.
+\end{lemma}
+\begin{proof}
+  For any function $\varphi$ from a type $X$ into a measurable space $Y$, the pullback
+  ($\mathrm{comap}$) of $Y$'s $\sigma$-algebra along $\varphi$ is always a well-defined
+  $\sigma$-algebra on $X$ (a standard construction: the pullback of a collection of sets closed
+  under complement and countable union along any function is again closed under complement and
+  countable union). Applying this to $X = \Theta(E)$, $Y = \mathbb{R} \times (\mathbb{R} \to E)$
+  (with the product $\sigma$-algebra) and $\varphi(\gamma) = (\length(\gamma), \gamma)$ produces the
+  claimed $\sigma$-algebra.
+
+  \paragraph{Why the full evaluation, and not just rational evaluations (modelling choice, not a
+  deviation).} One could instead take the coarser-looking $\sigma$-algebra generated only by
+  $\gamma \mapsto \length(\gamma)$ and $\gamma \mapsto \gamma(q)$ for $q$ ranging over $\mathbb{Q}$.
+  We do not: the two $\sigma$-algebras in fact coincide, because every $\gamma \in \Theta(E)$ is
+  globally $1$-Lipschitz (\noderef{CurveLipschitz}), so for every real $t$, $\gamma(t)$ is the limit
+  of $\gamma(q_n)$ along any sequence of rationals $q_n \to t$; hence $\gamma \mapsto \gamma(t)$ is a
+  pointwise limit of rational-evaluation-measurable functions of $\gamma$, and is therefore itself
+  measurable with respect to the rational-evaluation $\sigma$-algebra (a pointwise limit of
+  measurable functions into a metrizable space is measurable). Consequently every generator of the
+  full evaluation $\sigma$-algebra is already measurable for the rational-evaluation one, so the two
+  coincide. We record the definition using the full evaluation map because it lets every later
+  statement about a curve-valued measurable map (for instance, that $\gamma \mapsto \gamma(c \cdot
+  \length(\gamma))$ is measurable for a fixed $c\in[0,1]$, or that $\gamma \mapsto \gamma|_{[a,b]}$ is
+  measurable, \noderef{curveRestrictTot}) be phrased and proved directly in terms of trajectory
+  evaluation at a point, which is what these statements are actually about, rather than as an
+  unmotivated appeal to a countable generating family; the coincidence above shows this is a
+  bookkeeping convenience and not an enlargement of the $\sigma$-algebra actually needed.
+
+  We deliberately do not instead equip $\Theta(E)$ with the Borel $\sigma$-algebra of the
+  pseudometric $d_\Theta$ used elsewhere in the paper (paper.tex line 1174): constructing $d_\Theta$
+  as an honest metric on $\Theta(E)$ requires checking the triangle inequality over increasing
+  reparametrizing bijections, which is not needed for anything proved in this tablet, while the
+  evaluation $\sigma$-algebra above suffices for every measurability statement used here.
+\end{proof}

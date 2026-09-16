@@ -1,0 +1,140 @@
+\begin{corollary}[$\overline{\eta}_l$ repeats $\overline{\eta}_1$, $\tilde\psi$ display]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra, $T \colon \mathcal{D}^1(E) \to \mathbb{R}$, and
+  $F$ a Paolini--Stepanov family for $T$ (\noderef{PSFamily}). For every $m,l \in \mathbb{N}$ with
+  $m,l \ge 1$, every finite $Q \subset E$, and all $\epsilon, C \in \mathbb{R}$ with $\epsilon,C>0$,
+  \[
+    \int_{\Theta(E)} \frac{1}{l} \, \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma) \,
+      d\overline{\eta}_l(\gamma)
+    = \int_{\Theta(E)} \tilde\psi_{m,Q,\epsilon,C}(\gamma) \, d\overline{\eta}_1(\gamma)
+    ,
+  \]
+  where $\overline{\eta}_l = F.\mathrm{eta}(l)$. This is the second display of paper
+  Corollary~A.6 (paper.tex line 1881--1889), the $\tilde\psi$ counterpart of
+  \noderef{EtaRepeats}.
+\end{corollary}
+\begin{proof}
+  Throughout, fix $m,l,Q,\epsilon,C$ as in the statement and write $\eta_l := F.\mathrm{eta}(l)$,
+  $\eta_1 := F.\mathrm{eta}(1)$; both are finite measures (\noderef{PSFamily}, field
+  \emph{finite}).
+
+  \emph{Step 1: measurability.} For any $N \ge 1$, the map $\gamma \mapsto
+  \tilde\psi_{N,Q,\epsilon,C}(\gamma)$ (\noderef{psiTilde}) is measurable on $\Theta(E)$ (with the
+  evaluation $\sigma$-algebra, \noderef{CurveMeasurableSpace}): it is built by finitely many
+  applications of addition, multiplication, real scalar multiplication, and $\min$ (each of which
+  preserves measurability of real-valued functions -- multiplication is needed for the tail term
+  $2C^2\length(\gamma)^2/N$, a product of the non-constant measurable function $\length(\gamma)$
+  with itself) from the measurable maps $\gamma \mapsto
+  \length(\gamma)$ (\noderef{CurveLenMeasurable}), $\gamma \mapsto \gamma(i\cdot\length(\gamma)/N)$
+  for $i=1,\dotsc,N$ (\noderef{CurveScaledEvalMeasurable} with $c=i/N$, finitely many fixed real
+  constants), and the function $x \mapsto d(x,Q) = \mathrm{Metric.infDist}(x,Q)$, which is
+  $1$-Lipschitz, hence continuous, hence measurable since $E$ carries a Borel-compatible
+  $\sigma$-algebra. In particular $\gamma \mapsto \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma)$ and
+  $\gamma \mapsto \tilde\psi_{m,Q,\epsilon,C}(\gamma)$ are measurable, so $h :=
+  \mathrm{ENNReal.ofReal} \circ \tilde\psi_{m,Q,\epsilon,C}$ is measurable.
+
+  \emph{Step 2: nonnegativity and a.e.\ boundedness.} Since $C,\epsilon>0$ and $d(\cdot,Q)\ge0$,
+  each term $\min\{2C,\,\epsilon+2Cd(\gamma(s_i),Q)\}$ in $\tilde\psi_{N,Q,\epsilon,C}(\gamma)$
+  (\noderef{psiTilde}) is a minimum of two nonnegative reals, hence nonnegative and $\le 2C$; since
+  also $C\length(\gamma)/N \ge 0$ (using $\length(\gamma)\ge0$, \noderef{Curve}) and
+  $2C^2\length(\gamma)^2/N\ge0$,
+  \[
+    0 \le \tilde\psi_{N,Q,\epsilon,C}(\gamma)
+    = 2C^2\frac{\length(\gamma)^2}{N} + C\frac{\length(\gamma)}{N}\sum_{i=1}^N(\cdots)
+    \le 2C^2\frac{\length(\gamma)^2}{N} + C\frac{\length(\gamma)}{N}\cdot N\cdot 2C
+    = 2C^2\length(\gamma) + \frac{2C^2\length(\gamma)^2}{N}
+  \]
+  for every $\gamma\in\Theta(E)$ and $N\ge1$, giving the a priori bound
+  \begin{equation}\label{psitilde-bound}
+    0 \le \tilde\psi_{N,Q,\epsilon,C}(\gamma) \le 2C^2\length(\gamma) +
+      \frac{2C^2\length(\gamma)^2}{N}
+    \qquad\text{for every } \gamma\in\Theta(E),\ N\ge1
+    .
+  \end{equation}
+  By \noderef{PSFamily} (field \emph{lengthExactly}), $\length(\gamma) = l$ for $\eta_l$-a.e.\
+  $\gamma$ and $\length(\gamma)=1$ for $\eta_1$-a.e.\ $\gamma$. Substituting into
+  \eqref{psitilde-bound}: $\gamma \mapsto \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma)$ is bounded by
+  the constant $2C^2l + 2C^2l^2/(ml) = 2C^2l+2C^2l/m$ for $\eta_l$-a.e.\ $\gamma$, and $\gamma
+  \mapsto \tilde\psi_{m,Q,\epsilon,C}(\gamma)$ is bounded by $2C^2+2C^2/m$ for $\eta_1$-a.e.\
+  $\gamma$. A measurable function that is a.e.\ bounded with respect to a finite measure is
+  integrable for that measure; combined with Step~1 this shows $\gamma\mapsto
+  \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma)$ is $\eta_l$-integrable and $\gamma\mapsto
+  \tilde\psi_{m,Q,\epsilon,C}(\gamma)$ is $\eta_1$-integrable.
+
+  Fix $j \in \{1,\dotsc,l\}$. Since $1\le j\le l$, $0 \le j-1 \le j \le l$, so on the event
+  $\length(\gamma)=l$ (full $\eta_l$-measure), \noderef{CurveRestrictTotAgrees} applies with
+  $a=j-1,b=j,\length(\gamma)=l$ to give that $\gamma|^{\mathrm{tot}}_{[j-1,j]}$
+  (\noderef{curveRestrictTot}) equals the proof-carrying restriction $\gamma|_{[j-1,j]}$
+  (\noderef{curveRestrict}), which by \noderef{curveRestrict}'s own defining formula has length
+  exactly $j-(j-1)=1$. Hence, by \eqref{psitilde-bound}
+  applied with $N=m$ to the curve $\gamma|^{\mathrm{tot}}_{[j-1,j]}$ (of length $1$), $\gamma
+  \mapsto \tilde\psi_{m,Q,\epsilon,C}(\gamma|^{\mathrm{tot}}_{[j-1,j]})$ is bounded by
+  $2C^2+2C^2/m$ for $\eta_l$-a.e.\ $\gamma$, and is measurable as the composite of
+  $\gamma\mapsto\gamma|^{\mathrm{tot}}_{[j-1,j]}$ (measurable by \noderef{CurveRestrictTotMeasurable}
+  with the fixed constants $a=j-1,b=j$; \noderef{CurveScaledEvalMeasurable} does not apply here,
+  since its statement is about a single fixed-$c$ evaluation $\gamma\mapsto\gamma(c\cdot\length(\gamma))$,
+  not about the restricted curve itself as an element of $\Theta(E)$) with the Step~1-measurable map
+  $\gamma\mapsto\tilde\psi_{m,Q,\epsilon,C}(\gamma)$; hence it is also
+  $\eta_l$-integrable.
+
+  \emph{Step 3: reduce to $\eta_l$-a.e.\ via the reindexing identity.} On the (full-$\eta_l$-measure)
+  event $\length(\gamma)=l$, \noderef{PsiReindexTilde} applies (with its hypothesis
+  $\length(\gamma)=l$) to give
+  \[
+    \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma) = \sum_{j=1}^l
+      \tilde\psi_{m,Q,\epsilon,C}\bigl(\gamma|^{\mathrm{tot}}_{[j-1,j]}\bigr)
+  \]
+  for $\eta_l$-a.e.\ $\gamma$. Two $\eta_l$-a.e.-equal, $\eta_l$-integrable functions (both sides
+  are integrable by Step~2) have equal integrals, so
+  \[
+    \int_{\Theta(E)} \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma)\,d\eta_l(\gamma)
+    = \int_{\Theta(E)} \sum_{j=1}^l
+      \tilde\psi_{m,Q,\epsilon,C}\bigl(\gamma|^{\mathrm{tot}}_{[j-1,j]}\bigr)\,d\eta_l(\gamma)
+    = \sum_{j=1}^l \int_{\Theta(E)}
+      \tilde\psi_{m,Q,\epsilon,C}\bigl(\gamma|^{\mathrm{tot}}_{[j-1,j]}\bigr) \, d\eta_l(\gamma)
+    ,
+  \]
+  the last equality by linearity of the integral over the finite sum (each of the $l$ summands is
+  $\eta_l$-integrable by Step~2).
+
+  \emph{Step 4: apply the marginal identity to each summand.} Fix $j\in\{1,\dotsc,l\}$ and let
+  $h := \mathrm{ENNReal.ofReal}\circ\tilde\psi_{m,Q,\epsilon,C}$ as in Step~1, which is measurable.
+  By \noderef{PSFamily} (field \emph{marginal}) applied with this $l,j,h$,
+  \[
+    \int^-_{\Theta(E)} h\bigl(\gamma|^{\mathrm{tot}}_{[j-1,j]}\bigr) \, d\eta_l(\gamma)
+    = \int^-_{\Theta(E)} h(\gamma) \, d\eta_1(\gamma)
+    \tag{$\ast$}
+  \]
+  (extended-real Lebesgue integrals, denoted $\int^-$). Since $\gamma \mapsto
+  \tilde\psi_{m,Q,\epsilon,C}(\gamma|^{\mathrm{tot}}_{[j-1,j]})$ is nonnegative (Step~2) and
+  $\eta_l$-integrable (Step~2), its Bochner integral equals the $\mathrm{toReal}$ of the left side
+  of $(\ast)$ (the standard identification of the Bochner integral of a nonnegative integrable
+  function with the finite extended-real Lebesgue integral of its $\mathrm{ENNReal.ofReal}$
+  image); likewise, since $\gamma\mapsto\tilde\psi_{m,Q,\epsilon,C}(\gamma)$ is nonnegative and
+  $\eta_1$-integrable (Step~2), its Bochner integral equals the $\mathrm{toReal}$ of the right side
+  of $(\ast)$. Taking $\mathrm{toReal}$ of both sides of $(\ast)$ (both sides are finite, being the
+  lintegral image of an integrable function) therefore gives
+  \[
+    \int_{\Theta(E)} \tilde\psi_{m,Q,\epsilon,C}\bigl(\gamma|^{\mathrm{tot}}_{[j-1,j]}\bigr) \,
+      d\eta_l(\gamma)
+    = \int_{\Theta(E)} \tilde\psi_{m,Q,\epsilon,C}(\gamma) \, d\eta_1(\gamma)
+    \tag{$\ast\ast$}
+  \]
+  for this $j$. Crucially, the right side of $(\ast\ast)$ does not depend on $j$.
+
+  \emph{Step 5: sum and rescale.} Summing $(\ast\ast)$ over $j=1,\dotsc,l$ and combining with
+  Step~3,
+  \[
+    \int_{\Theta(E)} \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma) \, d\eta_l(\gamma)
+    = \sum_{j=1}^l \int_{\Theta(E)} \tilde\psi_{m,Q,\epsilon,C}(\gamma) \, d\eta_1(\gamma)
+    = l \cdot \int_{\Theta(E)} \tilde\psi_{m,Q,\epsilon,C}(\gamma) \, d\eta_1(\gamma)
+    ,
+  \]
+  since the $l$ summands are all equal to the same ($j$-independent) quantity. Dividing both
+  sides by $l>0$ and using linearity of the (Bochner) integral to move the constant $1/l$ inside,
+  \[
+    \int_{\Theta(E)} \frac1l\,\tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma) \, d\eta_l(\gamma)
+    = \int_{\Theta(E)} \tilde\psi_{m,Q,\epsilon,C}(\gamma) \, d\eta_1(\gamma)
+    ,
+  \]
+  which is the claimed identity.
+\end{proof}

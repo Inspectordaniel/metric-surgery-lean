@@ -1,0 +1,44 @@
+\begin{lemma}[Concatenation preserves the outer endpoints]
+  Let $E$ be a metric space and $\gamma_1,\gamma_2 \in \Theta(E)$ (\noderef{Curve}) with matching
+  endpoints $\gamma_1(\length(\gamma_1))=\gamma_2(0)$. Then the concatenation $\gamma_1*\gamma_2$
+  (\noderef{curveConcat}) starts where $\gamma_1$ starts and ends where $\gamma_2$ ends:
+  \[
+    (\gamma_1*\gamma_2)(0) = \gamma_1(0)
+    \qquad\text{and}\qquad
+    (\gamma_1*\gamma_2)(\length(\gamma_1*\gamma_2)) = \gamma_2(\length(\gamma_2))
+    .
+  \]
+
+  \paragraph{Why this is needed and where it is used.} This fact is currently re-derived inline
+  twice on the tablet -- once inside \noderef{curveSampling}'s own definition (to show the
+  recursive concatenation chain closes up correctly) and once inside \noderef{SamplingEndpoints}
+  (to show $\gamma^\delta$ starts where $\gamma$ starts) -- but has no statement-level home of its
+  own. \noderef{ClosingUp} needs it a third time: to show that the curve
+  $\hat\gamma_{i,l} := \gamma^{\delta_l}_{i,l} * \bar\gamma_{i,l}$ formed by concatenating the
+  sampled curve with the connecting geodesic $\bar\gamma_{i,l}$ (paper.tex line 1441) is closed,
+  i.e.\ starts and ends at the same point. This lemma packages the concatenation-endpoints fact
+  once so it can be cited rather than re-derived a fourth time.
+\end{lemma}
+\begin{proof}
+  Write $L_1 := \length(\gamma_1)$, $L_2 := \length(\gamma_2)$, so
+  $\length(\gamma_1*\gamma_2) = L_1+L_2$, and recall (\noderef{curveConcat})
+  $(\gamma_1*\gamma_2)(t) = \gamma_1(t)$ for $t \le L_1$ and $(\gamma_1*\gamma_2)(t) =
+  \gamma_2(t-L_1)$ for $t > L_1$.
+
+  \emph{Start point.} Since $0 \le L_1$ (\noderef{Curve}'s $\mathrm{len\_nonneg}$ field), evaluating
+  at $t=0$ takes the first branch: $(\gamma_1*\gamma_2)(0) = \gamma_1(0)$.
+
+  \emph{End point.} We evaluate at $t = L_1+L_2$. Split on whether $L_2 = 0$ or $L_2 > 0$ (using
+  $L_2 \ge 0$, again \noderef{Curve}'s $\mathrm{len\_nonneg}$ field).
+  \begin{itemize}
+    \item If $L_2 = 0$: then $L_1+L_2 = L_1 \le L_1$, so evaluating takes the first branch,
+      $(\gamma_1*\gamma_2)(L_1+L_2) = \gamma_1(L_1)$. By the standing endpoint-matching hypothesis,
+      $\gamma_1(L_1) = \gamma_2(0)$, and since $L_2=0$, $\gamma_2(0) = \gamma_2(L_2)$. Hence
+      $(\gamma_1*\gamma_2)(L_1+L_2) = \gamma_2(L_2)$.
+    \item If $L_2 > 0$: then $L_1+L_2 > L_1$, so evaluating takes the second branch,
+      $(\gamma_1*\gamma_2)(L_1+L_2) = \gamma_2((L_1+L_2)-L_1) = \gamma_2(L_2)$, the last equality by
+      elementary arithmetic.
+  \end{itemize}
+  In both cases $(\gamma_1*\gamma_2)(L_1+L_2) = \gamma_2(L_2) = \gamma_2(\length(\gamma_2))$, as
+  claimed.
+\end{proof}

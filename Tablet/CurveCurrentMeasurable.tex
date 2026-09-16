@@ -1,0 +1,99 @@
+\begin{lemma}[Measurability of the current in the curve]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra, and let
+  $\omega = (f,\pi) \in \mathcal{D}^1(E)$ (\noderef{Form1}). Then the map
+  $\gamma \mapsto [[\gamma]](\omega)$ is measurable as a map $\Theta(E) \to \mathbb{R}$, where
+  $\Theta(E)$ carries the evaluation $\sigma$-algebra of \noderef{CurveMeasurableSpace} and
+  $[[\gamma]](\omega)$ is the current of \noderef{curveCurrent}.
+
+  \paragraph{Why this node is needed.} Paper.tex line 1290 asserts, without proof, that the
+  countable family on $\Theta(E)$ headed by $\gamma \mapsto [[\gamma]](\tilde f_k,\tilde\pi_j)$
+  is measurable (and $\overline\eta_l$-integrable, for every $l$). Nothing else on this tablet
+  supplies measurability in $\gamma$ of the current: \noderef{PSFamily}'s \texttt{weakLength} field
+  only writes the Bochner integral defining $\overline\eta_l$-weak length, which is $0$ by the
+  junk-value convention whenever the integrand fails to be integrable, so that field alone is
+  satisfiable without this fact. This lemma supplies it, for a general fixed $\omega$, so that it
+  may be instantiated at each $\tilde f_k,\tilde\pi_j$ downstream.
+\end{lemma}
+\begin{proof}
+  For $m \in \mathbb{N}$, define the \emph{uniform Riemann sum} $R_m \colon \Theta(E) \to
+  \mathbb{R}$ by sampling $\gamma$ at $s_i := \frac{i}{m}\cdot\length(\gamma)$, $i = 0,\dots,m$:
+  \[
+    R_m(\gamma) := \sum_{i=0}^{m-1} f\bigl(\gamma(s_i)\bigr) \cdot
+      \Bigl(\pi\bigl(\gamma(s_{i+1})\bigr) - \pi\bigl(\gamma(s_i)\bigr)\Bigr)
+    .
+  \]
+  We show (Step~1) that $R_m$ is measurable for every $m$, and (Step~2) that
+  $R_m(\gamma) \to [[\gamma]](\omega)$ as $m \to \infty$, for every fixed $\gamma$; the conclusion
+  then follows (Step~3) since $\mathbb{R}$ is a metrizable topological space and a pointwise limit
+  of measurable real-valued functions is measurable
+  (\texttt{measurable\_of\_tendsto\_metrizable}, \texttt{Preamble}).
+
+  \emph{Step 1: $R_m$ is measurable.} Fix $m$. Each summand of $R_m$ is a finite sum, so it suffices
+  to show each of the $m$ terms is a measurable function of $\gamma$. Fix $i \in \{0,\dots,m-1\}$.
+  The maps $\gamma \mapsto \gamma(s_i) = \gamma\bigl(\frac{i}{m}\cdot\length(\gamma)\bigr)$ and
+  $\gamma \mapsto \gamma(s_{i+1}) = \gamma\bigl(\frac{i+1}{m}\cdot\length(\gamma)\bigr)$ are each
+  measurable by \noderef{CurveScaledEvalMeasurable} (at the constants $c = i/m$ and $c=(i+1)/m$
+  respectively). Since $f$ and $\pi$ are Lipschitz (\noderef{Form1}), they are continuous, hence
+  measurable; composing, $\gamma \mapsto f(\gamma(s_i))$, $\gamma \mapsto \pi(\gamma(s_i))$, and
+  $\gamma \mapsto \pi(\gamma(s_{i+1}))$ are all measurable. The $i$-th summand
+  $f(\gamma(s_i))\cdot(\pi(\gamma(s_{i+1}))-\pi(\gamma(s_i)))$ is then measurable as a product and
+  difference of measurable real-valued functions, and $R_m$, a finite sum of such terms, is
+  measurable.
+
+  \emph{Step 2: $R_m(\gamma) \to [[\gamma]](\omega)$.} Fix $\gamma \in \Theta(E)$ and write
+  $L := \length(\gamma)$. For $m = 0$ this is vacuous for the purpose of a limit as $m \to \infty$,
+  so fix $m \ge 1$ and set $s_i := \frac{i}{m}L$ for $i = 0,\dots,m$ (a slight reuse of notation
+  from the statement, now viewed as a function of $i \in \{0,\dots,m\}$ for this fixed $m$). Since
+  $i \mapsto i/m$ is non-decreasing and $L \ge 0$ (\noderef{Curve}), $i \mapsto s_i$ is
+  non-decreasing on $\{0,\dots,m\}$, with $s_0 = 0$ and $s_m = L$.
+
+  By \noderef{CurrentResolutionAdditive} applied to this resolution,
+  \[
+    [[\gamma]](\omega) = \sum_{i=0}^{m-1} \int_{s_i}^{s_{i+1}} f(\gamma(t)) \cdot
+      \mathrm{deriv}(\pi\circ\gamma)(t)\,dt
+    . \tag{A}
+  \]
+  For each $i \in \{0,\dots,m-1\}$, since $0 \le s_i \le s_{i+1} \le L$ (immediate from
+  monotonicity and the endpoint values just established, since $i/m, (i+1)/m \in [0,1]$), let
+  $\sigma_i := \gamma|_{[s_i,s_{i+1}]}$ (\noderef{curveRestrict}, legal by these bounds). By
+  \noderef{RestrictCurrentFormula},
+  \[
+    [[\sigma_i]](\omega) = \int_{s_i}^{s_{i+1}} f(\gamma(t)) \cdot \mathrm{deriv}(\pi\circ\gamma)(t)\,dt
+    , \tag{B}
+  \]
+  so combining (A) and (B), $[[\gamma]](\omega) = \sum_{i=0}^{m-1} [[\sigma_i]](\omega)$.
+
+  By \noderef{curveRestrict}'s defining formula, $\length(\sigma_i) = s_{i+1}-s_i = L/m$,
+  $\sigma_i(0) = \gamma(s_i)$, and $\sigma_i(\length(\sigma_i)) = \gamma(s_{i+1})$ (both are
+  un-clamped values of the restriction formula, since $0$ and $s_{i+1}-s_i$ are exactly the two
+  endpoints of $\sigma_i$'s own domain). Hence $\sigma_i$'s chord main term
+  $f(\sigma_i(0))\cdot(\pi(\sigma_i(\length(\sigma_i))) - \pi(\sigma_i(0)))$ is exactly the $i$-th
+  Riemann-sum summand $f(\gamma(s_i))\cdot(\pi(\gamma(s_{i+1}))-\pi(\gamma(s_i)))$. By
+  \noderef{CurrentChordEstimate} applied to $\sigma_i$ at the sample point $u=0$ (legal since
+  $0 \le 0 \le \length(\sigma_i)$; this is the left-endpoint instance of that lemma's general
+  sample point),
+  \[
+    \Bigl| [[\sigma_i]](\omega) - f(\gamma(s_i))\cdot\bigl(\pi(\gamma(s_{i+1}))-\pi(\gamma(s_i))\bigr)
+    \Bigr| \le \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot \length(\sigma_i)^2/2
+      = \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot (L/m)^2/2
+    . \tag{$C_i$}
+  \]
+  Summing $(C_i)$ over $i=0,\dots,m-1$ and using the triangle inequality for a finite sum together
+  with $[[\gamma]](\omega) = \sum_i [[\sigma_i]](\omega)$ and the identification of $R_m(\gamma)$
+  with $\sum_i$ (chord main term of $\sigma_i$) noted above,
+  \[
+    \bigl| R_m(\gamma) - [[\gamma]](\omega) \bigr|
+      \le \sum_{i=0}^{m-1} \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot(L/m)^2/2
+      = m \cdot \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot (L/m)^2/2
+      = \frac{\mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot L^2}{2m}
+    . \tag{$D_m$}
+  \]
+  Since the right-hand side of $(D_m)$ tends to $0$ as $m \to \infty$ (a constant divided by $m$),
+  and $(D_m)$ holds for every $m \ge 1$, $R_m(\gamma) \to [[\gamma]](\omega)$ as $m \to \infty$.
+
+  \emph{Step 3: conclude.} By Step~1, $R_m$ is measurable for every $m \in \mathbb{N}$; by Step~2,
+  $R_m(\gamma) \to [[\gamma]](\omega)$ for every $\gamma \in \Theta(E)$, i.e.\ $(R_m)_{m}$ converges
+  pointwise to $\gamma \mapsto [[\gamma]](\omega)$. Since $\mathbb{R}$ is metrizable, the pointwise
+  limit $\gamma \mapsto [[\gamma]](\omega)$ of the measurable sequence $(R_m)_m$ is measurable
+  (\texttt{measurable\_of\_tendsto\_metrizable}, \texttt{Preamble}), which is the claim.
+\end{proof}

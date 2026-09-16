@@ -1,0 +1,40 @@
+\begin{lemma}[Piecewise-geodesic sampling produces a piecewise geodesic curve]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}),
+  $\gamma \in \Theta(E)$ (\noderef{Curve}), and $\delta \in \mathbb{R}$ with $0 < \delta <
+  \length(\gamma)$. Then the piecewise-geodesic sampling $\gamma^\delta$ (\noderef{curveSampling})
+  is piecewise geodesic: $\mathrm{IsPiecewiseGeodesic}(\gamma^\delta)$ (\noderef{IsPiecewiseGeodesic}).
+
+  \paragraph{Why this is needed and where it is used.} Paper Theorem~4.4 (\texttt{bbassertion},
+  paper.tex line 1218) promises curves $\hat\gamma_{i,l}$ that are \emph{piecewise-geodesic closed}
+  curves, and \noderef{ApproximationMetric} feeds these straight into \noderef{SurgeryEta}, which
+  hypothesizes $\mathrm{IsPiecewiseGeodesic}(\gamma)$. The construction of $\hat\gamma_{i,l}$
+  (\noderef{ClosingUp}) concatenates a piecewise-geodesic sampling $\gamma^{\delta_l}_{i,l}$ with a
+  single connecting geodesic; this lemma supplies the piecewise-geodesicity of that sampled
+  component, matching the name $\gamma^\delta$ as it is used to build $\hat\gamma_{i,l}$
+  (paper.tex line 1233's Definition~4.3, which builds $\gamma^\delta$ literally as a chain of
+  geodesic edges and hence treats it as visibly piecewise geodesic without separate comment).
+\end{lemma}
+\begin{proof}
+  Write $L := \length(\gamma) > 0$, $k := \lceil L/\delta\rceil \ge 1$, and $s_j :=
+  \min(j\delta,L)$ for $j=0,\dots,k$, exactly as in \noderef{curveSampling}'s construction: writing
+  $c_n$ for the $n$-th stage of that construction's recursion ($n=0,\dots,k-1$), so that
+  $c_0 = G_{\gamma(s_0),\gamma(s_1)}$, $c_{n+1} = c_n * G_{\gamma(s_{n+1}),\gamma(s_{n+2})}$
+  (\noderef{curveConcat}), and $\gamma^\delta = c_{k-1}$.
+
+  We prove, by induction on $n=0,\dots,k-1$, that $c_n$ is piecewise geodesic.
+
+  \emph{Base case $n=0$.} $c_0 = G_{\gamma(s_0),\gamma(s_1)}$ is piecewise geodesic with one edge by
+  \noderef{GeodesicIsPiecewiseGeodesic}, hence piecewise geodesic.
+
+  \emph{Inductive step.} Suppose $c_n$ is piecewise geodesic, say with $m$ edges,
+  $\mathrm{IsPiecewiseGeodesicWith}(c_n,m)$. The edge $G_{\gamma(s_{n+1}),\gamma(s_{n+2})}$ is
+  piecewise geodesic with one edge, again by \noderef{GeodesicIsPiecewiseGeodesic}. The
+  concatenation $c_{n+1} = c_n * G_{\gamma(s_{n+1}),\gamma(s_{n+2})}$ is legal (its endpoint-
+  matching hypothesis holds) because $c_n$'s own defining data guarantees
+  $c_n(\length(c_n)) = \gamma(s_{n+1}) = G_{\gamma(s_{n+1}),\gamma(s_{n+2})}(0)$, the last equality
+  by \noderef{GeodesicPairing}'s $\mathrm{start\_eq}$ field. By \noderef{ConcatPiecewiseGeodesic}
+  applied to $c_n$ (with $m$ edges) and $G_{\gamma(s_{n+1}),\gamma(s_{n+2})}$ (with $1$ edge),
+  $c_{n+1}$ is piecewise geodesic with $m+1$ edges, in particular piecewise geodesic.
+
+  Taking $n=k-1$ gives that $c_{k-1} = \gamma^\delta$ is piecewise geodesic, as claimed.
+\end{proof}

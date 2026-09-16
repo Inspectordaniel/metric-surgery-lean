@@ -1,0 +1,39 @@
+\begin{definition}[Number of small pieces, $\nsmallpieces(\gamma,\delta)$]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), and $\delta \in
+  \mathbb{R}$. Define
+  \[
+    \mathrm{smallPieceCount}(\gamma,\delta)
+    := \min_{(k,s)} \# \set{ j \in \set{1,\dotsc,k} : s(j) - s(j-1) < \delta }
+    ,
+  \]
+  the minimum, over all $k \in \mathbb{N}$ and resolutions $s$ of $\gamma$ into $k$ geodesic edges
+  (\noderef{IsGeodesicResolution}), of the number of edges of length less than $\delta$; when no
+  resolution exists the minimum is taken to be $0$ (the infimum of the empty set of natural
+  numbers). This is exactly paper Def.~3.6 (paper.tex lines 732--739):
+  $\nsmallpieces(\gamma,\delta) = \min_{(s_0,\dotsc,s_k)} \#\set{j : \length(\gamma|_{[s_{j-1},s_j]})
+  < \delta}$, the minimum taken over resolutions of $\gamma$ into geodesic edges, with
+  $\length(\gamma|_{[s_{j-1},s_j]}) = s_j - s_{j-1}$ for a geodesic edge.
+
+  \paragraph{Only meaningful for piecewise-geodesic curves.} If $\gamma$ is not piecewise geodesic
+  (\noderef{IsPiecewiseGeodesic}), no resolution exists, the set being minimized over is empty, and
+  $\mathrm{smallPieceCount}(\gamma,\delta) = 0$ by the empty-infimum convention on $\mathbb{N}$ —
+  a value with no claimed relationship to $\gamma$'s geometry. This node, like the paper's
+  Def.~3.6, is therefore used only on curves $\gamma$ already known to be piecewise geodesic
+  (\noderef{IsPiecewiseGeodesic}), for which the minimizing set is nonempty and the minimum is
+  attained by \texttt{Nat.sInf\_mem}: this is exactly the fact that a future formalization of the
+  Type~II cut construction of paper Lemma 3.10 (paper.tex line 948) will need, to extract an
+  explicit resolution realizing the minimum edge count.
+
+  \paragraph{Harmlessness of non-strict resolutions.} As for \noderef{IsDeltaEpsN}, our resolutions
+  (\noderef{IsGeodesicResolution}) allow consecutive partition points to repeat (degenerate,
+  zero-length edges), whereas the paper's resolutions are strictly increasing. This does not change
+  the value of $\mathrm{smallPieceCount}(\gamma,\delta)$ for $\delta > 0$: starting from any
+  resolution (strict or not) and repeatedly deleting a repeated partition point produces a
+  resolution with strictly fewer geodesic edges and the same underlying sequence of nondegenerate
+  edges, since a deleted degenerate edge $[a,a]$ has length $0 < \delta$ and so was already counted
+  among the ``small'' edges being minimized; deleting it removes exactly one small edge from the
+  count without otherwise changing any edge. Iterating, every resolution's small-edge count is at
+  least the small-edge count of the strictly increasing resolution obtained by deleting all of its
+  repeats, so the minimum over the wider (non-strict) class of resolutions equals the minimum over
+  the paper's (strict) class.
+\end{definition}

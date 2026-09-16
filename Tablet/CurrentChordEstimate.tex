@@ -1,0 +1,115 @@
+\begin{lemma}[Chord estimate for the current of a curve]
+  Let $E$ be a metric space, $\sigma \in \Theta(E)$ (\noderef{Curve}), and $\omega = (f,\pi) \in
+  \mathcal{D}^1(E)$ (\noderef{Form1}). Write $L := \length(\sigma)$, and let $u \in [0,L]$ be an
+  arbitrary sample point. Then
+  \[
+    \Bigl| [[\sigma]](\omega) - f(\sigma(u)) \cdot \bigl(\pi(\sigma(L)) - \pi(\sigma(0))\bigr) \Bigr|
+      \le \mathrm{Lip}(f) \cdot \mathrm{Lip}(\pi) \cdot \frac{L^2}{2}
+    ,
+  \]
+  where $[[\sigma]](\omega)$ is the current of \noderef{curveCurrent} and $\mathrm{Lip}(f),
+  \mathrm{Lip}(\pi)$ are the Lipschitz constants carried by $\omega$ (\noderef{Form1}).
+
+  \paragraph{This is the paper's own general sample point, not a strengthening.} Paper
+  eq.~\eqref{RiemannStieltjesSum} (paper.tex line 1739) states the Riemann-Stieltjes decomposition
+  "for any $s_i^* \in [s_{i-1},s_i]$", i.e.\ with an arbitrary sample point in the relevant
+  subinterval, not only at the left endpoint. Both instances that the paper's own proof of
+  Lemma~A.2 (\noderef{PiBoundsPi}, \noderef{PiBoundsF}) actually uses are needed downstream:
+  paper.tex line 1757 uses $s_i^* = s_{i-1}$ (the left endpoint, $u=0$ after shifting to the
+  restricted piece) for \eqref{pi_estimate}, while paper.tex line 1791 explicitly uses
+  $s_i^* = s_i$ (the right endpoint, $u=L$ after shifting) for \eqref{f_estimate}. An earlier
+  version of this node fixed $u=0$; that only served the first of these two use sites, so this
+  node states the lemma at the paper's own generality, with $u$ free in $[0,L]$. The stated bound
+  is identical (same constant $\mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot L^2/2$) for every $u$, so
+  this is a strict generalization, not a change in strength at any fixed $u$; taking $u=0$ recovers
+  the previously landed statement exactly.
+
+  \paragraph{Role of this lemma (repair, not a deviation).} Paper Lemma~4.4 (paper.tex line 1239)
+  proves $[[\gamma^\delta]](\omega) \to [[\gamma]](\omega)$ as $\delta \to 0$ by bounding
+  $d_\Theta(\gamma^\delta,\gamma) \le 2\delta$ and citing \cite{PS_2012}*{Lemma~4.1}. This tablet does
+  not build the metric $d_\Theta$ on $\Theta(E)$ (process memory pm-0005), so that route is blocked.
+  This lemma is the single quantitative estimate from which \noderef{GeodesicSampledCurrent} derives
+  a strictly stronger, rate-explicit replacement of Lemma~4.4 without $d_\Theta$ and without citing
+  \cite{PS_2012}*{Lemma~4.1}: the point is that when two curves share both endpoints, their "chord
+  main terms" $f(\cdot(u)) \cdot (\pi(\cdot(L)) - \pi(\cdot(0)))$ at a common sample point $u$ can be
+  compared directly, so this lemma turns a comparison between the two curves' currents into a
+  comparison of two quadratic error terms, one for each curve, against the common chord.
+\end{lemma}
+\begin{proof}
+  Write $g := \pi \circ \sigma$, so by \noderef{curveCurrent}, $[[\sigma]](\omega) = \int_0^L f(\sigma(t))
+  \cdot \mathrm{deriv}(g)(t)\,dt$. By \noderef{CurveLipschitz}, $\sigma$ is globally $1$-Lipschitz, and
+  $\pi$ is $\mathrm{Lip}(\pi)$-Lipschitz (\noderef{Form1}), so $g$ is globally
+  $\mathrm{Lip}(\pi)$-Lipschitz, hence absolutely continuous on $[0,L]$
+  (\texttt{LipschitzOnWith.absolutelyContinuousOnInterval}, \texttt{Preamble}); consequently
+  $\mathrm{deriv}(g)$ is interval-integrable on $0..L$
+  (\texttt{AbsolutelyContinuousOnInterval.intervalIntegrable\_deriv}, \texttt{Preamble}), and by the
+  Fundamental Theorem of Calculus for absolutely continuous functions
+  (\texttt{AbsolutelyContinuousOnInterval.integral\_deriv\_eq\_sub}, \texttt{Preamble}),
+  \[
+    \int_0^L \mathrm{deriv}(g)(t)\,dt = g(L) - g(0) = \pi(\sigma(L)) - \pi(\sigma(0))
+    . \tag{1}
+  \]
+  Also $f$ is Lipschitz (\noderef{Form1}), hence continuous, so $f \circ \sigma$ is continuous, hence
+  bounded and continuous on $[0,L]$; the product of an interval-integrable function with a continuous
+  one on $[0,L]$ is interval-integrable on $0..L$, so both
+  $t \mapsto f(\sigma(t)) \cdot \mathrm{deriv}(g)(t)$ and the constant-multiple
+  $t \mapsto f(\sigma(u)) \cdot \mathrm{deriv}(g)(t)$ are interval-integrable on $0..L$, and so is their
+  difference.
+
+  \emph{Step 1: rewrite the difference as a single integral.} By linearity of the interval integral
+  and (1),
+  \begin{align*}
+    [[\sigma]](\omega) - f(\sigma(u)) \cdot \bigl(\pi(\sigma(L)) - \pi(\sigma(0))\bigr)
+    &= \int_0^L f(\sigma(t)) \cdot \mathrm{deriv}(g)(t)\,dt - f(\sigma(u)) \int_0^L \mathrm{deriv}(g)(t)\,dt \\
+    &= \int_0^L \bigl(f(\sigma(t)) - f(\sigma(u))\bigr) \cdot \mathrm{deriv}(g)(t)\,dt
+    . \tag{2}
+  \end{align*}
+
+  \emph{Step 2: a sharp pointwise bound on the new integrand.} Fix $t \in \mathbb{R}$; we show
+  \[
+    \bigl|(f(\sigma(t)) - f(\sigma(u))) \cdot \mathrm{deriv}(g)(t)\bigr|
+      \le \bigl(\mathrm{Lip}(f) \cdot |t-u|\bigr) \cdot \mathrm{Lip}(\pi)
+    . \tag{$\ast$}
+  \]
+  For the first factor: since $\sigma$ is $1$-Lipschitz (\noderef{CurveLipschitz}),
+  $d(\sigma(t),\sigma(u)) \le |t - u|$; since $f$ is $\mathrm{Lip}(f)$-Lipschitz
+  (\noderef{Form1}), $|f(\sigma(t)) - f(\sigma(u))| \le \mathrm{Lip}(f) \cdot d(\sigma(t),\sigma(u)) \le
+  \mathrm{Lip}(f) \cdot |t-u|$. For the second factor: if $g$ is differentiable at $t$, then since $g$ is
+  globally $\mathrm{Lip}(\pi)$-Lipschitz, $|\mathrm{deriv}(g)(t)| \le \mathrm{Lip}(\pi)$
+  (\texttt{HasDerivAt.le\_of\_lipschitz}, \texttt{Preamble}); if $g$ is not differentiable at $t$, then
+  $\mathrm{deriv}(g)(t) = 0$ by the junk-value convention, so $|\mathrm{deriv}(g)(t)| = 0 \le
+  \mathrm{Lip}(\pi)$ (as $\mathrm{Lip}(\pi) \ge 0$). In either case
+  $|\mathrm{deriv}(g)(t)| \le \mathrm{Lip}(\pi)$. Since both factors are non-negative reals with the
+  stated bounds, and both bounding constants $\mathrm{Lip}(f) \cdot |t-u|$ and $\mathrm{Lip}(\pi)$ are
+  non-negative, multiplying the two inequalities gives $(\ast)$.
+
+  \emph{Step 3: integrate the pointwise bound.} By the standard bound on an interval integral by an
+  integrable pointwise bound over $[0,L]$ (\texttt{intervalIntegral.integral\_mono\_on}, applicable
+  since $0 \le L$, both integrands are interval-integrable on $0..L$, and $(\ast)$ holds for every
+  $t \in [0,L]$), together with the standard bound of the absolute value of an interval integral by
+  the integral of the absolute value (\texttt{intervalIntegral.abs\_integral\_le\_integral\_abs}, valid
+  since $0 \le L$), (2) gives
+  \[
+    \Bigl|[[\sigma]](\omega) - f(\sigma(u)) \cdot \bigl(\pi(\sigma(L)) - \pi(\sigma(0))\bigr)\Bigr|
+    \le \int_0^L \bigl|(f(\sigma(t)) - f(\sigma(u))) \cdot \mathrm{deriv}(g)(t)\bigr|\,dt
+    \le \mathrm{Lip}(f) \cdot \mathrm{Lip}(\pi) \cdot \int_0^L |t-u| \, dt
+    .
+  \]
+
+  \emph{Step 4: evaluate the bounding integral at the general sample point.} Since $0 \le u \le L$,
+  split $\int_0^L |t-u|\,dt = \int_0^u (u-t)\,dt + \int_u^L (t-u)\,dt = u^2/2 + (L-u)^2/2$ (each piece
+  by \texttt{integral\_comp\_sub\_left}/\texttt{integral\_comp\_sub\_right} together with
+  \texttt{integral\_id}, \texttt{Preamble}, and additivity of the interval integral over adjacent
+  intervals, \texttt{intervalIntegral.integral\_add\_adjacent\_intervals}). Since $u,L-u \ge 0$ and
+  $u+(L-u)=L$, the arithmetic-mean/quadratic-mean inequality $u^2+(L-u)^2 \le (u+(L-u))^2 = L^2$ gives
+  $\int_0^L|t-u|\,dt = (u^2+(L-u)^2)/2 \le L^2/2$ (equivalently, this is
+  $2(u^2+(L-u)^2)-(2u+2(L-u))^2/2 \ge 0 \iff (2u-(L-u)-u)^2\ge0$, i.e.\ $(2u-L)^2\ge 0$, always true).
+  Hence
+  \[
+    \mathrm{Lip}(f) \cdot \mathrm{Lip}(\pi) \cdot \int_0^L |t-u|\,dt
+    \le \mathrm{Lip}(f) \cdot \mathrm{Lip}(\pi) \cdot \frac{L^2}{2}
+    ,
+  \]
+  using $\mathrm{Lip}(f),\mathrm{Lip}(\pi)\ge 0$. Combining Steps~3 and~4 gives the claimed bound,
+  for the arbitrary sample point $u \in [0,L]$.
+\end{proof}

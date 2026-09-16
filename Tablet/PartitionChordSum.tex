@@ -1,0 +1,131 @@
+\begin{lemma}[Riemann--Stieltjes partition sum with arbitrary sample points]
+  Let $E$ be a metric space, $g \in \Theta(E)$ (\noderef{Curve}) a curve, $\omega = (f,\pi) \in
+  \mathcal{D}^1(E)$ (\noderef{Form1}) a metric $1$-form, and $m \in \mathbb{N}$ with $m \ge 1$.
+  Write $L := \length(g)$ and let
+  \[
+    s_i := \frac{i\,L}{m} \qquad (i = 0,1,\dots,m)
+  \]
+  be the uniform $m$-piece partition of $[0,L]$. Let $u : \mathbb{N} \to \mathbb{R}$ be any choice
+  of sample points subject to
+  \[
+    s_i \le u_i \le s_{i+1} \qquad \text{for every } i \in \{0,\dots,m-1\}
+    .
+  \]
+  Then
+  \[
+    \Bigl| [[g]](f,\pi) - \sum_{i=0}^{m-1} f\bigl(g(u_i)\bigr)\,
+      \bigl(\pi(g(s_{i+1})) - \pi(g(s_i))\bigr) \Bigr|
+      \le \mathrm{Lip}(f)\,\mathrm{Lip}(\pi)\,\frac{L^2}{m}
+    ,
+  \]
+  where $[[g]](f,\pi)$ is \noderef{curveCurrent} and $\mathrm{Lip}(f), \mathrm{Lip}(\pi)$ are the
+  Lipschitz constants carried by $\omega$ (\noderef{Form1}).
+
+  \paragraph{This is paper eqs.~\eqref{RiemannStieltjesSum}--\eqref{mSumBound}.} Paper.tex
+  lines 1740--1748 decompose $[[\gamma]](f,\pi)$, ``for any $s_i^* \in [s_{i-1},s_i]$'', as the
+  Riemann--Stieltjes sum $\sum_{i=1}^m f(\gamma(s_i^*))(\pi(\gamma(s_i))-\pi(\gamma(s_{i-1})))$
+  plus a remainder, and paper.tex lines 1751--1754 bound that remainder by
+  $\mathrm{Lip}(f)\mathrm{Lip}(\pi)\length(\gamma)^2/m$. The display above is exactly the
+  combination of those two paper displays, with the paper's $1$-based index $i \in \{1,\dots,m\}$
+  and sample point $s_i^* \in [s_{i-1},s_i]$ rewritten with the $0$-based index $i \in
+  \{0,\dots,m-1\}$ and sample point $u_i \in [s_i,s_{i+1}]$; the partition $s_i = iL/m$ is the
+  paper's own (paper.tex line 1725). The sample points are kept arbitrary, as in the paper,
+  because the paper's proof of Lemma~A.2 specializes this one preliminary twice, in two different
+  ways: at the left endpoints $s_i^* = s_{i-1}$ for eq.~\eqref{pi_estimate} (paper.tex line 1757)
+  and at the right endpoints $s_i^* = s_i$ for eq.~\eqref{f_estimate} (paper.tex line 1791). The
+  condition $s_i \le u_i \le s_{i+1}$ is imposed only for $i < m$, since only those sample points
+  occur in the sum. Values of $u$ outside $\{0,\dots,m-1\}$ are unconstrained and unused.
+\end{lemma}
+\begin{proof}
+  Since $m \ge 1$ we have $m > 0$ as a real number, and $L \ge 0$ (\noderef{Curve}), so
+  $L/m \ge 0$. We record four elementary properties of the partition $s$, each an immediate
+  computation from $s_i = iL/m$:
+  \begin{itemize}
+    \item $s_0 = 0$ and $s_m = mL/m = L$;
+    \item $s_{i+1} - s_i = \frac{(i+1)L - iL}{m} = \frac{L}{m} \ge 0$ for every $i \in \mathbb{N}$;
+      in particular $s_i \le s_{i+1}$;
+    \item $s_i = iL/m \ge 0$ for every $i \in \mathbb{N}$, since $i \ge 0$, $L \ge 0$, $m > 0$;
+    \item for $i < m$ we have $i + 1 \le m$, hence $s_{i+1} = (i+1)L/m \le mL/m = L$, using
+      $L \ge 0$ and $m > 0$;
+    \item $s$ is monotone on $\{0,\dots,m\}$: if $i \le j$ then $iL/m \le jL/m$, again because
+      $L \ge 0$ and $m > 0$.
+  \end{itemize}
+
+  \emph{Step 1: resolve the current into $m$ blocks.} The hypotheses of
+  \noderef{CurrentResolutionAdditive} for the curve $g$, the form $\omega$, the index $k := m$ and
+  the partition $s$ are exactly monotonicity of $s$ on $\{0,\dots,m\}$, $s_0 = 0$ and $s_m = L$,
+  all three just verified. It therefore gives
+  \begin{equation}\label{pcs-A}
+    [[g]](f,\pi) = \sum_{i=0}^{m-1} \int_{s_i}^{s_{i+1}} f(g(t)) \cdot
+      \mathrm{deriv}(\pi \circ g)(t)\,dt
+    . \tag{A}
+  \end{equation}
+
+  \emph{Step 2: each block is the current of a restricted piece.} Fix $i \in \{0,\dots,m-1\}$. By
+  the bullet points above, $0 \le s_i$, $s_i \le s_{i+1}$ and $s_{i+1} \le L$, which are precisely
+  the three hypotheses of \noderef{curveRestrict}; let $\sigma_i := g|_{[s_i,s_{i+1}]}$ be the
+  resulting curve. By \noderef{RestrictCurrentFormula} (applied with $a := s_i$, $b := s_{i+1}$),
+  \begin{equation}\label{pcs-B}
+    [[\sigma_i]](f,\pi) = \int_{s_i}^{s_{i+1}} f(g(t)) \cdot \mathrm{deriv}(\pi \circ g)(t)\,dt
+    . \tag{B}
+  \end{equation}
+  By the defining formulas of \noderef{curveRestrict}, $\length(\sigma_i) = s_{i+1} - s_i = L/m$
+  and $\sigma_i(v) = g\bigl(s_i + \min(s_{i+1}-s_i, \max(0,v))\bigr)$ for all $v \in \mathbb{R}$.
+  Consequently, writing $\Delta := s_{i+1} - s_i = L/m \ge 0$:
+  \begin{align*}
+    \sigma_i(0) &= g\bigl(s_i + \min(\Delta, \max(0,0))\bigr) = g(s_i + \min(\Delta,0)) = g(s_i),\\
+    \sigma_i(\length(\sigma_i)) &= g\bigl(s_i + \min(\Delta,\max(0,\Delta))\bigr)
+      = g(s_i + \Delta) = g(s_{i+1}),
+  \end{align*}
+  using $\Delta \ge 0$ in both lines (so $\min(\Delta,0) = 0$ and $\max(0,\Delta) = \Delta$,
+  $\min(\Delta,\Delta)=\Delta$). Moreover, put $v_i := u_i - s_i$. The hypothesis
+  $s_i \le u_i \le s_{i+1}$ gives $0 \le v_i \le \Delta = \length(\sigma_i)$, and then
+  $\max(0,v_i) = v_i$, $\min(\Delta,v_i) = v_i$, so
+  \[
+    \sigma_i(v_i) = g(s_i + v_i) = g(u_i)
+    .
+  \]
+
+  \emph{Step 3: the chord estimate on each piece.} Apply \noderef{CurrentChordEstimate} to the
+  curve $\sigma_i$, the form $\omega$ and the sample point $v_i$, which is legal since
+  $0 \le v_i \le \length(\sigma_i)$ as just checked. It yields
+  \[
+    \Bigl| [[\sigma_i]](f,\pi) - f(\sigma_i(v_i)) \cdot
+      \bigl(\pi(\sigma_i(\length(\sigma_i))) - \pi(\sigma_i(0))\bigr) \Bigr|
+      \le \mathrm{Lip}(f)\,\mathrm{Lip}(\pi)\,\frac{\length(\sigma_i)^2}{2}
+    .
+  \]
+  Substituting the three evaluations of Step 2 and $\length(\sigma_i) = L/m$, and using
+  \eqref{pcs-B} to replace $[[\sigma_i]](f,\pi)$ by the integral, we obtain for every
+  $i \in \{0,\dots,m-1\}$
+  \begin{equation}\label{pcs-C}
+    \Bigl| \int_{s_i}^{s_{i+1}} f(g(t)) \cdot \mathrm{deriv}(\pi \circ g)(t)\,dt - D_i \Bigr|
+      \le \mathrm{Lip}(f)\,\mathrm{Lip}(\pi)\,\frac{(L/m)^2}{2}
+    , \tag{$C_i$}
+  \end{equation}
+  where $D_i := f(g(u_i)) \cdot \bigl(\pi(g(s_{i+1})) - \pi(g(s_i))\bigr)$ is exactly the $i$-th
+  summand of the sum appearing in the statement.
+
+  \emph{Step 4: assemble.} By \eqref{pcs-A},
+  \[
+    [[g]](f,\pi) - \sum_{i=0}^{m-1} D_i
+      = \sum_{i=0}^{m-1}\Bigl( \int_{s_i}^{s_{i+1}} f(g(t)) \cdot
+        \mathrm{deriv}(\pi \circ g)(t)\,dt - D_i \Bigr)
+    ,
+  \]
+  so by the triangle inequality for finite sums and then $(C_i)$ for each of the $m$ indices,
+  \[
+    \Bigl| [[g]](f,\pi) - \sum_{i=0}^{m-1} D_i \Bigr|
+      \le \sum_{i=0}^{m-1} \Bigl| \int_{s_i}^{s_{i+1}} f(g(t)) \cdot
+        \mathrm{deriv}(\pi \circ g)(t)\,dt - D_i \Bigr|
+      \le m \cdot \mathrm{Lip}(f)\,\mathrm{Lip}(\pi)\,\frac{(L/m)^2}{2}
+      = \mathrm{Lip}(f)\,\mathrm{Lip}(\pi)\,\frac{L^2}{2m}
+    ,
+  \]
+  the last equality because $m \cdot (L/m)^2 = L^2/m$. Finally
+  $\mathrm{Lip}(f)\mathrm{Lip}(\pi)L^2/m \ge 0$ (the Lipschitz constants are nonnegative,
+  $L^2 \ge 0$ and $m > 0$), so
+  $\mathrm{Lip}(f)\mathrm{Lip}(\pi)\frac{L^2}{2m}
+    = \frac{1}{2}\bigl(\mathrm{Lip}(f)\mathrm{Lip}(\pi)\frac{L^2}{m}\bigr)
+    \le \mathrm{Lip}(f)\mathrm{Lip}(\pi)\frac{L^2}{m}$, which is the claimed bound.
+\end{proof}

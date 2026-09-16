@@ -1,0 +1,78 @@
+\begin{lemma}[The current of a restriction, as an un-reparametrized integral]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $0 \le a \le b \le
+  \length(\gamma)$, and $\omega \in \mathcal{D}^1(E)$ (\noderef{Form1}). Then
+  \[
+    [[\gamma|_{[a,b]}]](\omega) = \int_a^b \omega.f(\gamma(t)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma)(t)\,dt
+    ,
+  \]
+  where $\gamma|_{[a,b]} = \mathrm{curveRestrict}(\gamma,a,b)$ (\noderef{curveRestrict}).
+
+  This converts the un-reparametrized per-edge integral used by
+  \noderef{CurrentResolutionAdditive} (over the \emph{original} parameter interval $[s(i),s(i+1)]$
+  of $\gamma$ itself) into the current of the genuinely reparametrized restricted curve
+  $\gamma|_{[s(i),s(i+1)]} \in \Theta(E)$, exactly the identification
+  \noderef{CurrentResolutionAdditive}'s own commentary describes but does not itself formalize;
+  \noderef{BasicCutCurrent} needs this identification for the arcs produced by
+  \noderef{curveRestrict}.
+\end{lemma}
+\begin{proof}
+  Write $\eta := \gamma|_{[a,b]} = \mathrm{curveRestrict}(\gamma,a,b)$, so $\length(\eta) = b-a$ and,
+  by \noderef{curveRestrict}'s defining formula, $\eta(u) = \gamma(a + \mathrm{clamp}_{[0,b-a]}(u))$
+  where $\mathrm{clamp}_{[0,b-a]}(u) = \min(b-a,\max(0,u))$; in particular, for $u$ in the
+  \emph{open} interval $(0,b-a)$, $\max(0,u)=u$ and $\min(b-a,u)=u$, so $\eta(u) = \gamma(a+u)$
+  \emph{exactly} (not merely up to clamping) for every such $u$.
+
+  \emph{Step 1: the two derivatives agree on $(0,b-a)$.} Fix $u_0 \in (0,b-a)$. Since $(0,b-a)$ is
+  open and $\eta$ and $u \mapsto \gamma(a+u)$ agree pointwise on all of $(0,b-a)$ (previous
+  paragraph), the two functions $\omega.\pi\circ\eta$ and $u \mapsto \omega.\pi(\gamma(a+u))$ agree
+  on the open neighbourhood $(0,b-a)$ of $u_0$, hence have equal derivatives at $u_0$
+  (\texttt{Filter.EventuallyEq.deriv\_eq}, \texttt{Preamble}, as used identically in Step~2 of
+  \noderef{CurrentConcatAdditive}):
+  \[
+    \mathrm{deriv}(\omega.\pi\circ\eta)(u_0)
+      = \mathrm{deriv}\bigl(u \mapsto \omega.\pi(\gamma(a+u))\bigr)(u_0)
+      = \mathrm{deriv}(\omega.\pi\circ\gamma)(a+u_0)
+    ,
+  \]
+  the last equality by the (unconditional) derivative-of-a-shift identity
+  $\mathrm{deriv}(u \mapsto h(a+u))(x) = \mathrm{deriv}(h)(a+x)$ for a constant $a$ -- the additive
+  counterpart of \texttt{deriv\_comp\_const\_sub} (\texttt{Preamble}), an instance of the chain rule
+  for the affine map $u \mapsto a+u$ (derivative $1$), available via the same
+  \texttt{Mathlib.Analysis.Calculus.Deriv.Shift} file already imported in \texttt{Preamble} and used
+  for the analogous shift identity in Step~3 of \noderef{CurrentConcatAdditive} -- applied here with
+  $h = \omega.\pi\circ\gamma$.
+
+  \emph{Step 2: the two values of $\omega.f$ agree on all of $[0,b-a]$, including the endpoints.} At
+  $u=0$: $\eta(0) = \gamma(a+\min(b-a,\max(0,0))) = \gamma(a+0) = \gamma(a)$, matching
+  $u\mapsto\gamma(a+u)$ at $u=0$. At $u=b-a$: $\eta(b-a) = \gamma(a+\min(b-a,\max(0,b-a))) =
+  \gamma(a+(b-a)) = \gamma(b)$ (using $b-a\ge0$), matching $u\mapsto\gamma(a+u)$ at $u=b-a$. On the
+  interior $(0,b-a)$ the two functions are literally equal, as noted above. So $\omega.f(\eta(u)) =
+  \omega.f(\gamma(a+u))$ for every $u \in [0,b-a]$.
+
+  \emph{Step 3: the integrands agree a.e.\ on $[0,b-a]$.} By Steps~1-2, the integrands
+  $u\mapsto\omega.f(\eta(u))\cdot\mathrm{deriv}(\omega.\pi\circ\eta)(u)$ and
+  $u\mapsto\omega.f(\gamma(a+u))\cdot\mathrm{deriv}(\omega.\pi\circ\gamma)(a+u)$ agree for every
+  $u\in(0,b-a)$, i.e.\ everywhere on $[0,b-a]$ except possibly at the two endpoints, a
+  Lebesgue-null set; altering an integrand on a null set does not change the value of the integral
+  (\texttt{MeasureTheory.integral\_congr\_ae}, \texttt{Preamble}, as in Step~2 of
+  \noderef{CurrentConcatAdditive}), so
+  \[
+    [[\eta]](\omega)
+      = \int_0^{b-a} \omega.f(\eta(u))\cdot\mathrm{deriv}(\omega.\pi\circ\eta)(u)\,du
+      = \int_0^{b-a} \omega.f(\gamma(a+u))\cdot\mathrm{deriv}(\omega.\pi\circ\gamma)(a+u)\,du
+    ,
+  \]
+  the first equality by \noderef{curveCurrent} applied to $\eta$ (using $\length(\eta)=b-a$).
+
+  \emph{Step 4: translate the integration variable.} By the standard translation-invariance of the
+  interval integral, $\int_0^{b-a} F(a+u)\,du = \int_a^{a+(b-a)} F(t)\,dt = \int_a^b F(t)\,dt$ (the
+  additive counterpart of \texttt{intervalIntegral.integral\_comp\_sub\_left}, used identically for a
+  shift by $-c$ in Step~3 of \noderef{CurrentConcatAdditive}), applied with $F(t) :=
+  \omega.f(\gamma(t))\cdot\mathrm{deriv}(\omega.\pi\circ\gamma)(t)$. Combining with Step~3,
+  \[
+    [[\gamma|_{[a,b]}]](\omega) = [[\eta]](\omega) = \int_a^b \omega.f(\gamma(t)) \cdot
+      \mathrm{deriv}(\omega.\pi\circ\gamma)(t)\,dt
+    ,
+  \]
+  as claimed.
+\end{proof}

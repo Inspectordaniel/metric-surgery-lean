@@ -1,0 +1,66 @@
+\begin{lemma}[A priori bound on $\psi$]
+  Let $E$ be a metric space, let $m \in \mathbb{N}$ with $m \ge 1$, let $Q \subset E$ be a finite
+  set, let $\epsilon, C \in \mathbb{R}$ with $\epsilon \ge 0$ and $C \ge 0$, and let
+  $\gamma \in \Theta(E)$ (\noderef{Curve}). Then
+  \[
+    0 \;\le\; \psi_{m,Q,\epsilon,C}(\gamma)
+      \;\le\; 2C^2\length(\gamma) + \frac{2C^2\length(\gamma)^2}{m}
+    ,
+  \]
+  where $\psi_{m,Q,\epsilon,C}$ is as in \noderef{psi}. In particular the upper bound depends only
+  on $m$, $C$ and $\length(\gamma)$: neither $Q$ nor $\epsilon$ nor any further feature of $\gamma$
+  enters it.
+
+  \paragraph{Why this node is needed.} The strong-law assembly of Theorem 4.4 (paper.tex
+  1349--1360) applies the Strong Law of Large Numbers to the countable family of functions
+  $\gamma \mapsto l^{-1}\psi_{m\cdot l,Q,\epsilon,C}(\gamma)$ on $\Theta(E)$, one for each
+  admissible $(m,Q,\epsilon,C)$ and each stage $l$, and the Strong Law requires each member of that
+  family to be $\overline\eta_l$-integrable. Measurability is \noderef{PsiMeasurable}; integrability
+  against the \emph{finite} measure $\overline\eta_l$ needs exactly a uniform bound of the present
+  shape, since on the $\overline\eta_l$-a.e.\ event $\length(\gamma)=l$ the displayed bound at
+  $m\cdot l$ reads $2C^2l + 2C^2l^2/(m l) = 2C^2 l + 2C^2 l/m$, so that
+  $l^{-1}\psi_{m\cdot l,Q,\epsilon,C}$ is a.e.\ bounded by the $l$-independent constant
+  $2C^2 + 2C^2/m$. Stating the bound at a general $m$ and a general $\length(\gamma)$, rather than
+  specialising to $(m\cdot l, l)$, is what makes it reusable at every stage $l$ simultaneously.
+\end{lemma}
+\begin{proof}
+  Recall \noderef{psi}'s defining formula: writing $L := \length(\gamma)$ and, for
+  $i \in \{1,\dots,m\}$,
+  \[
+    u_i := \min\Bigl\{\tfrac{2CL}{m},\;
+      2\epsilon + 2C\bigl(\mathrm{infDist}(\gamma(\tfrac{i}{m}L),Q)
+        + \mathrm{infDist}(\gamma(\tfrac{i-1}{m}L),Q)\bigr)\Bigr\}
+    ,
+  \]
+  we have $\psi_{m,Q,\epsilon,C}(\gamma) = C\sum_{i=1}^m u_i + \frac{2C^2L^2}{m}$.
+
+  \emph{Preliminaries.} Since $m \ge 1$ we have $m > 0$ as a real number, and
+  $L = \length(\gamma) \ge 0$ by \noderef{Curve} (field \emph{len\_nonneg}). Since $C \ge 0$ and
+  $L \ge 0$, the first argument of each minimum satisfies $\tfrac{2CL}{m} \ge 0$. Also
+  $\tfrac{2C^2L^2}{m} \ge 0$, being a quotient of nonnegative reals by a positive real.
+
+  \emph{Lower bound.} Fix $i \in \{1,\dots,m\}$. The first argument of $u_i$'s minimum is
+  $\ge 0$, as just noted. For the second argument, $\mathrm{infDist}(x,Q) \ge 0$ for every $x$ (an
+  infimum of distances, each $\ge 0$), and $\epsilon \ge 0$, $C \ge 0$, so
+  $2\epsilon + 2C(\mathrm{infDist}(\gamma(\tfrac{i}{m}L),Q) +
+  \mathrm{infDist}(\gamma(\tfrac{i-1}{m}L),Q)) \ge 0$ as well. A minimum of two nonnegative reals is
+  nonnegative, so $u_i \ge 0$. Hence $\sum_{i=1}^m u_i \ge 0$, and since $C \ge 0$ also
+  $C\sum_{i=1}^m u_i \ge 0$. Adding the nonnegative term $\tfrac{2C^2L^2}{m}$ gives
+  $\psi_{m,Q,\epsilon,C}(\gamma) \ge 0$.
+
+  \emph{Upper bound.} Fix $i \in \{1,\dots,m\}$. A minimum is at most its first argument, so
+  $u_i \le \tfrac{2CL}{m}$. Summing this inequality over the $m$ indices
+  $i \in \{1,\dots,m\}$ (the index set $\{1,\dots,m\}$ has exactly $m$ elements),
+  \[
+    \sum_{i=1}^m u_i \;\le\; m \cdot \frac{2CL}{m} \;=\; 2CL
+    ,
+  \]
+  the last equality because $m > 0$. Multiplying by $C \ge 0$ preserves the inequality:
+  $C\sum_{i=1}^m u_i \le 2C^2L$. Adding $\tfrac{2C^2L^2}{m}$ to both sides,
+  \[
+    \psi_{m,Q,\epsilon,C}(\gamma) = C\sum_{i=1}^m u_i + \frac{2C^2L^2}{m}
+      \;\le\; 2C^2L + \frac{2C^2L^2}{m}
+    ,
+  \]
+  which is the asserted upper bound.
+\end{proof}

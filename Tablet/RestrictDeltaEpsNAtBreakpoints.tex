@@ -1,0 +1,88 @@
+\begin{lemma}[Restricting to a window between two resolution breakpoints preserves $(\delta,\epsilon,n)$-ness]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $\delta,\epsilon \in
+  \mathbb{R}$, $n,k \in \mathbb{N}$, and $s \colon \mathbb{N} \to \mathbb{R}$ a resolution of
+  $\gamma$ into $k$ geodesic edges (\noderef{IsGeodesicResolution}) such that
+  \[
+    \text{for all } t,t' \in \mathbb{R} \text{ with } 0 \le t \le t' \le \length(\gamma)
+    \text{ and } t'-t \le 2\epsilon^{-1}\delta,
+  \]
+  \[
+    \#\{ j \in \set{1,\dots,k} : t \le s(j-1),\ s(j) \le t',\ s(j)-s(j-1) < \delta \} \le n
+  \]
+  (this is precisely the linear-window counting clause of $\mathrm{IsDeltaEpsN}$
+  (\noderef{IsDeltaEpsN}) asserted for this particular resolution $s$). Let $p,q \in
+  \set{0,\dots,k}$ with $p \le q$, write $u := s(p)$, $u' := s(q)$ (so $0 \le u \le u' \le
+  \length(\gamma)$), and suppose $\gamma|_{[u,u']} := \mathrm{curveRestrict}(\gamma,u,u')$
+  (\noderef{curveRestrict}) is \emph{not} a closed curve (\noderef{IsClosedCurve}). Then
+  \[
+    \gamma|_{[u,u']} \in \Xden(\delta,\epsilon,n)
+    ,
+  \]
+  i.e.\ $\gamma|_{[u,u']}$ is a $(\delta,\epsilon,n)$-curve (\noderef{IsDeltaEpsN}).
+
+  \paragraph{Why the window must be a pair of resolution breakpoints, and why non-closedness of
+  the restriction must be a hypothesis.} The corresponding claim for an \emph{arbitrary} window
+  $[t,t']$ (not necessarily breakpoints of $s$) is false: take $\gamma$ a single geodesic edge of
+  length $10$ with resolution $k=1$, $s=(0,10)$, and $\delta=1$, $\epsilon=1/2$ (so
+  $2\epsilon^{-1}\delta=4$), $n=0$. Then $\gamma$ is vacuously a $(1,1/2,0)$-curve, since it has no
+  edge of length less than $\delta=1$. But restricting to $[0,1/2]$ produces a curve every one of
+  whose geodesic resolutions has an edge of length $\le 1/2 < \delta$, and the window $[0,1/2]$
+  itself has length $\le 2\epsilon^{-1}\delta=4$ and contains that edge fully, so the count is
+  $\ge 1 > 0 = n$: the restriction is \emph{not} a $(1,1/2,0)$-curve. The mechanism is a
+  \emph{truncated end edge}: cutting an edge of $s$ mid-edge produces a piece that is short for
+  every threshold $\delta$, regardless of how large the original edge was. Restricting only
+  between two breakpoints $s(p),s(q)$ of a fixed resolution avoids this, since (by
+  \noderef{RestrictPiecewiseGeodesic}) every edge of the shifted resolution of the restriction is
+  then an honest, untruncated shift of an edge of $s$, so the counting clause transports directly
+  (this lemma's proof). Likewise, the closed-curve wrap-arc clause of $\mathrm{IsDeltaEpsN}$ does
+  \emph{not} transport from $\gamma$ to $\gamma|_{[u,u']}$: a wrap-around arc of the restriction
+  corresponds to two separated sub-arcs of $\gamma$ (one at each end of $[u,u']$), whose edge
+  counts would only give a bound of $2n$, not the $n$ that $\mathrm{IsDeltaEpsN}$'s wrap clause
+  demands. This is why the wrap clause is discharged only when $\gamma|_{[u,u']}$ is assumed
+  non-closed (making the clause vacuous), rather than derived; the hypothesis is supplied at the
+  call site, ultimately from the non-closedness conjunct of \noderef{TypeICutPointExists}.
+\end{lemma}
+\begin{proof}
+  Set $s'(j) := s(p+j)-s(p)$ for $j = 0,\dots,q-p$. By \noderef{RestrictPiecewiseGeodesic}, $s'$
+  is itself a geodesic resolution of $\gamma|_{[u,u']}$ into $q-p$ edges,
+  $\mathrm{IsGeodesicResolution}(\gamma|_{[u,u']},q-p,s')$. We use $s'$ as the resolution witness
+  for $\mathrm{IsDeltaEpsN}(\gamma|_{[u,u']},\delta,\epsilon,n)$
+  (\noderef{IsDeltaEpsN}), and verify its remaining two conjuncts.
+
+  \emph{Linear counting clause.} Let $a,b \in \mathbb{R}$ with $0 \le a \le b \le
+  \length(\gamma|_{[u,u']}) = u'-u$ and $b-a \le 2\epsilon^{-1}\delta$. We must bound
+  \[
+    \#\{ j \in \set{1,\dots,q-p} : a \le s'(j-1),\ s'(j) \le b,\ s'(j)-s'(j-1) < \delta \}
+  \]
+  by $n$. Consider the map $j \mapsto p+j$ from $\set{1,\dots,q-p}$ to $\set{1,\dots,k}$: it is
+  well defined since $1 \le p+j \le q \le k$ for $j \in \set{1,\dots,q-p}$, and it is injective
+  (it is injective as a map on $\mathbb{N}$). We claim it sends the filtered set above injectively
+  into
+  \[
+    \{ i \in \set{1,\dots,k} : (a+u) \le s(i-1),\ s(i) \le (b+u),\ s(i)-s(i-1) < \delta \}
+    .
+  \]
+  Indeed, if $j$ is in the first set, then writing $i := p+j$ we have $i-1 = p+(j-1)$ (as
+  $j \ge 1$), so $s(i-1) = s(p+(j-1)) = s'(j-1)+u \ge a+u$ (from $s'(j-1) \ge a$, using
+  $u=s(p)=s'(0)+u$, i.e.\ $s(p+m) = s'(m)+u$ for every $m$, which is immediate from the definition
+  $s'(m) = s(p+m)-s(p)$); similarly $s(i) = s(p+j) = s'(j)+u \le b+u$; and $s(i)-s(i-1) =
+  s'(j)-s'(j-1) < \delta$. So $i$ lies in the second set. By injectivity of $j \mapsto p+j$, the
+  cardinality of the first set is at most that of the second.
+
+  It remains to see the second set has cardinality at most $n$, by applying the hypothesised
+  counting clause to $t := a+u$, $t' := b+u$. We check its side conditions: $0 \le t$ since $a \ge
+  0$ and $u \ge 0$ (as $u = s(p) \in [0,\length(\gamma)]$, using $p \le k$ and monotonicity of $s$
+  together with $s(0)=0$, or directly the hypothesis $0 \le u$ recorded above); $t \le t'$ since
+  $a \le b$; $t' \le \length(\gamma)$ since $b \le u'-u$ gives $t' = b+u \le u' \le \length(\gamma)$
+  (using $u' \le \length(\gamma)$, recorded above); and $t'-t = b-a \le 2\epsilon^{-1}\delta$ by
+  hypothesis. The counting clause hypothesis then gives that the second set has cardinality at
+  most $n$, so the first (filtered) set does too, as required.
+
+  \emph{Closed-curve wrap clause.} This conjunct of $\mathrm{IsDeltaEpsN}$ reads: if
+  $\gamma|_{[u,u']}$ is a closed curve, then a corresponding wrap-arc count is at most $n$. Since
+  $\gamma|_{[u,u']}$ is hypothesised \emph{not} to be a closed curve, this conjunct holds
+  vacuously.
+
+  Both conjuncts hold for the resolution $s'$, so $\gamma|_{[u,u']}$ is a $(\delta,\epsilon,n)$-curve,
+  as claimed.
+\end{proof}

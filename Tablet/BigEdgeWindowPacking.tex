@@ -1,0 +1,71 @@
+\begin{helper}[Packing bound for long edges fully inside a window]
+  Let $k \in \mathbb{N}$, let $s \colon \mathbb{N} \to \mathbb{R}$, and let
+  $\delta, a, b \in \mathbb{R}$ with $\delta > 0$ and $a \le b$. Assume that $s$ is monotone
+  (non-decreasing) on $\set{0,1,\dots,k}$. Then
+  \[
+    \#\set{ j \in \set{1,\dots,k} \colon a \le s(j-1) \text{ and } s(j) \le b \text{ and }
+      \delta \le s(j) - s(j-1) } \cdot \delta \;\le\; b - a
+    .
+  \]
+  (Here $j-1$ denotes truncated natural-number subtraction; since $j \ge 1$ in the index set, this
+  is ordinary subtraction throughout.)
+
+  \paragraph{Role.} This is the quantitative form of the packing principle ``edges of length at
+  least $\delta$ that fit entirely inside a window of length $L$ number at most $L/\delta$'': the
+  edges counted are pairwise essentially disjoint subintervals of $[a,b]$, each of length at least
+  $\delta$. It is a statement about the breakpoint sequence alone, with no reference to any
+  ambient curve.
+\end{helper}
+\begin{proof}
+  For $K \in \mathbb{N}$ and $c \in \mathbb{R}$ write
+  \[
+    N_K(c) := \#\set{ j \in \set{1,\dots,K} \colon a \le s(j-1),\ s(j) \le c,\
+      \delta \le s(j)-s(j-1) }
+    .
+  \]
+  Since $a$, $\delta$ and $s$ are fixed throughout, it suffices to prove, by induction on $K$, the
+  following statement $(\ast_K)$ for every $K \in \mathbb{N}$: \emph{if $s(p) \le s(q)$ whenever
+  $p \le q \le K$, then $N_K(c) \cdot \delta \le c - a$ for every $c \in \mathbb{R}$ with
+  $a \le c$.}
+  The lemma is then $(\ast_k)$ applied with $c := b$: the hypothesis of $(\ast_k)$ holds because,
+  for $p \le q \le k$, both $p$ and $q$ lie in $\set{0,\dots,k}$ (the lower bound being automatic
+  in $\mathbb{N}$), so monotonicity of $s$ on $\set{0,\dots,k}$ gives $s(p) \le s(q)$; and $a \le
+  b$ is assumed.
+
+  \emph{Base case $K = 0$.} The index set $\set{1,\dots,0}$ is empty, so $N_0(c) = 0$ and
+  $N_0(c)\cdot\delta = 0 \le c - a$ by the assumption $a \le c$.
+
+  \emph{Inductive step.} Let $K = m+1$ and assume $(\ast_m)$. Assume $s(p) \le s(q)$ whenever
+  $p \le q \le m+1$; in particular this holds whenever $p \le q \le m$, so $(\ast_m)$ is
+  applicable. Fix $c$ with $a \le c$. Since $\set{1,\dots,m+1} = \set{m+1} \cup \set{1,\dots,m}$
+  with $m+1 \notin \set{1,\dots,m}$, we split according to whether the index $m+1$ is counted.
+
+  \emph{Case 1: $m+1$ is counted}, i.e.\ $a \le s(m)$, $s(m+1) \le c$ and $\delta \le s(m+1)-s(m)$
+  (note $(m+1)-1 = m$). Then
+  \[
+    N_{m+1}(c) = N_m(c) + 1
+    .
+  \]
+  Every index $j$ counted in $N_m(c)$ is also counted in $N_m(s(m))$: indeed such a $j$ satisfies
+  $1 \le j \le m$, $a \le s(j-1)$ and $\delta \le s(j)-s(j-1)$, and additionally $s(j) \le s(m)$
+  by the monotonicity hypothesis applied to $j \le m \le m+1$. Hence $N_m(c) \le N_m(s(m))$, and
+  since $\delta > 0$,
+  \[
+    N_m(c) \cdot \delta \;\le\; N_m(s(m)) \cdot \delta \;\le\; s(m) - a
+    ,
+  \]
+  the last inequality being $(\ast_m)$ applied with $c := s(m)$, which is legitimate because
+  $a \le s(m)$ holds in this case. Therefore
+  \[
+    N_{m+1}(c)\cdot\delta = N_m(c)\cdot\delta + \delta
+      \le \bigl(s(m) - a\bigr) + \bigl(s(m+1) - s(m)\bigr) = s(m+1) - a \le c - a
+    ,
+  \]
+  using $\delta \le s(m+1)-s(m)$ in the first inequality and $s(m+1) \le c$ in the last.
+
+  \emph{Case 2: $m+1$ is not counted.} Then $N_{m+1}(c) = N_m(c)$, and $(\ast_m)$ applied with the
+  same $c$ (and the same hypothesis $a \le c$) gives $N_{m+1}(c)\cdot\delta = N_m(c)\cdot\delta
+  \le c - a$ directly.
+
+  This completes the induction, and with it the proof.
+\end{proof}

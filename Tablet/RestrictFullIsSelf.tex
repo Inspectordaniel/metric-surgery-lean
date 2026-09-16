@@ -1,0 +1,39 @@
+\begin{lemma}[Restricting to the full domain is the identity]
+  Let $E$ be a metric space and $A \in \Theta(E)$ (\noderef{Curve}). Then
+  \[
+    A|_{[0,\length(A)]} = A
+    ,
+  \]
+  i.e.\ $\mathrm{curveRestrict}(A,0,\length(A)) = A$ (\noderef{curveRestrict}).
+
+  \paragraph{Why this is the enabler for the arc repair.} Every one of
+  \noderef{RestrictLSI}, \noderef{RestrictDeltaEpsNAtBreakpoints}, \noderef{RestrictPiecewiseGeodesic}
+  and \noderef{RestrictMeasureFormula} is stated about a sub-window $\mathrm{curveRestrict}(\gamma,u,u')$
+  of a \emph{generic} ambient curve $\gamma$. Taking the ambient curve to be $A :=
+  \mathrm{curveArc}(\gamma,t,t')$ (\noderef{curveArc}) itself, this lemma identifies
+  $\mathrm{curveRestrict}(A,0,\length(A))$ with $A$, so any of those four lemmas applied at
+  $t:=0,\ t':=\length(A)$ to ambient $A$ gives a statement directly about $A$'s own l.s.i., $\delta
+  \epsilon n$-count, piecewise-geodesic, or measure property, with no need to restate any of the four
+  for the wrap case: $A$ is an ordinary $\Theta(E)$-curve whether or not the arc it names wraps
+  around the closed curve $\gamma$.
+\end{lemma}
+\begin{proof}
+  Write $B := \mathrm{curveRestrict}(A,0,\length(A))$. By \noderef{curveRestrict}'s defining
+  formula (with $a:=0$, $b:=\length(A)$), $\length(B) = \length(A) - 0 = \length(A)$, and for every
+  $u \in \mathbb{R}$,
+  \[
+    B(u) = A\bigl(0 + \min(\length(A)-0,\ \max(0,u))\bigr) = A\bigl(\min(\length(A),\max(0,u))\bigr)
+    .
+  \]
+  By $A$'s own clamping property (\noderef{Curve}), $A(u) = A(\min(\length(A),\max(0,u)))$ for
+  every $u$. Hence $B(u) = A(u)$ for every $u \in \mathbb{R}$, i.e.\ the underlying maps of $B$ and
+  $A$ agree identically.
+
+  So $B$ and $A$ are two elements of $\Theta(E)$ with the same length ($\length(B) = \length(A)$)
+  and the same underlying map ($B(u) = A(u)$ for all $u$). The remaining structural data attached
+  to a curve in $\Theta(E)$ (\noderef{Curve}) -- non-negativity of the length, the clamping
+  condition, and the unit-speed condition -- are each a proof of a proposition depending only on
+  the length and the underlying map, hence, once those two agree, the corresponding proof
+  components of $B$ and $A$ are proofs of the same proposition and $B$ and $A$ coincide as elements
+  of $\Theta(E)$: $B = A$.
+\end{proof}

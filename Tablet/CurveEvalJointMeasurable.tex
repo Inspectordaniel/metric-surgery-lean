@@ -1,0 +1,29 @@
+\begin{helper}[Trajectory evaluation is jointly measurable]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra. Then the map
+  $(t,\gamma) \mapsto \gamma(t)$ from $\mathbb{R} \times \Theta(E)$ to $E$ is measurable, where
+  $\Theta(E)$ carries the evaluation $\sigma$-algebra (\noderef{CurveMeasurableSpace}) and
+  $\mathbb{R} \times \Theta(E)$ the product $\sigma$-algebra.
+\end{helper}
+\begin{proof}
+  We verify the two hypotheses of the Carath\'eodory-type joint-measurability criterion: continuity
+  in the first (topological) variable for each fixed second variable, and measurability in the
+  second variable for each fixed first variable.
+
+  \emph{Continuity in $t$.} For fixed $\gamma \in \Theta(E)$, the map $t \mapsto \gamma(t)$ is
+  $1$-Lipschitz on all of $\mathbb{R}$ (\noderef{CurveLipschitz}), hence continuous.
+
+  \emph{Measurability in $\gamma$, for fixed $t$.} By the universal property of the evaluation
+  $\sigma$-algebra on $\Theta(E)$ (\noderef{CurveMeasurableSpace}), the evaluation map
+  $\gamma \mapsto (\length(\gamma),\gamma)$ is measurable; composing with the second coordinate
+  projection and then with evaluation at the fixed point $t$ (both measurable operations on the
+  product/function space) shows $\gamma \mapsto \gamma(t)$ is measurable.
+
+  Given these two facts, the joint map $(t,\gamma) \mapsto \gamma(t)$ is measurable: this is exactly
+  the content of the standard measurable-selection/Carath\'eodory joint-measurability theorem for a
+  family of functions $u_t := (\gamma \mapsto \gamma(t))$ indexed by a second-countable metrizable
+  parameter $t$, continuous in $t$ pointwise and measurable in the other variable for each $t$
+  (Mathlib: \texttt{measurable\_uncurry\_of\_continuous\_of\_measurable}). The hypotheses of that
+  theorem require no second-countability assumption on $E$ itself, only on the topological index
+  ($\mathbb{R}$, which is second countable) and a Borel-compatible $\sigma$-algebra on $E$, both of
+  which hold here.
+\end{proof}

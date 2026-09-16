@@ -1,0 +1,290 @@
+\begin{lemma}[Failure of $(\delta,\epsilon,n)$-ness produces a controlled violating window at breakpoints]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}) a closed
+  (\noderef{IsClosedCurve}), piecewise-geodesic (\noderef{IsPiecewiseGeodesic}) curve, $\epsilon,
+  \delta > 0$, and $n \in \mathbb{N}$ with $\gamma \notin \Xden(\delta,\epsilon,n)$
+  (\noderef{IsDeltaEpsN}). Then there exist $k \in \mathbb{N}$, a resolution $s$ of $\gamma$ into
+  $k$ geodesic edges (\noderef{IsGeodesicResolution}) with
+  \[
+    \#\set{j\in\set{1,\dots,k} : s(j)-s(j-1)<\delta} = \mathrm{smallPieceCount}(\gamma,\delta)
+    \quad\text{(\noderef{smallPieceCount})}
+    ,
+  \]
+  which is moreover strictly monotone on $\set{0,\dots,k}$, and indices $p,q \in \set{0,\dots,k}$
+  with $s(p) \ne s(q)$ such that, writing (as in \noderef{BasicCutResolutionAtBreakpoints})
+  \[
+    \mathrm{inArc}(j) :=
+    \begin{cases}
+      p<j\le q & \text{if } p<q \\
+      j\le q \text{ or } p<j & \text{if } q<p
+    \end{cases}
+    ,
+  \]
+  \begin{align}
+    \label{eq:exact-n1}
+    \#\set{j\in\set{1,\dots,k} : \mathrm{inArc}(j) \text{ and } s(j)-s(j-1)<\delta} &= n+1 ,\\
+    \label{eq:total-bound}
+    \#\set{j\in\set{1,\dots,k} : \mathrm{inArc}(j)} &\le 2\epsilon^{-1} + (n+1) ,\\
+    \label{eq:arc-length}
+    \left(\text{if } p<q \text{ then } s(q)-s(p) \text{ else } (\length(\gamma)-s(p))+s(q)\right)
+      &\le 2\epsilon^{-1}\delta .
+  \end{align}
+
+  \paragraph{Why this is needed.} Paper Lemma 3.10's proof (paper.tex lines 947-957) asserts,
+  without proof, two facts about a resolution realizing $\nsmallpieces(\gamma,\delta)$: that
+  ``by shrinking $[s,s']$ if necessary, we may assume that $s,s' \in \set{s_0,\dots,s_k}$'' are
+  themselves breakpoints of that resolution, and that ``shrinking $[s,s']$ further if necessary,
+  we may further assume that $\gamma|_{[s,s']}$ has exactly $n+1$ edges of length smaller than
+  $\delta$.'' This lemma supplies both shrinking steps in full, together with the accompanying
+  edge-count bound (paper.tex lines 960-964, ``$\gamma_{[t,t']}$ has length at most
+  $2\epsilon^{-1}\delta$, so it contains at most $2\epsilon^{-1}$ edges of length at least
+  $\delta$''), in the exact index-based form (\noderef{BasicCutResolutionAtBreakpoints}'s
+  $\mathrm{inArc}$) that the Type~II cut construction needs to invoke
+  \noderef{BasicCutResolutionAtBreakpoints} directly, with no adapter step. Note also that this
+  lemma states $\gamma \in \Theta(E)$ closed and piecewise geodesic as explicit hypotheses (matching
+  \noderef{BasicCut}'s own domain, $\Theta_c(E)$, paper.tex line 581), rather than leaving them
+  implicit as the paper's ambient standing assumptions.
+
+  \paragraph{Why the arc-length clause \eqref{eq:arc-length} is needed, beyond the edge-count
+  clauses.} Paper Lemma 3.10's own statement of \eqref{LengthBoundTypeIItotal} (paper.tex line 958,
+  ``two additional geodesic edges each of length $d(\gamma(t),\gamma(t'))\le\length(\gamma|_{[t,t']})
+  \le 2\epsilon^{-1}\delta$'') is about the excised arc's \emph{length}, not the number of edges it
+  contains: an edge-count bound alone permits an arbitrarily long window, since a single window edge
+  may be arbitrarily long. \eqref{eq:arc-length} states exactly the length bound the Type~II cut
+  construction's length estimate needs, for the same window and in the same ordinary-or-wrap sense
+  as \eqref{eq:exact-n1}/\eqref{eq:total-bound}.
+\end{lemma}
+\begin{proof}
+  Throughout, write $\mathrm{small}(j) :\equiv s(j)-s(j-1)<\delta$ for the relevant resolution $s$
+  in context, and $[\ell]$ for $\set{1,\dots,\ell}$.
+
+  \paragraph{Step 0: a minimizing, strictly monotone resolution.} Since $\gamma$ is piecewise
+  geodesic, $\exists k_0$ with $\mathrm{IsPiecewiseGeodesicWith}(\gamma,k_0)$
+  (\noderef{IsPiecewiseGeodesic}), i.e.\ $\exists k_0,s_0$ with
+  $\mathrm{IsGeodesicResolution}(\gamma,k_0,s_0)$ (\noderef{IsPiecewiseGeodesicWith}); fix such
+  $k_0,s_0$. Hence the set
+  $\set{c\in\mathbb{N} : \exists k,s,\ \mathrm{IsGeodesicResolution}(\gamma,k,s) \wedge c =
+  \#\set{j\in[k] : s(j)-s(j-1)<\delta}}$ minimized by $\mathrm{smallPieceCount}(\gamma,\delta)$
+  (\noderef{smallPieceCount}) is nonempty. A nonempty set of natural numbers attains its infimum
+  (well-ordering of $\mathbb{N}$), so there exist $k\in\mathbb{N}$ and $s\colon\mathbb{N}\to\mathbb{R}$
+  with $\mathrm{IsGeodesicResolution}(\gamma,k,s)$ and
+  \begin{equation}
+    \label{eq:attain}
+    \#\set{j\in[k] : \mathrm{small}(j)} = \mathrm{smallPieceCount}(\gamma,\delta)
+    .
+  \end{equation}
+  Fix such $k,s$ for the rest of the proof; they will be the $k,s$ of the conclusion. By
+  \noderef{MinimizingResolutionStrict} (applicable since $\delta>0$, $\mathrm{IsGeodesicResolution}
+  (\gamma,k,s)$, and \eqref{eq:attain}), $s$ is strictly monotone on $\set{0,\dots,k}$: for
+  $a<b$ in $\set{0,\dots,k}$, $s(a)<s(b)$.
+
+  \paragraph{Two elementary general facts about $s$.} These use only the (non-strict) monotonicity
+  of $s$ on $\set{0,\dots,k}$ (\noderef{IsGeodesicResolution}) and elementary real arithmetic; they
+  make no further reference to $\gamma$'s geometry.
+  \begin{itemize}
+    \item[(F1) \emph{Telescoping and the big-edge count bound.}] For $0\le a\le b\le k$,
+    $\sum_{j=a+1}^{b} (s(j)-s(j-1)) = s(b)-s(a)$ (a finite telescoping sum). Consequently, if
+    $B \subseteq \set{a+1,\dots,b}$ is any set of indices with $s(j)-s(j-1)\ge\delta$ for every
+    $j\in B$, then, since $s(j)-s(j-1)\ge0$ for every $j\in\set{a+1,\dots,b}$ (monotonicity),
+    \[
+      \#B \cdot \delta \;\le\; \sum_{j\in B}(s(j)-s(j-1)) \;\le\; \sum_{j=a+1}^{b}(s(j)-s(j-1))
+      \;=\; s(b)-s(a)
+      ,
+    \]
+    so if in addition $s(b)-s(a) \le L$ for some $L\in\mathbb{R}$, then $\#B \le L/\delta$ (using
+    $\delta>0$).
+    \item[(F2) \emph{One-sided closure.}] For $c\in\mathbb{R}$: the set
+    $\set{j\in[k] : c\le s(j-1)}$ is \emph{upward closed} in $[k]$ (if $j$ is in it and $j\le
+    j'\le k$ then $j'$ is in it too, since $s(j-1)\le s(j'-1)$ by monotonicity as $j-1\le j'-1$);
+    and the set $\set{j\in[k] : s(j)\le c}$ is \emph{downward closed} in $[k]$ (if $j$ is in it
+    and $1\le j'\le j$ then $j'$ is in it too, since $s(j')\le s(j)$ by monotonicity as
+    $j'\le j$). Consequently, for $c\le c'$, the set $\set{j\in[k] : c\le s(j-1) \text{ and } s(j)
+    \le c'}$ (the intersection of an upward-closed and a downward-closed set) is an
+    \emph{integer interval}: if $j_1,j_2$ are both in it and $j_1\le j\le j_2\le k$, then $j$ is
+    too (apply upward closure with the witness $j_1$ to get $c\le s(j_1-1)\le s(j-1)$, and downward
+    closure with the witness $j_2$ to get $s(j)\le s(j_2)\le c'$).
+  \end{itemize}
+  We also record a third elementary fact about finite sets of naturals.
+  \begin{itemize}
+    \item[(F3)] If $A=\set{a_1<a_2<\dots<a_N}\subseteq\mathbb{N}$ ($N\ge1$, listed increasingly)
+    and $r\le N$, then $\set{a\in A : a\le a_r} = \set{a_1,\dots,a_r}$. Indeed
+    $\set{a_1,\dots,a_r}\subseteq\set{a\in A:a\le a_r}$ since $a_1<\dots<a_r$; conversely if
+    $a=a_i\in A$ with $a_i\le a_r$ then $i\le r$ (as the listing is strictly increasing, $i>r$
+    would force $a_i>a_r$), so $a_i\in\set{a_1,\dots,a_r}$.
+  \end{itemize}
+
+  Since $\gamma \notin \Xden(\delta,\epsilon,n)$, i.e.\ $\neg\,\mathrm{IsDeltaEpsN}(\gamma,\delta,
+  \epsilon,n)$ (\noderef{IsDeltaEpsN}), and $\mathrm{IsDeltaEpsN}(\gamma,\delta,\epsilon,n)$ is the
+  existential statement ``there exist $k',s'$ with $\mathrm{IsGeodesicResolution}(\gamma,k',s')$
+  and (clause~(i)) and (clause~(ii))'', its negation is universal and applies in particular to our
+  fixed $k,s$: since $\mathrm{IsGeodesicResolution}(\gamma,k,s)$ holds, we get
+  $\neg(\text{clause~(i) for } (k,s) \text{ and clause~(ii) for } (k,s))$, i.e.\ clause~(i) fails
+  for $(k,s)$ or clause~(ii) fails for $(k,s)$. Since $\gamma$ is closed
+  (\noderef{IsClosedCurve}), clause~(ii)'s guard is satisfied, so ``clause~(ii) fails'' means its
+  universally quantified body fails, i.e.\ some $t,t'$ violate it. We treat the two resulting
+  possibilities as Case~A (clause~(i) fails) and Case~B (clause~(ii) fails); at least one holds.
+
+  \paragraph{Case A: clause (i) fails.} There exist $t,t'\in\mathbb{R}$ with $0\le t\le t'\le
+  \length(\gamma)$, $t'-t\le2\epsilon^{-1}\delta$, and
+  \[
+    n \;<\; \#\underbrace{\set{j\in[k] : t\le s(j-1) \text{ and } s(j)\le t' \text{ and }
+    \mathrm{small}(j)}}_{=:S}
+    .
+  \]
+  By (F2) (with $c=t,c'=t'$, using $t\le t'$), the ``fully contained'' set $W:=\set{j\in[k] :
+  t\le s(j-1) \text{ and } s(j)\le t'}$ is an integer interval, and $S = \set{j\in W :
+  \mathrm{small}(j)}\subseteq W$. Since $\#S\ge n+1\ge1$, $S$ is nonempty; list it increasingly as
+  $S=\set{j_1<j_2<\dots<j_N}$ with $N=\#S\ge n+1$. Set
+  \[
+    p := j_1-1 , \qquad q := j_{n+1} .
+  \]
+  Since $j_1,\dots,j_N\in[k]$, $1\le j_1$ and $j_{n+1}\le k$, so $0\le p\le k-1$ and $1\le q\le k$,
+  giving $p\le k$ and $q\le k$. Also $q=j_{n+1}\ge j_1 = p+1 > p$ (the listing is increasing and
+  $n+1\ge1$), so $p<q$; by strict monotonicity of $s$ (Step~0, applicable since $0\le p<q\le k$),
+  $s(p)<s(q)$, in particular $s(p)\ne s(q)$. Since $p<q$, $\mathrm{inArc}(j) \equiv p<j\le q$.
+
+  \emph{The exact-count clause \eqref{eq:exact-n1}.} We show $\set{j\in[k] : p<j\le q \text{ and }
+  \mathrm{small}(j)} = \set{j_1,\dots,j_{n+1}}$.
+  ($\supseteq$) For $1\le i\le n+1$: $j_i\in[k]$ and $\mathrm{small}(j_i)$ hold since $j_i\in S$;
+  and $p=j_1-1<j_1\le j_i$ (increasing listing) and $j_i\le j_{n+1}=q$ (increasing listing,
+  $i\le n+1$), so $p<j_i\le q$.
+  ($\subseteq$) Let $j\in[k]$ with $p<j\le q$ and $\mathrm{small}(j)$. From $p=j_1-1<j$, $j\ge j_1$;
+  combined with $j\le q=j_{n+1}$, we have $j_1\le j\le j_{n+1}$. Since $j_1,j_{n+1}\in W$
+  (both are in $S\subseteq W$) and $W$ is an integer interval (F2), $j\in W$; together with
+  $\mathrm{small}(j)$, $j\in S$. Since $S=\set{j_1,\dots,j_N}$ and $j\le j_{n+1}$, (F3) (with
+  $A=S$, $r=n+1\le N$) gives $j\in\set{j_1,\dots,j_{n+1}}$.
+  Hence the claimed set equality holds, so its cardinality is $n+1$, proving \eqref{eq:exact-n1}
+  in Case~A.
+
+  \emph{The total-count bound \eqref{eq:total-bound}.} Every $j\in[k]$ with $p<j\le q$ satisfies
+  exactly one of $s(j)-s(j-1)<\delta$ (``small'', the set just shown to have cardinality $n+1$) or
+  $s(j)-s(j-1)\ge\delta$ (``big''; call this set $B$), so
+  $\#\set{j\in[k]:p<j\le q} = (n+1) + \#B$. Now $s(p)=s(j_1-1)\ge t$ (as $j_1\in W$) and
+  $s(q)=s(j_{n+1})\le t'$ (as $j_{n+1}\in W$), so $s(q)-s(p)\le t'-t\le2\epsilon^{-1}\delta$. By
+  (F1) (with $a=p,b=q,L=2\epsilon^{-1}\delta$), $\#B\le 2\epsilon^{-1}$. Hence
+  $\#\set{j\in[k]:p<j\le q}\le(n+1)+2\epsilon^{-1}$, which is \eqref{eq:total-bound} (as $p<q$
+  makes $\mathrm{inArc}(j)\equiv p<j\le q$).
+
+  \emph{The arc-length bound \eqref{eq:arc-length}.} Since $p<q$, \eqref{eq:arc-length}'s left side
+  is $s(q)-s(p)$, and this was just shown to be $\le t'-t\le2\epsilon^{-1}\delta$, proving
+  \eqref{eq:arc-length} in Case~A.
+
+  This exhibits $k,s,p,q$ with all required properties, completing Case~A.
+
+  \paragraph{Case B: clause (ii) fails.} There exist $t,t'\in\mathbb{R}$ with $0\le t'<t\le
+  \length(\gamma)$, $(\length(\gamma)-t)+t'\le2\epsilon^{-1}\delta$, and
+  \[
+    n \;<\; \#\set{j\in[k] : (t\le s(j-1) \text{ or } s(j)\le t') \text{ and } \mathrm{small}(j)}
+    .
+  \]
+  Let $T:=\set{j\in[k] : t\le s(j-1) \text{ and } \mathrm{small}(j)}$ (``small tail edges'') and
+  $H:=\set{j\in[k] : s(j)\le t' \text{ and } \mathrm{small}(j)}$ (``small head edges''); the
+  displayed set equals $T\cup H$ (distributing ``and $\mathrm{small}(j)$'' over the ``or''). We
+  first record two facts used throughout Case~B.
+
+  \emph{($\dagger$) Every head index precedes every tail index by more than one.} If $j\in[k]$
+  satisfies $s(j)\le t'$ and $j'\in[k]$ satisfies $t\le s(j'-1)$, then $j<j'-1$. Indeed, if instead
+  $j\ge j'-1$, monotonicity gives $s(j'-1)\le s(j)$ (as $j'-1\le j$), so $t\le s(j'-1)\le s(j)\le
+  t'$, contradicting $t'<t$. In particular this applies with $j\in H$ (so $s(j)\le t'$) and
+  $j'\in T$ (so $t\le s(j'-1)$), giving $j<j'-1$ for every $j\in H$, $j'\in T$; and it shows $T,H$
+  are disjoint (if $j\in T\cap H$, apply it with $j'=j\in T$ to get $j<j-1$, impossible).
+
+  \emph{($\ddagger$) Index $k\notin H$.} If $k\in H$ then $s(k)\le t'$, i.e.\ $\length(\gamma)\le
+  t'$; but $t\le\length(\gamma)$ and $t'<t$, giving $t'<t\le\length(\gamma)\le t'$, i.e.\ $t'<t'$,
+  absurd.
+
+  Since $T,H$ are disjoint, $\#T+\#H=\#(T\cup H)\ge n+1$. We split on the size of $T$.
+
+  \paragraph{Sub-case B1: $\#T\ge n+1$.} List $T=\set{i_1<\dots<i_{N_T}}$, $N_T\ge n+1$. Set
+  $p:=i_1-1$, $q:=i_{n+1}$. Exactly as in Case~A (with the set $\set{j\in[k]:t\le s(j-1)}$ playing
+  the role of $W$, which is upward closed by (F2) and hence, restricted to indices $\ge i_1$, is
+  all of $[k]\cap\set{j\ge i_1}$ — concretely: for $i_1\le j\le i_{n+1}\le k$, upward closure of
+  $\set{j\in[k]:t\le s(j-1)}$ from the witness $i_1$ gives $t\le s(j-1)$, i.e.\ every such $j$ is
+  automatically a tail index), the identical argument used for \eqref{eq:exact-n1} in Case~A
+  (replacing $S,W$ there by $T,\set{j\in[k]:t\le s(j-1)}$ here, and using (F3) with $A=T$,
+  $r=n+1\le N_T$) gives
+  \[
+    \set{j\in[k] : p<j\le q \text{ and } \mathrm{small}(j)} = \set{i_1,\dots,i_{n+1}}
+    , \qquad \text{cardinality } n+1 .
+  \]
+  As before $p\le k$, $q\le k$, $p<q$ (since $q=i_{n+1}\ge i_1=p+1>p$), so by strict monotonicity
+  $s(p)\ne s(q)$ and $\mathrm{inArc}(j)\equiv p<j\le q$; \eqref{eq:exact-n1} holds.
+
+  For \eqref{eq:total-bound}: as in Case~A, $\#\set{j\in[k]:p<j\le q} = (n+1)+\#B$ for $B$ the
+  big edges among $p<j\le q$. Since $s(p)=s(i_1-1)\ge t$ (as $i_1\in T$) and $s(q)\le s(k)=
+  \length(\gamma)$ (monotonicity, $q\le k$), $s(q)-s(p) \le \length(\gamma)-t \le
+  (\length(\gamma)-t)+t' \le 2\epsilon^{-1}\delta$ (using $t'\ge0$ for the middle inequality and the
+  Case~B window hypothesis for the last). By (F1) (with $a=p,b=q,L=2\epsilon^{-1}\delta$),
+  $\#B\le2\epsilon^{-1}$, giving \eqref{eq:total-bound}.
+
+  For \eqref{eq:arc-length}: since $p<q$ here too, its left side is $s(q)-s(p)$, just shown above
+  to be $\le2\epsilon^{-1}\delta$, proving \eqref{eq:arc-length} in Sub-case~B1.
+
+  This exhibits $k,s,p,q$ with all required properties in Sub-case~B1.
+
+  \paragraph{Sub-case B2: $\#T\le n$.} Write $m:=\#T\le n$; since $\#T+\#H\ge n+1$,
+  $\#H\ge n+1-m\ge1$. List $T=\set{i_1<\dots<i_m}$ (empty if $m=0$) and $H=\set{h_1<\dots<
+  h_{N_H}}$ with $N_H\ge n+1-m$. Set
+  \[
+    q := h_{n+1-m} , \qquad p := \begin{cases} i_1-1 & m\ge1 \\ k & m=0 \end{cases} .
+  \]
+  Since $h_{n+1-m}\in H\subseteq[k]$, $1\le q\le k$. If $m\ge1$: $i_1\in T\subseteq[k]$ gives
+  $0\le p\le k-1\le k$; and by $(\dagger)$ (with $j=q=h_{n+1-m}\in H$, $j'=i_1\in T$), $q<i_1-1=p$.
+  If $m=0$: $p=k\ge q$ trivially, and by $(\ddagger)$, $k\notin H$, so $q=h_{n+1}\ne k=p$ (as
+  $q\in H$), giving $q\le k-1<k=p$ (using $q\le k$ together with $q \ne k$). In either case
+  $q<p\le k$, so $\mathrm{inArc}(j)\equiv (j\le q \text{ or } p<j)$, and $s(q)<s(p)$ by strict
+  monotonicity (Step~0, applicable as $0\le q<p\le k$), so $s(p)\ne s(q)$.
+
+  \emph{The exact-count clause \eqref{eq:exact-n1}.} Since $q<p$, the sets $\set{j\in[k]:j\le q}$
+  and $\set{j\in[k]:p<j}$ are disjoint, so
+  \[
+    \#\set{j\in[k]: (j\le q\text{ or }p<j)\text{ and small}(j)}
+    = \#\underbrace{\set{j\in[k]:j\le q\text{ and small}(j)}}_{=:P_1}
+    + \#\underbrace{\set{j\in[k]:p<j\text{ and small}(j)}}_{=:P_2}
+    .
+  \]
+  \emph{Computing $P_1$: $P_1=\set{h_1,\dots,h_{n+1-m}}$.} ($\supseteq$) Each $h_i$ ($i\le n+1-m$)
+  is small ($h_i\in H$) with $h_i\le h_{n+1-m}=q$ (increasing listing). ($\subseteq$) Let $j\in[k]$
+  with $j\le q$ and small$(j)$. By (F2) (downward closure of $\set{j\in[k]:s(j)\le t'}$ from the
+  witness $q=h_{n+1-m}\in H$, i.e.\ $s(q)\le t'$, applied at $j\le q$), $s(j)\le t'$; with
+  small$(j)$, $j\in H$. Since $H=\set{h_1,\dots,h_{N_H}}$ and $j\le q=h_{n+1-m}$, (F3) (with
+  $A=H$, $r=n+1-m\le N_H$) gives $j\in\set{h_1,\dots,h_{n+1-m}}$. Hence $\#P_1=n+1-m$.
+
+  \emph{Computing $P_2$: $P_2=T$ (all $m$ of it; empty if $m=0$).} If $m=0$: $p=k$, so $p<j$ has
+  no solution for $j\in[k]$, giving $P_2=\emptyset$, $\#P_2=0=m$. If $m\ge1$: ($\supseteq$) each
+  $i_l$ ($l\le m$) is small ($i_l\in T$) with $i_l\ge i_1=p+1>p$ (increasing listing). ($\subseteq$)
+  Let $j\in[k]$ with $p<j$ and small$(j)$. By (F2) (upward closure of $\set{j\in[k]:t\le s(j-1)}$
+  from the witness $i_1\in T$, i.e.\ $t\le s(i_1-1)$, applied at $j\ge i_1=p+1$, i.e.\ $j>p$),
+  $t\le s(j-1)$; with small$(j)$, $j\in T=\set{i_1,\dots,i_m}$. Hence $\#P_2=m$ in this case too.
+
+  So $\#P_1+\#P_2 = (n+1-m)+m = n+1$, proving \eqref{eq:exact-n1} in Sub-case~B2.
+
+  \emph{The total-count bound \eqref{eq:total-bound}.} As above, $\set{j\in[k]:j\le q}$ has
+  cardinality $q$ and $\set{j\in[k]:p<j}$ has cardinality $k-p$, disjointly, so
+  $\#\set{j\in[k]:j\le q\text{ or }p<j} = q + (k-p)$. Each of these two blocks splits into its
+  small part ($P_1$, resp.\ $P_2$, together of cardinality $n+1$ by the above) and its big part
+  ($s(j)-s(j-1)\ge\delta$); call the big parts $B_1\subseteq\set{1,\dots,q}$ (i.e.\ $B_1\subseteq
+  \set{j\in[k]:0<j\le q}$) and $B_2\subseteq\set{p+1,\dots,k}$ respectively, so
+  $q+(k-p) = (n+1) + \#B_1+\#B_2$.
+  By (F1) with $a=0,b=q$: since $s(0)=0$ (\noderef{IsGeodesicResolution}) and $s(q)=s(h_{n+1-m})
+  \le t'$ (as $h_{n+1-m}\in H$), the window length is $s(q)-s(0)=s(q)\le t'$, so $\#B_1\cdot\delta
+  \le t'$.
+  By (F1) with $a=p,b=k$: the window length is $s(k)-s(p)=\length(\gamma)-s(p)$
+  (\noderef{IsGeodesicResolution}'s $s(k)=\length(\gamma)$); if $m\ge1$, $s(p)=s(i_1-1)\ge t$ (as
+  $i_1\in T$), giving $\length(\gamma)-s(p)\le\length(\gamma)-t$; if $m=0$, $p=k$ gives
+  $\length(\gamma)-s(p)=0\le\length(\gamma)-t$ (as $t\le\length(\gamma)$). Either way the window
+  length is $\le\length(\gamma)-t$, so $\#B_2\cdot\delta\le\length(\gamma)-t$.
+  Adding, $(\#B_1+\#B_2)\cdot\delta \le t'+(\length(\gamma)-t) = (\length(\gamma)-t)+t' \le
+  2\epsilon^{-1}\delta$ (the Case~B window hypothesis), so $\#B_1+\#B_2\le2\epsilon^{-1}$ (using
+  $\delta>0$). Hence $q+(k-p) \le (n+1)+2\epsilon^{-1}$, which is \eqref{eq:total-bound}.
+
+  \emph{The arc-length bound \eqref{eq:arc-length}.} Since $q<p$ here, \eqref{eq:arc-length}'s left
+  side is $(\length(\gamma)-s(p))+s(q)$. The two inequalities established just above for the big-edge
+  count, namely $s(q)\le t'$ and $\length(\gamma)-s(p)\le\length(\gamma)-t$, add directly (without
+  the factor of $\delta$ used there) to give $(\length(\gamma)-s(p))+s(q) \le t'+(\length(\gamma)-t)
+  = (\length(\gamma)-t)+t' \le 2\epsilon^{-1}\delta$ (the Case~B window hypothesis), proving
+  \eqref{eq:arc-length} in Sub-case~B2.
+
+  This exhibits $k,s,p,q$ with all required properties in Sub-case~B2, completing Case~B and, with
+  it, the proof (Case~A, Sub-case~B1, and Sub-case~B2 are jointly exhaustive, since at least one of
+  Case~A/Case~B holds, and $\#T\ge n+1$ or $\#T\le n$ jointly exhaust Case~B).
+\end{proof}

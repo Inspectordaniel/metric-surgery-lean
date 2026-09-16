@@ -1,0 +1,26 @@
+\begin{definition}[$\mathcal{D}^1(E)$, metric $1$-forms]
+  Let $E$ be a metric space. A \emph{metric $1$-form} $\omega = (f,\pi) \in \mathcal{D}^1(E)$
+  (paper.tex line 1098, $D^1(E)$) consists of:
+  \begin{itemize}
+    \item a function $f \colon E \to \mathbb{R}$ together with a bound $\|f\|_\infty \ge 0$ such
+      that $|f(x)| \le \|f\|_\infty$ for all $x \in E$, and a Lipschitz constant $\mathrm{Lip}(f) \ge 0$
+      such that $f$ is $\mathrm{Lip}(f)$-Lipschitz;
+    \item a function $\pi \colon E \to \mathbb{R}$ together with a Lipschitz constant
+      $\mathrm{Lip}(\pi) \ge 0$ such that $\pi$ is $\mathrm{Lip}(\pi)$-Lipschitz.
+  \end{itemize}
+  This is exactly the paper's $\mathcal{D}^1(E) = \mathrm{Lip}_b(E,\mathbb{R}) \times \mathrm{Lip}(E,\mathbb{R})$:
+  $f$ ranges over bounded Lipschitz functions and $\pi$ over Lipschitz functions.
+
+  \paragraph{Modeling choice (interface decision, not a deviation).} The paper's
+  $\mathrm{Lip}_b(E,\mathbb{R})$ and $\mathrm{Lip}(E,\mathbb{R})$ record only the existence of a
+  bound and a Lipschitz constant for $f$ and $\pi$ respectively. We instead carry a specific
+  witnessing bound $\|f\|_\infty$ and specific
+  witnessing Lipschitz constants $\mathrm{Lip}(f), \mathrm{Lip}(\pi)$ as explicit data fields of
+  $\omega$, rather than only asserting their existence. This changes no mathematical content -- any
+  $\omega \in \mathcal{D}^1(E)$ in the paper's sense admits such witnesses, and conversely any
+  witnessed data determines a valid $\omega$ in the paper's sense -- but it lets every downstream
+  statement about $[[\gamma]](\omega)$ (\noderef{curveCurrent}) name $\|f\|_\infty$ and
+  $\mathrm{Lip}(\pi)$ directly as $\omega.\|f\|_\infty$ and $\omega.\mathrm{Lip}(\pi)$, rather than
+  reconstructing them as suprema over $E$ (which would additionally require $E$ nonempty to be
+  well-behaved).
+\end{definition}

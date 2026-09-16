@@ -1,0 +1,35 @@
+\begin{definition}[Restriction $\gamma|_{[a,b]}$]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), and $0 \le a \le b \le \length(\gamma)$.
+  Define $\gamma|_{[a,b]} \in \Theta(E)$, written $\mathrm{curveRestrict}(\gamma,a,b)$, by
+  \[
+    \length(\gamma|_{[a,b]}) = b - a
+    , \qquad
+    \gamma|_{[a,b]}(u) = \gamma(a+u) \quad \text{for } u \in [0,b-a]
+    ,
+  \]
+  extended outside $[0,b-a]$ by the usual clamping convention of $\Theta(E)$ (\noderef{Curve}).
+  This is exactly the paper's convention for $\gamma|_{[t,t']}$ with $t<t'$ (paper.tex line 449:
+  ``we write $\gamma|_{[t,t']}$ for the Lipschitz curve formed by restricting to the subinterval
+  $[t,t']$''; paper.tex line 459: ``we will interpret $\gamma|_{[t,t']}$ modulo reparametrization
+  as $\tilde\gamma \in \Theta(E)$, $\tilde\gamma\colon[0,t'-t]\to E$, $\tilde\gamma(s)=\gamma(t+s)$''),
+  specialized to the degenerate case $a=b$ as the length-$0$ constant curve at $\gamma(a)$, which is
+  the natural (and harmless) boundary case of the same formula.
+
+  \paragraph{Well-definedness (clamping is preserved).} The formula above, taken literally as
+  $u \mapsto \gamma(a+u)$, is only guaranteed to satisfy the clamping condition of \noderef{Curve}
+  on $[0,b-a]$ itself, not automatically outside it (since $\gamma$ may continue non-constantly past
+  $\gamma(b)$ when $b < \length(\gamma)$). We therefore take the clamped extension
+  $u \mapsto \gamma(a + \mathrm{clamp}_{[0,b-a]}(u))$, where $\mathrm{clamp}_{[0,b-a]}(u) =
+  \min(b-a,\max(0,u))$, as the actual definition of $\gamma|_{[a,b]}$'s underlying map; this agrees
+  with $\gamma(a+u)$ on $[0,b-a]$ (where the clamp is the identity) and is constant outside it, as
+  required of any element of $\Theta(E)$.
+
+  \paragraph{Unit speed.} That $\gamma|_{[a,b]}$ is parametrized by arc length on $[0,b-a]$ --
+  i.e.\ that the total variation of $u \mapsto \gamma(a+u)$ on $[0,b-a] \cap [s,t]$ equals $t-s$ for
+  $s,t \in [0,b-a]$ -- follows from the corresponding property of $\gamma$ itself
+  (\noderef{Curve}) applied on the shifted subinterval $[a+s,a+t] \subseteq [0,\length(\gamma)]$,
+  since the total variation of $u \mapsto \gamma(a+u)$ on a set $S$ equals the total variation of
+  $\gamma$ on the shifted set $a+S$ (translation by a constant is an order isomorphism of
+  $\mathbb{R}$ that carries any finite increasing chain to a finite increasing chain of the same
+  total displacement).
+\end{definition}

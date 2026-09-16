@@ -1,0 +1,209 @@
+\begin{lemma}[The basic cut's kept arc, at resolution breakpoints, has a controlled small-edge count]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}), $\gamma \in
+  \Theta(E)$ (\noderef{Curve}) a closed curve (\noderef{IsClosedCurve}), $k \in \mathbb{N}$, $s
+  \colon \mathbb{N} \to \mathbb{R}$ a resolution of $\gamma$ into $k$ geodesic edges
+  (\noderef{IsGeodesicResolution}), $p,q \in \set{0,\dots,k}$ with $s(p) \ne s(q)$, and $\delta \in
+  \mathbb{R}$. Write $t := s(p)$, $t' := s(q)$ and $(\gamma',g) := C(\gamma,t,t')$
+  (\noderef{BasicCut}). Define, for $j \in \set{1,\dots,k}$, the \emph{excision predicate}
+  \[
+    \mathrm{inArc}(j) :=
+    \begin{cases}
+      p < j \le q & \text{if } p < q \\
+      j \le q \text{ or } p < j & \text{if } q < p
+    \end{cases}
+    ,
+  \]
+  and set
+  \[
+    m_{\mathrm{tot}} := \#\set{j \in \set{1,\dots,k} : s(j)-s(j-1) < \delta}
+    , \qquad
+    m_{\mathrm{exc}} := \#\set{j \in \set{1,\dots,k} : \mathrm{inArc}(j) \text{ and } s(j)-s(j-1) <
+    \delta}
+    .
+  \]
+  Then
+  \[
+    \nsmallpieces(\gamma',\delta) + m_{\mathrm{exc}} \le m_{\mathrm{tot}} + 1
+    .
+  \]
+
+  \paragraph{Why this is the fact paper Lemma 3.10's proof needs, in subtraction-free form.} Paper
+  Lemma 3.10 (paper.tex lines 947-957) fixes a resolution $(s_0,\dots,s_k)$ of $\gamma$ realizing
+  the minimum defining $\nsmallpieces(\gamma,\delta)$ (\noderef{smallPieceCount}, Def.~3.6), so with
+  this particular resolution $m_{\mathrm{tot}} = \nsmallpieces(\gamma,\delta)$ (an infimum over
+  natural numbers attained at a nonempty minimizing set is attained by some element of that set,
+  \texttt{Nat.sInf\_mem}), takes the two cut points $t,t'$ to be
+  endpoints of geodesic edges of that resolution (``we may assume that $s,s' \in
+  \set{s_0,\dots,s_k}$'', line 950), and asserts that $\gamma'$ is formed from $\gamma$ by deleting
+  the excised arc (which is assumed to contain exactly $n+1$ small edges) and replacing it with a
+  single new geodesic edge, ``for an overall decrease of at least $n$ small geodesic edges''. That
+  is exactly $\nsmallpieces(\gamma',\delta) \le m_{\mathrm{tot}} - m_{\mathrm{exc}} + 1$ once
+  $m_{\mathrm{tot}} = \nsmallpieces(\gamma,\delta)$, which we state instead in the equivalent,
+  natural-number-subtraction-free form above (an inequality of the form $A \le B - C + 1$ with
+  $A,B,C \colon \mathbb{N}$ is genuinely equivalent, over the naturals, to $A + C \le B + 1$, since
+  addition, unlike truncated subtraction, is total and cancellative).
+
+  We phrase the excision predicate $\mathrm{inArc}$ uniformly for both possible orderings of $p,q$
+  because -- unlike paper Lemma 3.10, which by construction always has the excised interval as an
+  \emph{ordinary} (non-wrapping) sub-interval $[s,s']$ with $s<s'$ -- \noderef{IsDeltaEpsN}'s
+  failure (the hypothesis of the companion Type II cut lemma this feeds) may instead witness a
+  \emph{wrap-around} excised arc (its clause (ii)), which is exactly the case $q<p$ below; both
+  cases are genuine and neither reduces to the other by relabelling $t,t'$, since which of
+  $\gamma',g$ receives which arc is determined by \noderef{BasicCut}'s own case split on the order
+  of $t,t'$.
+
+  \paragraph{Why this is not subsumed by \noderef{BasicCutClosed}.} \noderef{BasicCutClosed} shows
+  $\gamma'$ is \emph{some} piecewise-geodesic curve, i.e.\ admits \emph{some} resolution; it says
+  nothing about the \emph{size} of that resolution or the number of short edges in it, which is the
+  entire content needed here and is not recoverable from mere existence, since
+  $\mathrm{smallPieceCount}$ is an infimum over \emph{all} resolutions (\noderef{smallPieceCount}):
+  an upper bound on it requires exhibiting a specific resolution with a controlled small-edge
+  count, which is exactly what this lemma's proof does.
+\end{lemma}
+\begin{proof}
+  Since $s(p) \ne s(q)$, in particular $p \ne q$, so exactly one of $p<q$ or $q<p$ holds; we treat
+  the two cases below. In both, the three blocks of indices split $\set{1,\dots,k}$ into a disjoint
+  union (any block that would be empty, e.g.\ $\set{1,\dots,p}$ when $p=0$, contributes nothing).
+
+  \emph{A general sub-resolution extraction fact, with no clamping distortion.} We first record: if
+  $0 \le c \le d \le k$, then $s'(i) := s(c+i)-s(c)$ for $i=0,\dots,d-c$ satisfies
+  $\mathrm{IsGeodesicResolution}(\mathrm{curveRestrict}(\gamma,s(c),s(d)),\, d-c,\, s')$
+  (\noderef{curveRestrict}, \noderef{IsGeodesicResolution}), and, for $1 \le j \le d-c$, the edge
+  length $s'(j)-s'(j-1)$ equals $s(c+j)-s(c+j-1)$ exactly (no clamping ever occurs, because $c+i$
+  ranges only over $\set{c,\dots,d}$, on which $s$ already lies in $[s(c),s(d)]$ by monotonicity of
+  $s$, \noderef{IsGeodesicResolution}). Indeed: $s'$ is monotone on $\set{0,\dots,d-c}$ since $s$ is
+  monotone on $\set{c,\dots,d}$ (a subset of $\set{0,\dots,k}$, using $0\le c\le d\le k$); $s'(0) =
+  s(c)-s(c)=0$; $s'(d-c)=s(d)-s(c) = \length(\mathrm{curveRestrict}(\gamma,s(c),s(d)))$
+  (\noderef{curveRestrict}'s length formula). For $i < d-c$: since $s(c) \le s(c+i) \le s(c+i+1)
+  \le s(d)$ (monotonicity, as $c \le c+i \le c+i+1 \le d$), the values $s'(i)=s(c+i)-s(c)$ and
+  $s'(i+1)=s(c+i+1)-s(c)$ lie in $[0,s(d)-s(c)]$, so, since $\mathrm{curveRestrict}(\gamma,a',b')(u) := \gamma(a' + \min(b'-a',\max(0,u)))$
+  (\noderef{curveRestrict}) and $\min(b'-a',\max(0,u))=u$ whenever $0\le u\le b'-a'$,
+  \noderef{curveRestrict}'s defining formula is exact (unclamped) for arguments in this range, so
+  $\mathrm{curveRestrict}(\gamma,s(c),s(d))(s'(i)) =
+  \gamma(s(c)+s'(i)) = \gamma(s(c+i))$, and likewise at $i+1$. Hence, for any $u,v \in
+  [s'(i),s'(i+1)]$, writing $u' := s(c)+u,\, v':=s(c)+v \in [s(c+i),s(c+i+1)]$, we get
+  $\mathrm{dist}(\mathrm{curveRestrict}(\gamma,s(c),s(d))(u),
+  \mathrm{curveRestrict}(\gamma,s(c),s(d))(v)) = \mathrm{dist}(\gamma(u'),\gamma(v')) = |u'-v'| =
+  |u-v|$, the middle equality because $c+i < k$ (as $i<d-c$ gives $c+i<d\le k$) makes
+  $\mathrm{IsGeodesicOn}(\gamma,s(c+i),s(c+i+1))$ (\noderef{IsGeodesicOn}) a hypothesis of
+  $\mathrm{IsGeodesicResolution}(\gamma,k,s)$ applicable to $u',v'$. This is exactly
+  $\mathrm{IsGeodesicOn}(\mathrm{curveRestrict}(\gamma,s(c),s(d)),s'(i),s'(i+1))$, giving the claim,
+  and the edge-length identity $s'(j)-s'(j-1) = s(c+j)-s(c+j-1)$ for $1\le j\le d-c$ is immediate
+  from the definition of $s'$. In particular, the map $j \mapsto c+j$ is an order-preserving
+  bijection $\set{1,\dots,d-c} \to \set{c+1,\dots,d}$ under which $j$ is a small edge of $s'$
+  (length $<\delta$) exactly when $c+j$ is a small edge of $s$, so
+  \begin{equation}
+    \label{eq:count-subres}
+    \#\set{j \in \set{1,\dots,d-c} : s'(j)-s'(j-1)<\delta}
+    = \#\set{i \in \set{c+1,\dots,d} : s(i)-s(i-1)<\delta}
+    .
+  \end{equation}
+
+  \emph{A general resolution-concatenation counting fact.} Next, if $\eta_1,\eta_2 \in \Theta(E)$
+  admit geodesic resolutions $(k_1,r_1)$, $(k_2,r_2)$ respectively and $\eta_1(\length(\eta_1)) =
+  \eta_2(0)$, then $\eta_1 * \eta_2$ (\noderef{curveConcat}) admits the geodesic resolution
+  $(k_1+k_2, r)$ with $r(i)=r_1(i)$ for $i \le k_1$ and $r(i) = \length(\eta_1)+r_2(i-k_1)$ for $i >
+  k_1$ (the two formulas agree at $i=k_1$, both giving $\length(\eta_1)$, since $r_1(k_1) =
+  \length(\eta_1)$ and $r_2(0)=0$). Indeed, $r$ is monotone on $\set{0,\dots,k_1+k_2}$ ($r_1,r_2$
+  monotone on their own ranges and the two pieces meet continuously at $i=k_1$); $r(0)=r_1(0)=0$
+  and $r(k_1+k_2) = \length(\eta_1)+r_2(k_2) = \length(\eta_1)+\length(\eta_2) =
+  \length(\eta_1*\eta_2)$ (\noderef{curveConcat}); for $i<k_1$, on $[r_1(i),r_1(i+1)] \subseteq
+  [0,\length(\eta_1)]$, $\eta_1*\eta_2$ agrees with $\eta_1$ (\noderef{curveConcat}'s defining
+  formula), so $\mathrm{IsGeodesicOn}(\eta_1*\eta_2,r(i),r(i+1))$ is literally
+  $\mathrm{IsGeodesicOn}(\eta_1,r_1(i),r_1(i+1))$, a hypothesis; and for $k_1\le i<k_1+k_2$, writing
+  $i=k_1+j$, on $[\length(\eta_1)+r_2(j),\length(\eta_1)+r_2(j+1)]$, $(\eta_1*\eta_2)(u) =
+  \eta_2(u-\length(\eta_1))$ (\noderef{curveConcat}'s defining formula, since this range lies at or
+  past $\length(\eta_1)$), so for $u,v$ in this range, $\mathrm{dist}((\eta_1*\eta_2)(u),
+  (\eta_1*\eta_2)(v)) = \mathrm{dist}(\eta_2(u-\length(\eta_1)),\eta_2(v-\length(\eta_1))) =
+  |u-v|$ by $\mathrm{IsGeodesicOn}(\eta_2,r_2(j),r_2(j+1))$ (a hypothesis) applied to
+  $u-\length(\eta_1),v-\length(\eta_1) \in [r_2(j),r_2(j+1)]$. Under this identification, for $1
+  \le i \le k_1$ the edge $r(i)-r(i-1)=r_1(i)-r_1(i-1)$ agrees with
+  $\eta_1$'s $i$-th edge exactly, and for $k_1 < i \le k_1+k_2$, writing $i = k_1+i'$, the edge
+  $r(i)-r(i-1) = r_2(i')-r_2(i'-1)$ agrees with $\eta_2$'s $i'$-th edge exactly (the length
+  $\length(\eta_1)$ common to both terms of $r(i)-r(i-1)$ cancels). Since $\set{1,\dots,k_1}$ and
+  $\set{k_1+1,\dots,k_1+k_2}$ partition $\set{1,\dots,k_1+k_2}$, and $i \mapsto i-k_1$ is an
+  order-preserving bijection of the second block onto $\set{1,\dots,k_2}$ matching small edges to
+  small edges,
+  \begin{equation}
+    \label{eq:count-concat}
+    \#\set{i \in \set{1,\dots,k_1+k_2} : r(i)-r(i-1)<\delta}
+    = \#\set{j \in \set{1,\dots,k_1} : r_1(j)-r_1(j-1)<\delta}
+    + \#\set{j \in \set{1,\dots,k_2} : r_2(j)-r_2(j-1)<\delta}
+    .
+  \end{equation}
+  Finally, a single geodesic edge $G_{x,y}$ (\noderef{GeodesicPairing}) is itself a geodesic
+  resolution with $1$ edge (\noderef{IsGeodesicOn}'s defining condition on $[0,\length(G_{x,y})]$
+  applied to the constant resolution $(1,(0,\length(G_{x,y})))$), contributing $0$ or $1$ to any
+  small-edge count it is concatenated onto, so by \eqref{eq:count-concat} applied once more (with
+  $\eta_2 = G_{x,y}$, $k_2=1$),
+  \begin{equation}
+    \label{eq:count-plus-one}
+    \#\set{i \in \set{1,\dots,k_1+1} : r(i)-r(i-1)<\delta}
+    \le \#\set{j \in \set{1,\dots,k_1} : r_1(j)-r_1(j-1)<\delta} + 1
+    .
+  \end{equation}
+
+  \emph{Case $p<q$.} By monotonicity of $s$ on $\set{0,\dots,k}$ (\noderef{IsGeodesicResolution}),
+  $s(p) \le s(q)$, and combined with $s(p)\ne s(q)$ this gives $t=s(p)<s(q)=t'$. By
+  \noderef{BasicCut}'s case split (using $t<t'$),
+  $\gamma' = \mathrm{curveWrapRestrict}(\gamma,t',t) * G_{\gamma(t),\gamma(t')}$, and
+  $\mathrm{curveWrapRestrict}(\gamma,t',t) = \mathrm{curveRestrict}(\gamma,t',\length(\gamma)) *
+  \mathrm{curveRestrict}(\gamma,0,t)$ (\noderef{curveWrapRestrict}). Apply the sub-resolution
+  extraction fact twice: with $(c,d)=(q,k)$ (valid, $0\le q\le k$; note $s(k)=\length(\gamma)$,
+  \noderef{IsGeodesicResolution}) to get a resolution of $\mathrm{curveRestrict}(\gamma,t',
+  \length(\gamma))$ with $k-q$ edges whose small-edge count is, by \eqref{eq:count-subres},
+  $\#\set{i \in \set{q+1,\dots,k} : s(i)-s(i-1)<\delta}$; and with $(c,d)=(0,p)$ (valid, $0\le
+  p\le k$, and $s(0)=0$, \noderef{IsGeodesicResolution}) to get a resolution of
+  $\mathrm{curveRestrict}(\gamma,0,t)$ with $p$ edges whose small-edge count is
+  $\#\set{i \in \set{1,\dots,p} : s(i)-s(i-1)<\delta}$. Their endpoints match: by
+  \noderef{curveRestrict}'s unclamped evaluation formula (used identically in the sub-resolution
+  extraction fact above), the first piece $\mathrm{curveRestrict}(\gamma,t',\length(\gamma))$,
+  whose own \emph{real-valued} length is $\length(\gamma)-t' = s(k)-s(q)$, takes at that length the
+  value $\gamma(t'+(\length(\gamma)-t')) = \gamma(\length(\gamma))$, while the second piece
+  $\mathrm{curveRestrict}(\gamma,0,t)$ takes at $0$ the value $\gamma(0+0)=\gamma(0)$, and
+  $\gamma(\length(\gamma))=\gamma(0)$ by closedness of $\gamma$ (\noderef{IsClosedCurve}) -- exactly
+  the identification \noderef{curveWrapRestrict} itself is built on. Applying the concatenation
+  counting fact \eqref{eq:count-concat} to these two (whose edge counts are, respectively, $k-q$
+  and $p$, not to be confused with their real-valued lengths $\length(\gamma)-t'$ and $t$) gives a
+  resolution of $\mathrm{curveWrapRestrict}(\gamma,t',t)$ with $(k-q)+p$ edges and small-edge count
+  \[
+    \#\set{i \in \set{q+1,\dots,k} : s(i)-s(i-1)<\delta}
+    + \#\set{i \in \set{1,\dots,p} : s(i)-s(i-1)<\delta}
+    = \#\set{i \in \set{1,\dots,k}\setminus\set{p+1,\dots,q} : s(i)-s(i-1)<\delta}
+    ,
+  \]
+  the equality because $\set{1,\dots,p}$ and $\set{q+1,\dots,k}$ are disjoint and their union is
+  exactly $\set{1,\dots,k}\setminus\set{p+1,\dots,q}$ (using $p<q$). Finally applying
+  \eqref{eq:count-plus-one} once more (concatenating the single closing edge
+  $G_{\gamma(t),\gamma(t')}$, whose endpoints match by \noderef{BasicCut}'s own well-definedness)
+  gives a resolution of $\gamma'$ whose small-edge count is at most
+  $\#\set{i \in \set{1,\dots,k}\setminus\set{p+1,\dots,q} : s(i)-s(i-1)<\delta} + 1 = m_{\mathrm{tot}}
+  - m_{\mathrm{exc}} + 1$ in ordinary (non-truncated) arithmetic, since $\set{p+1,\dots,q}$ is
+  exactly $\mathrm{inArc}$'s index set when $p<q$, so $m_{\mathrm{exc}}$ counts precisely the small
+  edges removed from $m_{\mathrm{tot}}$'s defining set to leave the set just displayed; equivalently,
+  in subtraction-free form, this resolution's small-edge count plus $m_{\mathrm{exc}}$ is at most
+  $m_{\mathrm{tot}}+1$. Since $\mathrm{smallPieceCount}(\gamma',\delta)$ is the infimum over
+  \emph{all} resolutions of $\gamma'$ of the small-edge count (\noderef{smallPieceCount}), and we
+  have just exhibited one such resolution, $\mathrm{smallPieceCount}(\gamma',\delta)$ is at most
+  this resolution's small-edge count, giving $\nsmallpieces(\gamma',\delta) + m_{\mathrm{exc}} \le
+  m_{\mathrm{tot}}+1$, as claimed.
+
+  \emph{Case $q<p$.} Symmetrically, monotonicity gives $s(q)\le s(p)$, and with $s(p)\ne s(q)$ this
+  gives $t'=s(q)<s(p)=t$. By \noderef{BasicCut}'s case split (using $t'<t$),
+  $\gamma' = \mathrm{curveRestrict}(\gamma,t',t) * G_{\gamma(t),\gamma(t')}$. Apply the
+  sub-resolution extraction fact with $(c,d)=(q,p)$ (valid, $0\le q\le p\le k$) to get a resolution
+  of $\mathrm{curveRestrict}(\gamma,t',t)$ with $p-q$ edges and, by \eqref{eq:count-subres},
+  small-edge count $\#\set{i\in\set{q+1,\dots,p} : s(i)-s(i-1)<\delta}$. This set is exactly the
+  complement of $\mathrm{inArc}$'s index set within $\set{1,\dots,k}$ when $q<p$ (namely
+  $\set{1,\dots,k}\setminus(\set{1,\dots,q}\cup\set{p+1,\dots,k}) = \set{q+1,\dots,p}$), so this
+  small-edge count equals $m_{\mathrm{tot}}-m_{\mathrm{exc}}$ in ordinary arithmetic (since
+  $\set{1,\dots,q}\cup\set{p+1,\dots,k}$, the complement, is exactly $\mathrm{inArc}$'s index set
+  when $q<p$). Applying \eqref{eq:count-plus-one} once more (concatenating the closing edge
+  $G_{\gamma(t),\gamma(t')}$) gives a resolution of $\gamma'$ with small-edge count at most
+  $(m_{\mathrm{tot}}-m_{\mathrm{exc}})+1$, i.e., in subtraction-free form, at most $m_{\mathrm{tot}}
+  +1-m_{\mathrm{exc}}$; as before, taking the infimum over resolutions gives
+  $\mathrm{smallPieceCount}(\gamma',\delta)$ at most this value, i.e.\
+  $\nsmallpieces(\gamma',\delta) + m_{\mathrm{exc}} \le m_{\mathrm{tot}}+1$.
+
+  In both cases the claimed inequality holds, completing the proof.
+\end{proof}

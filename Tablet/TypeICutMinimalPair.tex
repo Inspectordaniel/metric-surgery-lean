@@ -1,0 +1,131 @@
+\begin{lemma}[The Type~I infimum is attained, at a pair of at most half the total length]
+  \label{typeI-cut-minimal-pair}
+  Let $E$ be a metric space and $\gamma \in \Theta(E)$ (\noderef{Curve}) a closed curve
+  (\noderef{IsClosedCurve}); write $L := \length(\gamma)$. Let $\delta,\epsilon \in \mathbb{R}$
+  with $\delta > 0$, and for $a,b \in \mathbb{R}$ set
+  \[
+    \ell(a,b) := \begin{cases} b-a & a \le b \\ (L-a)+b & a > b \end{cases}
+    .
+  \]
+  Call a pair $(a,b) \in [0,L]^2$ \emph{admissible} if
+  \[
+    \delta \le d_\gamma(a,b)
+    \qquad\text{and}\qquad
+    d(\gamma(a),\gamma(b)) \le \epsilon\, d_\gamma(a,b)
+  \]
+  (\noderef{dGamma}), and suppose some pair $(a_0,b_0) \in [0,L]^2$ is admissible. Then there is an
+  admissible pair $(t,t') \in [0,L]^2$ with
+  \[
+    \delta \le \ell(t,t') \le \tfrac{1}{2}L
+  \]
+  which minimizes $\ell$ among admissible pairs: $\ell(t,t') \le \ell(a,b)$ for every admissible
+  $(a,b) \in [0,L]^2$.
+
+  \paragraph{Relation to the paper.} This is the attainment claim of paper.tex 857-864 together
+  with the two bounds $\beta(\gamma) \ge \delta$ (paper.tex 859) and $\beta(\gamma) \le
+  \tfrac12\length(\gamma)$ (paper.tex 860-861), for the infimum \eqref{betagammainf}: the set of
+  admissible pairs is exactly the index set of that infimum, and $\ell(a,b)$ is exactly the
+  quantity $\length(\gamma|_{[a,b]})$ it minimizes (that identification is
+  \Cref{curve-arc-eval}, and is not needed here, where $\ell$ is taken as the explicit formula
+  above). Non-emptiness of the index set is a \emph{hypothesis} here, supplied by the witness
+  $(a_0,b_0)$; in the paper it comes from the failure of large-scale invertibility, which is the
+  consumer's business, not this lemma's. No claim of definiteness is made about $(t,t')$: the
+  paper's choice of the lexicographically-smallest attaining pair carries no mathematical content
+  beyond attainment.
+
+  \paragraph{No order relation between $t$ and $t'$.} The minimizing pair may well have $t' < t$,
+  i.e.\ the counter-clockwise arc from $t$ to $t'$ may be the wrap-around one; nothing in the
+  statement singles out either order, and the bound $\ell(t,t') \le \tfrac12 L$ is precisely what
+  survives in place of an order assumption.
+\end{lemma}
+\begin{proof}
+  Write $S \subseteq \mathbb{R}^2$ for the set of admissible pairs and
+  \[
+    D(a,b) := \min(|a-b|,\, L-|a-b|)
+    .
+  \]
+  Since $\gamma$ is closed, $d_\gamma(a,b) = D(a,b)$ for all $a,b$ (\noderef{dGamma}: the closed
+  branch of its defining case split applies), so $S = \{(a,b) \in [0,L]^2 : \delta \le D(a,b)
+  \text{ and } d(\gamma(a),\gamma(b)) \le \epsilon D(a,b)\}$, and we work with $D$ from now on.
+
+  \paragraph{Four elementary facts about $\ell$ and $D$.}
+
+  \emph{(F1) $D(a,b) \le \ell(a,b)$ for all $a,b \in \mathbb{R}$.} If $a \le b$ then $|a-b| = b-a =
+  \ell(a,b)$, and $D(a,b) \le |a-b|$ since $D$ is a minimum of two terms the first of which is
+  $|a-b|$. If $a > b$ then $|a-b| = a-b$, so $L - |a-b| = (L-a)+b = \ell(a,b)$, and $D(a,b) \le
+  L-|a-b|$.
+
+  \emph{(F2) If $a \ne b$ then $\ell(a,b) + \ell(b,a) = L$.} If $a < b$ then $\ell(a,b) = b-a$ and
+  $\ell(b,a) = (L-b)+a$, summing to $L$. If $a > b$ then $\ell(a,b) = (L-a)+b$ and $\ell(b,a) =
+  a-b$, again summing to $L$.
+
+  \emph{(F3) If $a \ne b$ and $\ell(a,b) \le \ell(b,a)$ then $D(a,b) = \ell(a,b)$.} If $a < b$ then
+  $\ell(a,b) = b-a = |a-b|$ and $\ell(b,a) = (L-b)+a = L-|a-b|$, so the hypothesis reads $|a-b| \le
+  L-|a-b|$ and $D(a,b) = \min(|a-b|,L-|a-b|) = |a-b| = \ell(a,b)$. If $a > b$ then $\ell(a,b) =
+  (L-a)+b = L-|a-b|$ and $\ell(b,a) = a-b = |a-b|$, so the hypothesis reads $L-|a-b| \le |a-b|$ and
+  $D(a,b) = L-|a-b| = \ell(a,b)$.
+
+  \emph{(F4) $S$ is symmetric: $(a,b) \in S$ iff $(b,a) \in S$.} $|a-b| = |b-a|$, so $D(a,b) =
+  D(b,a)$; and $d(\gamma(a),\gamma(b)) = d(\gamma(b),\gamma(a))$ by symmetry of the metric of $E$.
+  Both defining conditions of $S$, and membership in $[0,L]^2$, are therefore symmetric.
+
+  \paragraph{$S$ is compact and non-empty.} $S$ is the intersection of the square $[0,L]^2$ --
+  compact, being a product of two compact intervals -- with the two sets $\{(a,b) : \delta \le
+  D(a,b)\}$ and $\{(a,b) : d(\gamma(a),\gamma(b)) \le \epsilon D(a,b)\}$. The map $(a,b) \mapsto
+  D(a,b)$ is continuous on $\mathbb{R}^2$, being built from the continuous operations
+  $(a,b)\mapsto a-b$, $|\cdot|$, $x \mapsto L-x$ and $\min$. The underlying map of $\gamma$ is
+  $1$-Lipschitz on all of $\mathbb{R}$ (\noderef{CurveLipschitz}), hence continuous, so $(a,b)
+  \mapsto d(\gamma(a),\gamma(b))$ is continuous as a composition of continuous maps; and so is
+  $(a,b) \mapsto \epsilon D(a,b)$. Each of the two sets is therefore closed, being of the form
+  $\{f \le g\}$ for continuous $f,g$. Hence $S$, a compact set intersected with two closed sets, is
+  compact. It is non-empty because $(a_0,b_0) \in S$ by hypothesis.
+
+  \paragraph{Minimizing $D$ (not $\ell$) over $S$.} $D$ is continuous and $S$ is compact and
+  non-empty, so by the extreme value theorem $D$ attains a minimum on $S$: fix $q = (u,v) \in S$
+  with
+  \[
+    D(u,v) \le D(a,b) \qquad \text{for every } (a,b) \in S
+    .
+  \]
+  (This is the step at which the present proof departs from the paper's, which minimizes
+  $\ell$ directly. The paper's assertion at paper.tex 858 that $\length(\gamma|_{[s,s']})$ is a
+  continuous function of $(s,s')$ is false -- $\ell$ jumps by $L$ across the diagonal $s=s'$ --
+  so $\ell$ is not available to the extreme value theorem on the square. $D$ \emph{is} continuous
+  everywhere, and by (F1) and (F3) below its minimum over $S$ is also the minimum of $\ell$ over
+  $S$, once the minimizing pair is put in the right order.)
+
+  Note $u \ne v$: indeed $\delta \le D(u,v) \le |u-v|$ by definition of $D$ as a minimum, and
+  $\delta > 0$, so $|u-v| > 0$.
+
+  \paragraph{Ordering the minimizing pair.} By (F4), $(v,u) \in S$ as well, and $D(v,u) = D(u,v)$.
+  Define
+  \[
+    (t,t') := \begin{cases} (u,v) & \ell(u,v) \le \ell(v,u) \\ (v,u) & \text{otherwise.}\end{cases}
+  \]
+  In either case $(t,t') \in S$ (so $t,t' \in [0,L]$ and $(t,t')$ is admissible), $t \ne t'$,
+  $D(t,t') = D(u,v)$, and
+  \[
+    \ell(t,t') \le \ell(t',t)
+    ,
+  \]
+  the displayed inequality being the defining condition in the first case and, in the second case,
+  the negation $\ell(v,u) < \ell(u,v)$ of that condition, read with the roles of the two arguments
+  exchanged.
+
+  \paragraph{The three conclusions.} By (F3) applied to $(t,t')$ -- legitimate since $t \ne t'$ and
+  $\ell(t,t') \le \ell(t',t)$ -- we have
+  \[
+    D(t,t') = \ell(t,t')
+    .
+  \]
+  Since $(t,t') \in S$, $\delta \le D(t,t') = \ell(t,t')$, which is the lower bound. By (F2),
+  $\ell(t,t') + \ell(t',t) = L$, and $\ell(t,t') \le \ell(t',t)$, so $2\ell(t,t') \le L$, i.e.\
+  $\ell(t,t') \le \tfrac12 L$, which is the upper bound. Finally, let $(a,b) \in [0,L]^2$ be
+  admissible, i.e.\ $(a,b) \in S$. Then
+  \[
+    \ell(t,t') = D(t,t') = D(u,v) \le D(a,b) \le \ell(a,b)
+    ,
+  \]
+  the middle inequality by minimality of $D$ at $q$ and the last by (F1). This is the asserted
+  minimality of $\ell(t,t')$, and completes the proof.
+\end{proof}

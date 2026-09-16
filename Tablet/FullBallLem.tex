@@ -1,0 +1,206 @@
+\begin{lemma}[Full-ball estimate]
+  \label{full-ball-lem}
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, $0 < \epsilon < 1$, $\delta >
+  0$, $n \in \mathbb{N}$, and $\gamma \in \Theta(E)$ (\noderef{Curve}) such that
+  $\gamma \in \Xden(\delta,\epsilon,n)$ (\noderef{IsDeltaEpsN}) and $\gamma \in
+  \Xlsi(\delta,\epsilon)$ (\noderef{IsLSI}). Then
+  \[
+    \Morrey{\mu_\gamma} \leq 4\epsilon^{-1} + 2n + 4
+    ,
+  \]
+  where $\mu_\gamma$ is $\gamma$'s measure (\noderef{curveMeasure}) and $\Morrey{\cdot}$ is the
+  Morrey norm (\noderef{morreyNorm}).
+
+  This is exactly paper Lemma 3.7 (paper.tex line 743). An earlier version of this node instead
+  proved the weaker bound $4\epsilon^{-1}+4n+4$ under an authorized deviation, because
+  \noderef{IsDeltaEpsN} quantified only over non-wrapping subintervals and so did not directly
+  support the closed-curve wrap-around arc $I$ that this lemma's proof needs (paper.tex line 762).
+  \noderef{IsDeltaEpsN} has since been corrected to the paper's own arc reading of Def.~3.5 (see
+  its remark at paper.tex line 729 and the justification recorded there), and with that correction
+  the paper's proof — and its exact constant — goes through directly; the deviation has been
+  retired.
+\end{lemma}
+\begin{proof}
+  Fix a resolution $(k_0,s_0)$ and the associated data witnessing $\gamma \in
+  \Xden(\delta,\epsilon,n)$ (\noderef{IsDeltaEpsN}); write $l := \length(\gamma)$. By definition of
+  the Morrey norm as a supremum of ratios (\noderef{morreyNorm}), it suffices to show
+  $\mu_\gamma(B_r(x)) \leq (4\epsilon^{-1}+2n+4) \cdot r$ for every $x \in E$ and every $r > 0$ (in
+  Case A below we in fact bound $\Morrey{\mu_\gamma}$ directly).
+
+  \textbf{Case A: $l \leq 2\epsilon^{-1}\delta$.} We bound $\Morrey{\mu_\gamma}$ directly, without
+  reference to $x,r$. Every edge $j \in \set{1,\dotsc,k_0}$ of the fixed resolution has either
+  length $s_0(j)-s_0(j-1) \geq \delta$ (a \emph{big} edge) or $< \delta$ (a \emph{small} edge); these
+  two possibilities are exhaustive and mutually exclusive, so $k_0 = (\#\text{big edges}) +
+  (\#\text{small edges})$.
+
+  By monotonicity of $s_0$ (\noderef{IsGeodesicResolution}), the intervals $[s_0(j-1),s_0(j)]$ for
+  distinct big edges $j$ overlap at most at single (measure-zero) endpoints, so their total length
+  is at most $\abs{[0,l]} = l$. Since each big edge has length $\geq \delta$,
+  $(\#\text{big edges}) \cdot \delta \leq l \leq 2\epsilon^{-1}\delta$ (the last step is this
+  case's hypothesis), so $\#\text{big edges} \leq 2\epsilon^{-1}$.
+
+  Applying clause~(i) of $\mathrm{IsDeltaEpsN}(\gamma,\delta,\epsilon,n)$ directly to the
+  subinterval $[t,t']=[0,l]$ (valid since $0 \leq 0 \leq l \leq l$ and $l - 0 = l \leq
+  2\epsilon^{-1}\delta$ by this case's hypothesis) gives $\#\text{small edges} \leq n$.
+
+  Hence $k_0 \leq 2\epsilon^{-1} + n$. Since $(k_0,s_0)$ witnesses
+  $\mathrm{IsGeodesicResolution}(\gamma,k_0,s_0)$, it witnesses
+  $\mathrm{IsPiecewiseGeodesicWith}(\gamma,k_0)$ (\noderef{IsPiecewiseGeodesicWith}), so
+  \noderef{C1SmallBall} gives $\Morrey{\mu_\gamma}
+  \leq 2k_0 \leq 4\epsilon^{-1}+2n \leq 4\epsilon^{-1}+2n+4$. This bounds $\Morrey{\mu_\gamma}$
+  directly, hence in particular $\mu_\gamma(B_r(x)) \leq (4\epsilon^{-1}+2n+4)r$ for every $x,r$, as
+  required.
+
+  \textbf{Case B: $l > 2\epsilon^{-1}\delta$.} Fix $x \in E$ and $r > 0$.
+
+  \emph{Sub-case $r \geq \delta/2$.} Since $\gamma \in \Xlsi(\delta,\epsilon)$,
+  \noderef{LargeBallLem} gives $\mu_\gamma(B_r(x)) \leq 4(1+\epsilon^{-1})r = (4+4\epsilon^{-1})r
+  \leq (4\epsilon^{-1}+2n+4) r$ (using $n \geq 0$).
+
+  \emph{Sub-case $0 < r < \delta/2$.} If $\set{t \in [0,l] : \gamma(t) \in B_r(x)} = \emptyset$,
+  then $\mu_\gamma(B_r(x)) = 0$ and we are done. Otherwise fix $u \in [0,l]$ with $\gamma(u) \in
+  B_r(x)$, and set $\rho := \epsilon^{-1}\delta$ and $I := \set{t \in [0,l] : d_\gamma(u,t) < \rho}$
+  (\noderef{dGamma}); note $\rho > \delta$ since $\epsilon < 1$, and $l > 2\rho$ by this case's
+  hypothesis.
+
+  \emph{Step 1: locating the part of $\gamma$ near $x$ inside $\gamma|_I$.} First, $B_r(x) \subseteq
+  B_{2r}(\gamma(u))$: for any $z \in B_r(x)$, since $\gamma(u) \in B_r(x)$ (by the choice of $u$)
+  the triangle inequality gives $d(z,\gamma(u)) \leq d(z,x) + d(x,\gamma(u)) < r + r = 2r$, so $z
+  \in B_{2r}(\gamma(u))$. Next, every $t \in [0,l]$ with $\gamma(t) \in B_{2r}(\gamma(u))$ lies in
+  $I$: if $d_\gamma(u,t) < \delta$ then $d_\gamma(u,t) < \delta < \epsilon^{-1}\delta = \rho$ (as
+  $\epsilon<1$); otherwise $d_\gamma(u,t) \geq \delta$, and $\gamma \in \Xlsi(\delta,\epsilon)$
+  (\noderef{IsLSI}) gives $\epsilon\, d_\gamma(u,t) \leq d(\gamma(u),\gamma(t)) \leq 2r < \delta$
+  (the last step since $r<\delta/2$, strictly), so $\epsilon\, d_\gamma(u,t) < \delta$ (a
+  non-strict inequality followed by a strict one composes to strict), giving $d_\gamma(u,t) <
+  \delta/\epsilon = \rho$. Hence
+  \[
+    \set{t \in [0,l] : \gamma(t) \in B_r(x)} \subseteq \set{t \in [0,l] : \gamma(t) \in
+    B_{2r}(\gamma(u))} \subseteq I
+    .
+  \]
+
+  \emph{Step 2: locating $I$ as a genuine subinterval or a wrap-around arc.} We claim exactly one
+  of the following three cases holds, and in each, $I$ is contained in a set to which one
+  application of \noderef{IsDeltaEpsN}'s small-edge bound (clause~(i) or~(ii)) applies directly.
+
+  \emph{Case (a), no wrap: $\gamma$ is not closed, or $\gamma$ is closed with $u-\rho \geq 0$ and
+  $u+\rho \leq l$.} Set $t := \max(0,u-\rho)$, $t' := \min(l,u+\rho)$; then $0 \leq t \leq t' \leq
+  l$ and $t'-t \leq 2\rho = 2\epsilon^{-1}\delta$, so $[t,t']$ is a genuine subinterval to which
+  clause~(i) applies. We check $I \subseteq [t,t']$. If $\gamma$ is not closed, $d_\gamma(u,s) =
+  |u-s|$ for all $s$ (\noderef{dGamma}, \noderef{IsClosedCurve}), so $I = [0,l]\cap(u-\rho,u+\rho)
+  \subseteq [t,t']$ directly. If $\gamma$ is closed with $u-\rho\geq0$ and $u+\rho\leq l$: for $s
+  \in [0,l]$ with
+  $d_\gamma(u,s) < \rho$, either $|u-s|<\rho$, giving $s \in (u-\rho,u+\rho)\cap[0,l] \subseteq
+  [t,t']$ directly; or $l - |u-s| < \rho$, i.e. $|u-s| > l-\rho$, giving $s < u-l+\rho$ or $s >
+  u+l-\rho$ — but $u+\rho\leq l$ gives $u-l+\rho \leq 0$, so $s<u-l+\rho\leq0$ is impossible for
+  $s\geq0$, and $u-\rho\geq0$ gives $u+l-\rho\geq l$, so $s>u+l-\rho\geq l$ is impossible for
+  $s\leq l$; so this alternative cannot occur, and again $s\in[t,t']$.
+
+  \emph{Case (b), right wrap: $\gamma$ is closed (\noderef{IsClosedCurve}) and $u+\rho>l$.} First,
+  $u \geq \rho$: if instead $u<\rho$, then combined with $u+\rho>l$ this gives $l < u+\rho < 2\rho$,
+  contradicting $l>2\rho$. Set $t:=u-\rho$ (so $t\geq0$, and $t\leq l$ since $u\leq l$) and
+  $t':=u+\rho-l$ (so $t'>0$ since $u+\rho>l$, and $t'\leq\rho$ since $u\leq l$); then $t'<t$ since
+  $2\rho<l$ gives $u+\rho-l<u-\rho$, and $(l-t)+t' = (l-(u-\rho)) + (u+\rho-l) = 2\rho =
+  2\epsilon^{-1}\delta$, so clause~(ii) applies to $(t,t')$. We check $I \subseteq [t,l]\cup[0,t']$.
+  For $s\in[0,l]$ with $d_\gamma(u,s)<\rho$: either $|u-s|<\rho$, giving $s \in
+  (u-\rho,u+\rho)\cap[0,l] = (t,l]$ (using $u+\rho>l$ so the upper cap is $l$, and $t\geq0$ so the
+  lower cap is $t$, and the interval is open at $t$, closed at $l$ since $[0,l]$ is closed there);
+  or $l-|u-s|<\rho$, giving $s<u-l+\rho=t'$ or $s>u+l-\rho$ — the latter is impossible since
+  $u\geq\rho$ gives $u+l-\rho\geq l\geq s$ (strict), so $s<t'$, i.e. $s\in[0,t')\subseteq[0,t']$.
+  Either way $s\in[t,l]\cup[0,t']$.
+
+  \emph{Case (c), left wrap: $\gamma$ is closed (\noderef{IsClosedCurve}) and $u<\rho$.} First,
+  $u+\rho\leq l$ (else combined with $u<\rho$, $l<u+\rho<2\rho$, contradicting $l>2\rho$). Set
+  $t:=u+l-\rho$ and $t':=u+\rho$; then $t \leq l$ (since $u\leq\rho$, so $u+l-\rho\leq l$) and $t'
+  \geq 0$ (since $u,\rho \geq 0$), $t'<t$ since $t-t' = l-2\rho>0$ by this case's hypothesis, and
+  $(l-t)+t' = (\rho-u)+(u+\rho)=2\rho=2\epsilon^{-1}\delta$, so clause~(ii) applies to $(t,t')$. We
+  check $I\subseteq[t,l]\cup[0,t']$. For $s\in[0,l]$ with $d_\gamma(u,s)<\rho$: either $|u-s|<\rho$,
+  giving $s \in (u-\rho,u+\rho)\cap[0,l] = [0,t')$ (using $u<\rho$ so the lower cap is $0$, and
+  $u+\rho=t'\leq l$ so the upper cap is $t'$, open there) $\subseteq [0,t']$; or $l-|u-s|<\rho$,
+  giving $s<u-l+\rho$ or $s>u+l-\rho=t$ — the former is impossible since $u<\rho$ gives
+  $u-l+\rho<2\rho-l<0$ (using $l>2\rho$, this case's hypothesis), so $u-l+\rho<0\leq s$ (strict),
+  hence $s>t$, i.e. $s\in(t,l]\subseteq[t,l]$. Either way $s\in[t,l]\cup[0,t']$.
+
+  \emph{Exhaustiveness and exclusivity.} If $\gamma$ is not closed, (a) applies. If $\gamma$ is
+  closed, either both $u-\rho\geq0$ and $u+\rho\leq l$ hold (case (a)), or $u+\rho>l$ (case (b)) or
+  $u<\rho$ (case (c)) holds (these are the negation of ``both'', by the trichotomy on real
+  comparisons); and, as shown in the derivations of (b) and (c), $u+\rho>l$ and $u<\rho$ cannot
+  hold simultaneously once $l>2\rho$, so at most one of (b), (c) applies alongside the failure of
+  (a)'s conjunction.
+
+  \emph{Step 3: bounding the small and big edges of the covering set $C$.} Write $C := [t,t']$ in
+  case (a) and $C := [t,l]\cup[0,t']$ in cases (b) and (c) for the covering set constructed in
+  Step 2; by Step 2, $I \subseteq C$ in all three cases.
+
+  \emph{Small edges.} In case (a), applying clause~(i) of $\mathrm{IsDeltaEpsN}(\gamma,\delta,
+  \epsilon,n)$ to $[t,t']=C$ (valid since $0\le t\le t'\le l$ and $t'-t\le 2\epsilon^{-1}\delta$, as
+  shown in Step 2) shows at most $n$ edges of $(k_0,s_0)$ of length $<\delta$ are fully contained
+  in $C$. In cases (b) and (c), applying clause~(ii) to $(t,t')$ (valid since $\gamma$ is closed
+  and $0\le t' < t \le l$ with $(l-t)+t'\le 2\epsilon^{-1}\delta$, as shown in Step 2) shows at most
+  $n$ edges of length $<\delta$ are fully contained in $[t,l]\cup[0,t']=C$. In all three cases:
+  \textbf{at most $n$ small edges of $(k_0,s_0)$ are fully contained in $C$.}
+
+  \emph{Big edges.} We bound $\abs{C}$ directly from Step 2's own data, with no appeal to
+  $\mu_\gamma$-ball-measure estimates: in case (a), $\abs{C}=t'-t\leq 2\rho=2\epsilon^{-1}\delta$
+  (shown in Step 2); in cases (b) and (c), $\abs{C}=(l-t)+t'=2\rho=2\epsilon^{-1}\delta$ exactly
+  (shown in Step 2). Edges of $(k_0,s_0)$ of length $\geq\delta$ fully contained in $C$ are, by
+  monotonicity of $s_0$ (\noderef{IsGeodesicResolution}), pairwise essentially disjoint subsets of
+  $C$ (as in Case A), so their number is at most $\abs{C}/\delta \leq 2\epsilon^{-1}$: \textbf{at
+  most $2\epsilon^{-1}$ big edges of $(k_0,s_0)$ are fully contained in $C$.}
+
+  \emph{Step 4: bounding the edges that meet $I$ without being fully contained in $C$.} Write $D :=
+  [0,l]\setminus C$: $D = [0,t)\cup(t',l]$ in case (a), and $D=(t',t)$ in cases (b) and (c).
+
+  \emph{The free endpoints $t,t'$ do not lie in $I$, unless clamped to $0$ or $l$.} In cases (b)
+  and (c), $t,t'$ are defined without clamping. In case (b), the wrap-around formula for $d_\gamma$
+  (\noderef{dGamma}, \noderef{IsClosedCurve}) gives $d_\gamma(u,t) = \min(|u-t|,\,l-|u-t|) =
+  \min(\rho,\,l-\rho) = \rho$ and $d_\gamma(u,t') = \min(|u-t'|,\,l-|u-t'|) = \min(l-\rho,\,\rho) =
+  \rho$, using $l>2\rho$ (this case's hypothesis, so $l-\rho\ge\rho$); since $I = \set{s :
+  d_\gamma(u,s)<\rho}$ is defined by a \emph{strict} inequality, $t,t'\notin I$. Case (c) is
+  symmetric. In case (a), if $t=u-\rho$ is unclamped (i.e.\ $u-\rho\ge0$), the analogous
+  computation (using the direct formula $d_\gamma(u,t)=|u-t|=\rho$ if $\gamma$ is not closed, or
+  the wrap-around formula above if $\gamma$ is closed with $u-\rho\ge0$, $u+\rho\le l$ — in which
+  case $l>2\rho$ again gives $l-\rho\ge\rho$) gives $d_\gamma(u,t)=\rho$, so $t\notin I$; if instead
+  $t=0$ (clamped), $D$'s left piece $[0,t)=\emptyset$ is empty, so there is no point of $D$ on that
+  side to begin with. Symmetrically, $t'\notin I$ unless $t'=l$ (clamped), in which case $D$'s
+  right piece $(t',l]=\emptyset$ is empty.
+
+  \emph{Every edge meeting $I$ but not fully contained in $C$ has $t$ or $t'$ in its interior.} Let
+  $e=[s_0(j-1),s_0(j)]$ be an edge of $(k_0,s_0)$ meeting $I$ but not fully contained in $C$. Since
+  $I\subseteq C$ and $t,t'\notin I$, in fact $I\subseteq C\setminus\set{t,t'}$, so $e$ has a point
+  $q\in C\setminus\set{t,t'}$; since $e\not\subseteq C$, $e$ also has a point $q''\in D$. In case
+  (a), $C\setminus\set{t,t'}=(t,t')$ lies strictly between the two pieces $[0,t)$, $(t',l]$ of $D$:
+  if $q''<t$ then $q''<t<q$ (as $q>t$), and if $q''>t'$ then $q<t'<q''$ (as $q<t'$); either way $t$
+  or $t'$ lies strictly between the two points $q,q''\in e$, hence — since $e=[s_0(j-1),s_0(j)]$ is
+  an interval containing both $q$ and $q''$ — strictly between $s_0(j-1)$ and $s_0(j)$, i.e.\ in
+  the interior of $e$. In cases (b),(c), $D=(t',t)$ lies strictly between the two pieces $[0,t')$,
+  $(t,l]$ of $C\setminus\set{t,t'}$: if $q<t'$ then $q<t'<q''$ (as $q''>t'$, since $q''\in(t',t)$),
+  and if $q>t$ then $q''<t<q$ (as $q''<t$); either way $t'$ or $t$ lies strictly between $q,q''\in
+  e$, hence in the interior of $e$ by the same reasoning.
+
+  In every case, therefore, $t$ or $t'$ lies in the interior of $e$. Edges have pairwise disjoint
+  interiors (by monotonicity of $s_0$, \noderef{IsGeodesicResolution}), so at most one edge has $t$
+  in its interior and at most one has $t'$ in its interior: \textbf{at most $2$ edges of
+  $(k_0,s_0)$ meet $I$ without being fully contained in $C$.}
+
+  \emph{Step 5: concluding the estimate.} Combining Steps 3--4, the number $k'$ of edges of
+  $(k_0,s_0)$ meeting $I$ (fully contained in $C$, or meeting $I$ without being contained in $C$)
+  satisfies $k' \leq 2\epsilon^{-1}+n+2$. Since $\set{t\in[0,l]:\gamma(t)\in B_r(x)} \subseteq I$
+  (Step 1) is covered by the union of these $k'$ edges $[s_0(j-1),s_0(j)]$, subadditivity of
+  Lebesgue measure, together with $\mu_\gamma$'s defining formula (\noderef{curveMeasure}), gives
+  \[
+    \mu_\gamma(B_r(x)) = \abs{\set{t\in[0,l]:\gamma(t)\in B_r(x)}}
+    \leq \sum_{j \in J} \abs{\set{t \in [s_0(j-1),s_0(j)] : \gamma(t) \in B_r(x)}}
+    ,
+  \]
+  where $J$ is the set of (at most $k'$) indices of the covering edges. For each $j \in J$,
+  $\gamma$ is a geodesic on $[s_0(j-1),s_0(j)]$ (\noderef{IsGeodesicResolution}), so
+  \noderef{GeodesicMorreyLeTwo} gives $\Morrey{\gamma_\#(\mathrm{Leb}|_{[s_0(j-1),s_0(j)]})} \leq 2$,
+  i.e.\ $\abs{\set{t \in [s_0(j-1),s_0(j)] : \gamma(t) \in B_r(x)}} \leq 2r$. Summing over the at
+  most $k'$ indices in $J$,
+  \[
+    \mu_\gamma(B_r(x)) \leq k' \cdot 2r \leq (2\epsilon^{-1}+n+2)\cdot 2r = (4\epsilon^{-1}+2n+4) r
+    ,
+  \]
+  which is the claim. \qedhere
+\end{proof}

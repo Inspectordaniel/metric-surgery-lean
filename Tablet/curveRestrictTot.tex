@@ -1,0 +1,29 @@
+\begin{definition}[Total restriction $\gamma|^{\mathrm{tot}}_{[a,b]}$]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), and $a, b \in \mathbb{R}$
+  arbitrary (not assumed to satisfy $0 \le a \le b \le \length(\gamma)$). Define
+  \[
+    \mathrm{curveRestrictTot}(\gamma,a,b) := \mathrm{curveRestrict}\bigl(\gamma,\, a',\, b',\, \dots\bigr)
+    ,
+  \]
+  where $a' := \min(\max(a,0),\length(\gamma))$ is $a$ clamped into $[0,\length(\gamma)]$, and
+  $b' := \max(a', \min(\max(b,0),\length(\gamma)))$ is $b$ clamped into $[0,\length(\gamma)]$ and
+  then further clamped up to be at least $a'$. By construction $0 \le a' \le b' \le \length(\gamma)$
+  always holds, so the three side conditions of \noderef{curveRestrict} are always available and
+  $\mathrm{curveRestrictTot}(\gamma,a,b) \in \Theta(E)$ is a genuine total function of
+  $(\gamma,a,b)$, with no proof obligation on the caller.
+
+  \paragraph{Purpose and agreement.} \noderef{curveRestrict} is proof-carrying: it requires
+  $0 \le a \le b \le \length(\gamma)$ as hypotheses, so a term $\mathrm{curveRestrict}(\gamma,a,b,\dots)$
+  cannot appear under an integral over a measure for which $\length(\gamma) = l$ (say) holds only
+  almost everywhere -- exactly the situation of the Paolini--Stepanov marginal identity (Lemma A.5,
+  paper.tex line 1860) and Corollary A.6 (paper.tex line 1881), where the restriction points
+  $j-1, j$ are only guaranteed to lie in $[0,\length(\gamma)]$ for $\overline{\eta}_l$-a.e.\ $\gamma$
+  (eq.~(4.8)). $\mathrm{curveRestrictTot}$ removes this obstruction by making the restriction total,
+  at the cost of being correct only on its intended (admissible) domain; \noderef{CurveRestrictTotAgrees}
+  records that on the admissible range $0 \le a \le b \le \length(\gamma)$ the two constructions
+  literally coincide as elements of $\Theta(E)$, so no mathematical content is lost by using the
+  total version in every measure-theoretic statement in this tablet from here on. This is the same
+  design move as the clamping condition built into \noderef{Curve} itself, applied one level up: a
+  proof-carrying construction is made total by clamping its data into the admissible range before
+  applying it.
+\end{definition}

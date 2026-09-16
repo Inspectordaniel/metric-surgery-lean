@@ -1,0 +1,38 @@
+\begin{lemma}[A geodesic pairing's geodesic is a one-edge piecewise geodesic]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}), and
+  $x,y \in E$. Then $G_{x,y}$ is piecewise geodesic with one edge:
+  $\mathrm{IsPiecewiseGeodesicWith}(G_{x,y},1)$ (\noderef{IsPiecewiseGeodesicWith}).
+
+  \paragraph{Why this is needed and where it is used.} This is the base case of the fact, used by
+  \noderef{SamplingPiecewiseGeodesic}, that the piecewise-geodesic sampling $\gamma^\delta$
+  (\noderef{curveSampling}), built as a chain of geodesics $G_{x,y}$, is itself piecewise geodesic:
+  it records that each individual link of the chain is (trivially) piecewise geodesic with one
+  edge. It is also used directly by \noderef{ClosingUp}, which appeals to it for the connecting
+  geodesic $\bar\gamma_{i,l} = G_{e(\gamma_{i,l}),b(\gamma_{i,l})}$ used to close up the sampled
+  curve. No node on the tablet currently states this fact, even though it is used implicitly
+  whenever the paper treats a geodesic $G_{x,y}$ as visibly piecewise geodesic (e.g.\ around
+  paper.tex 1441, where the closing-up construction concatenates $\gamma^{\delta_l}_{i,l}$ with
+  such a geodesic and the resulting curve is asserted, without further comment, to remain piecewise
+  geodesic).
+\end{lemma}
+\begin{proof}
+  Define the candidate resolution $s : \mathbb{N} \to \mathbb{R}$ by $s(0) = 0$ and $s(j) =
+  \length(G_{x,y})$ for $j \ne 0$ (in particular $s(1) = \length(G_{x,y})$); we show $s$ witnesses
+  $\mathrm{IsGeodesicResolution}(G_{x,y},1,s)$ (\noderef{IsGeodesicResolution}), i.e.\ that $s$
+  satisfies the three required conditions with $k=1$.
+
+  \emph{Monotonicity on $\{0,1\}$.} For $a,b \in \{0,1\}$ with $a \le b$: if $a=0$ then either
+  $b=0$, giving $s(a)=s(b)=0$, or $b=1$, giving $s(a)=0 \le \length(G_{x,y})=s(b)$ (using
+  $\length(G_{x,y}) \ge 0$, \noderef{Curve}'s $\mathrm{len\_nonneg}$ field). If $a=1$ then $b=1$
+  too (as $a\le b\le 1$), giving $s(a)=s(b)=\length(G_{x,y})$. In every case $s(a)\le s(b)$.
+
+  \emph{Boundary values.} $s(0)=0$ by definition, and $s(1)=\length(G_{x,y})$ by definition
+  (the $j\ne0$ branch applies at $j=1$).
+
+  \emph{The single edge is geodesic.} We must show $\mathrm{IsGeodesicOn}(G_{x,y},s(0),s(1))$, i.e.\
+  $\mathrm{IsGeodesicOn}(G_{x,y},0,\length(G_{x,y}))$ (\noderef{IsGeodesicOn}). This is exactly
+  \noderef{GeodesicPairing}'s $\mathrm{isGeodesic}$ field applied to $x,y$.
+
+  Hence $s$ witnesses $\mathrm{IsGeodesicResolution}(G_{x,y},1,s)$, so
+  $\mathrm{IsPiecewiseGeodesicWith}(G_{x,y},1)$ holds.
+\end{proof}

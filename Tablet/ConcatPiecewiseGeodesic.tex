@@ -1,0 +1,73 @@
+\begin{lemma}[Concatenation of piecewise geodesics is piecewise geodesic, with edge counts adding]
+  Let $E$ be a metric space, $\gamma_1,\gamma_2 \in \Theta(E)$ (\noderef{Curve}) with matching
+  endpoints $\gamma_1(\length(\gamma_1))=\gamma_2(0)$, and $k_1,k_2 \in \mathbb{N}$ such that
+  $\gamma_1$ is piecewise geodesic with $k_1$ edges and $\gamma_2$ is piecewise geodesic with $k_2$
+  edges (\noderef{IsPiecewiseGeodesicWith}). Then the concatenation $\gamma_1 * \gamma_2$
+  (\noderef{curveConcat}) is piecewise geodesic with $k_1 + k_2$ edges:
+  $\mathrm{IsPiecewiseGeodesicWith}(\gamma_1 * \gamma_2, k_1 + k_2)$.
+
+  \paragraph{Why the counted form, not the bare existential.} \noderef{C1SmallBall} consumes a
+  hypothesis $\mathrm{IsPiecewiseGeodesicWith}(\gamma,k)$ and returns a Morrey-norm bound
+  $\|\gamma\|_{\mathrm{Morrey}} \le 2k$ that is linear in the edge count $k$. If this lemma only
+  concluded the bare existential $\mathrm{IsPiecewiseGeodesic}(\gamma_1*\gamma_2)$ (some
+  unspecified number of edges), the Morrey side of the route to \noderef{ApproximationMetric} would
+  have no quantitative bound to work with once curves are built by iterated concatenation (as in
+  \noderef{SamplingPiecewiseGeodesic} and \noderef{ClosingUp}). Carrying $k_1+k_2$ explicitly is
+  what lets that bound propagate through concatenation.
+\end{lemma}
+\begin{proof}
+  Write $\gamma := \gamma_1 * \gamma_2$, $L_1 := \length(\gamma_1)$, $L_2 := \length(\gamma_2)$, so
+  $\length(\gamma) = L_1+L_2$ and (\noderef{curveConcat})
+  $\gamma(t) = \gamma_1(t)$ for $t \le L_1$ and $\gamma(t) = \gamma_2(t-L_1)$ for $t \ge L_1$ (the
+  two formulas agree at $t=L_1$ by the endpoint-matching hypothesis). Let $s_1,s_2$
+  be resolutions witnessing $\mathrm{IsGeodesicResolution}(\gamma_1,k_1,s_1)$ and
+  $\mathrm{IsGeodesicResolution}(\gamma_2,k_2,s_2)$ respectively (\noderef{IsGeodesicResolution}).
+
+  \emph{Two arithmetic facts about $s_1,s_2$, from monotonicity and the boundary values.} For
+  $i \le k_1$, $s_1(i) \le s_1(k_1) = L_1$ (monotonicity of $s_1$ on $\{0,\dots,k_1\}$ together with
+  $s_1(k_1)=L_1$). For $i \le k_2$, $0 = s_2(0) \le s_2(i)$ (monotonicity of $s_2$ together with
+  $s_2(0)=0$).
+
+  Define the candidate resolution
+  \[
+    s(j) := \begin{cases} s_1(j) & j \le k_1 \\ L_1 + s_2(j-k_1) & j > k_1 \end{cases}
+    .
+  \]
+  We show $s$ witnesses $\mathrm{IsGeodesicResolution}(\gamma,k_1+k_2,s)$.
+
+  \emph{Boundary values.} $s(0) = s_1(0) = 0$ (using $0 \le k_1$ and $s_1(0)=0$). For the top value:
+  if $k_2=0$ then $s_2(0)=s_2(k_2)=L_2$, so $L_2=0$; hence $s(k_1+k_2)=s(k_1)=s_1(k_1)=L_1=L_1+L_2$
+  (using $L_2=0$). If $k_2 \ne 0$ then $k_1+k_2 > k_1$, so
+  $s(k_1+k_2) = L_1 + s_2((k_1+k_2)-k_1) = L_1+s_2(k_2) = L_1+L_2$.
+
+  \emph{Monotonicity on $\{0,\dots,k_1+k_2\}$.} Let $a \le b$ in $\{0,\dots,k_1+k_2\}$. If both
+  $a,b\le k_1$: $s(a)=s_1(a)\le s_1(b)=s(b)$ by monotonicity of $s_1$. If $a\le k_1 < b$:
+  $s(a)=s_1(a)\le L_1$ (first arithmetic fact) $\le L_1+s_2(b-k_1)=s(b)$ (second arithmetic fact,
+  since $b-k_1\le k_2$). The case $k_1<a\le b$ reduces, using $s(a)=L_1+s_2(a-k_1)$,
+  $s(b)=L_1+s_2(b-k_1)$, to monotonicity of $s_2$ applied to $a-k_1\le b-k_1$ (both $\le k_2$ since
+  $a,b\le k_1+k_2$). The remaining case $k_1<a$ and $b\le k_1$ cannot occur, since $a\le b$ would
+  force $k_1<a\le b\le k_1$.
+
+  \emph{Each edge $[s(i),s(i+1)]$ for $i<k_1+k_2$ is geodesic on $\gamma$.} Two cases.
+
+  \emph{Case $i+1\le k_1$ (so also $i\le k_1$).} Then $s(i)=s_1(i)$, $s(i+1)=s_1(i+1)$, and by the
+  first arithmetic fact $s_1(i),s_1(i+1) \le s_1(k_1)=L_1$, so on $[s(i),s(i+1)]$ the values of
+  $\gamma$ coincide with the values of $\gamma_1$ (both endpoints, hence the whole interval by
+  monotonicity of $s_1$, lie in $[0,L_1]$, the branch on which $\gamma=\gamma_1$). Hence
+  $\mathrm{IsGeodesicOn}(\gamma,s(i),s(i+1))$ follows directly from
+  $\mathrm{IsGeodesicOn}(\gamma_1,s_1(i),s_1(i+1))$, which holds since $i<k_1$ and $s_1$ resolves
+  $\gamma_1$.
+
+  \emph{Case $i+1>k_1$.} Then either $i>k_1$, or $i=k_1$; in the latter case $s(i)=s_1(k_1)=L_1$
+  agrees with the formula $s(i)=L_1+s_2(i-k_1)=L_1+s_2(0)=L_1$ (since $s_2(0)=0$), so in either
+  sub-case $s(i)=L_1+s_2(i-k_1)$ and $s(i+1)=L_1+s_2(i+1-k_1)=L_1+s_2((i-k_1)+1)$. By the second
+  arithmetic fact both values are $\ge L_1$, so on $[s(i),s(i+1)]$ the values of $\gamma$ coincide
+  with $u \mapsto \gamma_2(u-L_1)$ (the branch on which $\gamma(u)=\gamma_2(u-L_1)$, valid since
+  $u \ge L_1$ throughout the interval by monotonicity). Translating by the constant $L_1$,
+  $\mathrm{IsGeodesicOn}(\gamma,s(i),s(i+1))$ is equivalent to
+  $\mathrm{IsGeodesicOn}(\gamma_2,s_2(i-k_1),s_2((i-k_1)+1))$, which holds since $i-k_1<k_2$ (from
+  $i<k_1+k_2$) and $s_2$ resolves $\gamma_2$.
+
+  Hence $s$ witnesses $\mathrm{IsGeodesicResolution}(\gamma,k_1+k_2,s)$, so
+  $\mathrm{IsPiecewiseGeodesicWith}(\gamma_1*\gamma_2,k_1+k_2)$ holds.
+\end{proof}

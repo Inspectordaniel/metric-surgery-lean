@@ -1,0 +1,110 @@
+\begin{helper}[Amortization step for a Type II cut]
+  Let $\delta,\epsilon \in \mathbb{R}$ and $n \in \mathbb{N}$ with $0<\epsilon<1$, $\delta>0$ and
+  $n>0$, let $L,L',L_d \in \mathbb{R}$, and let $m,m' \in \mathbb{N}$. Assume
+  \[
+    L' \le L
+    , \qquad
+    L' + L_d \le L + 4\epsilon^{-1}\delta
+    , \qquad
+    m' + n \le m
+    .
+  \]
+  Then both of the following hold:
+  \begin{align}
+    \label{eq:StepII-measure}
+    (n+3)\left\lfloor \frac{L'}{(1-\epsilon)\delta} \right\rfloor + m' + n
+      &\le (n+3)\left\lfloor \frac{L}{(1-\epsilon)\delta} \right\rfloor + m
+    ,\\
+    \label{eq:StepII-length}
+    L_d + \mathrm{surgeryPotential}(\epsilon,\delta,n,L',m')
+      &\le \mathrm{surgeryPotential}(\epsilon,\delta,n,L,m)
+    \quad\text{(\noderef{surgeryPotential})}
+    .
+  \end{align}
+  Here $\lfloor\cdot\rfloor$ denotes the natural-number floor of a real number (which is $0$ on
+  negative inputs).
+
+  \paragraph{Role.} This is the purely numerical content of the Type II branch of the paper's
+  surgery algorithm (paper.tex lines 1005--1075, ``Algorithm 1''), with $L,m$ the length and
+  small-edge count of the curve entering the branch, $L',m'$ those of the kept curve, and $L_d$ the
+  length of the discarded curve; the three hypotheses are exactly the numerical conclusions of the
+  Type II cut. Inequality \eqref{eq:StepII-measure} is the strict drop (by at least $n>0$) of the
+  termination measure that drives the induction, written in the subtraction-free form
+  ``$M(L',m')+n \le M(L,m)$''; inequality \eqref{eq:StepII-length} is the amortized bookkeeping
+  that replaces the paper's separate count $T_{II}\le(3/n)T_I$ of cuts of each type.
+\end{helper}
+\begin{proof}
+  Write $c := (1-\epsilon)\delta$. Since $0<\epsilon<1$ we have $1-\epsilon>0$, and since
+  $\delta>0$ we get $c>0$. Write
+  \[
+    A := 1 + \frac{2\epsilon}{1-\epsilon} + \frac{12\epsilon^{-1}}{n(1-\epsilon)}
+    , \qquad
+    C := \frac{4\epsilon^{-1}\delta}{n}
+    ,
+  \]
+  so that, by \noderef{surgeryPotential},
+  $\mathrm{surgeryPotential}(\epsilon,\delta,n,X,k) = A\,X + C\,k$ for all $X \in \mathbb{R}$,
+  $k \in \mathbb{N}$. Note that $n>0$ gives $n \ne 0$ as a real number, and $1-\epsilon>0$ gives
+  $1-\epsilon\ne0$, so both $A$ and $C$ are well defined.
+
+  \emph{Proof of \eqref{eq:StepII-measure}.} Dividing the hypothesis $L'\le L$ by the positive
+  number $c$ preserves the inequality, so $L'/c \le L/c$. The natural-number floor function is
+  monotone, hence $\lfloor L'/c\rfloor \le \lfloor L/c\rfloor$, and multiplying this inequality of
+  natural numbers by $n+3$ gives
+  \[
+    (n+3)\left\lfloor \frac{L'}{c} \right\rfloor \le (n+3)\left\lfloor \frac{L}{c} \right\rfloor
+    .
+  \]
+  Adding this to the hypothesis $m'+n\le m$ (an inequality of natural numbers) gives
+  \eqref{eq:StepII-measure}.
+
+  \emph{Proof of \eqref{eq:StepII-length}.} Since $0<\epsilon<1$ and $n>0$, each of the three
+  summands $1$, $2\epsilon/(1-\epsilon)$, $12\epsilon^{-1}/(n(1-\epsilon))$ is nonnegative
+  ($\epsilon>0$, $1-\epsilon>0$, $\epsilon^{-1}>0$, $n>0$), so in particular
+  \begin{equation}
+    \label{eq:StepII-Age1}
+    A \ge 1
+    , \qquad A - 1 = \frac{2\epsilon}{1-\epsilon} + \frac{12\epsilon^{-1}}{n(1-\epsilon)} \ge 0
+    ,
+  \end{equation}
+  and likewise $C>0$. Clearing the denominator $n \ne 0$ gives the identity
+  \begin{equation}
+    \label{eq:StepII-Cn}
+    C \cdot n = \frac{4\epsilon^{-1}\delta}{n}\cdot n = 4\epsilon^{-1}\delta
+    .
+  \end{equation}
+
+  Multiplying the hypothesis $L'\le L$ by the nonnegative number $A-1$
+  (\eqref{eq:StepII-Age1}) gives $(A-1)L' \le (A-1)L$, i.e.
+  \begin{equation}
+    \label{eq:StepII-Apart}
+    A L' - L' \le A L - L
+    .
+  \end{equation}
+  Next, casting $m'+n\le m$ into the reals gives $m'+n \le m$ as real numbers, and multiplying by
+  the nonnegative number $C$ gives $C(m'+n) \le C\,m$, i.e.\ using \eqref{eq:StepII-Cn},
+  \begin{equation}
+    \label{eq:StepII-Cpart}
+    C\,m' + 4\epsilon^{-1}\delta \le C\,m
+    .
+  \end{equation}
+  Finally, the hypothesis $L'+L_d \le L + 4\epsilon^{-1}\delta$ rearranges to
+  \begin{equation}
+    \label{eq:StepII-tot}
+    L_d \le (L - L') + 4\epsilon^{-1}\delta
+    .
+  \end{equation}
+  Adding \eqref{eq:StepII-Apart}, \eqref{eq:StepII-Cpart} and \eqref{eq:StepII-tot}:
+  \[
+    L_d + \bigl(A L' - L'\bigr) + C m' + 4\epsilon^{-1}\delta
+      \le (L-L') + 4\epsilon^{-1}\delta + \bigl(A L - L\bigr) + C m
+    ,
+  \]
+  and cancelling the common summand $4\epsilon^{-1}\delta$ from both sides and then adding $L'$
+  to both sides yields
+  \[
+    L_d + A L' + C m' \le A L + C m
+    ,
+  \]
+  which is exactly \eqref{eq:StepII-length}.
+\end{proof}

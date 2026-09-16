@@ -1,0 +1,154 @@
+\begin{lemma}[The basic cut's discarded arc, at resolution breakpoints, has an exact resolution]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}), $\gamma \in
+  \Theta(E)$ (\noderef{Curve}) a closed curve (\noderef{IsClosedCurve}), $k \in \mathbb{N}$, $s
+  \colon \mathbb{N} \to \mathbb{R}$ a resolution of $\gamma$ into $k$ geodesic edges
+  (\noderef{IsGeodesicResolution}), and $p,q \in \set{0,\dots,k}$ with $s(p) \ne s(q)$. Write $t :=
+  s(p)$, $t' := s(q)$ and $(\gamma',g) := C(\gamma,t,t')$ (\noderef{BasicCut}). Using the same
+  excision predicate as \noderef{BasicCutResolutionAtBreakpoints},
+  \[
+    \mathrm{inArc}(j) :=
+    \begin{cases}
+      p < j \le q & \text{if } p<q \\
+      j \le q \text{ or } p < j & \text{if } q<p
+    \end{cases}
+    \qquad (j \in \set{1,\dots,k})
+    ,
+  \]
+  the discarded output $g$ admits a geodesic resolution with \emph{exactly}
+  $\#\set{j\in\set{1,\dots,k} : \mathrm{inArc}(j)} + 1$ pieces:
+  \[
+    \mathrm{IsPiecewiseGeodesicWith}\bigl(g,\ \#\set{j\in\set{1,\dots,k} : \mathrm{inArc}(j)} + 1\bigr)
+    .
+  \]
+
+  \paragraph{Why this is the mirror of \noderef{BasicCutResolutionAtBreakpoints}, and why it is
+  needed.} \noderef{BasicCutResolutionAtBreakpoints} bounds $\mathrm{smallPieceCount}(\gamma',\delta)$
+  -- an infimum over \emph{all} resolutions of the \emph{kept} output $\gamma'$ -- and so only
+  produces an inequality. Here, by contrast, the claim is about $\mathrm{IsPiecewiseGeodesicWith}$,
+  which merely asserts the \emph{existence} of a resolution with a given piece count; since $g$'s
+  natural resolution (the excised edges of $s$ plus the one new closing edge) has this piece count
+  \emph{exactly}, no infimum-taking or bookkeeping about which edges are ``small'' is needed at all
+  -- only the exact size of the exhibited resolution. This exact form is what the Type~II cut
+  construction needs: its Morrey bound goes through \noderef{C1SmallBall}, whose hypothesis is
+  $\mathrm{IsPiecewiseGeodesicWith}(g,k')$ for a \emph{concrete} $k'$, and
+  \noderef{BasicCutClosed} supplies only the existential $\mathrm{IsPiecewiseGeodesic}(g)$.
+
+  \paragraph{Why this is not subsumed by \noderef{BasicCutResolutionAtBreakpoints}.} That lemma's
+  conclusion is entirely about the \emph{kept} output $\gamma'$ (component \texttt{.1} of
+  \noderef{BasicCut}) and the small-edge counts $m_{\mathrm{tot}},m_{\mathrm{exc}}$; it says nothing
+  about the \emph{discarded} output $g$ (component \texttt{.2}) or about exact (rather than
+  small-edge-restricted) resolution sizes, which is the entire content of the present lemma.
+\end{lemma}
+\begin{proof}
+  \emph{General fact 1 (exact sub-resolution extraction).} If $0 \le c \le d \le k$, then, setting
+  $s'(i) := s(c+i)-s(c)$ for $i=0,\dots,d-c$, $s'$ witnesses
+  $\mathrm{IsGeodesicResolution}(\mathrm{curveRestrict}(\gamma,s(c),s(d)),\,d-c,\,s')$
+  (\noderef{curveRestrict}, \noderef{IsGeodesicResolution}). Indeed: $s'$ is monotone on
+  $\set{0,\dots,d-c}$ since $s$ is monotone on $\set{c,\dots,d}\subseteq\set{0,\dots,k}$
+  (using $0\le c\le d\le k$, \noderef{IsGeodesicResolution}); $s'(0)=s(c)-s(c)=0$; $s'(d-c) =
+  s(d)-s(c) = \length(\mathrm{curveRestrict}(\gamma,s(c),s(d)))$ (\noderef{curveRestrict}'s length
+  formula). For $i<d-c$: since $s(c)\le s(c+i)\le s(c+i+1)\le s(d)$ (monotonicity, as
+  $c\le c+i\le c+i+1\le d$), the values $s'(i)=s(c+i)-s(c)$ and $s'(i+1)=s(c+i+1)-s(c)$ lie in
+  $[0,s(d)-s(c)]$, so \noderef{curveRestrict}'s defining formula $\mathrm{curveRestrict}(\gamma,a',b')(u)
+  = \gamma(a'+u)$ for $u \in [0,b'-a']$ (unclamped there) gives, for $u,v\in[s'(i),s'(i+1)]$, writing
+  $u':=s(c)+u,v':=s(c)+v \in [s(c+i),s(c+i+1)]$, that $\mathrm{dist}(\mathrm{curveRestrict}(\gamma,
+  s(c),s(d))(u),\mathrm{curveRestrict}(\gamma,s(c),s(d))(v)) = \mathrm{dist}(\gamma(u'),\gamma(v')) =
+  |u'-v'|=|u-v|$, the middle equality because $c+i<k$ (as $i<d-c$ gives $c+i<d\le k$) makes
+  $\mathrm{IsGeodesicOn}(\gamma,s(c+i),s(c+i+1))$ (\noderef{IsGeodesicOn}) a hypothesis of
+  $\mathrm{IsGeodesicResolution}(\gamma,k,s)$ applicable to $u',v'$. This is exactly
+  $\mathrm{IsGeodesicOn}(\mathrm{curveRestrict}(\gamma,s(c),s(d)),s'(i),s'(i+1))$, proving General
+  fact 1. In particular $\mathrm{curveRestrict}(\gamma,s(c),s(d))$ admits a resolution with exactly
+  $d-c$ pieces.
+
+  \emph{General fact 2 (exact resolution concatenation).} If $\eta_1,\eta_2 \in \Theta(E)$ admit
+  geodesic resolutions $(k_1,r_1)$, $(k_2,r_2)$ respectively and $\eta_1(\length(\eta_1)) =
+  \eta_2(0)$, then $\eta_1 * \eta_2$ (\noderef{curveConcat}) admits the geodesic resolution
+  $(k_1+k_2,r)$ with $r(i)=r_1(i)$ for $i\le k_1$ and $r(i) = \length(\eta_1)+r_2(i-k_1)$ for
+  $i>k_1$ (agreeing at $i=k_1$: both give $\length(\eta_1)$, since $r_1(k_1)=\length(\eta_1)$ and
+  $r_2(0)=0$). Indeed $r$ is monotone on $\set{0,\dots,k_1+k_2}$ ($r_1,r_2$ monotone on their own
+  ranges, meeting continuously at $i=k_1$); $r(0)=r_1(0)=0$; $r(k_1+k_2) = \length(\eta_1)+r_2(k_2) =
+  \length(\eta_1)+\length(\eta_2) = \length(\eta_1*\eta_2)$ (\noderef{curveConcat}); for $i<k_1$, on
+  $[r_1(i),r_1(i+1)]\subseteq[0,\length(\eta_1)]$, $\eta_1*\eta_2$ agrees with $\eta_1$
+  (\noderef{curveConcat}'s defining formula), so $\mathrm{IsGeodesicOn}(\eta_1*\eta_2,r(i),r(i+1))$
+  is literally $\mathrm{IsGeodesicOn}(\eta_1,r_1(i),r_1(i+1))$, a hypothesis; for $k_1\le i<k_1+k_2$,
+  writing $i=k_1+j$, on $[\length(\eta_1)+r_2(j),\length(\eta_1)+r_2(j+1)]$,
+  $(\eta_1*\eta_2)(u)=\eta_2(u-\length(\eta_1))$ (\noderef{curveConcat}'s defining formula), so for
+  $u,v$ in this range, $\mathrm{dist}((\eta_1*\eta_2)(u),(\eta_1*\eta_2)(v)) =
+  \mathrm{dist}(\eta_2(u-\length(\eta_1)),\eta_2(v-\length(\eta_1))) = |u-v|$ by
+  $\mathrm{IsGeodesicOn}(\eta_2,r_2(j),r_2(j+1))$ (a hypothesis) applied to
+  $u-\length(\eta_1),v-\length(\eta_1)\in[r_2(j),r_2(j+1)]$. So $r$ witnesses
+  $\mathrm{IsGeodesicResolution}(\eta_1*\eta_2,k_1+k_2,r)$, proving General fact 2: $\eta_1*\eta_2$
+  admits a resolution with exactly $k_1+k_2$ pieces.
+
+  \emph{General fact 3 (a single geodesic edge is a $1$-piece resolution).} For any $x,y\in E$,
+  $G_{x,y}$ (\noderef{GeodesicPairing}) admits the geodesic resolution $(1,r)$ with $r(0)=0$,
+  $r(1)=\length(G_{x,y})$: monotonicity is $0\le\length(G_{x,y})$ (\noderef{Curve}'s
+  $\mathrm{len\_nonneg}$ field), and $\mathrm{IsGeodesicOn}(G_{x,y},0,\length(G_{x,y}))$ is exactly
+  the $\mathrm{isGeodesic}$ field of \noderef{GeodesicPairing}. So $G_{x,y}$ admits a resolution with
+  exactly $1$ piece.
+
+  Throughout, exhibiting a resolution $(N,r)$ with $\mathrm{IsGeodesicResolution}(\eta,N,r)$ for a
+  curve $\eta$ is exactly what $\mathrm{IsPiecewiseGeodesicWith}(\eta,N)$
+  (\noderef{IsPiecewiseGeodesicWith}) requires ($\exists r,\ \mathrm{IsGeodesicResolution}(\eta,N,r)$),
+  so General facts 1-3 each equally establish the corresponding
+  $\mathrm{IsPiecewiseGeodesicWith}$ instance.
+
+  \emph{A cardinality fact about $\mathrm{inArc}$.} For $p<q$ (both in $\set{0,\dots,k}$),
+  $\#\set{j\in\set{1,\dots,k} : p<j\le q} = q-p$ (the integer interval $(p,q]$ has $q-p$ elements,
+  and $(p,q]\subseteq\set{1,\dots,k}$ since $p\ge0,q\le k$). For $q<p$,
+  $\#\set{j\in\set{1,\dots,k}:j\le q} = q$ and $\#\set{j\in\set{1,\dots,k}:p<j}=k-p$ (using $q\le k$,
+  $p\le k$), and these two sets are disjoint (as $q<p$), so
+  $\#\set{j\in\set{1,\dots,k}: j\le q \text{ or } p<j} = q+(k-p)$.
+
+  Since $s(p)\ne s(q)$, exactly one of $p<q$ or $q<p$ holds.
+
+  \paragraph{Case $p<q$.} By monotonicity of $s$ (\noderef{IsGeodesicResolution}), $s(p)\le s(q)$,
+  and with $s(p)\ne s(q)$, $t=s(p)<s(q)=t'$. By \noderef{BasicCut}'s case split (using $t<t'$),
+  $g = \mathrm{curveRestrict}(\gamma,t,t') * G_{\gamma(t'),\gamma(t)}$.
+
+  By General fact 1 with $(c,d)=(p,q)$ (valid, $0\le p\le q\le k$), $\mathrm{curveRestrict}(\gamma,t,
+  t')$ admits an exact resolution with $q-p$ pieces. By General fact 3,
+  $G_{\gamma(t'),\gamma(t)}$ admits an exact resolution with $1$ piece. Their endpoints match:
+  $\mathrm{curveRestrict}(\gamma,t,t')$'s value at its own length $t'-t$ is $\gamma(t+(t'-t)) =
+  \gamma(t')$ (\noderef{curveRestrict}'s defining formula, unclamped there), and
+  $G_{\gamma(t'),\gamma(t)}$'s value at $0$ is $\gamma(t')$ (\noderef{GeodesicPairing}'s
+  $\mathrm{start\_eq}$ field) -- exactly the identification \noderef{BasicCut} itself already
+  establishes for this concatenation to be well-defined. By General fact 2, $g$ admits an exact
+  resolution with $(q-p)+1$ pieces. By the cardinality fact above (case $p<q$), $q-p =
+  \#\set{j\in\set{1,\dots,k}:\mathrm{inArc}(j)}$, so $g$ admits an exact resolution with
+  $\#\set{j\in\set{1,\dots,k}:\mathrm{inArc}(j)}+1$ pieces, i.e.\
+  $\mathrm{IsPiecewiseGeodesicWith}(g,\#\set{j\in\set{1,\dots,k}:\mathrm{inArc}(j)}+1)$, as claimed.
+
+  \paragraph{Case $q<p$.} By monotonicity, $s(q)\le s(p)$, and with $s(p)\ne s(q)$, $t'=s(q)<s(p)=t$.
+  By \noderef{BasicCut}'s case split (using $t'<t$), $g = \mathrm{curveWrapRestrict}(\gamma,t,t') *
+  G_{\gamma(t'),\gamma(t)}$, and $\mathrm{curveWrapRestrict}(\gamma,t,t') =
+  \mathrm{curveRestrict}(\gamma,t,\length(\gamma)) * \mathrm{curveRestrict}(\gamma,0,t')$
+  (\noderef{curveWrapRestrict}).
+
+  By General fact 1 with $(c,d)=(p,k)$ (valid, $0\le p\le k$; $s(k)=\length(\gamma)$,
+  \noderef{IsGeodesicResolution}), $\mathrm{curveRestrict}(\gamma,t,\length(\gamma))$ admits an exact
+  resolution with $k-p$ pieces. By General fact 1 with $(c,d)=(0,q)$ (valid, $0\le q\le k$;
+  $s(0)=0$), $\mathrm{curveRestrict}(\gamma,0,t')$ admits an exact resolution with $q$ pieces. Their
+  endpoints match by closedness of $\gamma$ (\noderef{IsClosedCurve}), exactly the identification
+  \noderef{curveWrapRestrict} itself already establishes for this concatenation (its own
+  well-definedness argument: the endpoint of $\gamma|_{[t,\length(\gamma)]}$ is
+  $\gamma(\length(\gamma))$ and the initial point of $\gamma|_{[0,t']}$ is $\gamma(0)$, and these
+  agree since $\gamma$ is closed). By General fact 2, $\mathrm{curveWrapRestrict}(\gamma,t,t')$
+  admits an exact resolution with $(k-p)+q$ pieces.
+
+  By General fact 3, $G_{\gamma(t'),\gamma(t)}$ admits an exact resolution with $1$ piece. Its
+  endpoint matches $\mathrm{curveWrapRestrict}(\gamma,t,t')$'s: by \noderef{curveConcat}'s defining
+  formula, the value of $\mathrm{curveWrapRestrict}(\gamma,t,t')$ at its own length equals the
+  second piece $\mathrm{curveRestrict}(\gamma,0,t')$'s value at ITS OWN length $t'$, namely
+  $\gamma(0+t')=\gamma(t')$ (\noderef{curveRestrict}'s defining formula); and
+  $G_{\gamma(t'),\gamma(t)}$'s value at $0$ is $\gamma(t')$ (\noderef{GeodesicPairing}'s
+  $\mathrm{start\_eq}$ field) -- exactly the identification \noderef{BasicCut} itself already
+  establishes for this concatenation to be well-defined.
+
+  By General fact 2 once more, $g$ admits an exact resolution with $((k-p)+q)+1$ pieces. By the
+  cardinality fact above (case $q<p$), $(k-p)+q = \#\set{j\in\set{1,\dots,k}:\mathrm{inArc}(j)}$, so
+  $g$ admits an exact resolution with $\#\set{j\in\set{1,\dots,k}:\mathrm{inArc}(j)}+1$ pieces, i.e.\
+  $\mathrm{IsPiecewiseGeodesicWith}(g,\#\set{j\in\set{1,\dots,k}:\mathrm{inArc}(j)}+1)$, as claimed.
+
+  Both cases exhaust $s(p)\ne s(q)$, completing the proof.
+\end{proof}

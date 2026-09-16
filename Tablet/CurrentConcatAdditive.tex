@@ -1,0 +1,123 @@
+\begin{lemma}[Additivity of $[[\gamma]]$ over a concatenation]
+  Let $E$ be a metric space, $\gamma_1,\gamma_2 \in \Theta(E)$ (\noderef{Curve}) with matching
+  endpoints $\gamma_1(\length(\gamma_1)) = \gamma_2(0)$, and $\omega \in \mathcal{D}^1(E)$
+  (\noderef{Form1}). Then
+  \[
+    [[\gamma_1 * \gamma_2]](\omega) = [[\gamma_1]](\omega) + [[\gamma_2]](\omega)
+    ,
+  \]
+  where $*$ is the concatenation of \noderef{curveConcat}.
+
+  This is exactly the case $k=2$ of paper.tex line 1129: ``if $\gamma$ is a concatenation of curves
+  $\gamma_1,\dots,\gamma_k$ then we may split the Riemann-Stieltjes integral \eqref{currentcurve}
+  across the subintervals corresponding to the concatenated curves, so that
+  $[[\gamma]]=[[\gamma_1]]+\dotsb+[[\gamma_k]]$ follows immediately.'' Unlike
+  \noderef{CurrentResolutionAdditive}, which is the analogous additivity statement for a
+  \emph{resolution of a single curve into edges of its own domain} (an un-reparametrized splitting
+  of one integral), this lemma is about the concatenation operator \noderef{curveConcat} itself,
+  which builds a genuinely new curve $\gamma_1 * \gamma_2 \in \Theta(E)$ by reparametrizing
+  $\gamma_2$ to start where $\gamma_1$ ends; the two statements are independent (neither's Lean
+  statement mentions the object the other is about), and \noderef{CurrentConcatAdditive} is what
+  \noderef{BasicCutCurrent} needs, since the two pieces produced by \noderef{BasicCut} are built by
+  \noderef{curveConcat}, not by resolving a single ambient curve.
+\end{lemma}
+\begin{proof}
+  Write $\gamma := \gamma_1 * \gamma_2$, $L_1 := \length(\gamma_1)$, $L_2 := \length(\gamma_2)$, so
+  by \noderef{curveConcat}, $\length(\gamma) = L_1+L_2$ and, for all $t \in \mathbb{R}$,
+  \[
+    \gamma(t) = \gamma_1(t) \text{ if } t \le L_1
+    , \qquad
+    \gamma(t) = \gamma_2(t-L_1) \text{ if } t > L_1
+    . \tag{$\ast$}
+  \]
+  (This is the literal underlying map of $\mathrm{curveConcat}$, an equality holding for every real
+  $t$, not merely on $[0,L_1+L_2]$.)
+
+  \emph{Step 1: integrability of each current's integrand.} For any curve $\eta \in \Theta(E)$
+  (here $\gamma$, $\gamma_1$, or $\gamma_2$), \noderef{CurveLipschitz} gives that $\eta$ is globally
+  $1$-Lipschitz, and $\omega.\pi$ is $\mathrm{Lip}(\omega.\pi)$-Lipschitz (\noderef{Form1}), so
+  $\omega.\pi \circ \eta$ is globally Lipschitz, hence absolutely continuous on every interval
+  (\texttt{LipschitzOnWith.absolutelyContinuousOnInterval}, \texttt{Preamble}); consequently
+  $\mathrm{deriv}(\omega.\pi\circ\eta)$ is interval-integrable on every $a..b$
+  (\texttt{AbsolutelyContinuousOnInterval.intervalIntegrable\_deriv}, \texttt{Preamble}). Also
+  $\omega.f$ is Lipschitz (\noderef{Form1}), hence continuous, so $\omega.f \circ \eta$ is
+  continuous on $\mathbb{R}$, hence bounded and continuous on every compact $[a,b]$. The product of
+  an interval-integrable function with a continuous one on $[a,b]$ is interval-integrable on $a..b$;
+  so $t \mapsto \omega.f(\eta(t)) \cdot \mathrm{deriv}(\omega.\pi\circ\eta)(t)$ is interval-integrable
+  on $a..b$ for every $a,b\in\mathbb{R}$ and every such $\eta$. In particular this applies to
+  $\eta=\gamma$, so the integral defining $[[\gamma]](\omega)$ over $[0,L_1+L_2]$ may be split at
+  $L_1$:
+  \[
+    [[\gamma]](\omega)
+    = \int_0^{L_1} \omega.f(\gamma(t)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma)(t)\,dt
+    + \int_{L_1}^{L_1+L_2} \omega.f(\gamma(t)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma)(t)\,dt
+    \tag{1}
+  \]
+  by the standard additivity of the interval integral over adjacent intervals
+  (\texttt{intervalIntegral.integral\_add\_adjacent\_intervals}, \texttt{Preamble}).
+
+  \emph{Step 2: the first piece of (1) equals $[[\gamma_1]](\omega)$.} By $(\ast)$, $\gamma(t) =
+  \gamma_1(t)$ for \emph{every} $t \le L_1$ (not merely for $t \in [0,L_1]$), so
+  $\gamma$ and $\gamma_1$ agree pointwise as functions on the whole open ray $(-\infty,L_1)$, an
+  open subset of $\mathbb{R}$. Since agreement on an open set containing a point $t$ makes the two
+  functions eventually equal in a neighbourhood of $t$, and $\mathrm{deriv}$ depends only on the
+  germ of a function at a point (\texttt{Filter.EventuallyEq.deriv\_eq}, \texttt{Preamble}: via
+  \texttt{Mathlib.Analysis.Calculus.Deriv.Basic}), we get, for every $t < L_1$,
+  \[
+    \mathrm{deriv}(\omega.\pi\circ\gamma)(t) = \mathrm{deriv}(\omega.\pi\circ\gamma_1)(t)
+    . \tag{2}
+  \]
+  Also $\omega.f(\gamma(t)) = \omega.f(\gamma_1(t))$ for every $t\le L_1$ directly from $(\ast)$
+  (this holds at $t=L_1$ too, unlike (2)). Hence the two integrands
+  $t\mapsto\omega.f(\gamma(t))\cdot\mathrm{deriv}(\omega.\pi\circ\gamma)(t)$ and
+  $t\mapsto\omega.f(\gamma_1(t))\cdot\mathrm{deriv}(\omega.\pi\circ\gamma_1)(t)$ agree for every $t \in
+  [0,L_1)$, i.e.\ everywhere on $[0,L_1]$ except possibly at the single point $t=L_1$. A single point
+  is Lebesgue-null, and altering an integrand on a null set does not change the value of a Bochner
+  (Lebesgue) integral (\texttt{MeasureTheory.integral\_congr\_ae}, \texttt{Preamble}: two functions
+  equal $\mu$-a.e.\ have equal integrals); since interval integrals over $[0,L_1]$ (with $0\le L_1$)
+  are exactly such Bochner integrals, this gives
+  \[
+    \int_0^{L_1} \omega.f(\gamma(t)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma)(t)\,dt
+    = \int_0^{L_1} \omega.f(\gamma_1(t)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma_1)(t)\,dt
+    = [[\gamma_1]](\omega)
+    ,
+  \]
+  the last equality by \noderef{curveCurrent} applied to $\gamma_1$.
+
+  \emph{Step 3: the second piece of (1) equals $[[\gamma_2]](\omega)$.} Define $h_2(t) :=
+  \gamma_2(t-L_1)$. By $(\ast)$, $\gamma(t) = h_2(t)$ for every $t > L_1$, so $\gamma$ and $h_2$
+  agree pointwise on the open ray $(L_1,\infty)$; as in Step~2, this gives, for every $t > L_1$,
+  \[
+    \mathrm{deriv}(\omega.\pi\circ\gamma)(t) = \mathrm{deriv}(\omega.\pi\circ h_2)(t)
+    = \mathrm{deriv}\bigl(u\mapsto (\omega.\pi\circ\gamma_2)(u-L_1)\bigr)(t)
+    = \mathrm{deriv}(\omega.\pi\circ\gamma_2)(t-L_1)
+    , \tag{3}
+  \]
+  the last equality by the standard derivative-of-a-shift identity
+  $\mathrm{deriv}(u\mapsto g(u-c))(t) = \mathrm{deriv}(g)(t-c)$ for a constant $c$ (an instance of
+  the chain rule for the affine map $u\mapsto u-c$, which has derivative $1$; available via
+  \texttt{Mathlib.Analysis.Calculus.Deriv.Shift}, already imported in \texttt{Preamble}). Also
+  $\omega.f(\gamma(t)) = \omega.f(h_2(t)) =
+  \omega.f(\gamma_2(t-L_1))$ for every $t \ge L_1$, directly from $(\ast)$. So the integrand of the
+  second piece of (1) agrees with $t\mapsto\omega.f(\gamma_2(t-L_1))\cdot
+  \mathrm{deriv}(\omega.\pi\circ\gamma_2)(t-L_1)$ for every $t\in(L_1,L_1+L_2]$, i.e.\ everywhere on
+  $[L_1,L_1+L_2]$ except possibly at $t=L_1$; as in Step~2, the single exceptional point is
+  Lebesgue-null and does not affect the integral, giving
+  \[
+    \int_{L_1}^{L_1+L_2} \omega.f(\gamma(t)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma)(t)\,dt
+    = \int_{L_1}^{L_1+L_2} \omega.f(\gamma_2(t-L_1)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma_2)(t-L_1)\,dt
+    .
+  \]
+  Substituting $u = t - L_1$ (the standard translation-invariance of the interval integral,
+  $\int_a^b F(t-c)\,dt = \int_{a-c}^{b-c} F(u)\,du$, \texttt{intervalIntegral.integral\_comp\_sub\_right},
+  \texttt{Preamble}), with $a=L_1,b=L_1+L_2,c=L_1$, this equals
+  \[
+    \int_0^{L_2} \omega.f(\gamma_2(u)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma_2)(u)\,du
+    = [[\gamma_2]](\omega)
+    ,
+  \]
+  the last equality by \noderef{curveCurrent} applied to $\gamma_2$.
+
+  \emph{Conclusion.} Substituting the results of Steps~2 and~3 into (1) gives
+  $[[\gamma_1*\gamma_2]](\omega) = [[\gamma_1]](\omega) + [[\gamma_2]](\omega)$, as claimed.
+\end{proof}

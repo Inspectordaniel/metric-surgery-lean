@@ -1,0 +1,88 @@
+\begin{lemma}[Restricting to a window between two resolution breakpoints stays piecewise geodesic]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $k \in \mathbb{N}$, $s \colon
+  \mathbb{N} \to \mathbb{R}$ a resolution of $\gamma$ into $k$ geodesic edges
+  (\noderef{IsGeodesicResolution}), and $p,q \in \set{0,\dots,k}$ with $p \le q$. Write $u := s(p)$,
+  $u' := s(q)$, so $0 \le u \le u' \le \length(\gamma)$ (by monotonicity of $s$ and the endpoint
+  values $s(0)=0$, $s(k)=\length(\gamma)$ of \noderef{IsGeodesicResolution}). Then the shifted
+  resolution $s'(j) := s(p+j) - s(p)$ for $j = 0,\dots,q-p$ is itself a geodesic resolution of
+  $\gamma|_{[u,u']}$ into $q-p$ edges,
+  \[
+    \mathrm{IsGeodesicResolution}(\gamma|_{[u,u']}, q-p, s')
+    ,
+  \]
+  where $\gamma|_{[u,u']} = \mathrm{curveRestrict}(\gamma,u,u')$ (\noderef{curveRestrict})
+  (\noderef{IsGeodesicResolution}); in particular $\gamma|_{[u,u']}$ is piecewise geodesic with
+  $q-p$ pieces, $\mathrm{IsPiecewiseGeodesicWith}(\gamma|_{[u,u']}, q-p)$
+  (\noderef{IsPiecewiseGeodesicWith}).
+
+  \paragraph{Why the window must be a pair of resolution breakpoints, not an arbitrary window.}
+  Paper.tex line 899 constructs the subcurve $\gamma|_{[u,u']}$ used in the Type~I Morrey bound
+  \emph{by concatenating exactly those geodesic edges $\gamma_{[s_{j-1},s_j]}$ with
+  $[s_{j-1},s_j]\subset[t,t']$, deliberately excluding up to two partial edges of $\gamma$ that
+  overlap the endpoints of $[t,t']$}. That is, $u$ and $u'$ are themselves values of the resolution
+  $s$ (the first and last breakpoints lying inside $[t,t']$), not the arbitrary endpoints $t,t'$
+  themselves. This is not an accident of exposition: restricting to an arbitrary window $[t,t']$
+  that truncates an edge of $s$ at a non-breakpoint would leave a partial edge at the truncation
+  point, and a partial edge of positive length is not itself a full geodesic edge of any fixed
+  resolution of the restriction in a way that composes with the surrounding edges -- indeed the
+  sibling fact for $\mathrm{IsDeltaEpsN}$ has exactly this failure at non-breakpoints (a truncated
+  edge, however long the original edge was, can be made shorter than any fixed threshold $\delta$
+  by choosing the truncation point close enough to an existing breakpoint, so an arbitrary
+  restriction need not inherit $\mathrm{IsDeltaEpsN}$ at all). Restricting only between two
+  breakpoints $s(p),s(q)$ of a fixed resolution avoids this: every edge of the restriction is then
+  an honest, untruncated shift of an edge of $s$, as the proof below verifies directly.
+
+  \paragraph{Why this is needed at all.} $\mathrm{IsLSI}$ (\noderef{IsLSI}) has piecewise-geodesicity
+  as its first conjunct, so a large-scale-invertibility statement about $\gamma|_{[u,u']}$ (needed
+  for the restriction step of paper Lemma~3.8's proof, paper.tex lines 899--901) cannot even be
+  \emph{stated} without first knowing $\gamma|_{[u,u']}$ is piecewise geodesic; nothing else on disk
+  currently supplies $\mathrm{IsPiecewiseGeodesic}$ of a $\mathrm{curveRestrict}$.
+\end{lemma}
+\begin{proof}
+  We exhibit $s'(j) := s(p+j)-s(p)$ for $j = 0,\dots,q-p$ as a witness to
+  $\mathrm{IsGeodesicResolution}(\gamma|_{[u,u']}, q-p, s')$ (\noderef{IsGeodesicResolution}),
+  verifying its four conjuncts in turn. Throughout, write $\gamma|_{[u,u']} =
+  \mathrm{curveRestrict}(\gamma,u,u')$, whose defining formula (\noderef{curveRestrict}) is
+  $\gamma|_{[u,u']}(v) = \gamma(u + \min(u'-u,\max(0,v)))$, and note that for $v \in [0,u'-u]$ the
+  clamp is the identity, so $\gamma|_{[u,u']}(v) = \gamma(u+v)$ exactly on $[0,u'-u]$.
+
+  \emph{Preliminary pointwise fact.} If $0 \le x \le y \le u'-u$ and $\gamma$ is a geodesic on
+  $[u+x,u+y]$ (\noderef{IsGeodesicOn}), then $\gamma|_{[u,u']}$ is a geodesic on $[x,y]$. Indeed, let
+  $\sigma,\tau \in [x,y] \subseteq [0,u'-u]$. By the clamp-identity noted above (applicable since
+  $0 \le x \le \sigma \le y \le u'-u$ and likewise for $\tau$),
+  \[
+    \mathrm{dist}\bigl(\gamma|_{[u,u']}(\sigma), \gamma|_{[u,u']}(\tau)\bigr)
+    = \mathrm{dist}\bigl(\gamma(u+\sigma), \gamma(u+\tau)\bigr)
+    = |(u+\sigma)-(u+\tau)|
+    = |\sigma - \tau|
+    ,
+  \]
+  the middle equality because $u+\sigma, u+\tau \in [u+x,u+y]$ and $\gamma$ is a geodesic there by
+  hypothesis. This holds for all such $\sigma,\tau \in [x,y]$, giving
+  $\mathrm{IsGeodesicOn}(\gamma|_{[u,u']},x,y)$.
+
+  \emph{Conjunct 1 (monotonicity of $s'$ on $\set{0,\dots,q-p}$).} Let $0 \le i \le j \le q-p$. Then
+  $p \le p+i \le p+j \le q \le k$, so $p+i,p+j \in \set{0,\dots,k}$ and $p+i \le p+j$; monotonicity
+  of $s$ on $\set{0,\dots,k}$ (\noderef{IsGeodesicResolution}) gives $s(p+i) \le s(p+j)$, hence
+  $s'(i) = s(p+i)-s(p) \le s(p+j)-s(p) = s'(j)$.
+
+  \emph{Conjunct 2 ($s'(0)=0$).} Immediate: $s'(0) = s(p)-s(p) = 0$.
+
+  \emph{Conjunct 3 ($s'(q-p) = \length(\gamma|_{[u,u']})$).} Since $p + (q-p) = q$,
+  $s'(q-p) = s(q) - s(p) = u' - u$, which is exactly $\length(\gamma|_{[u,u']})$ by
+  \noderef{curveRestrict}'s length formula ($\length(\mathrm{curveRestrict}(\gamma,u,u')) = u'-u$).
+
+  \emph{Conjunct 4 (each edge is geodesic).} Let $i < q-p$; we must show
+  $\mathrm{IsGeodesicOn}(\gamma|_{[u,u']}, s'(i), s'(i+1))$. Since $p+i < q \le k$, the edge clause
+  of $\mathrm{IsGeodesicResolution}(\gamma,k,s)$ gives $\mathrm{IsGeodesicOn}(\gamma, s(p+i),
+  s(p+i+1))$, i.e.\ $\gamma$ is a geodesic on $[u+s'(i), u+s'(i+1)]$ (using $u+s'(i) =
+  u + (s(p+i)-s(p)) = s(p+i)$ since $u=s(p)$, and likewise $u+s'(i+1) = s(p+i+1) =
+  s(p+(i+1))$). We also have $0 \le s'(i)$ (Conjunct~1 with $j=i \ge 0=$ the value at index $0$) and
+  $s'(i+1) \le s'(q-p) = u'-u$ (Conjunct~1 with $j=q-p$, using $i+1 \le q-p$). By the preliminary
+  pointwise fact applied with $x=s'(i)$, $y=s'(i+1)$, this gives exactly
+  $\mathrm{IsGeodesicOn}(\gamma|_{[u,u']}, s'(i), s'(i+1))$, as required.
+
+  All four conjuncts hold, so $s'$ witnesses
+  $\mathrm{IsGeodesicResolution}(\gamma|_{[u,u']}, q-p, s')$, i.e.\
+  $\mathrm{IsPiecewiseGeodesicWith}(\gamma|_{[u,u']}, q-p)$, as claimed.
+\end{proof}

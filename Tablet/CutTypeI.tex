@@ -1,0 +1,334 @@
+\begin{lemma}[Type I cut operation]
+  \label{cut-type-I}
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, let $GP$ be a geodesic
+  pairing on $E$ (\noderef{GeodesicPairing}), let $\gamma \in \Theta(E)$ (\noderef{Curve}) be a
+  closed (\noderef{IsClosedCurve}), piecewise-geodesic (\noderef{IsPiecewiseGeodesic}) curve, let
+  $\epsilon,\delta \in \mathbb{R}$ with $0<\epsilon<1$ and $0<\delta$, and let $n \in \mathbb{N}$
+  with $\gamma \in \Xden(\delta,\epsilon,n)$ (\noderef{IsDeltaEpsN}) and $\gamma \notin
+  \Xlsi(\delta,\epsilon)$ (\noderef{IsLSI}). Then there exist $\gamma',g \in \Theta(E)$, both
+  closed and piecewise-geodesic, and $\beta \in \mathbb{R}$, such that
+  \[
+    \delta \le \beta \le \tfrac12\length(\gamma)
+    ,
+  \]
+  \begin{align}
+    \label{eq:SameSumTypeI}
+    [[\gamma]](\omega) &= [[\gamma']](\omega) + [[g]](\omega) \qquad \text{for every }\omega \in
+    \mathcal{D}^1(E) \quad \text{(\noderef{curveCurrent})}, \\
+    \label{eq:MorreyTypeI}
+    \Morrey{\mu_g} &\le 4\epsilon^{-1}+2n+10 \quad\text{(\noderef{curveMeasure},
+    \noderef{morreyNorm})}, \\
+    \label{eq:LengthBoundTypeIgamma}
+    \length(\gamma') &\le \length(\gamma) - (1-\epsilon)\beta , \\
+    \label{eq:LengthBoundTypeItotal}
+    \length(\gamma')+\length(g) &\le \length(\gamma) + 2\epsilon\beta , \\
+    \label{eq:SmallCountBoundTypeI}
+    \nsmallpieces(\gamma',\delta) &\le \nsmallpieces(\gamma,\delta) + 3 \quad
+    \text{(\noderef{smallPieceCount})} .
+  \end{align}
+
+  This is paper Lemma~3.8 (paper.tex 798-913), stated existentially in $(\gamma',g,\beta)$ with no
+  accompanying choice function of $\gamma$, exactly parallel to \Cref{typeI-cut-point-exists}'s own
+  existential statement of the cut point $(t,t',\beta)$ that this lemma consumes: nothing in the
+  paper's use of Lemma~3.8 (the Type~I branch of the surgery induction, paper.tex around line 1030)
+  needs $(\gamma',g,\beta)$ to be a definite function of $\gamma$, and the statement below never
+  mentions $t,t'$ at all, only the data $(\gamma',g,\beta)$ that a consumer of this lemma actually
+  uses.
+
+  \paragraph{Why $GP$ is hypothesised.} As in the analogous Type~II cut operation (paper
+  Lemma~3.9), $\gamma'$ and $g$ are produced by closing two circular arcs of $\gamma$
+  with a single geodesic edge each, using the fixed geodesic pairing $GP$ (\noderef{BasicCut}); this
+  is an existential statement about the \emph{existence} of such $(\gamma',g,\beta)$, but exhibiting
+  them still requires a chosen family of connecting geodesics, exactly as that construction already
+  hypothesises.
+
+  \paragraph{Repair of paper.tex 883 (an off-by-one in the small-edge count).} The paper's proof of
+  the $\beta(\gamma)=\delta$ case asserts that $g$ ``can be formed as a concatenation of $k\le n+2$
+  geodesics'', invoking \Cref{C1-small-ball} to get $\Morrey{g}\le2(n+2)$. This count is short by
+  two: it accounts for at most $n$ short edges of $\gamma$ plus ``up to $2$ other [partial] edges'',
+  but omits the single \emph{closing} geodesic edge $G_{\gamma(t'),\gamma(t)}$ that
+  \noderef{BasicCut} always appends to form $g$. The corrected count -- proved below as Branch~1 --
+  is $k_A+1\le n+4$ edges (the arc's own resolution, of size $k_A\le n+3$ by
+  \noderef{ArcShortWindowEdgeCount}, plus
+  the one closing edge), giving $\Morrey{g}\le2(n+4)=2n+8$, which is still comfortably under the
+  claimed bound $4\epsilon^{-1}+2n+10$ (since $2n+8\le4\epsilon^{-1}+2n+10$ trivially, as
+  $\epsilon^{-1}>0$). This is a repair of an arithmetic slip in the paper's proof, not a deviation:
+  the corrected count is strictly smaller than what \eqref{eq:MorreyTypeI} claims.
+
+  \paragraph{Replacement of the paper's Branch~C sub-case, and of the cycle-23 plan's false
+  instruction.} The paper's own case split (paper.tex 879-907) is on $\beta(\gamma)=\delta$ versus
+  $\beta(\gamma)>\delta$, and inside the second case further reduces (879-882, ``\ldots $\gamma
+  |_{[t,t']}$ may instead consist of a single edge of length $\delta$'') no genuinely new
+  sub-cases; a since-discarded planning note for this project additionally proposed splitting on
+  whether the excised window $[t,t']$ itself has length $<\delta$, asserting that this forces the
+  arc to be at most one edge -- \emph{this is false}: a window of length $<\delta$ can contain
+  arbitrarily many edges of $\gamma$ each individually shorter than $\delta$ (e.g.\ $100$ edges of
+  length $\delta/1000$), so no bound on the edge count follows from the window length alone. The
+  proof below instead splits on the length $W$ of the arc's own \emph{interior} window (between its
+  breakpoints $s_A(1)$ and $s_A(k_A-1)$, dropping the two possibly-truncated end edges), which is
+  the quantity \noderef{ArcShortWindowEdgeCount} was built to bound, and which coincides with (not
+  merely resembles) the paper's own $\beta(\gamma)=\delta$ versus $\beta(\gamma)>\delta$ dichotomy:
+  Branch~1 below ($W\le\delta$) subsumes the paper's $\beta=\delta$ case, and Branch~2 ($\delta<W$)
+  reproduces its $\beta>\delta$ case verbatim.
+\end{lemma}
+\begin{proof}
+  \paragraph{Setup.} By \noderef{TypeICutPointExists} applied to $\gamma,\delta,\epsilon$ (valid
+  since $\gamma$ is closed and piecewise-geodesic, $0<\epsilon<1$, $0<\delta$, and $\gamma \notin
+  \Xlsi(\delta,\epsilon)$), there exist $t,t' \in [0,\length(\gamma)]$ and $\beta \in \mathbb{R}$
+  such that, writing $A := \gamma|_{[t,t']}$ (\noderef{curveArc}),
+  \[
+    \beta = \length(A) ,\qquad \beta = d_\gamma(t,t') ,\qquad \delta\le\beta\le\tfrac12\length(\gamma)
+    ,\qquad d(\gamma(t),\gamma(t')) \le \epsilon\beta ,
+  \]
+  and, whenever $\delta<\beta$: $\epsilon\beta\le d(\gamma(t),\gamma(t'))$, $A$ is not closed, and
+  $A$ is $(\delta,\epsilon)$-l.s.i.\ (\noderef{IsLSI}). This already gives $\delta\le\beta\le
+  \tfrac12\length(\gamma)$, the first claim of the lemma.
+
+  \paragraph{Step 0: $t \ne t'$.} Suppose $t=t'$. Since $\gamma$ is closed, $d_\gamma(t,t') =
+  \min(|t-t'|,\length(\gamma)-|t-t'|) = \min(0,\length(\gamma)) = 0$ (\noderef{dGamma}, using
+  $\length(\gamma)\ge0$, \noderef{Curve}). But $\beta = d_\gamma(t,t')$ from Setup, so $\beta=0$,
+  contradicting $\delta\le\beta$ and $\delta>0$. So $t\ne t'$.
+
+  \paragraph{Definition of $\gamma',g$.} Set $(\gamma',g) := C(\gamma,t,t')$ (\noderef{BasicCut}),
+  well-defined since $t,t'\in[0,\length(\gamma)]$.
+
+  \paragraph{Step 1: the current identity \eqref{eq:SameSumTypeI}.} By \noderef{BasicCutCurrent}
+  applied to $\gamma,t,t'$ (valid by Step~0, $t\ne t'$), for every $\omega\in\mathcal{D}^1(E)$,
+  $[[\gamma]](\omega)=[[\gamma']](\omega)+[[g]](\omega)$.
+
+  \paragraph{Step 2: closedness and piecewise-geodesic-ness of $\gamma',g$.} By
+  \noderef{BasicCutClosed} applied to $\gamma,t,t'$ (valid: $\gamma$ closed and piecewise-geodesic
+  by hypothesis, $t\ne t'$ by Step~0), $\gamma'$ and $g$ are both closed and piecewise-geodesic.
+
+  \paragraph{Step 3: the small-count bound \eqref{eq:SmallCountBoundTypeI}.} By
+  \noderef{BasicCutResolutionGeneral} applied to $\gamma,\delta,t,t'$ (valid: $\gamma$ closed and
+  piecewise-geodesic, $\delta>0$, $t,t'\in[0,\length(\gamma)]$, $t\ne t'$ by Step~0),
+  $\nsmallpieces(\gamma',\delta) \le \nsmallpieces(\gamma,\delta)+3$. This holds unconditionally --
+  \noderef{BasicCutResolutionGeneral} places no hypothesis on $t,t'$ beyond membership in
+  $[0,\length(\gamma)]$ and distinctness -- so no case split on $\beta$ is needed for this conjunct,
+  matching the fact that paper eq.~(SmallCountBoundTypeI) itself is proved (paper.tex 830-834,
+  citing the general cut-count lemma) without reference to $\beta(\gamma)$ versus $\delta$.
+
+  \paragraph{Step 4: the length bounds \eqref{eq:LengthBoundTypeIgamma},
+  \eqref{eq:LengthBoundTypeItotal}.} By \noderef{BasicCutLength} applied to $\gamma,t,t'$ (valid by
+  Step~0), writing $A_\ell := (\text{if }t\le t'\text{ then }t'-t\text{ else }
+  (\length(\gamma)-t)+t')$ and $d:=\mathrm{dist}(\gamma(t),\gamma(t'))$,
+  \[
+    \length(\gamma') = \length(\gamma)-A_\ell+d , \qquad \length(g) = A_\ell+d , \qquad d\le A_\ell
+    .
+  \]
+  By \noderef{curveArc}'s own case split together with \noderef{curveRestrict} and
+  \noderef{curveWrapRestrict}'s length fields (both definitional), $A_\ell = \length(A) = \beta$
+  (the last equality from Setup). So the three displayed facts read $\length(\gamma') =
+  \length(\gamma)-\beta+d$, $\length(g)=\beta+d$, $d\le\beta$.
+
+  From Setup, $d = \mathrm{dist}(\gamma(t),\gamma(t')) \le \epsilon\beta$ (the \emph{unconditional}
+  distance bound of \noderef{TypeICutPointExists}, holding at every $\beta\ge\delta$, not only
+  $\beta>\delta$). Hence
+  \[
+    \length(\gamma') = \length(\gamma)-\beta+d \le \length(\gamma)-\beta+\epsilon\beta =
+    \length(\gamma)-(1-\epsilon)\beta
+    ,
+  \]
+  which is \eqref{eq:LengthBoundTypeIgamma}; and
+  \[
+    \length(\gamma')+\length(g) = (\length(\gamma)-\beta+d)+(\beta+d) = \length(\gamma)+2d \le
+    \length(\gamma)+2\epsilon\beta
+    ,
+  \]
+  which is \eqref{eq:LengthBoundTypeItotal}. Neither bound needs a case split on $\beta$ versus
+  $\delta$: both follow from the single unconditional bound $d\le\epsilon\beta$ that
+  \noderef{TypeICutPointExists} supplies regardless.
+
+  \paragraph{Setup for the Morrey bound: a common resolution of $A$.} It remains to prove
+  \eqref{eq:MorreyTypeI}. Since $\gamma\in\Xden(\delta,\epsilon,n)$ (\noderef{IsDeltaEpsN}), fix
+  $k\in\mathbb{N}$ and a resolution $s$ of $\gamma$ into $k$ geodesic edges,
+  $\mathrm{IsGeodesicResolution}(\gamma,k,s)$, satisfying the two counting clauses (linear) and,
+  since $\gamma$ is closed, (wrap):
+  \[
+    \text{(linear)}\ \forall a,b,\ 0\le a\le b\le\length(\gamma),\ b-a\le2\epsilon^{-1}\delta
+    \implies \#\{j\in\set{1,\dots,k}:a\le s(j-1),\,s(j)\le b,\,s(j)-s(j-1)<\delta\}\le n ,
+  \]
+  \[
+    \text{(wrap)}\ \forall a,b,\ 0\le b<a\le\length(\gamma),\ (\length(\gamma)-a)+b\le2\epsilon^{-1}
+    \delta \implies \#\{j\in\set{1,\dots,k}:(a\le s(j-1)\vee s(j)\le b),\,s(j)-s(j-1)<\delta\}\le n
+    .
+  \]
+  By \noderef{ArcGeodesicResolution} applied to $\gamma,k,s,t,t'$, there exist $k_A\ge1$ and a
+  resolution $s_A$ of $A$ into $k_A$ geodesic edges, $\mathrm{IsGeodesicResolution}(A,k_A,s_A)$,
+  carrying the stated correspondence with $s$ at indices $1,\dots,k_A-1$ (ordinary case $t\le t'$:
+  a single shift by $-t$ from index $j_0$; wrap case $t'<t$: a tail shifted by $-t$ up to index $m$,
+  then a head shifted by $\length(\gamma)-t$, meeting at a genuine edge of $\gamma$,
+  $s(j_0+(m-1))=\length(\gamma)$, whenever $m\ge1$). Write $W := s_A(k_A-1)-s_A(1)$ for the length
+  of $A$'s own interior window.
+
+  We split on whether $W\le\delta$ or $\delta<W$; these are exhaustive. (A monotonicity chain
+  $0=s_A(0)\le s_A(1)\le s_A(k_A-1)\le s_A(k_A)=\beta$ would bound $W\le\beta$, but its middle step
+  $s_A(1)\le s_A(k_A-1)$ needs $1\le k_A-1$, i.e.\ $k_A\ge2$, which need not hold here: at $k_A=1$,
+  $s_A(k_A-1)=s_A(0)=0$ while $s_A(1)=s_A(k_A)=\beta$, so $W=0-\beta=-\beta<0\le\delta$, and this
+  instance falls into Branch~1 below regardless of any bound relating $W$ to $\beta$. Branch~2
+  re-derives $k_A\ge3$ from its own hypothesis $\delta<W$ before invoking this monotonicity chain,
+  so no such bound is asserted unconditionally here.)
+
+  \paragraph{Branch 1: $W\le\delta$.} By \noderef{ArcShortWindowEdgeCount} applied to
+  $\gamma,\delta,\epsilon,n,k,s,t,t',k_A,s_A$ with the correspondence data above and $W\le\delta$,
+  \[
+    k_A \le n+3
+    .
+  \]
+  (This is exactly \noderef{ArcShortWindowEdgeCount}'s conclusion, whose two counting inputs
+  (linear) and (wrap) are read off directly from $\gamma\in\Xden(\delta,\epsilon,n)$ as fixed
+  above.)
+
+  By \noderef{BasicCutDiscardedResolutionGeneral} applied to $\gamma,t,t',k_A,s_A$ (valid: $t\ne t'$
+  by Step~0, and $\mathrm{IsGeodesicResolution}(A,k_A,s_A)$ as fixed above), the discarded output
+  $g$ admits an exact geodesic resolution into $k_A+1$ edges: $\mathrm{IsPiecewiseGeodesicWith}(g,
+  k_A+1)$ (the arc's own $k_A$ edges plus the one closing edge). By \noderef{C1SmallBall} applied to
+  $g,k_A+1$,
+  \[
+    \Morrey{\mu_g} \le 2\bigl((k_A+1:\mathbb{N}):\mathbb{R}_{\ge0}\cup\set{\infty}\bigr)
+    .
+  \]
+  Since $k_A\le n+3$, $(k_A+1:\mathbb{R})\le(n:\mathbb{R})+4$, so $2((k_A+1:\mathbb{R}))\le
+  2(n+4) = 2n+8 \le 4\epsilon^{-1}+2n+10$ (using $\epsilon^{-1}>0$ for the last, in fact strict,
+  inequality). Converting the natural-number cast to the extended-real form via
+  $\mathrm{ofReal}$ (a nonnegative natural cast always equals $\mathrm{ofReal}$ of its real value)
+  and applying monotonicity of $\mathrm{ofReal}$ on this real inequality gives
+  \[
+    \Morrey{\mu_g} \le \mathrm{ofReal}\bigl(2((k_A+1:\mathbb{R}))\bigr) \le
+    \mathrm{ofReal}\bigl(4\epsilon^{-1}+2n+10\bigr)
+    ,
+  \]
+  which is \eqref{eq:MorreyTypeI}. This is precisely the repair of paper.tex 883 recorded above,
+  with $k_A+1\le n+4$ replacing the paper's uncorrected $k\le n+2$.
+
+  \paragraph{Branch 2: $\delta<W$.}
+
+  \emph{$3\le k_A$.} Suppose $k_A\le2$. Then $k_A-1\le1$, so by monotonicity of $s_A$ (on
+  $\set{0,\dots,k_A}$, applicable since $k_A-1\le1\le k_A$), $s_A(k_A-1)\le s_A(1)$, giving
+  $W=s_A(k_A-1)-s_A(1)\le0<\delta<W$, absurd. So $3\le k_A$. (This uses only the branch hypothesis
+  $\delta<W$ and monotonicity of $s_A$, so it is available before anything about $\beta$ is known.)
+
+  \emph{$u\le u'\le\beta$.} Set $u:=s_A(1)$, $u':=s_A(k_A-1)$. Since
+  $\mathrm{IsGeodesicResolution}(A,k_A,s_A)$ gives $s_A$ monotone on $\set{0,\dots,k_A}$ with
+  $s_A(0)=0$ and $s_A(k_A)=\length(A)=\beta$, and, now that $3\le k_A$ is in hand,
+  $0\le1\le k_A-1\le k_A$ (as $k_A-1\ge2\ge1$), monotonicity gives
+  $0=s_A(0)\le s_A(1)\le s_A(k_A-1)\le s_A(k_A)=\beta$, i.e.\ $0\le u\le u'\le\beta$; in particular
+  $W=u'-u\le\beta$.
+
+  \emph{$\delta<\beta$, and the conjuncts of \noderef{TypeICutPointExists} guarded by it.}
+  Combining $\delta<W$ (this branch's hypothesis) with $W\le\beta$ just shown, $\delta<\beta$;
+  hence the three conjuncts of \noderef{TypeICutPointExists} guarded by $\delta<\beta$ all fire:
+  $A$ is not closed, and $A$ is $(\delta,\epsilon)$-l.s.i.\ (\noderef{IsLSI}) -- write $\mathrm{hlsi}
+  _A$ for this fact and $\mathrm{hnc}_A$ for $A$'s non-closedness.
+
+  \emph{$B$ is well-defined and non-closed.} From $0\le u\le u'\le\beta=\length(A)$ just shown,
+  $B := A|_{[u,u']} =
+  \mathrm{curveRestrict}(A,u,u')$ (\noderef{curveRestrict}) is well-defined, with $\length(B)=u'-u=
+  W$. Since $A$ is not closed ($\mathrm{hnc}_A$), $d_A(u,u') = |u'-u| = W$ (\noderef{dGamma}'s
+  non-closed branch). Since $\delta\le W$ (as $\delta<W$), $\mathrm{hlsi}_A$'s l.s.i.\ inequality at
+  $(u,u')\in[0,\length(A)]^2$ gives $\epsilon W \le \epsilon\, d_A(u,u') \le d(A(u),A(u'))$; since
+  $\epsilon>0$ and $W>\delta>0$, $\epsilon W>0$, so $d(A(u),A(u'))>0$, i.e.\ $A(u)\ne A(u')$. By
+  \noderef{curveRestrict}'s defining formula, $B(0) = A(u+\min(u'-u,\max(0,0))) = A(u)$ and
+  $B(\length(B)) = B(W) = A(u+\min(u'-u,\max(0,W))) = A(u+W) = A(u')$ (using $W=u'-u\ge0$, so
+  $\max(0,W)=W$ and $\min(u'-u,W)=W$). Hence $B(\length(B)) = A(u') \ne A(u) = B(0)$, i.e.\ $B$ is
+  not closed (\noderef{IsClosedCurve}). This single fact discharges both
+  \noderef{ArcDeltaEpsNCount}'s non-closedness hypothesis and \noderef{RestrictLSI}'s
+  $\mathrm{hncu}$ hypothesis below, applied to this same $B$.
+
+  \emph{$B$ is piecewise-geodesic.} Since $3\le k_A$, $1\le k_A-1$, so \noderef{RestrictPiecewiseGeodesic}
+  applies to $\mathrm{IsGeodesicResolution}(A,k_A,s_A)$ at $p:=1,q:=k_A-1$ (valid: $p\le q$,
+  $q\le k_A$, and $0\le u\le u'\le\beta$ as above), giving
+  $\mathrm{IsGeodesicResolution}(B,k_A-2,(j\mapsto s_A(1+j)-u))$. By \noderef{IsPiecewiseGeodesicWith}
+  and \noderef{IsPiecewiseGeodesic}'s own definitions (a resolution witnesses
+  $\mathrm{IsPiecewiseGeodesicWith}$, and an existential in the edge count witnesses
+  $\mathrm{IsPiecewiseGeodesic}$), this resolution directly gives $\mathrm{IsPiecewiseGeodesic}(B)$.
+
+  \emph{$B$ is $(\delta,\epsilon)$-l.s.i.} By \noderef{RestrictFullIsSelf} applied to $A$,
+  $\mathrm{curveRestrict}(A,0,\length(A)) = A$. Substituting this identity into
+  $\mathrm{hlsi}_A$ and $\mathrm{hnc}_A$ turns them into, respectively,
+  $\mathrm{IsLSI}(\mathrm{curveRestrict}(A,0,\length(A)),\delta,\epsilon)$ and
+  $\neg\mathrm{IsClosedCurve}(\mathrm{curveRestrict}(A,0,\length(A)))$. \noderef{RestrictLSI}
+  applied with ambient curve $A$, outer window $[0,\length(A)]$, and inner window $[u,u']$ (valid:
+  $0\le u$, $u\le u'$, $u'\le\length(A)$, together with the two rewritten facts above, $B$'s
+  non-closedness just shown, and $B$'s piecewise-geodesicity just shown) gives
+  $\mathrm{IsLSI}(B,\delta,\epsilon)$.
+
+  \emph{$B$ is a $(\delta,\epsilon,n)$-curve.} By \noderef{ArcDeltaEpsNCount} applied to
+  $\gamma,\delta,\epsilon,n,k,s,t,t',k_A,s_A$ with the correspondence data fixed above, $u=s_A(1)$,
+  $u'=s_A(k_A-1)$, and $B$'s non-closedness just shown, $\mathrm{IsDeltaEpsN}(B,\delta,\epsilon,n)$.
+  (\noderef{ArcDeltaEpsNCount}'s conclusion is stated about exactly the curve
+  $\mathrm{curveRestrict}(A,s_A(1),s_A(k_A-1))$, which is $B$ by definition -- no further
+  identification is needed.)
+
+  \emph{The Morrey bound on $B$.} By \noderef{FullBallLem} applied to $B,\delta,\epsilon,n$ (valid:
+  $\delta>0$, $0<\epsilon<1$, $B\in\Xden(\delta,\epsilon,n)$ and $(\delta,\epsilon)$-l.s.i.\ as just
+  shown), $\Morrey{\mu_B} \le 4\epsilon^{-1}+2n+4$.
+
+  \paragraph{Splicing $B$ back into $g$.} Recall $g = A * G_{\gamma(t'),\gamma(t)}$
+  (\noderef{BasicCut}), a concatenation (\noderef{curveConcat}) of $A$ with the single closing
+  geodesic edge $C := G_{\gamma(t'),\gamma(t)}$, so $\length(g) = \length(A)+\length(C) = \beta +
+  \length(C) \ge \beta = \length(A)$, and, by \noderef{curveConcat}'s defining formula, $g(v) =
+  A(v)$ for every $v\in[0,\length(A)]$ (the "then" branch, taken whenever $v\le\length(A)$), while
+  $g(v) = C(v-\length(A))$ for $v\ge\length(A)$ (using $\length(g)=\length(A)+\length(C)$, both
+  branches of \noderef{curveConcat}'s "if" agreeing at $v=\length(A)$ by \noderef{BasicCut}'s own
+  endpoint-matching identity).
+
+  Consider the four-point sequence $s'(0):=0$, $s'(1):=u$, $s'(2):=u'$, $s'(3):=\length(A)$,
+  $s'(i):=\length(g)$ for $i\ge4$. By the chain $0\le u\le u'\le\length(A)\le\length(g)$ (the last
+  from $\length(g)=\length(A)+\length(C)\ge\length(A)$, since $\length(C)\ge0$), $s'$ is monotone on
+  $\set{0,\dots,4}$, $s'(0)=0$, $s'(4)=\length(g)$. By \noderef{MorreyResolutionAdditive} applied to
+  $g,4,s'$,
+  \[
+    \mu_g = \sum_{i=0}^{3} (g_*)(\mathrm{Leb}|_{[s'(i),s'(i+1)]})
+    ,
+  \]
+  where $(g_*)(\nu)$ denotes the pushforward of a measure $\nu$ under $g$'s underlying map.
+
+  \emph{Block $i=0$: $[0,u]$.} Since $u\le\length(A)$, $g$ agrees with $A$ on $[0,u]$. By
+  $\mathrm{IsGeodesicResolution}(A,k_A,s_A)$'s edge clause at index $0$ (valid, $k_A\ge3>0$),
+  $\mathrm{IsGeodesicOn}(A,s_A(0),s_A(1)) = \mathrm{IsGeodesicOn}(A,0,u)$ (using $s_A(0)=0$), hence
+  $\mathrm{IsGeodesicOn}(g,0,u)$ (agreement of $g,A$ on $[0,u]\subseteq[0,\length(A)]$). By
+  \noderef{GeodesicMorreyLeTwo} applied to $g,0,u$ (valid: $0\le u\le\length(g)$),
+  $\Morrey{(g_*)(\mathrm{Leb}|_{[0,u]})} \le 2$.
+
+  \emph{Block $i=1$: $[u,u']$.} By \noderef{RestrictMeasureFormula} applied to $A,u,u'$,
+  $\mu_B = \mu_{A|_{[u,u']}} = (A_*)(\mathrm{Leb}|_{[u,u']})$. Since $u'\le\length(A)$, $g$ agrees
+  with $A$ on $[u,u']\subseteq[0,\length(A)]$, so $(g_*)(\mathrm{Leb}|_{[u,u']}) =
+  (A_*)(\mathrm{Leb}|_{[u,u']}) = \mu_B$. Hence $\Morrey{(g_*)(\mathrm{Leb}|_{[u,u']})} =
+  \Morrey{\mu_B} \le 4\epsilon^{-1}+2n+4$, by the bound on $B$ above.
+
+  \emph{Block $i=2$: $[u',\length(A)]$.} Since $u'\le\length(A)$, $g$ agrees with $A$ on
+  $[u',\length(A)]\subseteq[0,\length(A)]$. By $\mathrm{IsGeodesicResolution}(A,k_A,s_A)$'s edge
+  clause at index $k_A-1$ (valid, $k_A-1<k_A$), $\mathrm{IsGeodesicOn}(A,s_A(k_A-1),s_A(k_A)) =
+  \mathrm{IsGeodesicOn}(A,u',\length(A))$ (using $s_A(k_A)=\length(A)$), hence
+  $\mathrm{IsGeodesicOn}(g,u',\length(A))$. By \noderef{GeodesicMorreyLeTwo} applied to $g,u',
+  \length(A)$ (valid: $u'\le\length(A)\le\length(g)$), $\Morrey{(g_*)(\mathrm{Leb}|_{[u',\length(A)]})}
+  \le 2$.
+
+  \emph{Block $i=3$: $[\length(A),\length(g)]$.} For $v\in[\length(A),\length(g)]$,
+  $g(v)=C(v-\length(A))$ as noted above. Since $C$ is a geodesic on $[0,\length(C)]$
+  (\noderef{GeodesicPairing}'s $\mathrm{isGeodesic}$ field), for $s,t\in[\length(A),\length(g)]$,
+  $s-\length(A),t-\length(A)\in[0,\length(C)]$ (using $\length(g)=\length(A)+\length(C)$), and
+  \[
+    d(g(s),g(t)) = d(C(s-\length(A)),C(t-\length(A))) = |(s-\length(A))-(t-\length(A))| = |s-t|
+    ,
+  \]
+  so $\mathrm{IsGeodesicOn}(g,\length(A),\length(g))$. By \noderef{GeodesicMorreyLeTwo} applied to
+  $g,\length(A),\length(g)$ (valid: $\length(A)\le\length(g)$),
+  $\Morrey{(g_*)(\mathrm{Leb}|_{[\length(A),\length(g)]})}\le2$.
+
+  \paragraph{Assembly.} By \noderef{MorreySubadditive} applied to the four measures above,
+  \[
+    \Morrey{\mu_g} = \Morrey{\textstyle\sum_{i=0}^3 (g_*)(\mathrm{Leb}|_{[s'(i),s'(i+1)]})} \le
+    \sum_{i=0}^3 \Morrey{(g_*)(\mathrm{Leb}|_{[s'(i),s'(i+1)]})} \le 2 + (4\epsilon^{-1}+2n+4) + 2 +
+    2
+    .
+  \]
+  Since $2,4\epsilon^{-1}+2n+4\ge0$ and $\mathrm{ofReal}$ is additive on nonnegative reals, the
+  right side equals $\mathrm{ofReal}(2+(4\epsilon^{-1}+2n+4)+2+2) = \mathrm{ofReal}(4\epsilon^{-1}
+  +2n+10)$ exactly -- zero slack. This is \eqref{eq:MorreyTypeI}, completing Branch~2.
+
+  Both branches establish \eqref{eq:MorreyTypeI}; together with Steps~1-4, all the required
+  conjuncts are established, completing the proof.
+\end{proof}

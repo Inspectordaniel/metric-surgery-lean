@@ -1,0 +1,299 @@
+\begin{lemma}[Surgery induction]
+  \label{surgery-induction}
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, let $GP$ be a geodesic
+  pairing on $E$ (\noderef{GeodesicPairing}), let $\gamma \in \Theta(E)$ (\noderef{Curve}) be a
+  closed (\noderef{IsClosedCurve}), piecewise-geodesic (\noderef{IsPiecewiseGeodesic}) curve, let
+  $\epsilon,\delta \in \mathbb{R}$ with $0<\epsilon<1$ and $0<\delta$, and let $n \in \mathbb{N}$
+  with $n>0$. Then there exist $N \in \mathbb{N}$ with $N \ge 1$ and closed, piecewise-geodesic
+  curves $(g_j)_{j=1}^N$ such that
+  \begin{align}
+    \label{eq:SurgeryIndCurrent}
+    [[\gamma]](\omega) &= \sum_{j=1}^N [[g_j]](\omega) \qquad\text{for every } \omega \in
+    \mathcal{D}^1(E) \quad\text{(\noderef{curveCurrent})}, \\
+    \label{eq:SurgeryIndLength}
+    \sum_{j=1}^N \length(g_j) &\le \mathrm{surgeryPotential}(\epsilon,\delta,n,\length(\gamma),
+    \nsmallpieces(\gamma,\delta)) \quad\text{(\noderef{surgeryPotential}, \noderef{smallPieceCount})},\\
+    \label{eq:SurgeryIndMorrey}
+    \Morrey{\mu_{g_j}} &\le 4\epsilon^{-1}+2n+10 \qquad\text{for every } j
+    \quad\text{(\noderef{curveMeasure}, \noderef{morreyNorm})}.
+  \end{align}
+
+  This is the content of paper Lemma~3.1 (the paper's own label \texttt{surgery-lem}, paper.tex
+  line 597), specialized to $L:=\length(\gamma)$, $m:=\nsmallpieces(\gamma,\delta)$
+  \emph{before} the algorithm of paper.tex lines 1005-1075 (``Algorithm 1'') has been run: paper
+  Lemma~3.1 itself, with the paper's literal bound $\bigl(1+\tfrac{2\epsilon}{1-\epsilon}+
+  \tfrac{12\epsilon^{-1}}{n(1-\epsilon)}\bigr)\length(\gamma)$, will be recovered from this node
+  by a planned follow-up node, using \noderef{InitialDeltaExists} to arrange $m=0$ at the start
+  (that node is outside the present scope; this node supplies its entire mathematical content).
+  Below, the whole of Algorithm~1 -- its counters $i,j,T_1,T_2$ and its
+  stored sequence $(\beta_j)$ -- is replaced by a single strong induction on a natural-number
+  termination measure; the case split of the loop body becomes the case split on
+  $\Xden(\delta,\epsilon,n)$ versus $\Xlsi(\delta,\epsilon)$ membership below, and the algorithm's
+  own two-stage bound $T_I \le \length(\gamma)/((1-\epsilon)\delta)$, $T_{II}\le(3/n)T_I$ (paper.tex
+  1058-1062) is replaced by the single potential inequality \eqref{eq:SurgeryIndLength}, established
+  directly by an amortized argument (the length steps proved below) rather
+  than by counting cuts of each type separately.
+
+  \paragraph{Why $n>0$ is mandatory, and is a faithful hypothesis, not a deviation.} The
+  coefficient $12\epsilon^{-1}/(n(1-\epsilon))$ appearing in \noderef{surgeryPotential} is literally
+  undefined at $n=0$ (division by zero in a context where the paper intends a genuine positive
+  quantity), so \eqref{eq:SurgeryIndLength} cannot even be stated at $n=0$ without a convention. More
+  substantively, the induction's Type~I termination step (proved below) uses
+  $n>0$ essentially: the measure drops by exactly $n$ at each Type~I cut, and at $n=0$ this drop
+  vanishes, so the induction need not terminate. This matches the paper's own use of $n$: the
+  standing hypothesis of the entire surgery construction (Def.~3.5, paper.tex, restated at the head
+  of paper Lemma~3.1) is $n \in \mathbb{N}$ with no explicit positivity clause stated, but every
+  citing use of paper Lemma~3.1 (paper Cor.~3.2, \texttt{surgery-eta}, paper.tex line 628, with
+  $n = \lceil \epsilon^{-2}\rceil \ge 1$) supplies $n \ge 1$, so requiring $n>0$ here changes nothing about
+  which instances of the lemma are actually used.
+\end{lemma}
+\begin{proof}
+  \paragraph{The termination measure.} For a closed, piecewise-geodesic curve $\eta$, define the
+  natural number
+  \[
+    M(\eta) := (n+3) \cdot \left\lfloor \frac{\length(\eta)}{(1-\epsilon)\delta} \right\rfloor +
+    \nsmallpieces(\eta,\delta)
+    \quad \in \mathbb{N}
+    ,
+  \]
+  where $\lfloor\cdot\rfloor$ is the floor of a nonnegative real number (well defined since
+  $\length(\eta)\ge0$ by \noderef{Curve} and $(1-\epsilon)\delta>0$, as $0<\epsilon<1$ and
+  $0<\delta$). Write $\Phi(L,m) := \mathrm{surgeryPotential}(\epsilon,\delta,n,L,m)$
+  (\noderef{surgeryPotential}) for the potential of the statement, with its defining formula
+  \[
+    \Phi(L,m) = A \cdot L + C \cdot m
+    , \qquad
+    A := 1 + \frac{2\epsilon}{1-\epsilon} + \frac{12\epsilon^{-1}}{n(1-\epsilon)}
+    , \qquad
+    C := \frac{4\epsilon^{-1}\delta}{n}
+    .
+  \]
+  Since $0<\epsilon<1$ and $n>0$, all four summands $1,2\epsilon/(1-\epsilon),
+  12\epsilon^{-1}/(n(1-\epsilon))$ are nonnegative, so
+  \begin{equation}
+    \label{eq:A-ge-one}
+    A \ge 1
+    , \qquad\text{hence}\qquad A - 1 \ge 0
+    ,
+  \end{equation}
+  and, since additionally $\delta>0$, $C>0$. A direct computation (clearing denominators, using
+  $1-\epsilon\ne0$ and $n\ne0$) gives the two algebraic identities used below:
+  \begin{equation}
+    \label{eq:A-minus-one-identity}
+    (A-1)(1-\epsilon) = 2\epsilon + \frac{12\epsilon^{-1}}{n}
+    , \qquad\qquad
+    C \cdot n = 4\epsilon^{-1}\delta
+    .
+  \end{equation}
+
+  \paragraph{Statement of the induction.} We prove, for every closed piecewise-geodesic curve
+  $\eta$, the claim $Q(\eta)$: ``there exist $N\ge1$ and closed piecewise-geodesic $(g_j)_{j=1}^N$
+  satisfying \eqref{eq:SurgeryIndCurrent}--\eqref{eq:SurgeryIndMorrey} with $\gamma$ replaced by
+  $\eta$ throughout (and $\length(\gamma),\nsmallpieces(\gamma,\delta)$ replaced by
+  $\length(\eta),\nsmallpieces(\eta,\delta)$ in \eqref{eq:SurgeryIndLength})''. We prove $Q(\eta)$
+  for every such $\eta$ by strong induction on $M(\eta) \in \mathbb{N}$: fix $\eta$ closed and
+  piecewise-geodesic, and assume the induction hypothesis (IH) that $Q(\eta')$ holds for every
+  closed piecewise-geodesic $\eta'$ with $M(\eta') < M(\eta)$. Applying the resulting $Q(\gamma)$
+  to the $\gamma$ of the lemma's statement (closed and piecewise-geodesic by hypothesis) then gives
+  exactly the lemma's conclusion.
+
+  By the law of excluded middle applied twice, exactly one of the following three cases holds for
+  $\eta$: (A) $\eta \notin \Xden(\delta,\epsilon,n)$; (B) $\eta \in \Xden(\delta,\epsilon,n)$ and
+  $\eta \in \Xlsi(\delta,\epsilon)$; (C) $\eta \in \Xden(\delta,\epsilon,n)$ and $\eta \notin
+  \Xlsi(\delta,\epsilon)$ (\noderef{IsDeltaEpsN}, \noderef{IsLSI}).
+
+  \paragraph{A finite-sum splitting identity, used in both cut cases.} If $N'\in\mathbb{N}$, $d$ is
+  a curve, and $(h_i)_{i=1}^{N'}$ is a family of curves, then setting $N:=N'+1$ and $g_1:=d$,
+  $g_{i+1}:=h_i$ for $1\le i\le N'$ (i.e.\ $(g_j)_{j=1}^N$ is $d$ prepended to $(h_i)_{i=1}^{N'}$),
+  for any function $F$ of a curve valued in an additive commutative monoid,
+  \begin{equation}
+    \label{eq:sum-split}
+    \sum_{j=1}^N F(g_j) = F(d) + \sum_{i=1}^{N'} F(h_i)
+    ,
+  \end{equation}
+  simply by separating the $j=1$ term (which is $F(g_1)=F(d)$) from the remaining $N'$ terms
+  (which are $F(g_{i+1})=F(h_i)$ for $i=1,\dots,N'$, a relabelling of the sum's index). This is
+  used below with $F$ ranging over $\omega\mapsto[[\,\cdot\,]](\omega)$ (additive in
+  $\mathbb{R}$) and $\cdot\mapsto\length(\cdot)$ (additive in $\mathbb{R}$), and separately to
+  transport the pointwise bound $F\le K$ over $(g_j)_j$ from $F(d)\le K$ and $F(h_i)\le K$ for all
+  $i$ (immediate, since $j=1$ gives $d$ and $j=i+1$ gives $h_i$).
+
+  \paragraph{Case (A): $\eta \notin \Xden(\delta,\epsilon,n)$.} By \noderef{CutTypeII} applied to
+  $GP,\eta,\delta,\epsilon,n$ (valid: $0<\epsilon<1$, $0<\delta$, $\eta$ closed and
+  piecewise-geodesic, and this case's hypothesis), there exist $\eta',d \in \Theta(E)$, both closed
+  and piecewise-geodesic, such that
+  \[
+    [[\eta]](\omega)=[[\eta']](\omega)+[[d]](\omega) \ (\forall\omega),\quad
+    \Morrey{\mu_d} \le 2(n+2\epsilon^{-1}+2),\quad
+    \length(\eta')\le\length(\eta),
+  \]
+  \[
+    \length(\eta')+\length(d) \le \length(\eta)+4\epsilon^{-1}\delta
+    , \qquad
+    \nsmallpieces(\eta',\delta)+n \le \nsmallpieces(\eta,\delta)
+    .
+  \]
+
+  \emph{Measure drop.} Write $m:=\nsmallpieces(\eta,\delta)$, $m':=\nsmallpieces(\eta',\delta)$,
+  $F:=\lfloor\length(\eta)/((1-\epsilon)\delta)\rfloor$, $F':=\lfloor\length(\eta')/((1-\epsilon)
+  \delta)\rfloor$. Since $\length(\eta')\le\length(\eta)$ and dividing by the positive number
+  $(1-\epsilon)\delta$ preserves order, $\length(\eta')/((1-\epsilon)\delta) \le
+  \length(\eta)/((1-\epsilon)\delta)$; since the floor function is monotone on the reals,
+  $F'\le F$, hence $(n+3)F' \le (n+3)F$. Since $m'+n\le m$ and $n>0$, $m' < m$ (indeed $m'\le m-n$).
+  Combining, $M(\eta')=(n+3)F'+m' \le (n+3)F+m' \le (n+3)F+(m-n) = M(\eta)-n < M(\eta)$, using
+  $n>0$ for the last strict inequality. So
+  \begin{equation}
+    \label{eq:typeII-measure-drop}
+    M(\eta') < M(\eta)
+    .
+  \end{equation}
+
+  \emph{The length step.} We claim
+  \begin{equation}
+    \label{eq:typeII-arith}
+    \length(d) + \Phi(\length(\eta'),m') \le \Phi(\length(\eta),m)
+    .
+  \end{equation}
+  Indeed, $\Phi(\length(\eta),m)-\Phi(\length(\eta'),m') = A\bigl(\length(\eta)-\length(\eta')\bigr)
+  + C(m-m')$. Since $\length(\eta)-\length(\eta')\ge0$ (shown above) and $A-1\ge0$
+  \eqref{eq:A-ge-one}, $(A-1)(\length(\eta)-\length(\eta'))\ge0$, so $A(\length(\eta)-\length(\eta'))
+  \ge \length(\eta)-\length(\eta')$. Since $m-m'\ge n$ and $C>0$, $C(m-m')\ge Cn=4\epsilon^{-1}
+  \delta$ by \eqref{eq:A-minus-one-identity}. Hence
+  \[
+    \Phi(\length(\eta),m)-\Phi(\length(\eta'),m') \ge \bigl(\length(\eta)-\length(\eta')\bigr) +
+    4\epsilon^{-1}\delta \ge \bigl(\length(\eta)-\length(\eta')\bigr) +
+    \bigl(\length(\eta')+\length(d)-\length(\eta)\bigr) = \length(d)
+    ,
+  \]
+  the middle inequality from $\length(\eta')+\length(d)\le\length(\eta)+4\epsilon^{-1}\delta$
+  rearranged. This is \eqref{eq:typeII-arith}.
+
+  \emph{Assembly.} By \eqref{eq:typeII-measure-drop} the IH applies to $\eta'$ (closed and
+  piecewise-geodesic, as produced by \noderef{CutTypeII}): there exist $N'\ge1$ and closed
+  piecewise-geodesic $(h_i)_{i=1}^{N'}$ with $[[\eta']](\omega)=\sum_i[[h_i]](\omega)$,
+  $\sum_i\length(h_i)\le\Phi(\length(\eta'),m')$, and $\Morrey{\mu_{h_i}}\le4\epsilon^{-1}+2n+10$
+  for all $i$. Set $N:=N'+1$ and $(g_j)_{j=1}^N$ the family obtained by prepending $d$ to
+  $(h_i)_{i=1}^{N'}$, as in the splitting identity above. Then $N\ge1$; each $g_j$ is closed and
+  piecewise-geodesic ($g_1=d$ from \noderef{CutTypeII}, $g_{i+1}=h_i$ from the IH). By
+  \eqref{eq:sum-split} with $F(\cdot)=[[\cdot]](\omega)$, $[[\eta]](\omega) = [[\eta']](\omega)+
+  [[d]](\omega) = \bigl(\sum_i[[h_i]](\omega)\bigr)+[[d]](\omega) = \sum_j[[g_j]](\omega)$, which is
+  \eqref{eq:SurgeryIndCurrent} for $\eta$. By \eqref{eq:sum-split} with $F=\length$,
+  $\sum_j\length(g_j) = \length(d)+\sum_i\length(h_i) \le \length(d)+\Phi(\length(\eta'),m') \le
+  \Phi(\length(\eta),m)$, the last step by \eqref{eq:typeII-arith}; this is
+  \eqref{eq:SurgeryIndLength} for $\eta$. Finally, for the Morrey bound: $g_1=d$ satisfies
+  $\Morrey{\mu_d}\le2(n+2\epsilon^{-1}+2) = 4\epsilon^{-1}+2n+4 \le 4\epsilon^{-1}+2n+10$ (as reals,
+  $4\le10$), and applying the (extended-real) monotonicity of the Morrey norm bound under this
+  numeral inequality gives $\Morrey{\mu_d}\le4\epsilon^{-1}+2n+10$; each $g_{i+1}=h_i$ satisfies
+  $\Morrey{\mu_{h_i}}\le4\epsilon^{-1}+2n+10$ directly from the IH. This establishes
+  \eqref{eq:SurgeryIndMorrey} for $\eta$ and completes Case~(A).
+
+  \paragraph{Case (B): $\eta\in\Xden(\delta,\epsilon,n)$ and $\eta\in\Xlsi(\delta,\epsilon)$.} Take
+  $N:=1$ and $g_1:=\eta$ (the terminal step: the algorithm halts and outputs the current curve
+  unchanged, paper.tex line 1007, ``\textsc{if} $\gamma_i$ is $(\delta,\epsilon)$-l.s.i.\
+  \textsc{then} \ldots \textsc{return}''). Then $N\ge1$ trivially, and $g_1=\eta$ is closed and
+  piecewise-geodesic by $\eta$'s own standing properties. The sum in
+  \eqref{eq:SurgeryIndCurrent} has a single term, giving $[[\eta]](\omega)=[[g_1]](\omega)$
+  trivially.
+
+  \emph{The length bound.} We claim $\length(\eta) \le
+  \Phi(\length(\eta),m)$ where $m:=\nsmallpieces(\eta,\delta)$. Indeed $\Phi(\length(\eta),m) = A
+  \cdot\length(\eta)+C\cdot m \ge 1\cdot\length(\eta)+0 = \length(\eta)$, using $A\ge1$
+  \eqref{eq:A-ge-one} together with $\length(\eta)\ge0$ (\noderef{Curve}) to get $A\cdot\length(\eta)
+  \ge\length(\eta)$, and $C>0$, $m\ge0$ to get $C\cdot m\ge0$. This is exactly
+  \eqref{eq:SurgeryIndLength}'s single-term instance, $\length(g_1)=\length(\eta) \le
+  \Phi(\length(\eta),m)$.
+
+  \emph{The Morrey bound.} Since $\eta\in\Xden(\delta,\epsilon,n)$ and $\eta\in\Xlsi(\delta,
+  \epsilon)$, \noderef{FullBallLem} applies to $\eta,\delta,\epsilon,n$ (valid: $0<\delta$,
+  $0<\epsilon<1$, and these two membership facts) and gives $\Morrey{\mu_\eta} \le
+  4\epsilon^{-1}+2n+4 \le 4\epsilon^{-1}+2n+10$ (as reals, $4\le10$; converting via the monotonicity
+  of the extended-real bound as in Case~(A)). This is \eqref{eq:SurgeryIndMorrey}'s single-term
+  instance and completes Case~(B).
+
+  \paragraph{Case (C): $\eta\in\Xden(\delta,\epsilon,n)$ and $\eta\notin\Xlsi(\delta,\epsilon)$.}
+  By \noderef{CutTypeI} applied to $GP,\eta,\delta,\epsilon,n$ (valid: $0<\epsilon<1$, $0<\delta$,
+  $\eta$ closed and piecewise-geodesic, and this case's two membership facts), there exist
+  $\eta',d\in\Theta(E)$, both closed and piecewise-geodesic, and $\beta\in\mathbb{R}$, such that
+  \[
+    \delta\le\beta\le\tfrac12\length(\eta),\qquad
+    [[\eta]](\omega)=[[\eta']](\omega)+[[d]](\omega)\ (\forall\omega),\qquad
+    \Morrey{\mu_d}\le4\epsilon^{-1}+2n+10,
+  \]
+  \[
+    \length(\eta')\le\length(\eta)-(1-\epsilon)\beta,\qquad
+    \length(\eta')+\length(d)\le\length(\eta)+2\epsilon\beta,\qquad
+    \nsmallpieces(\eta',\delta)\le\nsmallpieces(\eta,\delta)+3
+    .
+  \]
+  (Unlike Case~(A), the Morrey bound on $d$ is \emph{already} exactly the target constant
+  $4\epsilon^{-1}+2n+10$; no numeral adjustment is needed for this case.)
+
+  \emph{Measure drop.} Write $m:=\nsmallpieces(\eta,\delta)$,
+  $m':=\nsmallpieces(\eta',\delta)$, $F,F'$ as in Case~(A). Since $\delta\le\beta$ and $1-\epsilon>0$,
+  $(1-\epsilon)\delta\le(1-\epsilon)\beta$, so $\length(\eta')\le\length(\eta)-(1-\epsilon)\beta\le
+  \length(\eta)-(1-\epsilon)\delta$, i.e.\ $\length(\eta)-\length(\eta')\ge(1-\epsilon)\delta>0$.
+  Writing $c:=(1-\epsilon)\delta>0$: since $\length(\eta')/c \le \length(\eta)/c - 1$ (dividing the
+  length gap $\ge c$ by $c$), and $\lfloor\length(\eta')/c\rfloor\le\length(\eta')/c$, we get
+  $\lfloor\length(\eta')/c\rfloor+1 \le \length(\eta)/c$, and since the left side is an integer,
+  $\lfloor\length(\eta')/c\rfloor+1 \le \lfloor\length(\eta)/c\rfloor$, i.e.\ $F'+1\le F$. Hence
+  $(n+3)F'+(n+3) \le (n+3)F$. Together with $m'\le m+3$ (i.e.\ $m' - 3\le m$, reorganized as
+  $m'\le m+3$ used directly below):
+  \[
+    M(\eta') = (n+3)F'+m' \le \bigl((n+3)F-(n+3)\bigr) + (m+3) = M(\eta) - (n+3)+3 = M(\eta) - n <
+    M(\eta)
+    ,
+  \]
+  using $n>0$ for the final strict inequality. So $M(\eta')<M(\eta)$.
+
+  \emph{The length step.} We claim
+  \begin{equation}
+    \label{eq:typeI-arith}
+    \length(d) + \Phi(\length(\eta'),m') \le \Phi(\length(\eta),m)
+    .
+  \end{equation}
+  From $\length(\eta')\le\length(\eta)-(1-\epsilon)\beta$, $\length(\eta)-\length(\eta') \ge
+  (1-\epsilon)\beta$; since $A-1\ge0$ \eqref{eq:A-ge-one}, $(A-1)(\length(\eta)-\length(\eta')) \ge
+  (A-1)(1-\epsilon)\beta = \bigl(2\epsilon+12\epsilon^{-1}/n\bigr)\beta$ by
+  \eqref{eq:A-minus-one-identity}. Also, from $m'\le m+3$, $m-m'\ge-3$, so (using $C>0$)
+  $C(m-m') \ge -3C = -12\epsilon^{-1}\delta/n$ (using $C=4\epsilon^{-1}\delta/n$). Combining,
+  \[
+    \Phi(\length(\eta),m)-\Phi(\length(\eta'),m') = \bigl(\length(\eta)-\length(\eta')\bigr) +
+    (A-1)\bigl(\length(\eta)-\length(\eta')\bigr) + C(m-m')
+  \]
+  \[
+    \ge \bigl(\length(\eta)-\length(\eta')\bigr) + 2\epsilon\beta + \frac{12\epsilon^{-1}}{n}\beta -
+    \frac{12\epsilon^{-1}}{n}\delta
+    = \bigl(\length(\eta)-\length(\eta')\bigr) + 2\epsilon\beta +
+    \frac{12\epsilon^{-1}}{n}(\beta-\delta)
+    .
+  \]
+  Since $\beta\ge\delta$ (this is the \emph{second}, independent use of $\beta\ge\delta$ in this
+  proof: the first controlled the measure drop above, and this one absorbs the $+3$ small-edge
+  slack of \eqref{eq:typeI-arith}'s hypothesis $m'\le m+3$ into a nonnegative correction term) and
+  $12\epsilon^{-1}/n>0$, the last summand is $\ge0$, so
+  \[
+    \Phi(\length(\eta),m)-\Phi(\length(\eta'),m') \ge \bigl(\length(\eta)-\length(\eta')\bigr) +
+    2\epsilon\beta \ge \length(d)
+    ,
+  \]
+  the last inequality from $\length(\eta')+\length(d) \le \length(\eta)+2\epsilon\beta$ rearranged
+  to $\length(d) \le (\length(\eta)-\length(\eta'))+2\epsilon\beta$. This is
+  \eqref{eq:typeI-arith}.
+
+  \emph{Assembly.} Exactly as in Case~(A): by the measure drop, the IH applies to $\eta'$, giving
+  $N'\ge1$ and closed piecewise-geodesic $(h_i)_{i=1}^{N'}$ satisfying
+  \eqref{eq:SurgeryIndCurrent}--\eqref{eq:SurgeryIndMorrey} for $\eta'$. Set $N:=N'+1$ and
+  $(g_j)_{j=1}^N$ the family obtained by prepending $d$ to $(h_i)_{i=1}^{N'}$. Then $N\ge1$; each
+  $g_j$ is closed and piecewise-geodesic ($g_1=d$ from \noderef{CutTypeI}, $g_{i+1}=h_i$ from the
+  IH). The current identity and length bound follow exactly as in Case~(A), using
+  \eqref{eq:sum-split} and \eqref{eq:typeI-arith} in place of \eqref{eq:typeII-arith}. For the
+  Morrey bound, $g_1=d$ satisfies $\Morrey{\mu_d}\le4\epsilon^{-1}+2n+10$ directly (no numeral
+  adjustment needed here, unlike Case~(A)), and each $g_{i+1}=h_i$ satisfies the bound from the IH.
+  This completes Case~(C).
+
+  \paragraph{Conclusion.} Cases (A), (B), (C) are exhaustive and each establishes $Q(\eta)$ from the
+  IH (with, in Cases (A) and (C), the IH invoked at a curve $\eta'$ with strictly smaller measure
+  $M(\eta')<M(\eta)$, and in Case (B) no recursive use of the IH at all). By strong induction on
+  $M(\eta)\in\mathbb{N}$, $Q(\eta)$ holds for every closed piecewise-geodesic curve $\eta$. Applying
+  this to $\eta:=\gamma$ (closed and piecewise-geodesic by hypothesis) gives the lemma's conclusion.
+\end{proof}

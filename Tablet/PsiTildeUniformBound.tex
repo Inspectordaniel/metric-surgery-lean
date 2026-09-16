@@ -1,0 +1,64 @@
+\begin{lemma}[A priori bound on $\tilde\psi$]
+  Let $E$ be a metric space, let $m \in \mathbb{N}$ with $m \ge 1$, let $Q \subset E$ be a finite
+  set, let $\epsilon, C \in \mathbb{R}$ with $\epsilon \ge 0$ and $C \ge 0$, and let
+  $\gamma \in \Theta(E)$ (\noderef{Curve}). Then
+  \[
+    0 \;\le\; \tilde\psi_{m,Q,\epsilon,C}(\gamma)
+      \;\le\; 2C^2\length(\gamma) + \frac{2C^2\length(\gamma)^2}{m}
+    ,
+  \]
+  where $\tilde\psi_{m,Q,\epsilon,C}$ is as in \noderef{psiTilde}. As in
+  \noderef{PsiUniformBound}, the upper bound depends only on $m$, $C$ and $\length(\gamma)$.
+
+  \paragraph{Why this node is needed.} This is the $\tilde\psi$ half of the integrability input to
+  the strong-law assembly of Theorem 4.4 (paper.tex 1349--1360), which applies the Strong Law of
+  Large Numbers simultaneously to $\gamma\mapsto l^{-1}\psi_{m\cdot l,Q,\epsilon,C}(\gamma)$ and
+  $\gamma\mapsto l^{-1}\tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma)$. On the
+  $\overline\eta_l$-a.e.\ event $\length(\gamma)=l$ the bound at $m\cdot l$ reads
+  $2C^2l + 2C^2l^2/(ml) = 2C^2l + 2C^2l/m$, so $l^{-1}\tilde\psi_{m\cdot l,Q,\epsilon,C}$ is
+  a.e.\ bounded by the $l$-independent constant $2C^2+2C^2/m$ and is therefore integrable against
+  the finite measure $\overline\eta_l$. That the two bounds coincide is a convenience of the
+  particular constants in \noderef{psi} and \noderef{psiTilde}, not an identification of the two
+  functionals.
+\end{lemma}
+\begin{proof}
+  Recall \noderef{psiTilde}'s defining formula: writing $L := \length(\gamma)$ and, for
+  $i \in \{1,\dots,m\}$,
+  \[
+    v_i := \min\bigl\{2C,\; \epsilon + 2C\,\mathrm{infDist}(\gamma(\tfrac{i}{m}L),Q)\bigr\}
+    ,
+  \]
+  we have $\tilde\psi_{m,Q,\epsilon,C}(\gamma) = \frac{2C^2L^2}{m} + \frac{CL}{m}\sum_{i=1}^m v_i$.
+
+  \emph{Preliminaries.} Since $m \ge 1$ we have $m > 0$ as a real number, and $L \ge 0$ by
+  \noderef{Curve} (field \emph{len\_nonneg}). Since $C \ge 0$ and $L \ge 0$ and $m > 0$, the
+  coefficient $\tfrac{CL}{m}$ is $\ge 0$, and likewise $\tfrac{2C^2L^2}{m} \ge 0$.
+
+  \emph{Lower bound.} Fix $i \in \{1,\dots,m\}$. The first argument of $v_i$'s minimum is
+  $2C \ge 0$. For the second, $\mathrm{infDist}(x,Q)\ge0$ for every $x$ and $\epsilon \ge 0$,
+  $C \ge 0$, so $\epsilon + 2C\,\mathrm{infDist}(\gamma(\tfrac{i}{m}L),Q) \ge 0$. A minimum of two
+  nonnegative reals is nonnegative, so $v_i \ge 0$ and hence $\sum_{i=1}^m v_i \ge 0$. Multiplying
+  by the nonnegative coefficient $\tfrac{CL}{m}$ and adding the nonnegative term
+  $\tfrac{2C^2L^2}{m}$ gives $\tilde\psi_{m,Q,\epsilon,C}(\gamma) \ge 0$.
+
+  \emph{Upper bound.} Fix $i \in \{1,\dots,m\}$. A minimum is at most its first argument, so
+  $v_i \le 2C$. Summing over the $m$ indices $i \in \{1,\dots,m\}$,
+  \[
+    \sum_{i=1}^m v_i \;\le\; m \cdot 2C
+    .
+  \]
+  Multiplying by the nonnegative coefficient $\tfrac{CL}{m}$ preserves the inequality, and since
+  $m>0$,
+  \[
+    \frac{CL}{m}\sum_{i=1}^m v_i \;\le\; \frac{CL}{m}\cdot m\cdot 2C \;=\; 2C^2L
+    .
+  \]
+  Adding $\tfrac{2C^2L^2}{m}$ to both sides,
+  \[
+    \tilde\psi_{m,Q,\epsilon,C}(\gamma)
+      = \frac{2C^2L^2}{m} + \frac{CL}{m}\sum_{i=1}^m v_i
+      \;\le\; 2C^2L + \frac{2C^2L^2}{m}
+    ,
+  \]
+  which is the asserted upper bound.
+\end{proof}

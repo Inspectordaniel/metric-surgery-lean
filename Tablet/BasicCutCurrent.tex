@@ -1,0 +1,126 @@
+\begin{lemma}[The basic cut splits the current additively]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}), $\gamma \in
+  \Theta(E)$ (\noderef{Curve}) a closed curve (\noderef{IsClosedCurve}), $t,t' \in
+  [0,\length(\gamma)]$ with $t \ne t'$, and $\omega \in \mathcal{D}^1(E)$ (\noderef{Form1}). Writing
+  $(\gamma',g) := C(\gamma,t,t')$ (\noderef{BasicCut}),
+  \[
+    [[\gamma]](\omega) = [[\gamma']](\omega) + [[g]](\omega)
+    .
+  \]
+  This is exactly paper.tex line 584-587: ``In particular, $[[\gamma]] = [[\gamma']] + [[g]]$.''
+  As \noderef{BasicCutClosed} explains, the hypothesis $t \ne t'$ is exactly the paper's own
+  restriction (paper.tex line 577: the circular-restriction length identity
+  $\length(\gamma|_{[t,t']})+\length(\gamma|_{[t',t]})=\length(\gamma)$ is asserted only for
+  \emph{distinct} $t,t'$); at $t=t'$ this identity is false in general
+  (\noderef{BasicCut}'s two outputs both degenerate to length-$0$ curves there, forcing
+  $[[\gamma]](\omega)=0$, which fails e.g.\ for $\gamma$ a once-traversed unit circle against a
+  suitable $\omega$), so the paper's own basic-cut identity is genuinely restricted to $t \ne t'$,
+  matching this lemma's hypothesis.
+\end{lemma}
+\begin{proof}
+  \emph{Reduction via \noderef{BasicCut}.} By \noderef{BasicCut}'s case split, and since $t \ne t'$
+  excludes the middle case, exactly one of the following holds.
+
+  \paragraph{Case $t < t'$.} Here $\gamma' = A * G_{\gamma(t),\gamma(t')}$ with $A :=
+  \mathrm{curveWrapRestrict}(\gamma,t',t) = \gamma|_{[t',\length(\gamma)]} * \gamma|_{[0,t]}$
+  (\noderef{curveWrapRestrict}), and $g = B * G_{\gamma(t'),\gamma(t)}$ with $B :=
+  \mathrm{curveRestrict}(\gamma,t,t')$, where $*$ is \noderef{curveConcat}.
+
+  By \noderef{CurrentConcatAdditive} applied to $\gamma' = A * G_{\gamma(t),\gamma(t')}$,
+  \[
+    [[\gamma']](\omega) = [[A]](\omega) + [[G_{\gamma(t),\gamma(t')}]](\omega)
+    .
+  \]
+  By \noderef{CurrentConcatAdditive} again, applied to $A = \gamma|_{[t',\length(\gamma)]} *
+  \gamma|_{[0,t]}$ (an instance of \noderef{curveConcat} by \noderef{curveWrapRestrict}'s own
+  definition),
+  \[
+    [[A]](\omega) = [[\gamma|_{[t',\length(\gamma)]}]](\omega) + [[\gamma|_{[0,t]}]](\omega)
+    .
+  \]
+  By \noderef{CurrentConcatAdditive} applied to $g = B * G_{\gamma(t'),\gamma(t)}$,
+  \[
+    [[g]](\omega) = [[\gamma|_{[t,t']}]](\omega) + [[G_{\gamma(t'),\gamma(t)}]](\omega)
+    .
+  \]
+  Summing the first, second, and third displays,
+  \begin{align}
+    [[\gamma']](\omega) + [[g]](\omega)
+    &= [[\gamma|_{[t',\length(\gamma)]}]](\omega) + [[\gamma|_{[0,t]}]](\omega) +
+       [[\gamma|_{[t,t']}]](\omega) \notag \\
+    &\qquad + \bigl([[G_{\gamma(t),\gamma(t')}]](\omega) + [[G_{\gamma(t'),\gamma(t)}]](\omega)\bigr)
+    . \label{eq:BCC-sum}
+  \end{align}
+
+  \emph{The two closing edges cancel.} Write $x:=\gamma(t)$, $y:=\gamma(t')$. By
+  \noderef{GeodesicPairing}'s $\mathrm{len\_eq}$ field, $\length(G_{y,x}) = d(y,x) = d(x,y)$
+  (\texttt{dist\_comm}) $=\length(G_{x,y})$, and by the $\mathrm{reversal}$ field of
+  \noderef{GeodesicPairing} applied to $x,y$, for every $s \in [0,d(x,y)] = [0,\length(G_{x,y})]$,
+  $G_{y,x}(s) = G_{x,y}(d(x,y)-s) = G_{x,y}(\length(G_{x,y})-s)$. These are exactly the two
+  hypotheses of \noderef{CurrentReverse} applied with $\gamma := G_{x,y}$, $\gamma' := G_{y,x}$, so
+  \[
+    [[G_{y,x}]](\omega) = -[[G_{x,y}]](\omega)
+    , \qquad \text{i.e.} \qquad
+    [[G_{\gamma(t),\gamma(t')}]](\omega) + [[G_{\gamma(t'),\gamma(t)}]](\omega) = 0
+    .
+  \]
+  Substituting into \eqref{eq:BCC-sum},
+  \[
+    [[\gamma']](\omega) + [[g]](\omega) = [[\gamma|_{[t',\length(\gamma)]}]](\omega) +
+      [[\gamma|_{[0,t]}]](\omega) + [[\gamma|_{[t,t']}]](\omega)
+    . \tag{$\dagger$}
+  \]
+
+  \emph{The three arcs recombine to $[[\gamma]]$.} Define $s \colon \mathbb{N} \to \mathbb{R}$ by
+  $s(0)=0$, $s(1)=t$, $s(2)=t'$, $s(3)=\length(\gamma)$ (and $s(i)=\length(\gamma)$ for $i>3$,
+  irrelevant). Since $0 \le t \le t' \le \length(\gamma)$ (using $t<t'$), $s$ is monotone on
+  $\{0,\dots,3\}$, so \noderef{CurrentResolutionAdditive} (with $k=3$) gives
+  \[
+    [[\gamma]](\omega) = \int_0^t \omega.f(\gamma(u))\cdot\mathrm{deriv}(\omega.\pi\circ\gamma)(u)\,du
+      + \int_t^{t'} (\cdots)\,du + \int_{t'}^{\length(\gamma)} (\cdots)\,du
+    .
+  \]
+  By \noderef{RestrictCurrentFormula} applied with $(a,b)=(0,t)$, $(a,b)=(t,t')$, and
+  $(a,b)=(t',\length(\gamma))$ respectively, the three integrals equal
+  $[[\gamma|_{[0,t]}]](\omega)$, $[[\gamma|_{[t,t']}]](\omega)$, and
+  $[[\gamma|_{[t',\length(\gamma)]}]](\omega)$, so
+  \[
+    [[\gamma]](\omega) = [[\gamma|_{[0,t]}]](\omega) + [[\gamma|_{[t,t']}]](\omega) +
+      [[\gamma|_{[t',\length(\gamma)]}]](\omega)
+    .
+  \]
+  The right side is (up to reordering the sum, which is commutative) exactly the right side of
+  $(\dagger)$, so $[[\gamma]](\omega) = [[\gamma']](\omega)+[[g]](\omega)$, as claimed, in this case.
+
+  \paragraph{Case $t' < t$.} Symmetric, exchanging the roles of $t,t'$ (and of $\gamma',g$). Here
+  $\gamma' = A' * G_{\gamma(t),\gamma(t')}$ with $A' := \mathrm{curveRestrict}(\gamma,t',t)$, and
+  $g = B' * G_{\gamma(t'),\gamma(t)}$ with $B' := \mathrm{curveWrapRestrict}(\gamma,t,t') =
+  \gamma|_{[t,\length(\gamma)]} * \gamma|_{[0,t']}$. Exactly as above,
+  \[
+    [[\gamma']](\omega) + [[g]](\omega) = [[\gamma|_{[t',t]}]](\omega) +
+      \bigl([[\gamma|_{[t,\length(\gamma)]}]](\omega) + [[\gamma|_{[0,t']}]](\omega)\bigr) +
+      \bigl([[G_{\gamma(t),\gamma(t')}]](\omega)+[[G_{\gamma(t'),\gamma(t)}]](\omega)\bigr)
+    ,
+  \]
+  by \noderef{CurrentConcatAdditive} applied three times (to $\gamma'=A'*G_{\gamma(t),\gamma(t')}$,
+  to $g = B'*G_{\gamma(t'),\gamma(t)}$, and to $B' = \gamma|_{[t,\length(\gamma)]}*\gamma|_{[0,t']}$
+  by \noderef{curveWrapRestrict}'s own definition), and the closing-edge sum again vanishes by
+  \noderef{CurrentReverse} exactly as above, leaving
+  \[
+    [[\gamma']](\omega) + [[g]](\omega) = [[\gamma|_{[0,t']}]](\omega) + [[\gamma|_{[t',t]}]](\omega)
+      + [[\gamma|_{[t,\length(\gamma)]}]](\omega)
+    .
+  \]
+  Applying \noderef{CurrentResolutionAdditive} with $k=3$, $s(0)=0,s(1)=t',s(2)=t,s(3)=\length(\gamma)$
+  (monotone since $0\le t' \le t \le \length(\gamma)$) together with \noderef{RestrictCurrentFormula}
+  applied to each of the three resulting subintervals, exactly as above,
+  \[
+    [[\gamma]](\omega) = [[\gamma|_{[0,t']}]](\omega) + [[\gamma|_{[t',t]}]](\omega) +
+      [[\gamma|_{[t,\length(\gamma)]}]](\omega)
+    ,
+  \]
+  which is the same sum, so $[[\gamma]](\omega) = [[\gamma']](\omega) + [[g]](\omega)$ in this case
+  too.
+
+  In both cases the claimed identity holds, completing the proof.
+\end{proof}

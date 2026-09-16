@@ -1,0 +1,43 @@
+\begin{lemma}[Finite subadditivity of the Morrey norm]
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, let $\iota$ be an index type,
+  let $s$ be a finite subset of $\iota$, and let $\mu \colon \iota \to$ (Borel measures on $E$).
+  Then
+  \[
+    \Morrey{\sum_{i \in s} \mu(i)} \le \sum_{i \in s} \Morrey{\mu(i)}
+    .
+  \]
+\end{lemma}
+\begin{proof}
+  \emph{Step 1 (binary case).} We first show $\Morrey{\nu_1 + \nu_2} \le \Morrey{\nu_1} +
+  \Morrey{\nu_2}$ for any two Borel measures $\nu_1, \nu_2$ on $E$. Fix $x \in E$ and $r > 0$. Since
+  measure addition is computed pointwise on Borel sets, $(\nu_1+\nu_2)(B_r(x)) = \nu_1(B_r(x)) +
+  \nu_2(B_r(x))$, and division by $r$ distributes over this sum (in $[0,\infty]$), so
+  \[
+    \frac{(\nu_1+\nu_2)(B_r(x))}{r} = \frac{\nu_1(B_r(x))}{r} + \frac{\nu_2(B_r(x))}{r}
+    \le \Morrey{\nu_1} + \Morrey{\nu_2}
+    ,
+  \]
+  the inequality because each summand is one of the terms whose supremum (over all $x,r$) defines
+  $\Morrey{\nu_1}$, resp.\ $\Morrey{\nu_2}$ (\noderef{morreyNorm}), hence is bounded by it. Since
+  $x,r$ were arbitrary, taking the supremum over $x \in E$ and $r>0$ of the left-hand side gives
+  $\Morrey{\nu_1+\nu_2} \le \Morrey{\nu_1}+\Morrey{\nu_2}$, as the right-hand side does not depend
+  on $x,r$.
+
+  \emph{Step 2 (induction on $s$).} We induct on the finite set $s$. If $s = \emptyset$, both sides
+  are $\Morrey{0} = 0$ (the zero measure assigns $0$ to every ball, so every term in the supremum
+  defining $\Morrey{0}$ is $0/r = 0$), so the inequality holds with equality.
+
+  For the inductive step, suppose $s = \set{a} \cup t$ with $a \notin t$ and the claim holds for
+  $t$: $\Morrey{\sum_{i\in t}\mu(i)} \le \sum_{i\in t}\Morrey{\mu(i)}$. Then
+  \[
+    \Morrey{\sum_{i \in s} \mu(i)}
+    = \Morrey{\mu(a) + \sum_{i \in t} \mu(i)}
+    \overset{\text{Step 1}}{\le} \Morrey{\mu(a)} + \Morrey{\sum_{i\in t}\mu(i)}
+    \overset{\text{IH}}{\le} \Morrey{\mu(a)} + \sum_{i \in t} \Morrey{\mu(i)}
+    = \sum_{i \in s} \Morrey{\mu(i)}
+    ,
+  \]
+  where the first equality is $\sum_{i\in s}\mu(i) = \mu(a) + \sum_{i\in t}\mu(i)$ (splitting off
+  the element $a$ from the finite sum) and the last equality is the same splitting for the
+  right-hand sum. This completes the induction, and hence the proof.
+\end{proof}

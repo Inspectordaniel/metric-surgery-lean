@@ -1,0 +1,57 @@
+\begin{corollary}[C1-small-ball]
+  \label{C1-small-ball}
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, let $\gamma \in \Theta(E)$
+  (\noderef{Curve}), and let $k \in \mathbb{N}$ be such that $\gamma$ is piecewise geodesic with $k$
+  pieces, $\mathrm{IsPiecewiseGeodesicWith}(\gamma,k)$ (\noderef{IsPiecewiseGeodesicWith}) -- which,
+  as recorded in that node, is equivalent to $\gamma$ being writable as the concatenation of at
+  most $k$ geodesic curves. Then $\mu_\gamma$ (\noderef{curveMeasure}) satisfies the ball growth
+  condition
+  \[
+    \Morrey{\mu_\gamma} \le 2k
+    ,\qquad\text{i.e.,}\qquad
+    \mu_\gamma(B_r(x)) \le 2kr\quad\text{for all } r>0, x\in E
+    .
+  \]
+  This is paper Corollary~2.6 (paper.tex lines 539--549).
+
+  \paragraph{On the ambient hypotheses.} The paper's standing assumption for this section is that
+  $E$ is a complete, separable, geodesic metric space (paper.tex line 264). Corollary~2.6's own
+  proof (``follows immediately from Lemma~2.2 and Lemma~2.1,'' paper.tex line 550) uses neither
+  completeness, separability, nor the ambient geodesic-space property of $E$: it only uses that the
+  specific curve $\gamma$ under consideration is piecewise geodesic, which is exactly the corollary's
+  hypothesis. We therefore state the corollary for a general metric space $E$; this is strictly
+  stronger than, and specializes to, the paper's statement under its standing assumptions, so it is
+  a faithful (in fact more broadly applicable) formalization of the same mathematical content.
+\end{corollary}
+\begin{proof}
+  Let $s$ be a resolution witnessing $\mathrm{IsPiecewiseGeodesicWith}(\gamma,k)$: $s$ is monotone
+  on $\set{0,\dots,k}$, $s(0)=0$, $s(k)=\length(\gamma)$, and $\gamma$ is a geodesic on
+  $[s(i),s(i+1)]$ for every $i<k$ (\noderef{IsGeodesicResolution}).
+
+  By \noderef{MorreyResolutionAdditive} applied to this resolution,
+  \[
+    \mu_\gamma = \sum_{i=0}^{k-1} \nu_i
+    , \qquad \nu_i := \gamma_\#\!\left(\mathrm{Leb}|_{[s(i),s(i+1)]}\right)
+    .
+  \]
+  By \noderef{MorreySubadditive} applied to the family $(\nu_i)_{i=0}^{k-1}$ (indexed by the finite
+  set $\set{0,\dots,k-1}$),
+  \[
+    \Morrey{\mu_\gamma} = \Morrey{\sum_{i=0}^{k-1}\nu_i} \le \sum_{i=0}^{k-1} \Morrey{\nu_i}
+    .
+  \]
+  Fix $i < k$. Since $s$ is monotone on $\set{0,\dots,k}$ and $i \le i+1 \le k$, we get
+  $s(i) \le s(i+1)$ and, since also $i+1 \le k$ and $s(k) = \length(\gamma)$, $s(i+1) \le
+  \length(\gamma)$. Together with the resolution's hypothesis that $\gamma$ is a geodesic on
+  $[s(i),s(i+1)]$, \noderef{GeodesicMorreyLeTwo} (applied with $a=s(i)$, $b=s(i+1)$) gives
+  $\Morrey{\nu_i} \le 2$.
+
+  Summing over the $k$ indices $i=0,\dots,k-1$,
+  \[
+    \Morrey{\mu_\gamma} \le \sum_{i=0}^{k-1} \Morrey{\nu_i} \le \sum_{i=0}^{k-1} 2 = 2k
+    ,
+  \]
+  which is the claim. The displayed ball-growth form $\mu_\gamma(B_r(x)) \le 2kr$ for all $r>0,
+  x\in E$ is exactly the definition of $\Morrey{\mu_\gamma} \le 2k$ unwound
+  (\noderef{morreyNorm}).
+\end{proof}

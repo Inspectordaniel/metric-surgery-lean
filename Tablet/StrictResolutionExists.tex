@@ -1,0 +1,72 @@
+\begin{lemma}[Strict resolutions exist]
+  Let $E$ be a metric space and $\gamma \in \Theta(E)$ (\noderef{Curve}) piecewise geodesic
+  (\noderef{IsPiecewiseGeodesic}) with $\length(\gamma) > 0$. Then there exist $k \in \mathbb{N}$
+  with $k > 0$ and a resolution $s$ of $\gamma$ into $k$ geodesic edges
+  (\noderef{IsGeodesicResolution}) that is \emph{strictly} increasing on $\set{0,\dots,k}$:
+  $s(i) < s(i+1)$ for every $i < k$.
+
+  This repairs a deliberate weakening recorded at \noderef{IsGeodesicResolution}: the paper's own
+  notion of a resolution into geodesic edges (paper.tex line 532) is strictly increasing,
+  $0=s_0<s_1<\dots<s_k=\length(\gamma)$, while our $\mathrm{IsGeodesicResolution}$ permits
+  consecutive values to repeat (degenerate, zero-length edges), so that a resolution witnessing
+  $\mathrm{IsGeodesicResolution}$ need not directly exhibit the strict form the paper's later
+  constructions (in particular the surgery algorithm's initial choice of $\delta$, paper.tex line
+  976, formalized at \noderef{InitialDeltaExists}) rely on. This lemma shows every piecewise-geodesic
+  curve of positive length nonetheless admits a strict witness, so nothing is lost by the
+  weakening.
+\end{lemma}
+\begin{proof}
+  By \noderef{IsPiecewiseGeodesic}, fix $k_0 \in \mathbb{N}$ and a resolution $s_0$ of $\gamma$ into
+  $k_0$ geodesic edges (\noderef{IsGeodesicResolution}): $s_0$ is monotone (non-decreasing) on
+  $\set{0,\dots,k_0}$, $s_0(0)=0$, $s_0(k_0)=\length(\gamma)$, and for every $i<k_0$,
+  $\mathrm{IsGeodesicOn}(\gamma,s_0(i),s_0(i+1))$ (\noderef{IsGeodesicOn}).
+
+  \emph{Step 1: the distinct-value subsequence.} Let $V := \set{s_0(i) : i \in \set{0,\dots,k_0}}
+  \subseteq \mathbb{R}$, a nonempty finite set (it has at most $k_0+1$ elements). List its elements
+  in increasing order as $t_0 < t_1 < \dots < t_{k'}$, where $k'+1 = |V| \le k_0+1$, i.e.\ $k' \le
+  k_0$. Since $s_0$ is monotone non-decreasing on $\set{0,\dots,k_0}$, its minimum value over this
+  set is attained at $i=0$ and its maximum at $i=k_0$; hence $t_0 = s_0(0) = 0$ and $t_{k'} =
+  s_0(k_0) = \length(\gamma)$. Since $\length(\gamma) > 0$ by hypothesis, $t_0 = 0 \ne \length(\gamma)
+  = t_{k'}$, so $t_0 \ne t_{k'}$, forcing $k' \ge 1$, i.e.\ $k' > 0$.
+
+  \emph{Step 2: definition of the candidate resolution.} Define $s' \colon \mathbb{N} \to
+  \mathbb{R}$ by $s'(i) = t_i$ for $i \le k'$ (the values of $s'$ at $i > k'$ are irrelevant, since
+  $\mathrm{IsGeodesicResolution}(\gamma,k',s')$ only constrains $s'$ on $\set{0,\dots,k'}$; take
+  $s'(i) = t_{k'}$ there for definiteness). By construction, $s'$ is strictly increasing
+  ($s'(i)<s'(i+1)$ for all $i<k'$, since $t_0<t_1<\dots<t_{k'}$), hence monotone (non-decreasing) on
+  $\set{0,\dots,k'}$, with $s'(0)=t_0=0$ and $s'(k')=t_{k'}=\length(\gamma)$. It remains to show
+  $\mathrm{IsGeodesicOn}(\gamma,s'(i),s'(i+1))$ for every $i<k'$, which together with the above gives
+  $\mathrm{IsGeodesicResolution}(\gamma,k',s')$ and hence, taking $k:=k'$ and $s:=s'$, both
+  conclusions of the lemma.
+
+  \emph{Step 3: each edge $[t_i,t_{i+1}]$ of $s'$ is an unchanged geodesic edge of $s_0$.} Fix $i <
+  k'$. Since $t_i \in V$, the set $\set{m \in \set{0,\dots,k_0} : s_0(m) = t_i}$ is nonempty; let $j$
+  be its largest element.
+
+  First, $j < k_0$: otherwise $j = k_0$ would give $t_i = s_0(k_0) = \length(\gamma) = t_{k'}$,
+  contradicting $t_i \ne t_{k'}$ (as $i < k' $ and the $t$-sequence is strictly increasing, hence
+  injective). So $j+1 \le k_0$ is a valid index, and the resolution property of $(k_0,s_0)$ gives
+  $\mathrm{IsGeodesicOn}(\gamma, s_0(j), s_0(j+1))$, i.e.\ (since $s_0(j)=t_i$)
+  $\mathrm{IsGeodesicOn}(\gamma,t_i,s_0(j+1))$.
+
+  We claim $s_0(j+1) = t_{i+1}$, which turns this into
+  $\mathrm{IsGeodesicOn}(\gamma,t_i,t_{i+1}) = \mathrm{IsGeodesicOn}(\gamma,s'(i),s'(i+1))$ as needed.
+  \begin{itemize}
+    \item ($s_0(j+1) \ge t_{i+1}$.) By monotonicity of $s_0$ on $\set{j,j+1} \subseteq
+      \set{0,\dots,k_0}$, $s_0(j+1) \ge s_0(j) = t_i$. Moreover $s_0(j+1) \ne t_i$, since otherwise
+      $j+1$ would also lie in $\set{m : s_0(m)=t_i}$ (as $j+1 \le k_0$), contradicting maximality of
+      $j$ in that set. So $s_0(j+1) > t_i$. Since $s_0(j+1) \in V$ (it is a value of $s_0$ at a
+      valid index) and every element of $V$ exceeding $t_i$ lies in $\set{t_{i+1},\dots,t_{k'}}$ (by
+      construction of the increasing enumeration of $V$), the smallest such element being
+      $t_{i+1}$, we get $s_0(j+1) \ge t_{i+1}$.
+    \item ($s_0(j+1) \le t_{i+1}$.) Since $t_{i+1} \in V$, fix $m' \in \set{0,\dots,k_0}$ with
+      $s_0(m') = t_{i+1}$. Since $t_{i+1} > t_i = s_0(j)$ and $s_0$ is monotone, $m' \le j$ would
+      force $s_0(m') \le s_0(j) = t_i < t_{i+1}$, a contradiction; so $m' > j$, i.e.\ $m' \ge j+1$.
+      Monotonicity of $s_0$ on $\set{j+1,\dots,k_0} \ni j+1,m'$ then gives $s_0(j+1) \le s_0(m') =
+      t_{i+1}$.
+  \end{itemize}
+  Combining the two inequalities, $s_0(j+1) = t_{i+1}$, completing Step~3.
+
+  Since $i<k'$ was arbitrary, Step~3 establishes the edge condition of
+  $\mathrm{IsGeodesicResolution}(\gamma,k',s')$ for every $i<k'$, completing the proof.
+\end{proof}

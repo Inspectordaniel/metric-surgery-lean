@@ -1,0 +1,52 @@
+\begin{lemma}[Measurability of $\psi$]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra, let
+  $m \in \mathbb{N}$, $Q \subset E$ a finite set, and $\epsilon, C \in \mathbb{R}$. Then
+  $\gamma \mapsto \psi_{m,Q,\epsilon,C}(\gamma)$ (\noderef{psi}) is a measurable map
+  $\Theta(E) \to \mathbb{R}$, where $\Theta(E)$ carries the evaluation $\sigma$-algebra of
+  \noderef{CurveMeasurableSpace}.
+
+  \paragraph{Why this node is needed.} A planned downstream lemma (paper Lemma A.3, paper.tex 1817)
+  will state an inequality between Bochner integrals of $\psi_{m,Q,\epsilon,C}$ and
+  $\tilde\psi_{m,Q,\epsilon,C}$ against a finite Borel measure on $\Theta(E)$. Lean's Bochner
+  integral of a function that is not (a.e.-strongly) measurable is $0$ by the junk-value convention,
+  exactly as \noderef{psi} itself becomes identically $0$ at $m=0$ (a fact recorded on this
+  tablet's process memory as \texttt{psi\_zero\_at\_m\_zero}): without measurability established
+  here, such an integral inequality would be satisfiable vacuously by taking $\psi_{m,Q,\epsilon,C}$
+  to be any non-measurable function agreeing with the honest $\psi$ in name only, since Lean's
+  integral of a non-measurable function carries no information about the function's actual values.
+  This lemma closes that gap, for a general fixed $(m,Q,\epsilon,C)$, so that the downstream
+  integral-inequality node and the strong-law assembly it feeds (which need
+  $\gamma\mapsto\psi_{m\cdot l,Q,\epsilon,C}(\gamma)$ measurable and integrable for a countable
+  family of admissible $(m,Q,\epsilon,C)$) may cite it once they are written.
+\end{lemma}
+\begin{proof}
+  Write $L(\gamma) := \length(\gamma)$. By \noderef{CurveLenMeasurable}, $\gamma \mapsto L(\gamma)$
+  is measurable. Fix any constant $c \in \mathbb{R}$; by \noderef{CurveScaledEvalMeasurable} (at
+  that constant $c$), $\gamma \mapsto \gamma(c \cdot L(\gamma))$ is measurable, and since
+  $x \mapsto \mathrm{infDist}(x,Q)$ is $1$-Lipschitz (hence continuous, hence measurable) for any
+  fixed nonempty ambient metric space and any $Q \subset E$ (a Lipschitz map composed with a
+  measurable map is measurable), the composite
+  \[
+    \gamma \;\longmapsto\; \mathrm{infDist}\bigl(\gamma(c \cdot L(\gamma)), Q\bigr)
+  \]
+  is measurable, for every fixed real constant $c$.
+
+  Recall \noderef{psi}'s definition:
+  \[
+    \psi_{m,Q,\epsilon,C}(\gamma) = C \cdot \sum_{i=1}^{m} \min\Bigl\{ \tfrac{2C L(\gamma)}{m},\;
+      2\epsilon + 2C\bigl(\mathrm{infDist}(\gamma(\tfrac{i}{m}L(\gamma)),Q) +
+        \mathrm{infDist}(\gamma(\tfrac{i-1}{m}L(\gamma)),Q)\bigr) \Bigr\} + \frac{2C^2 L(\gamma)^2}{m}
+    .
+  \]
+  For each fixed $i \in \{1,\dots,m\}$, apply the previous paragraph at $c = i/m$ and at
+  $c=(i-1)/m$: both $\gamma \mapsto \mathrm{infDist}(\gamma(\tfrac{i}{m}L(\gamma)),Q)$ and
+  $\gamma \mapsto \mathrm{infDist}(\gamma(\tfrac{i-1}{m}L(\gamma)),Q)$ are measurable, hence so is
+  their sum, its product by the measurable constant $2C$, its sum with the measurable constant
+  $2\epsilon$, and its minimum with the measurable function $\gamma \mapsto 2CL(\gamma)/m$ (itself
+  measurable as a constant multiple of the measurable $L$). Each summand of the finite sum
+  defining $\psi_{m,Q,\epsilon,C}$ is therefore measurable in $\gamma$, so the finite sum over
+  $i \in \{1,\dots,m\}$ is measurable, and multiplying by the constant $C$ preserves
+  measurability. The additive term $2C^2 L(\gamma)^2/m$ is measurable as a constant multiple of a
+  power of the measurable function $L$, divided by the constant $m$. Summing these two measurable
+  pieces, $\gamma \mapsto \psi_{m,Q,\epsilon,C}(\gamma)$ is measurable, as claimed.
+\end{proof}

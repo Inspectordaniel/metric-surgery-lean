@@ -1,0 +1,49 @@
+\begin{lemma}[Ball growth for a geodesic edge]
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, $\gamma \in \Theta(E)$
+  (\noderef{Curve}), and $a \le b \le \length(\gamma)$ real numbers such that $\gamma$ is a
+  geodesic on $[a,b]$ (\noderef{IsGeodesicOn}). Then the pushforward measure
+  $\gamma_\#(\mathrm{Leb}|_{[a,b]})$ satisfies
+  \[
+    \Morrey{\gamma_\#(\mathrm{Leb}|_{[a,b]})} \le 2
+    .
+  \]
+  This is the ``$\le$'' half of paper Lemma~2.2 (paper.tex lines 501--507), applied to the
+  subinterval $[a,b]$ rather than only to the whole curve $[0,\length(\gamma)]$ (the case
+  $a=0,b=\length(\gamma)$ recovers the paper's statement about $\gamma$ itself, and general $a,b$ is
+  exactly what \noderef{C1SmallBall} needs for each geodesic edge of a resolution). We omit the
+  matching equality half of Lemma~2.2 here: as recorded in process memory, it is false for
+  $a=b$ (a degenerate, zero-length edge has $\gamma_\#(\mathrm{Leb}|_{[a,a]}) = 0$, whose Morrey
+  norm is $0 \ne 2$), and every downstream use in this tablet needs only the inequality proved here.
+\end{lemma}
+\begin{proof}
+  Fix $x \in E$ and $r > 0$; we bound
+  $\gamma_\#(\mathrm{Leb}|_{[a,b]})(B_r(x))/r$ by $2$, which suffices since $x,r$ were arbitrary and
+  $\Morrey{\cdot}$ is the supremum of exactly these ratios (\noderef{morreyNorm}).
+
+  Write $S = \set{t \in [a,b] : \gamma(t) \in B_r(x)}$. Since $\gamma$ is Borel measurable
+  (\noderef{CurveLipschitz}), $\gamma_\#(\mathrm{Leb}|_{[a,b]})(B_r(x)) = |S|$ (Lebesgue measure of
+  $S$), by definition of pushforward and restriction. If $S = \emptyset$ then $|S|=0 \le 2r$
+  trivially. So assume $S \ne \emptyset$.
+
+  \emph{Bounding the diameter of $S$.} Let $t, t' \in S$. Since $\gamma(t), \gamma(t') \in B_r(x)$,
+  the triangle inequality gives
+  $d(\gamma(t),\gamma(t')) \le d(\gamma(t),x) + d(x,\gamma(t')) \le r + r = 2r$. Since $\gamma$ is a
+  geodesic on $[a,b]$ and $t,t' \in [a,b]$, $d(\gamma(t),\gamma(t')) = |t-t'|$
+  (\noderef{IsGeodesicOn}). Hence $|t - t'| \le 2r$ for all $t,t' \in S$: $S$ has diameter at most
+  $2r$.
+
+  \emph{From diameter to measure.} Since $S \subseteq [a,b]$ is bounded, $\sup S$ and $\inf S$ are
+  well-defined real numbers. For any fixed $t' \in S$, every $t \in S$ satisfies $t \le t' + 2r$ (a
+  restatement of $|t-t'|\le 2r$), so $t'+2r$ is an upper bound for $S$, giving $\sup S \le t' + 2r$.
+  As this holds for every $t' \in S$, $\sup S - 2r$ is a lower bound for $S$, so
+  $\sup S - 2r \le \inf S$, i.e.\ $\sup S - \inf S \le 2r$. Every $t \in S$ satisfies
+  $\inf S \le t \le \sup S$, so $S \subseteq [\inf S, \sup S]$, an interval of length
+  $\sup S - \inf S \le 2r$. Hence
+  \[
+    |S| \le |[\inf S, \sup S]| = \sup S - \inf S \le 2r
+    .
+  \]
+
+  \emph{Conclusion.} $\gamma_\#(\mathrm{Leb}|_{[a,b]})(B_r(x)) / r = |S|/r \le 2r/r = 2$. Since
+  $x,r$ were arbitrary, $\Morrey{\gamma_\#(\mathrm{Leb}|_{[a,b]})} = \sup_{x,r} |S|/r \le 2$.
+\end{proof}

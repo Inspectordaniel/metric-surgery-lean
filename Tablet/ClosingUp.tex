@@ -1,0 +1,275 @@
+\begin{lemma}[Closing the loops]\label{ClosingUp}
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra,
+  $T \colon \mathcal{D}^1(E) \to \mathbb{R}$, $F$ a Paolini--Stepanov family for $T$
+  (\noderef{PSFamily}), $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}), and
+  $x_0 \in E$ a basepoint. Let $(n_l)_{l\in\mathbb{N}}$ be a sequence of positive integers, and
+  $(\gamma_{i,l})_{l\in\mathbb{N},\,i<n_l}$ a doubly-indexed family of curves in $\Theta(E)$ such
+  that:
+  \begin{itemize}
+    \item[(H0)] $n_l>0$ for every $l\in\mathbb{N}$;
+    \item[(H1)] $\length(\gamma_{i,l}) = l$ for every $l\ge1$ and every $i<n_l$;
+    \item[(H2)] (current averages) for every metric $1$-form $\omega \in \mathcal{D}^1(E)$,
+      \[
+        \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\gamma_{i,l}]](\omega)
+        \;\longrightarrow\; T(\omega)
+        \qquad(l\to\infty)
+        ;
+      \]
+    \item[(H3)] (endpoint-cutoff mass-marginal averages) for every rational $r>0$,
+      \begin{align*}
+        \frac{1}{n_l}\sum_{i=0}^{n_l-1} \mathbf{1}\bigl[r \le d(\gamma_{i,l}(0),x_0)\bigr]
+        &\;\longrightarrow\; F.\mu_T(E)^{-1}\cdot F.\mu_T\bigl(\set{x\in E : r \le d(x,x_0)}\bigr)
+        ,
+        \\
+        \frac{1}{n_l}\sum_{i=0}^{n_l-1} \mathbf{1}\bigl[r \le d(\gamma_{i,l}(\length(\gamma_{i,l})),x_0)\bigr]
+        &\;\longrightarrow\; F.\mu_T(E)^{-1}\cdot F.\mu_T\bigl(\set{x\in E : r \le d(x,x_0)}\bigr)
+      \end{align*}
+      as $l\to\infty$.
+  \end{itemize}
+  Then there exist doubly-indexed families of curves $\hat\gamma_{i,l},\overline\gamma_{i,l} \in
+  \Theta(E)$ ($l\in\mathbb{N}$, $i<n_l$) and edge-counts $k_{i,l}\in\mathbb{N}$ such that:
+  \begin{itemize}
+    \item[(a)] for every $l\ge1$ and $i<n_l$, $\hat\gamma_{i,l}$ is a closed curve and is
+      piecewise geodesic with $k_{i,l}$ edges (\noderef{IsClosedCurve},
+      \noderef{IsPiecewiseGeodesicWith});
+    \item[(b)] for every $l\ge1$ and $i<n_l$, $\length(\hat\gamma_{i,l}) \le 2l$;
+    \item[(b$'$)] for every $l\ge1$ and $i<n_l$, $\length(\hat\gamma_{i,l}) \le l +
+      \length(\overline\gamma_{i,l})$;
+    \item[(c)] (eq.~important\_identity) for every metric $1$-form $\omega \in \mathcal{D}^1(E)$,
+      \[
+        \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}\Bigl([[\hat\gamma_{i,l}]](\omega)
+          +[[\overline\gamma_{i,l}]](\omega)\Bigr)
+        \;\longrightarrow\; T(\omega)
+        \qquad(l\to\infty)
+        ;
+      \]
+    \item[(d)] (eq.~ExtraLengthSmall)
+      \[
+        \frac{1}{n_l\cdot l}\sum_{i=0}^{n_l-1}\length(\overline\gamma_{i,l})
+        \;\longrightarrow\; 0
+        \qquad(l\to\infty)
+        ;
+      \]
+    \item[(e)] (the $\overline\gamma$ half of eq.~closed1) for every metric $1$-form
+      $\omega \in \mathcal{D}^1(E)$,
+      \[
+        \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\overline\gamma_{i,l}]](\omega)
+        \;\longrightarrow\; 0
+        \qquad(l\to\infty)
+        .
+      \]
+  \end{itemize}
+
+  \paragraph{Where the hypotheses come from.} (H0)--(H3) are exactly the positivity-of-$n_l$
+  clause, the length clause, and the first two of the three $l$-independent stage-limit families
+  produced by \noderef{BBSamplingDiagonal} (its clauses (I) and (II) there): this node does not use
+  \noderef{BBSamplingDiagonal}'s $\psi$/$\tilde\psi$ clause (III) at all, so it is stated without
+  the countable dense set $D$ that clause needs. (H2) is stated for a general $1$-form $\omega$
+  rather than only for the countable dense family that \noderef{BBSamplingDiagonal} itself produces
+  averages against; \noderef{DiagonalizationGeneral} sits between \noderef{BBSamplingDiagonal} and
+  this node and supplies exactly that upgrade, from the countable family to every $\omega$, so
+  that (H2) can be discharged as stated here. (H0) is retained, unlike
+  \noderef{BBSamplingDiagonal}'s further clause $n_l\to\infty$, because the averaging steps below
+  genuinely divide by $n_l$ and need it nonzero at every $l$, not merely eventually.
+\end{lemma}
+\begin{proof}
+  \paragraph{Construction.} For $l\ge1$, set $\delta_l := 1/(l+1)$; note $0<\delta_l$ and, since
+  $l(l+1)\ge2>1$ for $l\ge1$, $\delta_l = 1/(l+1) < l = \length(\gamma_{i,l})$ for every $i<n_l$ by
+  (H1), so the piecewise-geodesic sampling $\gamma_{i,l}^{\delta_l}$ (\noderef{curveSampling}) is
+  well defined. Write $b_{i,l} := \gamma_{i,l}(0)$, $e_{i,l} := \gamma_{i,l}(l)$. Set
+  \[
+    \hat\gamma_{i,l} := \gamma_{i,l}^{\delta_l} * G_{e_{i,l},b_{i,l}}
+    , \qquad
+    \overline\gamma_{i,l} := G_{b_{i,l},e_{i,l}}
+    ,
+  \]
+  where $*$ is \noderef{curveConcat} and $G_{x,y}=GP.G(x,y)$. The concatenation is legal: by
+  \noderef{SamplingEndpoints}, $\gamma_{i,l}^{\delta_l}(\length(\gamma_{i,l}^{\delta_l})) =
+  \gamma_{i,l}(l) = e_{i,l}$, and by \noderef{GeodesicPairing}'s $\mathrm{start\_eq}$ field,
+  $G_{e_{i,l},b_{i,l}}(0) = e_{i,l}$; these agree, licensing $*$. For $l=0$ or $i\ge n_l$, set
+  $\hat\gamma_{i,l} := \overline\gamma_{i,l} := GP.G(x_0,x_0)$ and $k_{i,l}:=1$ arbitrarily (no
+  clause of the statement constrains these cases).
+
+  \paragraph{Proof of (a).} Fix $l\ge1$, $i<n_l$. \emph{Closedness.} By \noderef{CurveConcatEndpoints}
+  applied to $\gamma_{i,l}^{\delta_l}$ and $G_{e_{i,l},b_{i,l}}$,
+  $\hat\gamma_{i,l}(0) = \gamma_{i,l}^{\delta_l}(0)$ and
+  $\hat\gamma_{i,l}(\length(\hat\gamma_{i,l})) = G_{e_{i,l},b_{i,l}}(\length(G_{e_{i,l},b_{i,l}}))$.
+  By \noderef{SamplingEndpoints}, $\gamma_{i,l}^{\delta_l}(0) = \gamma_{i,l}(0) = b_{i,l}$. By
+  \noderef{GeodesicPairing}'s $\mathrm{end\_eq}$ field,
+  $G_{e_{i,l},b_{i,l}}(\length(G_{e_{i,l},b_{i,l}})) = b_{i,l}$. Hence
+  $\hat\gamma_{i,l}(0) = \hat\gamma_{i,l}(\length(\hat\gamma_{i,l})) = b_{i,l}$, i.e.\
+  $\hat\gamma_{i,l}$ is closed (\noderef{IsClosedCurve}). \emph{Piecewise-geodesicity.} By
+  \noderef{SamplingPiecewiseGeodesic}, $\gamma_{i,l}^{\delta_l}$ is piecewise geodesic with some
+  edge-count $m_{i,l}\in\mathbb{N}$ (\noderef{IsPiecewiseGeodesicWith}); by
+  \noderef{GeodesicIsPiecewiseGeodesic}, $G_{e_{i,l},b_{i,l}}$ is piecewise geodesic with exactly
+  $1$ edge. By \noderef{ConcatPiecewiseGeodesic} applied to these two pieces, $\hat\gamma_{i,l} =
+  \gamma_{i,l}^{\delta_l} * G_{e_{i,l},b_{i,l}}$ is piecewise geodesic with $k_{i,l} := m_{i,l}+1$
+  edges.
+
+  \paragraph{Proof of (b) and (b$'$).} Fix $l\ge1$, $i<n_l$. By \noderef{curveConcat}'s length
+  additivity,
+  \[
+    \length(\hat\gamma_{i,l}) = \length(\gamma_{i,l}^{\delta_l}) + \length(G_{e_{i,l},b_{i,l}})
+    . \tag{$\flat$}
+  \]
+  By \noderef{GeodesicSampledCurrent} (first conjunct, at $\gamma=\gamma_{i,l}$,
+  $\delta=\delta_l$), $\length(\gamma_{i,l}^{\delta_l}) \le \length(\gamma_{i,l}) = l$ (using
+  (H1)). By \noderef{GeodesicPairing}'s $\mathrm{len\_eq}$ field, $\length(G_{e_{i,l},b_{i,l}}) =
+  d(e_{i,l},b_{i,l})$, and by metric symmetry $d(e_{i,l},b_{i,l}) = d(b_{i,l},e_{i,l})$; applying
+  $\mathrm{len\_eq}$ again (to the pair $(b_{i,l},e_{i,l})$), $d(b_{i,l},e_{i,l}) =
+  \length(G_{b_{i,l},e_{i,l}}) = \length(\overline\gamma_{i,l})$. Hence
+  \[
+    \length(G_{e_{i,l},b_{i,l}}) = \length(\overline\gamma_{i,l})
+    . \tag{$\sharp$}
+  \]
+  Substituting ($\sharp$) into ($\flat$) and using $\length(\gamma_{i,l}^{\delta_l}) \le l$ from
+  above gives
+  \[
+    \length(\hat\gamma_{i,l}) = \length(\gamma_{i,l}^{\delta_l}) + \length(\overline\gamma_{i,l})
+    \le l + \length(\overline\gamma_{i,l})
+    ,
+  \]
+  which is exactly (b$'$). For (b), by \noderef{CurveLipschitz} $\gamma_{i,l}$ is globally
+  $1$-Lipschitz, so $\length(\overline\gamma_{i,l}) = d(b_{i,l},e_{i,l}) =
+  d(\gamma_{i,l}(0),\gamma_{i,l}(l)) \le |l-0| = l$; combined with (b$'$),
+  $\length(\hat\gamma_{i,l}) \le l + l = 2l$, which is (b).
+
+  \paragraph{Proof of the current-splitting identity (*).} We first show, for every $l\ge1$,
+  $i<n_l$, and every $1$-form $\omega$,
+  \[
+    [[\hat\gamma_{i,l}]](\omega) + [[\overline\gamma_{i,l}]](\omega)
+      = [[\gamma_{i,l}^{\delta_l}]](\omega)
+    . \tag{*}
+  \]
+  By \noderef{GeodesicPairing}'s $\mathrm{reversal}$ field applied at $x=e_{i,l}$, $y=b_{i,l}$, for
+  every $t \in [0,d(e_{i,l},b_{i,l})]$, $G_{b_{i,l},e_{i,l}}(t) = G_{e_{i,l},b_{i,l}}(d(e_{i,l},b_{i,l})-t)$.
+  By $\mathrm{len\_eq}$, $\length(G_{e_{i,l},b_{i,l}}) = d(e_{i,l},b_{i,l})$, so this is exactly the
+  hypothesis of \noderef{CurrentReverse} applied with $\gamma := G_{e_{i,l},b_{i,l}}$,
+  $\gamma' := G_{b_{i,l},e_{i,l}} = \overline\gamma_{i,l}$, using also
+  $\length(G_{b_{i,l},e_{i,l}}) = d(b_{i,l},e_{i,l}) = d(e_{i,l},b_{i,l}) = \length(G_{e_{i,l},b_{i,l}})$
+  (metric symmetry and $\mathrm{len\_eq}$ again for the matching-lengths hypothesis). Applying
+  \noderef{CurrentReverse} gives
+  \[
+    [[\overline\gamma_{i,l}]](\omega) = -[[G_{e_{i,l},b_{i,l}}]](\omega)
+    . \tag{$\dagger$}
+  \]
+  By \noderef{CurrentConcatAdditive} applied to $\hat\gamma_{i,l} = \gamma_{i,l}^{\delta_l} *
+  G_{e_{i,l},b_{i,l}}$,
+  \[
+    [[\hat\gamma_{i,l}]](\omega) = [[\gamma_{i,l}^{\delta_l}]](\omega) +
+      [[G_{e_{i,l},b_{i,l}}]](\omega)
+    . \tag{$\ddagger$}
+  \]
+  Adding $(\dagger)$ and $(\ddagger)$, the $[[G_{e_{i,l},b_{i,l}}]](\omega)$ terms cancel, giving
+  exactly (*).
+
+  \paragraph{Proof of (c).} Fix a metric $1$-form $\omega$. By \noderef{GeodesicSampledCurrent}
+  (second conjunct, at $\gamma=\gamma_{i,l}$, $\delta=\delta_l$), for every $l\ge1$ and $i<n_l$,
+  \[
+    \bigl|[[\gamma_{i,l}^{\delta_l}]](\omega) - [[\gamma_{i,l}]](\omega)\bigr|
+    \le \mathrm{Lip}(\omega.f)\cdot\mathrm{Lip}(\omega.\pi)\cdot\delta_l\cdot\length(\gamma_{i,l})
+    = \mathrm{Lip}(\omega.f)\cdot\mathrm{Lip}(\omega.\pi)\cdot\delta_l\cdot l
+    ,
+  \]
+  the last equality by (H1). Write $M_{\mathbb R} := \mathrm{toReal}(F.\mu_T(E)) \ge 0$. Summing
+  over $i<n_l$ (triangle inequality for the finite sum) and multiplying by
+  $M_{\mathbb R}/(n_l\cdot l) \ge 0$, then cancelling $n_l\cdot l>0$ (by (H0) and $l\ge1$) against
+  itself in the resulting product $\frac{M_{\mathbb R}}{n_l\cdot l}\cdot n_l\cdot l$,
+  \[
+    \Bigl|\frac{M_{\mathbb R}}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\gamma_{i,l}^{\delta_l}]](\omega)
+      - \frac{M_{\mathbb R}}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\gamma_{i,l}]](\omega)\Bigr|
+    \le \frac{M_{\mathbb R}}{n_l\cdot l}\cdot n_l\cdot \mathrm{Lip}(\omega.f)\cdot
+      \mathrm{Lip}(\omega.\pi)\cdot\delta_l\cdot l
+    = M_{\mathbb R}\cdot\mathrm{Lip}(\omega.f)\cdot\mathrm{Lip}(\omega.\pi)\cdot\delta_l
+    .
+  \]
+  Since $\delta_l = 1/(l+1) \to 0$ as $l\to\infty$, the right-hand side tends to $0$, so the two
+  averaged sequences on the left have the same limit whenever either exists. By (H2), the second
+  sequence tends to $T(\omega)$; hence
+  \[
+    \frac{M_{\mathbb R}}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\gamma_{i,l}^{\delta_l}]](\omega)
+    \;\longrightarrow\; T(\omega)
+    \qquad(l\to\infty)
+    . \tag{**}
+  \]
+  By (*), summed over $i<n_l$ and scaled by $M_{\mathbb R}/(n_l\cdot l)$, the left side of (**)
+  equals
+  \[
+    \frac{M_{\mathbb R}}{n_l\cdot l}\sum_{i=0}^{n_l-1}\Bigl([[\hat\gamma_{i,l}]](\omega)+
+      [[\overline\gamma_{i,l}]](\omega)\Bigr)
+    ,
+  \]
+  so this quantity also tends to $T(\omega)$, which is exactly (c).
+
+  \paragraph{Proof of (d).} Fix a rational $r>0$. \emph{Pointwise bound.} Fix $l\ge1$, $i<n_l$. If
+  $d(x_0,b_{i,l})<r$ and $d(x_0,e_{i,l})<r$, then by the triangle inequality
+  $d(b_{i,l},e_{i,l}) \le d(b_{i,l},x_0)+d(x_0,e_{i,l}) < 2r$, and both indicators
+  $\mathbf 1[r\le d(x_0,b_{i,l})]$, $\mathbf 1[r\le d(x_0,e_{i,l})]$ are $0$, so trivially
+  $\length(\overline\gamma_{i,l}) = d(b_{i,l},e_{i,l}) < 2r \le 2r + l\cdot 0 + l\cdot 0$.
+  Otherwise, at least one of $d(x_0,b_{i,l})\ge r$, $d(x_0,e_{i,l})\ge r$ holds, so at least one of
+  the two indicators equals $1$, hence their sum is $\ge1$; by \noderef{CurveLipschitz}
+  ($\gamma_{i,l}$ is $1$-Lipschitz) and (H1), $\length(\overline\gamma_{i,l}) = d(b_{i,l},e_{i,l})
+  = d(\gamma_{i,l}(0),\gamma_{i,l}(l)) \le l$, so (using the indicator sum $\ge1$ and $l\ge0$)
+  $\length(\overline\gamma_{i,l}) \le l \le l\cdot\bigl(\mathbf1[r\le d(x_0,b_{i,l})]+
+  \mathbf1[r\le d(x_0,e_{i,l})]\bigr) \le 2r + l\cdot\mathbf1[r\le d(x_0,b_{i,l})]+
+  l\cdot\mathbf1[r\le d(x_0,e_{i,l})]$ (adding the nonnegative $2r$). In either case,
+  \[
+    \length(\overline\gamma_{i,l}) \le 2r + l\cdot\mathbf1[r\le d(x_0,b_{i,l})]
+      + l\cdot\mathbf1[r\le d(x_0,e_{i,l})]
+    . \tag{$\S$}
+  \]
+  \emph{Averaging.} Summing ($\S$) over $i<n_l$ and dividing by $n_l\cdot l>0$ (using (H0) and
+  $l\ge1$, so the division is genuine, not the junk value at a zero denominator),
+  \[
+    \frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}\length(\overline\gamma_{i,l})
+    \le \frac{2r}{l} + \frac1{n_l}\sum_{i=0}^{n_l-1}\mathbf1[r\le d(x_0,b_{i,l})]
+      + \frac1{n_l}\sum_{i=0}^{n_l-1}\mathbf1[r\le d(x_0,e_{i,l})]
+    . \tag{$\S\S$}
+  \]
+  As $l\to\infty$, the first term on the right tends to $0$; by (H3) at this $r$, the second and
+  third terms tend to $F.\mu_T(E)^{-1}\cdot F.\mu_T(\set{x:r\le d(x,x_0)})$ each. Since the
+  left-hand side of ($\S\S$) is a sequence of nonnegative reals, this gives
+  \[
+    \limsup_{l\to\infty} \frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}\length(\overline\gamma_{i,l})
+    \le 2\,F.\mu_T(E)^{-1}\cdot F.\mu_T\bigl(\set{x\in E: r\le d(x,x_0)}\bigr)
+    . \tag{$\P_r$}
+  \]
+  \emph{Sending $r\to\infty$.} The left side of $(\P_r)$ does not depend on $r$. For $m\in\mathbb N$,
+  $m\ge1$, apply $(\P_r)$ at $r=m$: the sets $S_m := \set{x\in E: m\le d(x,x_0)}$ are measurable
+  (closed, as preimages of $[m,\infty)$ under the continuous map $d(\cdot,x_0)$, and $E$ carries a
+  compatible Borel $\sigma$-algebra) and antitone in $m$ (larger $m$ is a stronger constraint), with
+  $\bigcap_{m\ge1} S_m = \emptyset$ (for any $x\in E$, $d(x,x_0)$ is a fixed real number, so
+  $x\notin S_m$ once $m>d(x,x_0)$). Since $F.\mu_T$ is a finite measure
+  (\noderef{PSFamily}, field \emph{massMeasure\_finite}), continuity of measure from above
+  (\texttt{tendsto\_measure\_iInter\_atTop}, applicable since one -- indeed every -- $S_m$ has
+  finite $F.\mu_T$-measure) gives $F.\mu_T(S_m) \to F.\mu_T(\emptyset) = 0$ as $m\to\infty$; taking
+  $\mathrm{toReal}$ (continuous at the finite limit $0$, since every $F.\mu_T(S_m)\ne\infty$),
+  $F.\mu_T(E)^{-1}\cdot\mathrm{toReal}(F.\mu_T(S_m)) \to 0$ as $m\to\infty$. Combined with
+  $(\P_m)$ for every $m\ge1$ and the fact that the left side of $(\P_m)$ is a single quantity not
+  depending on $m$, we conclude
+  \[
+    \limsup_{l\to\infty} \frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}\length(\overline\gamma_{i,l}) \le 0
+    .
+  \]
+  Since each term of the sequence $l\mapsto \frac1{n_l\cdot l}\sum_{i}\length(\overline\gamma_{i,l})$
+  is nonnegative (a sum of lengths), its $\liminf$ is also $\ge0$; a sequence whose $\limsup\le0$
+  and whose terms are all $\ge0$ (hence $\liminf\ge0$) converges to $0$. This is exactly (d).
+
+  \paragraph{Proof of (e).} Fix a metric $1$-form $\omega$. By \noderef{CurveCurrentBound} applied
+  to $\overline\gamma_{i,l}$ and $\omega$, for every $l\ge1$, $i<n_l$,
+  \[
+    \bigl|[[\overline\gamma_{i,l}]](\omega)\bigr| \le \omega.\mathrm{fBound}\cdot
+      \omega.\mathrm{piLip}\cdot\length(\overline\gamma_{i,l})
+    .
+  \]
+  Summing over $i<n_l$ (triangle inequality) and scaling by $M_{\mathbb R}/(n_l\cdot l)\ge0$,
+  \[
+    \Bigl|\frac{M_{\mathbb R}}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\overline\gamma_{i,l}]](\omega)\Bigr|
+    \le M_{\mathbb R}\cdot\omega.\mathrm{fBound}\cdot\omega.\mathrm{piLip}\cdot
+      \frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}\length(\overline\gamma_{i,l})
+    .
+  \]
+  By (d), the right-hand side tends to $0$ as $l\to\infty$ (a fixed nonnegative constant times a
+  sequence tending to $0$); since the left-hand side is squeezed between $0$ and a sequence tending
+  to $0$, it too tends to $0$, which is exactly (e).
+\end{proof}

@@ -1,0 +1,43 @@
+\begin{helper}[A point lies in the interior of at most one edge]
+  Let $k \in \mathbb{N}$, let $s \colon \mathbb{N} \to \mathbb{R}$ be monotone (non-decreasing) on
+  $\set{0,1,\dots,k}$, and let $c \in \mathbb{R}$. Then
+  \[
+    \#\set{ j \in \set{1,\dots,k} \colon s(j-1) < c < s(j) } \le 1
+    .
+  \]
+  (Here $j-1$ denotes truncated natural-number subtraction; since $j \ge 1$ in the index set, this
+  is ordinary subtraction throughout.)
+
+  \paragraph{Role.} This is the ``edges have pairwise disjoint interiors'' principle in the form
+  needed to count the edges that a window's endpoint can cut: a single real number can lie
+  strictly inside at most one of the edges $[s(j-1),s(j)]$. It is a statement about the breakpoint
+  sequence alone, with no reference to any ambient curve.
+\end{helper}
+\begin{proof}
+  First we record the form of monotonicity we use: for all $p, q \in \mathbb{N}$ with $p \le q$
+  and $q \le k$, both $p$ and $q$ lie in $\set{0,\dots,k}$ (the lower bound being automatic in
+  $\mathbb{N}$, and $p \le q \le k$), so monotonicity of $s$ on $\set{0,\dots,k}$ gives
+  $s(p) \le s(q)$.
+
+  Write $S := \set{ j \in \set{1,\dots,k} \colon s(j-1) < c < s(j) }$. It suffices to show that any
+  two elements of $S$ are equal. So let $x, y \in S$ and suppose, for contradiction, that
+  $x \ne y$. By trichotomy either $x < y$ or $y < x$; the two cases are symmetric, so assume
+  $x < y$ (otherwise swap the names of $x$ and $y$).
+
+  From $x \in S$ we have $1 \le x \le k$ and $s(x-1) < c < s(x)$; from $y \in S$ we have
+  $1 \le y \le k$ and $s(y-1) < c < s(y)$.
+
+  Since $x < y$ we have $x \le y-1$, and $y - 1 \le y \le k$, so the recorded monotonicity gives
+  \[
+    s(x) \le s(y-1)
+    .
+  \]
+  Combining with the two strict inequalities $c < s(x)$ (from $x \in S$) and $s(y-1) < c$ (from
+  $y \in S$) yields
+  \[
+    c < s(x) \le s(y-1) < c
+    ,
+  \]
+  i.e.\ $c < c$, a contradiction. Hence no two distinct elements of $S$ exist, and
+  $\#S \le 1$.
+\end{proof}

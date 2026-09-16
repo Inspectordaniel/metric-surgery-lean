@@ -1,0 +1,146 @@
+\begin{definition}[Paolini--Stepanov family, with the bridging mass identity: the statement,
+  taken as an explicit hypothesis]
+  Let $E$ be a complete, separable metric space equipped with a compatible Borel $\sigma$-algebra.
+  We write $\mathrm{PaoliniStepanovExistsStatement}(E)$ for the following proposition about $E$:
+  \begin{quote}
+    for every metric $1$-current $T \in \mathcal{M}_1(E)$ (\noderef{MetricCurrent1}) with $T \neq
+    0$ and $\partial T = 0$ (\noderef{BoundaryZero}), there exists a Paolini--Stepanov family $F$
+    for $T$ (\noderef{PSFamily}) whose mass measure $F.\mu_T$ has total mass equal to the mass of
+    $T$:
+    \[
+      F.\mu_T(E) = \mathbb{M}(T) := \mathrm{massOfFunctional}(T)
+    \]
+    (\noderef{massOfFunctional}).
+  \end{quote}
+
+  \textbf{Why this node is a statement rather than a theorem.} This node is a verbatim external
+  literature citation, \cite{PS}*{Theorem 3.1} together with \cite{PS}*{Proposition 4.2}, which
+  the tablet deliberately does not reprove. Rather than record it as a theorem with an unproved
+  body -- which would make every downstream result depend on \texttt{sorryAx} -- it is recorded
+  here as a named proposition about $E$, and the nodes that consume it (\noderef{BBAssertion}, and
+  through it \noderef{ApproximationMetric}) carry $\mathrm{PaoliniStepanovExistsStatement}(E)$ as
+  an explicit hypothesis, discharged by whoever invokes them. The remainder of this node justifies
+  that the proposition displayed above is exactly what the cited results supply.
+
+  \textbf{The external theorem, verbatim.} We invoke two results of Paolini and Stepanov together
+  as a single external input, exactly as the paper does at paper.tex 1178--1216.
+
+  \emph{\cite{PS}*{Theorem 3.1}.} If $E$ is a complete, separable metric space and $T \in
+  \mathcal{M}_1(E)$ satisfies $\partial T = 0$, then there exists a positive Borel measure
+  $\overline{\eta}_1$ on $\Theta_1(E)$ such that
+  \[
+    T(\omega) = \int_{\Theta_1(E)} [[\gamma]](\omega) \, d\overline{\eta}_1(\gamma)
+    \qquad \text{for every } \omega \in \mathcal{D}^1(E)
+    ,
+    \tag{PaoT}
+  \]
+  $\mathbb{M}([[\gamma]]) = \length(\gamma) = 1$ for $\overline{\eta}_1$-a.e.\ $\gamma \in
+  \Theta_1(E)$, and moreover the mass measure $\mu_T$ of $T$ satisfies
+  \[
+    \int_E \phi \, d\mu_T = \int_{\Theta_1(E)} \phi(b(\gamma)) \, d\overline{\eta}_1(\gamma)
+    = \int_{\Theta_1(E)} \phi(e(\gamma)) \, d\overline{\eta}_1(\gamma)
+    \tag{Paophi}
+  \]
+  for every measurable $\phi \colon E \to \cointerval{0,\infty}$, and $\mathbb{M}(T) =
+  \overline{\eta}_1(\Theta_1(E))$ (paper.tex 1192).
+
+  \emph{\cite{PS}*{Proposition 4.2}}, as used by the paper (paper.tex 1192--1211). Paolini and
+  Stepanov's construction of $\overline{\eta}_1$ concatenates to a measure $\hat{\eta}$ on
+  bi-infinite curves, whose restrictions to $[0,l]$ produce, for every $l \in \mathbb{N}$, a
+  positive Borel measure $\overline{\eta}_l$ on $\Theta(E)$ satisfying:
+  \begin{align}
+    T(\omega) &= \frac{1}{l} \int_{\Theta(E)} [[\gamma]](\omega) \, d\overline{\eta}_l(\gamma)
+    \quad \text{for every } \omega \in \mathcal{D}^1(E), \ l \ge 1,
+    \tag{weaklengthl}
+    \\
+    \int_E \phi \, d\mu_T &= \int_{\Theta(E)} \phi(b(\gamma)) \, d\overline{\eta}_l(\gamma)
+    = \int_{\Theta(E)} \phi(e(\gamma)) \, d\overline{\eta}_l(\gamma)
+    ,\quad l \ge 1,
+    \tag{lengthlmassmeasure}
+    \\
+    \mathbb{M}([[\gamma]]) &= \length(\gamma) = l \quad\text{for $\overline{\eta}_l$-a.e.}\ \gamma,
+    \quad l \ge 1,
+    \tag{lengthlExactly}
+  \end{align}
+  and, for every $j \in \{1,\dotsc,l\}$ and every bounded measurable
+  $h \colon \Theta(E) \to \mathbb{R}$ (equivalently, by monotone convergence on truncations $h
+  \wedge n$, every measurable $h \colon \Theta(E) \to \cointerval{0,\infty}$),
+  \[
+    \int_{\Theta(E)} h\bigl(\gamma\vert^{\mathrm{tot}}_{[j-1,j]}\bigr) \, d\overline{\eta}_l(\gamma)
+    = \int_{\Theta(E)} h(\gamma) \, d\overline{\eta}_1(\gamma)
+    \tag{marginal}
+  \]
+  (Lemma A.5, paper.tex 1860--1868, whose own proof is a direct computation with the image-measure
+  construction of \cite{PS}*{Proposition 4.2} that produced $\overline{\eta}_l$, and so is folded
+  into this single by-product citation together with \eqref{weaklengthl}--\eqref{lengthlExactly}
+  rather than treated as a third external fact).
+
+  \textbf{Hypotheses supplied.} $E$ is complete and separable by the ambient
+  \texttt{[CompleteSpace E] [TopologicalSpace.SeparableSpace E]} instances. $T \in \mathcal{M}_1(E)$
+  is the hypothesis $T : \mathrm{MetricCurrent1}\ E$. $\partial T = 0$ is exactly the hypothesis
+  $\mathrm{hbdry} : \mathrm{BoundaryZero}\ T.\mathrm{toFun}$ (\noderef{BoundaryZero}). This
+  discharges every hypothesis of \cite{PS}*{Theorem 3.1}; \cite{PS}*{Proposition 4.2} is then
+  applied to the very construction that theorem's proof produces, so it needs no further
+  hypothesis on $T$ beyond what Theorem 3.1 already consumed. The hypothesis $T \neq 0$ is not
+  needed by either cited result -- both hold verbatim even when $T = 0$, taking every
+  $\overline{\eta}_l$ to be the zero measure and $\mu_T$ to be the zero measure -- and is carried
+  here only because every use of this node in the tablet (the target-covering assembly of
+  \texttt{bbassertion}) is at a $T \neq 0$; this is a harmless restriction of scope, not a
+  strengthening of the conclusion, and does not affect the argument below.
+
+  \textbf{Constructing $F$.} Define $F.\eta\ 0 := 0$ (the zero measure on $\Theta(E)$; \noderef{PSFamily}'s
+  fields other than \noderef{PSFamily}'s \texttt{finite} are only constrained for $l \ge 1$, and the
+  zero measure is trivially finite) and $F.\eta\ l := \overline{\eta}_l$ for $l \ge 1$, as
+  produced above. Define $F.\mu_T := \mu_T$, the mass measure produced by \cite{PS}*{Theorem 3.1}
+  (which, by the paper's own definition at paper.tex 1099--1100, is \emph{the} minimum admissible
+  measure for $T$, a measure whose existence for $T \in \mathcal{M}_1(E)$ Ambrosio--Kirchheim
+  guarantee and which \cite{PS}*{Theorem 3.1} quotes as already given).
+
+  Each remaining field of $F$ is now read off directly:
+  \begin{itemize}
+    \item \emph{\noderef{PSFamily}'s \texttt{finite}.} For $l \ge 1$, \eqref{lengthlmassmeasure}
+      at $\phi \equiv 1$ gives $\overline{\eta}_l(\Theta(E)) = \mu_T(E)$, which is finite since
+      $\mu_T$ is a finite Borel measure (\cite{PS}*{Theorem 3.1}'s own hypothesis, inherited from
+      $T \in \mathcal{M}_1(E)$, paper.tex 1099). The zero measure at $l = 0$ is finite trivially.
+    \item \emph{\texttt{supported}.} For $l \ge 1$, $\overline{\eta}_l$ is (by \cite{PS}*{Theorem
+      3.1}/\cite{PS}*{Proposition 4.2}'s own construction) a measure carried on $\Theta_l(E)
+      \subseteq \Theta(E)$ in the sense that it assigns zero mass to the complement of
+      $\{\gamma : \mathbb{M}([[\gamma]]) = l\} = \Theta_l(E)$ (\noderef{ThetaL}): this is exactly
+      \eqref{lengthlExactly} restated as a measure-zero-complement statement, since
+      $\overline{\eta}_l$-a.e.\ $\gamma$ satisfies $\mathbb{M}([[\gamma]]) = l$, i.e.\ $\gamma \in
+      \Theta_l(E)$.
+    \item \emph{\texttt{lengthExactly}.} Exactly \eqref{lengthlExactly}.
+    \item \emph{\texttt{weakLength}.} Exactly \eqref{weaklengthl}.
+    \item \emph{\texttt{massMeasure\_finite}.} As in \texttt{finite} above, $\mu_T$ is a finite
+      Borel measure.
+    \item \emph{\texttt{massMarginal}.} Exactly \eqref{lengthlmassmeasure}.
+    \item \emph{\texttt{marginal}.} Exactly \eqref{marginal}.
+  \end{itemize}
+  This $F$ is a genuine element of $\mathrm{PSFamily}\ T.\mathrm{toFun}$.
+
+  \textbf{The bridging identity.} It remains to show $F.\mu_T(E) = \mathrm{massOfFunctional}(T)$.
+  \begin{itemize}
+    \item[(a)] $\mu_T$ is admissible for $T$ (\noderef{IsAdmissible}): this is exactly the
+      defining property of the mass measure at paper.tex 1099, $|T(f,\pi)| \le \mathrm{Lip}(\pi)
+      \int_E |f| \, d\mu_T$ for every $(f,\pi) \in \mathcal{D}^1(E)$. Since
+      $\mathrm{massOfFunctional}(T)$ is the infimum of $\mu(E)$ over admissible $\mu$
+      (\noderef{massOfFunctional}), admissibility of $\mu_T$ gives
+      $\mathrm{massOfFunctional}(T) \le \mu_T(E)$.
+    \item[(b)] $\mu_T$ is the \emph{minimum} admissible measure (paper.tex 1099--1100: ``we define
+      the mass measure $\mu_T$ of $T$ to be the minimum over all the finite positive Borel measure
+      $\mu$ satisfying'' the admissibility inequality), so for every admissible $\mu$,
+      $\mu_T(E) \le \mu(E)$ (pointwise minimality on Borel sets in particular gives this on $E$
+      itself). Hence $\mu_T(E)$ is a lower bound for $\{\mu(E) : \mu \text{ admissible for } T\}$,
+      so $\mu_T(E) \le \mathrm{massOfFunctional}(T)$.
+  \end{itemize}
+  Combining (a) and (b), $F.\mu_T(E) = \mu_T(E) = \mathrm{massOfFunctional}(T)$, as required.
+
+  \textbf{On the normalization.} We record the identity at the general, un-normalized mass
+  $\mathbb{M}(T) = \mathrm{massOfFunctional}(T)$, rather than assuming the paper's running
+  normalization $\mathbb{M}(T) = 1$ (paper.tex 1266): every field of $F$ above is produced by
+  \cite{PS}*{Theorem 3.1}/\cite{PS}*{Proposition 4.2} for a current of arbitrary finite mass, and
+  the normalization is a choice made once, later, at the point where a probability measure is
+  actually needed for the strong law of large numbers; carrying the scaling explicitly
+  downstream, rather than baking $\mathbb{M}(T)=1$ into this citation node, keeps this node
+  reusable at its natural generality.
+\end{definition}

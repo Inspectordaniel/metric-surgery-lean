@@ -1,0 +1,41 @@
+\begin{definition}[$(\delta,\epsilon)$-large-scale invertibility, $\Xlsi(\delta,\epsilon)$]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $\delta > 0$, and
+  $0 < \epsilon < 1$. We say $\gamma$ is \emph{$(\delta,\epsilon)$-large-scale-invertible},
+  written $\mathrm{IsLSI}(\gamma,\delta,\epsilon)$, when $\gamma$ is piecewise geodesic
+  (\noderef{IsPiecewiseGeodesic}) and, for all $s,t \in [0,\length(\gamma)]$ with
+  $d_\gamma(s,t) \geq \delta$ (\noderef{dGamma}),
+  \[
+    d(\gamma(s),\gamma(t)) \geq \epsilon\, d_\gamma(s,t)
+    .
+  \]
+  Paper Def.~3.3 (paper.tex lines 665--675) states~\eqref{bilip-2} with a strict inequality
+  $d(\gamma(s),\gamma(t)) > \epsilon\, d_\gamma(s,t)$. We deliberately record the non-strict
+  reading $\geq$ instead, because it is the reading the paper's own proofs establish and use, not
+  the literal strict one: the proof of \noderef{CutTypeI} (paper.tex lines 884--897) derives
+  strict inequality only on subintervals of $[t,t']$ that are strictly contained in $[t,t']$
+  (by minimality of $\beta(\gamma)$), and then invokes continuity to conclude
+  $d(\gamma(t),\gamma(t')) \geq \epsilon\, d_\gamma(t,t')$ at the single limiting pair $(t,t')$
+  itself, with only $\geq$, not $>$ (paper.tex line 887, eq.~\eqref{gammatt'lsi}); the paper's own
+  displayed conclusion of that argument is stated with $\geq$. Since the limit can genuinely be
+  attained with equality, the strict form is not recoverable from the paper's argument, and a
+  formalization using the literal strict $>$ would make \noderef{CutTypeI}'s appeal to l.s.i.\ of
+  the subcurve $\gamma|_{[t,t']}$ unjustified. The non-strict reading costs nothing downstream:
+  \noderef{LargeBallLem} (paper Lemma 3.4) goes through with the identical constant
+  $4(1+\epsilon^{-1})$ using only $\geq$, and \noderef{DGammaBallMeasure} (already stated with a
+  strict circle-distance bound) still discharges the resulting non-strict ball estimate via a
+  standard limiting argument (letting an auxiliary radius decrease to the target radius from
+  above). This is a documented definitional-reading choice, in the same spirit as the
+  already-documented non-strict-resolution reading of \noderef{IsGeodesicResolution}; it is not a
+  Deviation, since it does not change any downstream numeric constant or conclusion.
+
+  As in the paper, $\delta > 0$ and $0 < \epsilon < 1$ are standing ambient parameters supplied at
+  every use site rather than hypotheses of the predicate itself; the predicate
+  $\mathrm{IsLSI}(\gamma,\delta,\epsilon)$ is a well-defined (if vacuous or trivial) proposition
+  for any real $\delta,\epsilon$, matching how the paper always quantifies $\delta,\epsilon$
+  before invoking $\Xlsi(\delta,\epsilon)$.
+
+  We quantify $s,t$ over $[0,\length(\gamma)]$ explicitly: the paper's curves $\gamma \in \Theta(E)$
+  are parametrized on $[0,\length(\gamma)]$ (paper.tex line 441), and $d_\gamma$ (\noderef{dGamma})
+  is the distance along that parametrization, so the condition ``for all $s,t$'' in the paper's
+  display means for all $s,t$ in $\gamma$'s domain of parametrization, i.e.\ $[0,\length(\gamma)]$.
+\end{definition}

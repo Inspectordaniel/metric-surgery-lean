@@ -1,0 +1,214 @@
+\begin{lemma}[The basic cut's kept arc, at arbitrary cut points, has a controlled small-piece count]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}), $\gamma \in
+  \Theta(E)$ (\noderef{Curve}) a closed (\noderef{IsClosedCurve}), piecewise-geodesic
+  (\noderef{IsPiecewiseGeodesic}) curve, $\delta \in \mathbb{R}$ with $\delta > 0$, and
+  $t,t' \in [0,\length(\gamma)]$ with $t \ne t'$. Write $(\gamma',g) := C(\gamma,t,t')$
+  (\noderef{BasicCut}). Then
+  \[
+    \nsmallpieces(\gamma',\delta) \le \nsmallpieces(\gamma,\delta) + 3
+    .
+  \]
+  This is exactly \eqref{SmallCountBoundTypeI} (paper.tex 831-834).
+
+  \paragraph{Why this generalizes \noderef{BasicCutResolutionAtBreakpoints}.}
+  \noderef{BasicCutResolutionAtBreakpoints} proves the sharper, subtraction-free bound
+  $\nsmallpieces(\gamma',\delta)+m_{\mathrm{exc}} \le m_{\mathrm{tot}}+1$, but only when $t,t'$ are
+  themselves breakpoints $s(p),s(q)$ of a \emph{fixed}, given resolution $(k,s)$ of $\gamma$ (paper
+  Lemma 3.10's own setting, paper.tex 947-950: ``we may assume that $s,s' \in \set{s_0,\dots,s_k}$'').
+  Paper Lemma~\ref{cut_I}'s cut points $t,t'$ (produced by \noderef{TypeICutPointExists}) attain an
+  infimum \eqref{betagammainf} over \emph{arbitrary} reals in $[0,\length(\gamma)]$ (paper.tex
+  852-857: ``where the infimum is over a non-empty set''), with no reason to land on a breakpoint
+  of any particular resolution, so \noderef{BasicCutResolutionAtBreakpoints} does not apply to
+  \Cref{cut-type-I}'s cut points directly. This lemma removes the breakpoint hypothesis entirely,
+  at the cost of the weaker one-sided inequality above, which is all \Cref{cut-type-I} needs (its
+  Branch~A/B/C case analysis consumes only $\nsmallpieces(\gamma',\delta)$, never
+  $m_{\mathrm{exc}}$ or $m_{\mathrm{tot}}$ individually).
+
+  \paragraph{The mechanism.} Paper.tex 866-869 (quoted at \noderef{BasicCut}) explains: ``$\gamma'$
+  consists of the rest of $\gamma$, with $\gamma|_{[t,t']}$ replaced by a single geodesic edge''.
+  Applying this to the \emph{kept} arc $\gamma|_{[t',t]}$ via \noderef{ArcGeodesicResolution}: its
+  own named resolution consists of (up to two) truncated \emph{partial} edges at its two ends,
+  plus, in its interior, genuine unclamped edges of $\gamma$'s own resolution. The partial edges
+  need not correspond to any single edge of $\gamma$'s resolution (so contribute up to $2$ small
+  edges with no comparison to $\gamma$'s own count), the interior edges' small-edge count is at
+  most $\gamma$'s own (an inclusion of edge-index sets, not an equality, since only \emph{some} of
+  $\gamma$'s edges lie in the kept arc's interior), and the one new closing edge contributes up to
+  $1$ more -- for a total of at most $3$ beyond $\gamma$'s own small-edge count.
+\end{lemma}
+\begin{proof}
+  Since $\gamma$ is piecewise-geodesic (\noderef{IsPiecewiseGeodesic}), the defining set of
+  $\nsmallpieces(\gamma,\delta)$ (\noderef{smallPieceCount}) -- namely $\{c\in\mathbb{N} : \exists
+  k,s,\ \mathrm{IsGeodesicResolution}(\gamma,k,s) \wedge c = \#\set{j\in\set{1,\dots,k} :
+  s(j)-s(j-1)<\delta}\}$ -- is non-empty, so, an infimum over a non-empty subset of $\mathbb{N}$
+  being attained by some element of that subset (\texttt{Nat.sInf\_mem}), there is a resolution
+  $(k,s)$ of $\gamma$ with
+  \[
+    M := \nsmallpieces(\gamma,\delta) = \#\set{j\in\set{1,\dots,k} : s(j)-s(j-1)<\delta}
+    .
+  \]
+  We exhibit a geodesic resolution of $\gamma'$ with small-edge count at most $M+3$; since
+  $\nsmallpieces(\gamma',\delta)$ is the infimum over \emph{all} resolutions of $\gamma'$
+  (\noderef{smallPieceCount}), this gives $\nsmallpieces(\gamma',\delta) \le M+3 =
+  \nsmallpieces(\gamma,\delta)+3$, as claimed.
+
+  \paragraph{The arc resolution.} Apply \noderef{ArcGeodesicResolution} to $\gamma$, $k$, $s$ with
+  cut-point arguments $(t',t)$ (in this order, i.e.\ instantiating its own ``$t,t'$'' at our
+  $t',t$): since $\mathrm{IsGeodesicResolution}(\gamma,k,s)$ holds, this gives $k_A\ge1$ and a
+  geodesic resolution $(k_A,s_A)$ of the arc $\gamma|_{[t',t]}$ (\noderef{curveArc}), together with:
+  if $t'\le t$, there is $j_0$ with
+  \begin{equation}
+    \label{eq:ord-corr}
+    s_A(i) = s(j_0+(i-1))-t' \quad\text{and}\quad j_0+(i-1)\le k \qquad (1\le i\le k_A-1)
+    ;
+  \end{equation}
+  if $t<t'$, there are $j_0,m$ with
+  \begin{align}
+    \label{eq:wrap-tail}
+    s_A(i) &= s(j_0+(i-1))-t' \quad\text{and}\quad j_0+(i-1)\le k & (1\le i\le m)
+    ,
+    \\
+    \label{eq:wrap-head}
+    s_A(i) &= (\length(\gamma)-t')+s(i-m) \quad\text{and}\quad i-m\le k & (m<i\le k_A-1)
+    ,
+    \\
+    \label{eq:wrap-split}
+    s(j_0+(m-1)) &= \length(\gamma) & (\text{if } m\ge1)
+    .
+  \end{align}
+  Since $t\ne t'$, exactly one of $t'\le t$ or $t<t'$ holds, so exactly one of \eqref{eq:ord-corr}
+  or \eqref{eq:wrap-tail}--\eqref{eq:wrap-split} is available. By \noderef{BasicCut}'s own
+  definition, $\gamma' = \gamma|_{[t',t]} * G_{\gamma(t),\gamma(t')}$ (\noderef{curveConcat}) --
+  uniformly in the order of $t,t'$, with no further case split at the level of $\gamma'$ itself
+  beyond the one already internal to \noderef{curveArc} (already accounted for above).
+
+  \paragraph{Step 1: the arc's own small-edge count is at most $M+2$.} Write $S_A := \#\set{i \in
+  \set{1,\dots,k_A} : s_A(i)-s_A(i-1)<\delta}$. We show $S_A \le M+2$.
+
+  \emph{Step 1a: reduction to the interior.} Write $S_A^{\circ} := \#\set{i\in\set{2,\dots,k_A-1} :
+  s_A(i)-s_A(i-1)<\delta}$. As sets, $\set{1,\dots,k_A} = \set{2,\dots,k_A-1}\cup\set{1,k_A}$ for
+  every $k_A\ge1$ (including $k_A=1$: $\set{2,\dots,0}=\emptyset$, $\set{1,k_A}=\set{1}$, and
+  $k_A=2$: $\set{2,\dots,1}=\emptyset$, $\set{1,k_A}=\set{1,2}$). Since $\set{1,k_A}$ has at most
+  $2$ elements, filtering by the small-edge predicate and using the subadditivity of cardinality
+  over a union, $S_A \le S_A^{\circ} + 2$.
+
+  \emph{Step 1b: the interior count is at most $M$.} We show $S_A^{\circ}\le M$, splitting on which
+  of \eqref{eq:ord-corr} or \eqref{eq:wrap-tail}--\eqref{eq:wrap-split} is available.
+
+  \emph{Case $t'\le t$.} For $2\le i\le k_A-1$, both $i-1$ and $i$ lie in $\set{1,\dots,k_A-1}$, so
+  \eqref{eq:ord-corr} gives $s_A(i-1)=s(j_0+(i-2))-t'$, $s_A(i)=s(j_0+(i-1))-t'$, hence
+  $s_A(i)-s_A(i-1) = s(j_0+(i-1))-s(j_0+(i-2))$ exactly: writing $\phi(i):=j_0+(i-1)$, this is
+  precisely the edge length $s(\phi(i))-s(\phi(i)-1)$ of $s$ at index $\phi(i)$. The map $\phi$ is
+  strictly increasing in $i$, hence injective on $\set{2,\dots,k_A-1}$, and lands in
+  $\set{1,\dots,k}$: $\phi(i) = j_0+(i-1) \ge j_0+1 \ge 1$, and, since $\phi$ is increasing in $i$
+  and $\phi(k_A-1)=j_0+(k_A-2)\le k$ by \eqref{eq:ord-corr}'s side condition at $i=k_A-1$,
+  $\phi(i)\le k$ for every $i\le k_A-1$. Since $\phi$ preserves edge lengths exactly, $i$ is
+  counted in $S_A^{\circ}$'s defining set iff $\phi(i)$ is counted in $M$'s defining set, so $\phi$
+  injects the former into the latter, giving $S_A^{\circ}\le M$.
+
+  \emph{Case $t<t'$.} Partition $\set{2,\dots,k_A-1}$ into $T:=\set{i : 2\le i\le m}$ and
+  $H:=\set{i : m<i\le k_A-1}$ (a partition, as every $i$ satisfies exactly one of $i\le m$ or
+  $i>m$; either block may be empty).
+
+  For $i\in T$ (so $m\ge2$): both $i-1,i \in \set{1,\dots,m}$, so \eqref{eq:wrap-tail} gives, as in
+  the previous case, $s_A(i)-s_A(i-1) = s(j_0+(i-1))-s(j_0+(i-2))$. Writing
+  $\phi_T(i):=j_0+(i-1)$: strictly increasing (hence injective) on $T$, preserves edge lengths
+  exactly, and lands in $\set{1,\dots,k}$: $\phi_T(i)\ge j_0+1\ge1$ and, since $\phi_T$ increasing
+  and $\phi_T(m)=j_0+(m-1)\le k$ by \eqref{eq:wrap-tail}'s side condition at $i=m$, $\phi_T(i)\le k$
+  for every $i\in T$.
+
+  For $i\in H$: if $i-1>m$ (i.e.\ $i\ge m+2$), both $i-1,i$ satisfy \eqref{eq:wrap-head}, giving
+  $s_A(i)-s_A(i-1) = s(i-m)-s(i-1-m)$. If $i-1=m$ (i.e.\ $i=m+1$, forcing $m\ge1$ since $i\in H
+  \subseteq \set{2,\dots,k_A-1}$ gives $i\ge2$), then $s_A(m) = s(j_0+(m-1))-t' =
+  \length(\gamma)-t'$ (using \eqref{eq:wrap-tail} at $i=m$ together with \eqref{eq:wrap-split},
+  valid since $m\ge1$), which equals $(\length(\gamma)-t')+s(0)$ (since $s(0)=0$,
+  \noderef{IsGeodesicResolution}) -- matching \eqref{eq:wrap-head}'s pattern extended to index $0$
+  -- while $s_A(m+1)=(\length(\gamma)-t')+s(1)$ directly by \eqref{eq:wrap-head}. So in both
+  sub-cases, $s_A(i)-s_A(i-1) = s(i-m)-s(i-1-m)$ exactly. Writing $\phi_H(i):=i-m$: strictly
+  increasing (hence injective) on $H$, preserves edge lengths exactly, and lands in
+  $\set{1,\dots,k}$: $\phi_H(i)=i-m\ge1$ (as $i>m$), and $\phi_H(i)\le k$ by \eqref{eq:wrap-head}'s
+  side condition (applicable at $i$, since $m<i\le k_A-1$).
+
+  \emph{Disjointness of $\phi_T(T)$ and $\phi_H(H)$.} By $\mathrm{IsGeodesicResolution}(A,k_A,s_A)$
+  (writing $A:=\gamma|_{[t',t]}$), $s_A(0)=0$ and $s_A$ is monotone on $\set{0,\dots,k_A}$. If
+  $T\ne\emptyset$ (i.e.\ $m\ge2$): $s_A(1)\ge s_A(0)=0$, and $s_A(1)=s(j_0)-t'$ by
+  \eqref{eq:wrap-tail} at $i=1$ (valid since $1\le m$), giving $s(j_0)\ge t'$; then, by
+  monotonicity of $s$ on $\set{0,\dots,k}$ (\noderef{IsGeodesicResolution}), $s(j)\ge s(j_0)\ge t'$
+  for every $j$ with $j_0\le j\le k$, and in particular $s(\phi_T(i))\ge t'$ for every $i\in T$
+  (since $j_0\le\phi_T(i)\le k$, as shown above). If $H\ne\emptyset$ (i.e.\ $m\le k_A-2$):
+  $s_A(k_A-1)\le s_A(k_A)$; by $\mathrm{IsGeodesicResolution}(A,k_A,s_A)$'s own defining field,
+  $s_A(k_A)=\length(A)$, which, unfolding \noderef{curveArc}, \noderef{curveWrapRestrict},
+  \noderef{curveConcat}'s length fields (all definitional), equals $(\length(\gamma)-t')+t$ in the
+  case $t<t'$; and $s_A(k_A-1)=(\length(\gamma)-t')+s(k_A-1-m)$ by \eqref{eq:wrap-head} (valid since
+  $k_A-1>m$, as $H\ne\emptyset$), so $s(k_A-1-m)\le t$; then, by monotonicity of $s$, $s(j)\le
+  s(k_A-1-m)\le t$ for every $j$ with $j\le k_A-1-m$, and in particular $s(\phi_H(i))\le t$ for
+  every $i\in H$ (since $\phi_H(i)\le k_A-1-m$, as shown above). Now, if some $j$ lay in both
+  $\phi_T(T)$ and $\phi_H(H)$, that $j$ would satisfy both $s(j)\ge t'$ and $s(j)\le t$, giving
+  $t'\le t$, contradicting $t<t'$. So $\phi_T(T)$ and $\phi_H(H)$ are disjoint subsets of
+  $\set{1,\dots,k}$.
+
+  \emph{Conclusion of Case $t<t'$.} Combining $\phi_T$ on $T$ and $\phi_H$ on $H$ gives a single
+  map $\phi$ on $T\cup H = \set{2,\dots,k_A-1}$ ($T,H$ partition this set), injective (each piece
+  is injective and the two images are disjoint), preserving edge lengths exactly, and landing in
+  $\set{1,\dots,k}$. Since $T,H$ partition $\set{2,\dots,k_A-1}$, $S_A^{\circ}$ equals the number
+  of small edges counted by $T$ plus the number counted by $H$, and $\phi$ injects this into
+  $\set{j\in\set{1,\dots,k} : s(j)-s(j-1)<\delta}$, giving $S_A^{\circ}\le M$.
+
+  In either case $S_A^{\circ}\le M$, so, by Step 1a, $S_A \le M+2$.
+
+  \paragraph{Step 2: the closing edge and concatenation.} By \noderef{GeodesicPairing}'s
+  $\mathrm{isGeodesic}$ field, $\mathrm{IsGeodesicOn}(G_{\gamma(t),\gamma(t')},0,
+  \length(G_{\gamma(t),\gamma(t')}))$, so $r(0):=0,\,r(1):=\length(G_{\gamma(t),\gamma(t')})$
+  witnesses $\mathrm{IsGeodesicResolution}(G_{\gamma(t),\gamma(t')},1,r)$: monotonicity is
+  $0\le\length(G_{\gamma(t),\gamma(t')})$ (\noderef{Curve}'s $\mathrm{len\_nonneg}$ field), and the
+  one edge condition is exactly the $\mathrm{isGeodesic}$ field cited above.
+
+  By \noderef{BasicCut}'s own well-definedness argument (the displayed endpoint fact
+  $\gamma|_{[a,b]}(\length(\cdot))=\gamma(b)$ for every $a,b\in[0,\length(\gamma)]$, applied at
+  $(a,b)=(t',t)$), $A=\gamma|_{[t',t]}$'s value at its own length $\length(A)$ is $\gamma(t)$; and
+  $G_{\gamma(t),\gamma(t')}$'s value at $0$ is $\gamma(t)$ (\noderef{GeodesicPairing}'s
+  $\mathrm{start\_eq}$ field) -- the two endpoints match, exactly the identification
+  \noderef{BasicCut} itself already establishes for $\gamma' = A * G_{\gamma(t),\gamma(t')}$ to be
+  well-defined.
+
+  Define $r'(i):=s_A(i)$ for $0\le i\le k_A$, and $r'(i):=\length(A)+r(i-k_A)$ for $k_A\le i\le
+  k_A+1$ (the two formulas agree at $i=k_A$: $s_A(k_A)=\length(A)$, and $r(0)=0$). We check $r'$
+  witnesses $\mathrm{IsGeodesicResolution}(\gamma',k_A+1,r')$.
+
+  \emph{Monotonicity.} On $\set{0,\dots,k_A}$, $r'$ agrees with $s_A$, monotone by hypothesis. On
+  $\set{k_A,\dots,k_A+1}$, $r'(k_A)=\length(A)\le\length(A)+r(1)=r'(k_A+1)$ since
+  $r(1)=\length(G_{\gamma(t),\gamma(t')})\ge0=r(0)$. The two pieces agree at the shared index
+  $k_A$, so $r'$ is monotone on all of $\set{0,\dots,k_A+1}$.
+
+  \emph{Endpoints.} $r'(0)=s_A(0)=0$. $r'(k_A+1) = \length(A)+r(1) =
+  \length(A)+\length(G_{\gamma(t),\gamma(t')}) = \length(\gamma')$ (\noderef{curveConcat}'s length
+  field).
+
+  \emph{Edges $i<k_A$.} On $[s_A(i),s_A(i+1)] \subseteq [0,\length(A)]$, $\gamma'$ agrees with $A$
+  (\noderef{curveConcat}'s defining formula, valid since this range lies at or before
+  $\length(A)$), so $\mathrm{IsGeodesicOn}(\gamma',s_A(i),s_A(i+1)) =
+  \mathrm{IsGeodesicOn}(A,s_A(i),s_A(i+1))$ literally, a consequence of
+  $\mathrm{IsGeodesicResolution}(A,k_A,s_A)$ (its own $i<k_A$ clause).
+
+  \emph{Edge $i=k_A$.} On $[r'(k_A),r'(k_A+1)] = [\length(A),\length(\gamma')]$, $\gamma'(u) =
+  G_{\gamma(t),\gamma(t')}(u-\length(A))$ (\noderef{curveConcat}'s defining formula, valid since
+  this range lies at or past $\length(A)$). So for $u,v$ in this range, writing
+  $u'':=u-\length(A),\,v'':=v-\length(A) \in [0,\length(G_{\gamma(t),\gamma(t')})]$,
+  \[
+    \mathrm{dist}(\gamma'(u),\gamma'(v)) =
+    \mathrm{dist}(G_{\gamma(t),\gamma(t')}(u''),G_{\gamma(t),\gamma(t')}(v'')) = |u''-v''| = |u-v|
+    ,
+  \]
+  the middle equality by $\mathrm{IsGeodesicOn}(G_{\gamma(t),\gamma(t')},0,
+  \length(G_{\gamma(t),\gamma(t')}))$ (cited above) applied to $u'',v''$. This is exactly
+  $\mathrm{IsGeodesicOn}(\gamma',r'(k_A),r'(k_A+1))$.
+
+  So $r'$ witnesses $\mathrm{IsGeodesicResolution}(\gamma',k_A+1,r')$. Under this identification,
+  for $1\le i\le k_A$ the edge $r'(i)-r'(i-1)=s_A(i)-s_A(i-1)$ agrees with $A$'s $i$-th edge
+  exactly, so exactly $S_A$ of these $k_A$ edges are small; and the one remaining edge
+  $r'(k_A+1)-r'(k_A) = r(1)-r(0) = \length(G_{\gamma(t),\gamma(t')})$ is the closing edge,
+  contributing $0$ or $1$ more. So this resolution of $\gamma'$ has small-edge count $\le S_A+1 \le
+  (M+2)+1 = M+3$ (using Step~1). Since $\nsmallpieces(\gamma',\delta)$ is the infimum over
+  \emph{all} resolutions of $\gamma'$ (\noderef{smallPieceCount}), and we have exhibited one with
+  small-edge count at most $M+3$, $\nsmallpieces(\gamma',\delta) \le M+3 =
+  \nsmallpieces(\gamma,\delta)+3$, as claimed.
+\end{proof}

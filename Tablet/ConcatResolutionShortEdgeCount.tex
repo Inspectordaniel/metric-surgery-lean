@@ -1,0 +1,91 @@
+\begin{lemma}[Short-edge counts are additive across a glued resolution]
+  Let $K_1,K_2 \in \mathbb{N}$, let $r_1,r_2,R \colon \mathbb{N} \to \mathbb{R}$, and let
+  $L,\delta \in \mathbb{R}$. Assume
+  \[
+    r_1(K_1) = L, \qquad r_2(0) = 0, \qquad
+    R(i) = \begin{cases} r_1(i) & \text{if } i \le K_1 \\ L + r_2(i-K_1) & \text{if } i > K_1
+    \end{cases}
+    \quad \text{for all } i \in \mathbb{N}
+    .
+  \]
+  Then
+  \[
+    \#\set{i \in \set{1,\dots,K_1+K_2} : R(i)-R(i-1) < \delta}
+    \;=\;
+    \#\set{j \in \set{1,\dots,K_1} : r_1(j)-r_1(j-1) < \delta}
+    + \#\set{j \in \set{1,\dots,K_2} : r_2(j)-r_2(j-1) < \delta}
+    ,
+  \]
+  where $i-1$, $j-1$ and $i-K_1$ denote truncated subtraction of natural numbers.
+
+  \paragraph{Why this is needed and where it is used.}
+  \noderef{ConcatGeodesicResolution} resolves a concatenation $\eta_1 * \eta_2$
+  (\noderef{curveConcat}) into $K_1+K_2$ geodesic edges by exactly the spliced breakpoint sequence
+  $R$ displayed above, with $L = \length(\eta_1)$; the two side conditions are automatic there,
+  since $r_1(K_1) = \length(\eta_1)$ and $r_2(0)=0$ are two of the defining clauses of
+  $\mathrm{IsGeodesicResolution}$ (\noderef{IsGeodesicResolution}). But
+  \noderef{ConcatGeodesicResolution} asserts only that the glued object \emph{is} a resolution: it
+  says nothing whatever about how many of $R$'s edges are short, which is the entire content of the
+  present lemma and is what an upper bound on $\nsmallpieces$ of a concatenated curve requires,
+  $\nsmallpieces$ being an infimum over all resolutions (\noderef{smallPieceCount}). Applied with
+  $K_2=1$, where the second summand is at most $1$ because it counts a subset of a one-element
+  index set, it is the ``plus one for the single new closing geodesic edge'' step of paper Lemma
+  3.10 (``these are replaced by a single geodesic edge which may have length smaller than $\delta$'',
+  paper.tex line 957); applied with general $K_2$ it is what lets a wrap-around arc, itself a
+  concatenation of a tail piece and a head piece, have its short edges counted piece by piece.
+\end{lemma}
+\begin{proof}
+  Write
+  \[
+    S := \set{i \in \set{1,\dots,K_1+K_2} : R(i)-R(i-1) < \delta}, \quad
+    S_1 := \set{j \in \set{1,\dots,K_1} : r_1(j)-r_1(j-1) < \delta}, \quad
+    S_2 := \set{j \in \set{1,\dots,K_2} : r_2(j)-r_2(j-1) < \delta}.
+  \]
+  We first compute the edge differences of $R$ on the two index blocks, then show that $S$ is the
+  disjoint union of $S_1$ and the image of $S_2$ under $j \mapsto K_1+j$.
+
+  \emph{Step 1: lower block.} Let $1 \le i \le K_1$. Then $i \le K_1$ and also $i-1 \le K_1$, so the
+  defining formula for $R$ takes its first branch at both $i$ and $i-1$:
+  \[
+    R(i)-R(i-1) = r_1(i)-r_1(i-1)
+    . \tag{1}
+  \]
+
+  \emph{Step 2: upper block.} Let $j \ge 1$. Then $K_1 + j > K_1$, so $R(K_1+j) = L + r_2(K_1+j-K_1)
+  = L + r_2(j)$. We claim also
+  \[
+    R(K_1+j-1) = L + r_2(j-1)
+    . \tag{2}
+  \]
+  Indeed, split on whether $K_1+j-1 \le K_1$. If $K_1+j-1 \le K_1$, then, since $j \ge 1$, we get
+  $j \le 1$, hence $j = 1$ and $K_1+j-1 = K_1$; the first branch of $R$'s formula gives
+  $R(K_1+j-1) = r_1(K_1) = L$ by the hypothesis $r_1(K_1)=L$, while the right-hand side of $(2)$ is
+  $L + r_2(j-1) = L + r_2(0) = L + 0 = L$ by the hypothesis $r_2(0)=0$; so $(2)$ holds. If instead
+  $K_1+j-1 > K_1$, the second branch gives $R(K_1+j-1) = L + r_2(K_1+j-1-K_1) = L + r_2(j-1)$, since
+  $K_1+j-1-K_1 = j-1$ (as $j \ge 1$); so $(2)$ holds in this case too. Subtracting,
+  \[
+    R(K_1+j) - R(K_1+j-1) = \bigl(L + r_2(j)\bigr) - \bigl(L + r_2(j-1)\bigr) = r_2(j)-r_2(j-1)
+    . \tag{3}
+  \]
+
+  \emph{Step 3: $S = S_1 \cup \varphi(S_2)$, where $\varphi(j) := K_1+j$.} Let $i \in S$, so
+  $1 \le i \le K_1+K_2$ and $R(i)-R(i-1) < \delta$. If $i \le K_1$, then by $(1)$ we have
+  $r_1(i)-r_1(i-1) < \delta$, so $i \in S_1$. If $i > K_1$, put $j := i-K_1$; then $j \ge 1$ and
+  $j \le K_2$ (from $i \le K_1+K_2$), and $K_1+j = i$, so by $(3)$ we get
+  $r_2(j)-r_2(j-1) = R(i)-R(i-1) < \delta$, i.e.\ $j \in S_2$ and $i = \varphi(j) \in \varphi(S_2)$.
+
+  Conversely, if $j \in S_1$ then $1 \le j \le K_1 \le K_1+K_2$ and, by $(1)$,
+  $R(j)-R(j-1) = r_1(j)-r_1(j-1) < \delta$, so $j \in S$. And if $j \in S_2$ then
+  $1 \le j \le K_2$, so $1 \le K_1+j \le K_1+K_2$, and by $(3)$,
+  $R(K_1+j)-R(K_1+j-1) = r_2(j)-r_2(j-1) < \delta$, so $\varphi(j) = K_1+j \in S$.
+
+  \emph{Step 4: disjointness and cardinalities.} Every element of $S_1$ is at most $K_1$, while
+  every element of $\varphi(S_2)$ has the form $K_1+j$ with $j \ge 1$ and so is strictly greater
+  than $K_1$; hence $S_1$ and $\varphi(S_2)$ are disjoint. The map $\varphi(j) = K_1+j$ is
+  injective on $\mathbb{N}$ by cancellation of addition, so $\#\varphi(S_2) = \#S_2$. Therefore
+  \[
+    \#S = \#\bigl(S_1 \cup \varphi(S_2)\bigr) = \#S_1 + \#\varphi(S_2) = \#S_1 + \#S_2
+    ,
+  \]
+  which is the claimed identity.
+\end{proof}

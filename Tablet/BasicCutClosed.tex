@@ -1,0 +1,177 @@
+\begin{lemma}[The basic cut's outputs are closed and piecewise geodesic]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}), $\gamma \in
+  \Theta(E)$ (\noderef{Curve}) a closed (\noderef{IsClosedCurve}), piecewise-geodesic
+  (\noderef{IsPiecewiseGeodesic}) curve, and $t,t' \in [0,\length(\gamma)]$ with $t \ne t'$. Writing
+  $(\gamma',g) := C(\gamma,t,t')$ (\noderef{BasicCut}), both $\gamma'$ and $g$ are closed
+  (\noderef{IsClosedCurve}) and piecewise-geodesic (\noderef{IsPiecewiseGeodesic}).
+
+  This is needed because \noderef{BasicCut} itself does not hypothesize $\gamma$ piecewise-geodesic
+  (it only needs $\gamma$ closed to be well-defined), so this lemma supplies, on top of that
+  hypothesis, exactly the closure-under-the-surgery-class property the surgery algorithm needs at
+  every step: the paper only asserts this property in passing (paper.tex line 581-583 constructs
+  $C(\gamma,t,t')$ as a pair of elements of $\Theta_c(E)$, i.e.\ closed curves, and every later use
+  of the basic cut re-applies it to the outputs, tacitly assuming they remain piecewise-geodesic).
+
+  The hypothesis $t \ne t'$ is imposed for uniformity with the companion lemma
+  \noderef{BasicCutCurrent}, which genuinely needs it: at $t = t'$ the paper's circular-restriction
+  length identity (paper.tex line 577, ``$\length(\gamma|_{[t,t']}) + \length(\gamma|_{[t',t]}) =
+  \length(\gamma)$ for all \emph{distinct} $t,t' \in [0,\length(\gamma)]$'') does not apply, and
+  indeed at $t=t'$ both of \noderef{BasicCut}'s outputs degenerate to length-$0$ curves; the present
+  lemma's own closedness and piecewise-geodesic conclusions in fact hold without this hypothesis,
+  but we keep it so that every lemma about the basic cut's outputs shares one hypothesis set.
+\end{lemma}
+\begin{proof}
+  \emph{Reduction via \noderef{BasicCut}.} By \noderef{BasicCut}'s three-way case split on the order
+  of $t,t'$, and since $t \ne t'$ excludes the middle (``$t=t'$'') case, exactly one of the following
+  holds:
+  \begin{itemize}
+    \item $t < t'$: $\gamma' = A_1 * G_{\gamma(t),\gamma(t')}$ with $A_1 :=
+      \mathrm{curveWrapRestrict}(\gamma,t',t)$, and $g = B_1 * G_{\gamma(t'),\gamma(t)}$ with $B_1 :=
+      \mathrm{curveRestrict}(\gamma,t,t')$;
+    \item $t' < t$: $\gamma' = A_2 * G_{\gamma(t),\gamma(t')}$ with $A_2 :=
+      \mathrm{curveRestrict}(\gamma,t',t)$, and $g = B_2 * G_{\gamma(t'),\gamma(t)}$ with $B_2 :=
+      \mathrm{curveWrapRestrict}(\gamma,t,t')$,
+  \end{itemize}
+  where $*$ is \noderef{curveConcat}. In either case write $A \in \{A_1,A_2\}$ for the arc used in
+  $\gamma'$ and $B \in \{B_1,B_2\}$ for the arc used in $g$; in both cases $A$ is (ordinary or
+  wrap-around) the restriction of $\gamma$ ``from $t'$ to $t$'' and $B$ is the restriction of
+  $\gamma$ ``from $t$ to $t'$''.
+
+  \paragraph{Part 1: closedness (uniform in both cases).} We first show $A.\mathrm{toFun}(0) =
+  \gamma(t')$ in both cases. If $A = A_2 = \mathrm{curveRestrict}(\gamma,t',t)$: by
+  \noderef{curveRestrict}'s defining formula, $A(u) = \gamma(t' + u)$ for $u \in [0,t-t']$, in
+  particular $A(0) = \gamma(t'+0) = \gamma(t')$. If $A = A_1 =
+  \mathrm{curveWrapRestrict}(\gamma,t',t) = \gamma|_{[t',\length(\gamma)]} *
+  \gamma|_{[0,t]}$ (\noderef{curveWrapRestrict}): by \noderef{curveConcat}'s defining formula at
+  the argument $0$ (which is $\le \length(\gamma|_{[t',\length(\gamma)]})$, since lengths are
+  nonnegative, \noderef{Curve}), $A(0) = \gamma|_{[t',\length(\gamma)]}(0) = \gamma(t'+0) = \gamma(t')$
+  by \noderef{curveRestrict} applied to $\gamma|_{[t',\length(\gamma)]}$. So in both cases
+  $A(0)=\gamma(t')$.
+
+  Next, by \noderef{curveConcat}'s defining formula applied to $\gamma' = A *
+  G_{\gamma(t),\gamma(t')}$ at the argument $\length(\gamma') = \length(A) +
+  \length(G_{\gamma(t),\gamma(t')})$ (which lies in the closed range
+  $[\length(A),\length(A)+\length(G_{\gamma(t),\gamma(t')})]$, the second case of
+  \noderef{curveConcat}'s formula), $\gamma'(\length(\gamma')) =
+  G_{\gamma(t),\gamma(t')}(\length(\gamma')-\length(A)) = G_{\gamma(t),\gamma(t')}
+  (\length(G_{\gamma(t),\gamma(t')}))= \gamma(t')$, the last equality by the $\mathrm{end\_eq}$ field
+  of \noderef{GeodesicPairing} applied to $x=\gamma(t),y=\gamma(t')$. Also, by
+  \noderef{curveConcat}'s defining formula at the argument $0$ (which lies in $[0,\length(A)]$, the
+  first case), $\gamma'(0) = A(0) = \gamma(t')$ by the previous paragraph. Hence
+  $\gamma'(\length(\gamma')) = \gamma(t') = \gamma'(0)$, which is exactly $\mathrm{IsClosedCurve}(\gamma')$
+  (\noderef{IsClosedCurve}).
+
+  The identical argument with the roles of $t,t'$ exchanged (using $B.\mathrm{toFun}(0) = \gamma(t)$,
+  proved the same way, and the $\mathrm{end\_eq}$ field of \noderef{GeodesicPairing} applied to
+  $x=\gamma(t'),y=\gamma(t)$) gives $g(\length(g)) = \gamma(t) = g(0)$, i.e.\
+  $\mathrm{IsClosedCurve}(g)$.
+
+  \paragraph{Part 2: piecewise-geodesic-ness. Three general transport facts.} We establish three
+  general facts about \noderef{IsPiecewiseGeodesic}, used to transport $\gamma$'s piecewise-geodesic
+  structure onto $\gamma'$ and $g$.
+
+  \emph{Fact A (restriction transport).} If $\eta \in \Theta(E)$ is piecewise-geodesic
+  (\noderef{IsPiecewiseGeodesic}) and $0 \le a \le b \le \length(\eta)$, then
+  $\mathrm{curveRestrict}(\eta,a,b)$ is piecewise-geodesic.
+  \emph{Proof of Fact A.} Let $k,s$ witness $\mathrm{IsPiecewiseGeodesic}(\eta)$
+  (\noderef{IsPiecewiseGeodesic}, \noderef{IsPiecewiseGeodesicWith}): $s$ is monotone on
+  $\{0,\dotsc,k\}$, $s(0)=0$, $s(k)=\length(\eta)$, and $\mathrm{IsGeodesicOn}(\eta,s(i),s(i+1))$ for
+  all $i<k$ (\noderef{IsGeodesicResolution}). Define $\mathrm{clamp}(x) := \min(b,\max(a,x))$ and
+  $s'(i) := \mathrm{clamp}(s(i)) - a$ for $i=0,\dotsc,k$.
+  \begin{itemize}
+    \item \emph{Monotone:} $\mathrm{clamp}$ is monotone nondecreasing (a composition of $\min,\max$
+      with a monotone argument), so $s'$ is monotone on $\{0,\dotsc,k\}$ since $s$ is.
+    \item \emph{Boundary:} $s'(0) = \mathrm{clamp}(s(0)) - a = \mathrm{clamp}(0)-a$; since $0\le a\le
+      b$, $\mathrm{clamp}(0)=\min(b,\max(a,0))=\min(b,a)=a$, so $s'(0)=0$. Likewise
+      $s'(k)=\mathrm{clamp}(s(k))-a=\mathrm{clamp}(\length(\eta))-a$; since $a \le b \le
+      \length(\eta)$, $\mathrm{clamp}(\length(\eta))=\min(b,\max(a,\length(\eta)))=\min(b,\length(\eta))=b$,
+      so $s'(k)=b-a=\length(\mathrm{curveRestrict}(\eta,a,b))$ (\noderef{curveRestrict}).
+    \item \emph{Edges:} fix $i<k$. If $s'(i)=s'(i+1)$, $\mathrm{IsGeodesicOn}$ of
+      $\mathrm{curveRestrict}(\eta,a,b)$ on $[s'(i),s'(i+1)]=\{s'(i)\}$ holds trivially: the
+      defining universally-quantified equality of \noderef{IsGeodesicOn} ranges over the single
+      point $s'(i)$, where it reads $\mathrm{dist}(\cdot,\cdot)=0=|s'(i)-s'(i)|$. If
+      $s'(i)<s'(i+1)$: we claim $s(i) \le a+s'(i)=\mathrm{clamp}(s(i))$ and
+      $a+s'(i+1)=\mathrm{clamp}(s(i+1)) \le s(i+1)$. Indeed, if $s(i) > b$ then (since $s(i)\le
+      s(i+1)$) also $s(i+1)>b$, so $\mathrm{clamp}(s(i))=\mathrm{clamp}(s(i+1))=b$, contradicting
+      $s'(i)<s'(i+1)$; so $s(i)\le b$. Since also $a \le b$, $\max(a,s(i)) \le b$, so
+      $\mathrm{clamp}(s(i)) = \min(b,\max(a,s(i))) = \max(a,s(i)) \ge s(i)$ (the last inequality
+      since $\max(a,x)\ge x$ always). Symmetrically, if $s(i+1)<a$ then $s(i)\le s(i+1)<a$, so
+      $\mathrm{clamp}(s(i))=\mathrm{clamp}(s(i+1))=a$, again contradicting $s'(i)<s'(i+1)$; so
+      $s(i+1)\ge a$, whence $\mathrm{clamp}(s(i+1))=\min(b,\max(a,s(i+1)))\le s(i+1)$ (as
+      $\min(b,\max(a,x)) \le \max(a,x)$, and here $s(i+1)\ge a$ gives $\max(a,s(i+1))=s(i+1)$ if
+      $s(i+1)\ge a$, hence $\min(b,s(i+1))\le s(i+1)$). Thus $[a+s'(i),a+s'(i+1)] \subseteq
+      [s(i),s(i+1)]$, so by $\mathrm{IsGeodesicOn}(\eta,s(i),s(i+1))$ (which asserts
+      $\mathrm{dist}(\eta(p),\eta(q))=|p-q|$ for \emph{every} $p,q \in [s(i),s(i+1)]$,
+      \noderef{IsGeodesicOn}) restricted to the sub-interval, $\mathrm{IsGeodesicOn}(\eta,
+      a+s'(i),a+s'(i+1))$ holds. Finally, by \noderef{curveRestrict}'s defining formula,
+      $\mathrm{curveRestrict}(\eta,a,b)(u) = \eta(a+u)$ for $u \in [0,b-a]$; since $s'(i),s'(i+1) \in
+      [0,b-a]$ (as $0\le s'(i)$ by $\mathrm{clamp}(s(i))\ge a$ and $s'(i+1)\le b-a$ by
+      $\mathrm{clamp}(s(i+1))\le b$), for any $p,q \in [s'(i),s'(i+1)]$, $\mathrm{dist}\bigl(
+      \mathrm{curveRestrict}(\eta,a,b)(p),\mathrm{curveRestrict}(\eta,a,b)(q)\bigr) =
+      \mathrm{dist}(\eta(a+p),\eta(a+q)) = |(a+p)-(a+q)| = |p-q|$, the middle equality by
+      $\mathrm{IsGeodesicOn}(\eta,a+s'(i),a+s'(i+1))$ applied to $a+p,a+q \in [a+s'(i),a+s'(i+1)]$.
+      This is exactly $\mathrm{IsGeodesicOn}(\mathrm{curveRestrict}(\eta,a,b),s'(i),s'(i+1))$.
+  \end{itemize}
+  So $s'$ witnesses $\mathrm{IsGeodesicResolution}(\mathrm{curveRestrict}(\eta,a,b),k,s')$, giving
+  Fact A.
+
+  \emph{Fact B (concatenation transport).} If $\eta_1,\eta_2$ are piecewise-geodesic and
+  $\eta_1(\length(\eta_1))=\eta_2(0)$, then $\eta_1 * \eta_2$ (\noderef{curveConcat}) is
+  piecewise-geodesic. \emph{Proof of Fact B.} Let $k_1,s_1$ and $k_2,s_2$ witness
+  $\mathrm{IsPiecewiseGeodesic}(\eta_1)$, $\mathrm{IsPiecewiseGeodesic}(\eta_2)$ respectively. Set
+  $k:=k_1+k_2$ and $s(i) := s_1(i)$ for $i \le k_1$, $s(i):=\length(\eta_1)+s_2(i-k_1)$ for $i > k_1$
+  (these two formulas agree at $i=k_1$, both giving $\length(\eta_1)$, since $s_1(k_1)=\length(\eta_1)$
+  and $s_2(0)=0$, \noderef{IsGeodesicResolution}). Then $s$ is monotone on $\{0,\dotsc,k\}$
+  ($s_1,s_2$ monotone on their own ranges and the two pieces meet continuously at $i=k_1$), $s(0) =
+  s_1(0)=0$, $s(k)=\length(\eta_1)+s_2(k_2)=\length(\eta_1)+\length(\eta_2)=\length(\eta_1*\eta_2)$
+  (\noderef{curveConcat}). For $i<k_1$: on $[s_1(i),s_1(i+1)]\subseteq[0,\length(\eta_1)]$,
+  $(\eta_1*\eta_2)$ agrees with $\eta_1$ (\noderef{curveConcat}'s defining formula, first case),
+  so $\mathrm{IsGeodesicOn}(\eta_1*\eta_2,s(i),s(i+1))$ is literally
+  $\mathrm{IsGeodesicOn}(\eta_1,s_1(i),s_1(i+1))$, which holds by hypothesis. For $k_1 \le i < k$,
+  writing $i=k_1+j$: on $[\length(\eta_1)+s_2(j),\length(\eta_1)+s_2(j+1)] \subseteq
+  [\length(\eta_1),\length(\eta_1)+\length(\eta_2)]$, $(\eta_1*\eta_2)(u) = \eta_2(u-\length(\eta_1))$
+  (\noderef{curveConcat}'s defining formula, second case), so for $p,q$ in this range,
+  $\mathrm{dist}((\eta_1*\eta_2)(p),(\eta_1*\eta_2)(q)) =
+  \mathrm{dist}(\eta_2(p-\length(\eta_1)),\eta_2(q-\length(\eta_1))) = |(p-\length(\eta_1)) -
+  (q-\length(\eta_1))| = |p-q|$, the middle equality by
+  $\mathrm{IsGeodesicOn}(\eta_2,s_2(j),s_2(j+1))$ (hypothesis) applied to $p-\length(\eta_1),
+  q-\length(\eta_1) \in [s_2(j),s_2(j+1)]$. So $\mathrm{IsGeodesicOn}(\eta_1*\eta_2,s(i),s(i+1))$
+  holds for every $i<k$, and $s$ witnesses $\mathrm{IsGeodesicResolution}(\eta_1*\eta_2,k,s)$,
+  giving Fact B.
+
+  \emph{Fact C (a single geodesic edge is piecewise-geodesic).} For any $x,y \in E$,
+  $G_{x,y}$ (\noderef{GeodesicPairing}) is piecewise-geodesic, via $k=1$, $s(0)=0$,
+  $s(1)=\length(G_{x,y})$: monotonicity is $0 \le \length(G_{x,y})$ (\noderef{Curve}'s
+  $\mathrm{len\_nonneg}$ field), and $\mathrm{IsGeodesicOn}(G_{x,y},0,\length(G_{x,y}))$ is exactly
+  the $\mathrm{isGeodesic}$ field of \noderef{GeodesicPairing}.
+
+  \paragraph{Applying Facts A-C.} In the case $t<t'$: $A = A_1 =
+  \gamma|_{[t',\length(\gamma)]} * \gamma|_{[0,t]}$ (\noderef{curveWrapRestrict}). By Fact A applied
+  twice (with $(a,b)=(t',\length(\gamma))$, valid since $0\le t' \le \length(\gamma)$, and
+  $(a,b)=(0,t)$, valid since $0\le t\le\length(\gamma)$) to $\eta=\gamma$ (piecewise-geodesic by
+  hypothesis), both $\gamma|_{[t',\length(\gamma)]}$ and $\gamma|_{[0,t]}$ are piecewise-geodesic;
+  their endpoints match (the closedness identity $\gamma(\length(\gamma))=\gamma(0)$,
+  \noderef{IsClosedCurve}, is exactly the endpoint condition \noderef{curveWrapRestrict} itself
+  needs and already establishes for this concatenation to be well-defined), so Fact B gives that
+  $A_1$ is piecewise-geodesic. By Fact C, $G_{\gamma(t),\gamma(t')}$ is piecewise-geodesic; its
+  endpoint matches $A_1$'s by \noderef{BasicCut}'s own well-definedness argument for this
+  concatenation. So Fact B applied once more gives $\gamma' = A_1 * G_{\gamma(t),\gamma(t')}$
+  piecewise-geodesic. For $g = B_1 * G_{\gamma(t'),\gamma(t)}$ with $B_1 =
+  \mathrm{curveRestrict}(\gamma,t,t')$ (valid since $0\le t\le t' \le \length(\gamma)$): Fact A gives
+  $B_1$ piecewise-geodesic directly (a single restriction, no concatenation needed), Fact C gives
+  $G_{\gamma(t'),\gamma(t)}$ piecewise-geodesic, and their endpoints match by \noderef{BasicCut}'s
+  well-definedness; Fact B gives $g$ piecewise-geodesic.
+
+  In the case $t'<t$: symmetric, with the roles of $\gamma'$ and $g$ exchanged. $\gamma' = A_2 *
+  G_{\gamma(t),\gamma(t')}$ with $A_2 = \mathrm{curveRestrict}(\gamma,t',t)$ (valid since $0 \le t'
+  \le t \le \length(\gamma)$): Fact A gives $A_2$ piecewise-geodesic directly, Fact C gives
+  $G_{\gamma(t),\gamma(t')}$ piecewise-geodesic, Fact B (endpoints matching by \noderef{BasicCut})
+  gives $\gamma'$ piecewise-geodesic. $g = B_2 * G_{\gamma(t'),\gamma(t)}$ with $B_2 =
+  \gamma|_{[t,\length(\gamma)]} * \gamma|_{[0,t']}$ (\noderef{curveWrapRestrict}): Fact A applied
+  twice (to $(t,\length(\gamma))$ and $(0,t')$) and Fact B (endpoints matching by closedness of
+  $\gamma$, as in the $A_1$ case above) give $B_2$ piecewise-geodesic; Fact C and Fact B once more
+  (endpoints matching by \noderef{BasicCut}) give $g$ piecewise-geodesic.
+
+  In every case, $\gamma'$ and $g$ are both closed (Part 1) and piecewise-geodesic (Part 2), as
+  claimed.
+\end{proof}

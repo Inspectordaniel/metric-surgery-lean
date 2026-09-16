@@ -1,0 +1,129 @@
+\begin{corollary}[Surgery, sharp $\eta$ form]
+  \label{surgery-eta}
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, let $GP$ be a geodesic
+  pairing on $E$ (\noderef{GeodesicPairing}), let $0 < \eta \le 1$, and let $\gamma \in \Theta(E)$
+  (\noderef{Curve}) be a closed (\noderef{IsClosedCurve}), piecewise-geodesic
+  (\noderef{IsPiecewiseGeodesic}) curve. Then there exist $N \in \mathbb{N}$ with $N \ge 1$ and
+  closed, piecewise-geodesic curves $(g_j)_{j=1}^N$ such that
+  \begin{align}
+    \label{eq:SurgeryEtaCurrent}
+    [[\gamma]](\omega) &= \sum_{j=1}^N [[g_j]](\omega) \qquad \text{for every } \omega \in
+    \mathcal{D}^1(E) \quad \text{(\noderef{curveCurrent})}, \\
+    \label{eq:SurgeryEtaLength}
+    \sum_{j=1}^N \length(g_j) &\le (1+\eta)\length(\gamma), \\
+    \label{eq:SurgeryEtaMorrey}
+    \Morrey{\mu_{g_j}} &\le \frac{522}{\eta^2} \qquad \text{for every } j
+    \quad \text{(\noderef{curveMeasure}, \noderef{morreyNorm})}.
+  \end{align}
+
+  This is paper Cor.~3.2 (paper.tex line 628), with the paper's universal constant $C'$ pinned to
+  the numeral $C'=522$ rather than left existentially quantified. The paper derives
+  \Cref{surgery-eta} "immediately from \Cref{surgery-lem} with $\epsilon=c\eta$ and
+  $n=\lceil\epsilon^{-2}\rceil$ for a sufficiently small absolute constant $c>0$" (paper.tex line
+  653); here $c=1/15$ is pinned explicitly. The proof below shows $c=1/15$ works for every
+  $0<\eta\le1$ and, at the endpoint $\eta=1$, is sharp for the length bound: the argument's final
+  step is exactly the inequality $\eta\le1$, so no larger constant such as $c=1/14$ would suffice
+  (see the closing remark).
+\end{corollary}
+\begin{proof}
+  Set $\epsilon := \eta/15$ and $n := \lceil \epsilon^{-2}\rceil \in \mathbb{N}$.
+
+  \paragraph{Step 1: side conditions on $\epsilon,n$.} Since $0<\eta\le1$,
+  $0<\epsilon=\eta/15\le1/15<1$, so $0<\epsilon<1$. Since $\epsilon>0$, $\epsilon^{-2}>0$, and the
+  ceiling of a positive real number is a positive natural number, so $n=\lceil\epsilon^{-2}
+  \rceil>0$. Moreover, by the defining property of the ceiling function ($x\le\lceil x\rceil<x+1$
+  for every real $x$), taking $x:=\epsilon^{-2}\ge0$,
+  \begin{equation}
+    \label{eq:eta-nge}
+    \epsilon^{-2} \le n
+    \qquad\text{and}\qquad
+    n \le \epsilon^{-2}+1
+    .
+  \end{equation}
+
+  \paragraph{Step 2: apply \noderef{SurgeryLem}.} By \noderef{SurgeryLem} applied to
+  $GP,\gamma,\epsilon,n$ (valid: $0<\epsilon<1$ and $n>0$ by Step~1, $\gamma$ closed and
+  piecewise-geodesic by hypothesis), there exist $N\in\mathbb{N}$ with $N\ge1$ and closed,
+  piecewise-geodesic curves $(g_j)_{j=1}^N$ such that
+  \[
+    [[\gamma]](\omega)=\sum_{j=1}^N[[g_j]](\omega)\ \ (\forall\omega), \qquad
+    \sum_{j=1}^N\length(g_j) \le \left(1+\frac{2\epsilon}{1-\epsilon}+
+    \frac{12\epsilon^{-1}}{n(1-\epsilon)}\right)\length(\gamma), \qquad
+    \Morrey{\mu_{g_j}}\le4\epsilon^{-1}+2n+10\ \ (\forall j)
+    .
+  \]
+  This is exactly \eqref{eq:SurgeryEtaCurrent}; it remains to derive
+  \eqref{eq:SurgeryEtaLength}--\eqref{eq:SurgeryEtaMorrey} from the two numerical bounds above,
+  using $\epsilon=\eta/15$ and \eqref{eq:eta-nge}.
+
+  \paragraph{Step 3: the length bound \eqref{eq:SurgeryEtaLength}.} We first show
+  \begin{equation}
+    \label{eq:eta-length-factor}
+    1+\frac{2\epsilon}{1-\epsilon}+\frac{12\epsilon^{-1}}{n(1-\epsilon)} \le 1+\eta
+    .
+  \end{equation}
+  Since $0<\epsilon\le1/15$, $1-\epsilon>0$. Since $\epsilon^{-2}\le n$ (Step~1) and $\epsilon>0$,
+  multiplying by $\epsilon>0$ gives $\epsilon^{-1}\le n\epsilon$, and dividing by the positive
+  number $n$ gives $\epsilon^{-1}/n\le\epsilon$, hence $12\epsilon^{-1}/n\le12\epsilon$. Dividing
+  this by the positive number $1-\epsilon$ preserves the inequality:
+  $\tfrac{12\epsilon^{-1}}{n(1-\epsilon)} \le \tfrac{12\epsilon}{1-\epsilon}$. Hence
+  \[
+    \frac{2\epsilon}{1-\epsilon}+\frac{12\epsilon^{-1}}{n(1-\epsilon)} \le
+    \frac{2\epsilon}{1-\epsilon}+\frac{12\epsilon}{1-\epsilon} = \frac{14\epsilon}{1-\epsilon}
+    .
+  \]
+  It remains to show $\tfrac{14\epsilon}{1-\epsilon}\le\eta$. Since $1-\epsilon>0$, this is
+  equivalent (multiplying both sides by $1-\epsilon$) to $14\epsilon\le\eta(1-\epsilon)$; substituting
+  $\epsilon=\eta/15$, this reads $\tfrac{14\eta}{15}\le\eta-\tfrac{\eta^2}{15}$, i.e.\ (multiplying
+  by $15$) $14\eta\le15\eta-\eta^2$, i.e.\ $\eta^2\le\eta$, i.e.\ (dividing by $\eta>0$) $\eta\le1$,
+  which holds by hypothesis. Hence $\tfrac{14\epsilon}{1-\epsilon}\le\eta$, and combining with the
+  displayed inequality above,
+  $\tfrac{2\epsilon}{1-\epsilon}+\tfrac{12\epsilon^{-1}}{n(1-\epsilon)}\le\eta$, which is exactly
+  \eqref{eq:eta-length-factor}. Since $\length(\gamma)\ge0$ (\noderef{Curve}), multiplying
+  \eqref{eq:eta-length-factor} by $\length(\gamma)$ preserves the inequality:
+  \[
+    \left(1+\frac{2\epsilon}{1-\epsilon}+\frac{12\epsilon^{-1}}{n(1-\epsilon)}\right)\length(\gamma)
+    \le (1+\eta)\length(\gamma)
+    .
+  \]
+  Combining this with Step~2's length bound gives \eqref{eq:SurgeryEtaLength}.
+
+  \paragraph{Step 4: the Morrey bound \eqref{eq:SurgeryEtaMorrey}.} We first show
+  \begin{equation}
+    \label{eq:eta-morrey-factor}
+    4\epsilon^{-1}+2n+10 \le \frac{522}{\eta^2}
+    .
+  \end{equation}
+  Since $\epsilon=\eta/15$, $\epsilon^{-1}=15/\eta$, so $4\epsilon^{-1}=60/\eta$ and
+  $\epsilon^{-2}=(15/\eta)^2=225/\eta^2$. By Step~1, $n\le\epsilon^{-2}+1=225/\eta^2+1$, so
+  $2n\le450/\eta^2+2$. Adding these to the constant term $10$,
+  \[
+    4\epsilon^{-1}+2n+10 \le \frac{60}{\eta}+\frac{450}{\eta^2}+12
+    .
+  \]
+  It remains to show $\tfrac{60}{\eta}+\tfrac{450}{\eta^2}+12 \le \tfrac{522}{\eta^2}$. Since
+  $\eta^2>0$, this is equivalent (multiplying both sides by $\eta^2$) to
+  $60\eta+450+12\eta^2\le522$, i.e.\ $60\eta+12\eta^2\le72$. Since $0<\eta\le1$: $60\eta\le60$
+  (multiplying $\eta\le1$ by $60>0$), and $\eta^2\le\eta\le1$ (since $0<\eta\le1$ implies
+  $\eta^2\le\eta$, multiplying $\eta\le1$ by $\eta>0$), so $12\eta^2\le12$. Adding,
+  $60\eta+12\eta^2\le60+12=72$, proving the needed inequality and hence
+  \eqref{eq:eta-morrey-factor}.
+
+  Combining \eqref{eq:eta-morrey-factor} with Step~2's Morrey bound,
+  $\Morrey{\mu_{g_j}} \le 4\epsilon^{-1}+2n+10 \le \tfrac{522}{\eta^2}$ for every $j$, which is
+  exactly \eqref{eq:SurgeryEtaMorrey}. This completes the proof.
+
+  \paragraph{Remark: sharpness of $c=1/15$ at $\eta=1$.} Step~3's final reduction showed
+  $\tfrac{14\epsilon}{1-\epsilon}\le\eta$ (with $\epsilon=\eta/15$) is equivalent to $\eta\le1$,
+  so at $\eta=1$ it holds with equality in the underlying reduction and cannot be improved by
+  enlarging $c$. Concretely, taking instead $\epsilon=\eta/14$ (i.e.\ $c=1/14$) at $\eta=1$ gives
+  $\epsilon=1/14$ and
+  \[
+    \frac{14\epsilon}{1-\epsilon} = \frac{14\cdot\frac{1}{14}}{1-\frac{1}{14}} =
+    \frac{1}{13/14} = \frac{14}{13} > 1 = \eta
+    ,
+  \]
+  so the analogue of \eqref{eq:eta-length-factor} fails at $\eta=1$ with that choice, and the
+  corresponding length bound \eqref{eq:SurgeryEtaLength} would be false: $c=1/15$ is the largest
+  constant of this form for which the argument above goes through uniformly on $0<\eta\le1$.
+\end{proof}

@@ -1,0 +1,15 @@
+\begin{definition}[Morrey norm of a measure]
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, and let $\mu$ be a Borel
+  measure on $E$. The Morrey norm of $\mu$ is
+  \[
+    \Morrey{\mu} = \sup_{r>0,\, x \in E} \frac{\mu(B_r(x))}{r}
+    ,
+  \]
+  where $B_r(x)$ is the closed ball of radius $r$ about $x$ (matching the condition
+  $d(x,\gamma(t)) \le r$ used in the paper's ball-growth display, eq.~(1.1)), and the supremum is
+  taken in $[0,\infty]$ -- exactly paper eq.~(2.3) (paper.tex line 474). For a curve $\gamma$, the
+  Morrey norm $\Morrey{\gamma}$ of eq.~(1.1) (paper.tex lines 259--262) is the Morrey norm
+  $\Morrey{\mu_\gamma}$ of its measure $\mu_\gamma$, per paper eq.~(2.3)/line 478; downstream nodes
+  write this out inline as $\Morrey{\mu_\gamma}$ rather than introducing a separate alias
+  definition.
+\end{definition}

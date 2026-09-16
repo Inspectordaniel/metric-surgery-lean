@@ -1,0 +1,100 @@
+\begin{lemma}[The basic cut's discarded arc, at arbitrary cut points, has an exact resolution]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}), $\gamma \in
+  \Theta(E)$ (\noderef{Curve}) a closed curve (\noderef{IsClosedCurve}), and $t,t' \in
+  [0,\length(\gamma)]$ with $t \ne t'$. Write $(\gamma',g) := C(\gamma,t,t')$ (\noderef{BasicCut}).
+  If $(k_A,s_A)$ is \emph{any} geodesic resolution of the circular arc $\gamma|_{[t,t']}$
+  (\noderef{curveArc}), i.e.\ $\mathrm{IsGeodesicResolution}(\gamma|_{[t,t']},k_A,s_A)$, then $g$
+  admits a geodesic resolution with \emph{exactly} $k_A+1$ pieces:
+  \[
+    \mathrm{IsPiecewiseGeodesicWith}(g,\ k_A+1)
+    .
+  \]
+
+  \paragraph{Why this generalizes \noderef{BasicCutDiscardedResolution}.}
+  \noderef{BasicCutDiscardedResolution} proves the same conclusion, but only when $t,t'$ are
+  themselves breakpoints $s(p),s(q)$ of a \emph{fixed}, given resolution $(k,s)$ of $\gamma$, and
+  uses the resolution obtained by restricting $s$ to the excised block of indices. Here $t,t'$ are
+  \emph{arbitrary} points of $[0,\length(\gamma)]$, and $(k_A,s_A)$ is an arbitrary resolution of
+  the arc itself (in practice, the one supplied by \noderef{ArcGeodesicResolution}, which need not
+  come from restricting any single resolution of $\gamma$ to a block of indices, since $t,t'$ need
+  not be $\gamma$-breakpoints at all). This is exactly the form needed by \Cref{cut-type-I}'s Type~I
+  cut points, which -- per \noderef{TypeICutPointExists} -- attain an infimum over arbitrary reals
+  (paper.tex 852-857) rather than over the breakpoints of a fixed resolution.
+
+  \paragraph{Why no case split on the order of $t,t'$ is needed.} Unlike the kept output $\gamma'$
+  (\noderef{BasicCutResolutionGeneral}, whose underlying arc is $\gamma|_{[t',t]}$, with the roles
+  of $t,t'$ swapped relative to $g$), the discarded output $g$ is \emph{always}
+  $\gamma|_{[t,t']} * G_{\gamma(t'),\gamma(t)}$ by \noderef{BasicCut}'s own definition, with no
+  further case split on the order of $t,t'$ beyond the one already internal to
+  \noderef{curveArc} (already absorbed into the hypothesis that $(k_A,s_A)$ resolves
+  $\gamma|_{[t,t']}$, whichever of \noderef{curveArc}'s two branches that is). This matches the
+  paper's own description (paper.tex 866, quoted at \noderef{BasicCutResolutionGeneral}): ``$g$
+  consists of a curve $\gamma|_{[t,t']}$ .., closed by a single geodesic edge''.
+
+  \paragraph{Why the exact (not merely small-edge-bounded) form matters.} As in
+  \noderef{BasicCutDiscardedResolution}, this exact piece count is what feeds
+  \noderef{C1SmallBall} (whose hypothesis is $\mathrm{IsPiecewiseGeodesicWith}(g,k')$ for a
+  \emph{concrete} $k'$) in \Cref{cut-type-I}'s Branch~A (the case $\beta(\gamma)=\delta$), where
+  the arc's own resolution has few enough edges that only a raw piece count -- not a small-edge
+  count -- is needed.
+\end{lemma}
+\begin{proof}
+  By \noderef{BasicCut}'s own definition, $g = \gamma|_{[t,t']} * G_{\gamma(t'),\gamma(t)}$
+  (\noderef{curveConcat}), for \emph{every} $t,t' \in [0,\length(\gamma)]$ (no case split on their
+  order: \noderef{BasicCut} builds $g$ from $\gamma|_{[t,t']}$ via \noderef{curveArc} uniformly,
+  the order-dependence being entirely internal to \noderef{curveArc}).
+
+  By \noderef{GeodesicPairing}'s $\mathrm{isGeodesic}$ field,
+  $\mathrm{IsGeodesicOn}(G_{\gamma(t'),\gamma(t)},0,\length(G_{\gamma(t'),\gamma(t)}))$, so the map
+  $r(0):=0,\,r(1):=\length(G_{\gamma(t'),\gamma(t)})$ witnesses
+  $\mathrm{IsGeodesicResolution}(G_{\gamma(t'),\gamma(t)},1,r)$: monotonicity is
+  $0\le\length(G_{\gamma(t'),\gamma(t)})$ (\noderef{Curve}'s $\mathrm{len\_nonneg}$ field), $r(0)=0$,
+  $r(1)=\length(G_{\gamma(t'),\gamma(t)})$, and the one edge condition is exactly the
+  $\mathrm{isGeodesic}$ field cited above.
+
+  By \noderef{BasicCut}'s own well-definedness argument (the displayed endpoint fact
+  $\gamma|_{[a,b]}(\length(\cdot))=\gamma(b)$ for every $a,b\in[0,\length(\gamma)]$, applied at
+  $(a,b)=(t,t')$), $\gamma|_{[t,t']}$'s value at its own length $\length(\gamma|_{[t,t']})$ is
+  $\gamma(t')$; and $G_{\gamma(t'),\gamma(t)}$'s value at $0$ is $\gamma(t')$
+  (\noderef{GeodesicPairing}'s $\mathrm{start\_eq}$ field) -- the two endpoints match, exactly the
+  identification \noderef{BasicCut} itself already establishes for $g = \gamma|_{[t,t']} *
+  G_{\gamma(t'),\gamma(t)}$ to be well-defined.
+
+  Define $r'(i) := s_A(i)$ for $0\le i\le k_A$, and $r'(i) := \length(\gamma|_{[t,t']})+r(i-k_A)$
+  for $k_A\le i\le k_A+1$ (the two formulas agree at $i=k_A$: $s_A(k_A)=\length(\gamma|_{[t,t']})$,
+  by $\mathrm{IsGeodesicResolution}(\gamma|_{[t,t']},k_A,s_A)$'s own defining field, and $r(0)=0$).
+  We check $r'$ witnesses $\mathrm{IsGeodesicResolution}(g,k_A+1,r')$.
+
+  \emph{Monotonicity.} On $\set{0,\dots,k_A}$, $r'$ agrees with $s_A$, monotone by hypothesis. On
+  $\set{k_A,\dots,k_A+1}$, $r'(k_A)=\length(\gamma|_{[t,t']})\le\length(\gamma|_{[t,t']})+r(1)=r'(k_A+1)$
+  since $r(1)=\length(G_{\gamma(t'),\gamma(t)})\ge0=r(0)$. The two pieces agree at the shared index
+  $k_A$, so $r'$ is monotone on all of $\set{0,\dots,k_A+1}$.
+
+  \emph{Endpoints.} $r'(0)=s_A(0)=0$. $r'(k_A+1) = \length(\gamma|_{[t,t']})+r(1) =
+  \length(\gamma|_{[t,t']})+\length(G_{\gamma(t'),\gamma(t)}) = \length(g)$
+  (\noderef{curveConcat}'s length field).
+
+  \emph{Edges $i<k_A$.} On $[s_A(i),s_A(i+1)] \subseteq [0,\length(\gamma|_{[t,t']})]$, $g$ agrees
+  with $\gamma|_{[t,t']}$ (\noderef{curveConcat}'s defining formula, valid since this range lies at
+  or before $\length(\gamma|_{[t,t']})$), so $\mathrm{IsGeodesicOn}(g,s_A(i),s_A(i+1)) =
+  \mathrm{IsGeodesicOn}(\gamma|_{[t,t']},s_A(i),s_A(i+1))$ literally, a consequence of
+  $\mathrm{IsGeodesicResolution}(\gamma|_{[t,t']},k_A,s_A)$ (its own $i<k_A$ clause).
+
+  \emph{Edge $i=k_A$.} On $[r'(k_A),r'(k_A+1)] = [\length(\gamma|_{[t,t']}),\length(g)]$, $g(u) =
+  G_{\gamma(t'),\gamma(t)}(u-\length(\gamma|_{[t,t']}))$ (\noderef{curveConcat}'s defining formula,
+  valid since this range lies at or past $\length(\gamma|_{[t,t']})$). So for $u,v$ in this range,
+  writing $u'':=u-\length(\gamma|_{[t,t']}),\,v'':=v-\length(\gamma|_{[t,t']}) \in
+  [0,\length(G_{\gamma(t'),\gamma(t)})]$,
+  \[
+    \mathrm{dist}(g(u),g(v)) = \mathrm{dist}(G_{\gamma(t'),\gamma(t)}(u''),G_{\gamma(t'),\gamma(t)}(v''))
+    = |u''-v''| = |u-v|
+    ,
+  \]
+  the middle equality by $\mathrm{IsGeodesicOn}(G_{\gamma(t'),\gamma(t)},0,
+  \length(G_{\gamma(t'),\gamma(t)}))$ (cited above) applied to $u'',v''$. This is exactly
+  $\mathrm{IsGeodesicOn}(g,r'(k_A),r'(k_A+1))$.
+
+  So $r'$ witnesses $\mathrm{IsGeodesicResolution}(g,k_A+1,r')$, i.e.\ (exhibiting a resolution
+  witness is exactly what $\mathrm{IsPiecewiseGeodesicWith}$, \noderef{IsPiecewiseGeodesicWith},
+  requires) $\mathrm{IsPiecewiseGeodesicWith}(g,k_A+1)$, as claimed.
+\end{proof}

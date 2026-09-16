@@ -1,0 +1,86 @@
+\begin{lemma}[Additivity of $[[\gamma]]$ in the $\pi$ slot]\label{CurrentFormAddPi}
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), and $\omega_1, \omega_2,
+  \omega_{12} \in \mathcal{D}^1(E)$ (\noderef{Form1}) with $\omega_1.f = \omega_{12}.f$,
+  $\omega_2.f = \omega_{12}.f$, and $\omega_{12}.\pi(x) = \omega_1.\pi(x) + \omega_2.\pi(x)$ for
+  every $x \in E$. Then
+  \[
+    [[\gamma]](\omega_{12}) = [[\gamma]](\omega_1) + [[\gamma]](\omega_2)
+    .
+  \]
+
+  \paragraph{Provenance.} As with \noderef{CurrentFormAddF}, this is the other half of the
+  ``multilinearity'' invoked at paper.tex 1398 in the estimate of paper.tex 1399--1407, applied
+  with $\omega_{12} := (f_k,\pi_j)$, $\omega_1 := (f_k,\pi_j-\pi)$, $\omega_2 := (f_k,\pi)$ (so that
+  $\omega_{12}.\pi = \omega_1.\pi + \omega_2.\pi$ pointwise and all three share the $f$-component
+  $f_k$). No tablet node states this fact; \noderef{PiBoundsPi} bounds
+  $\bigl|[[\gamma]](f,\pi_j-\pi)\bigr|$ directly but does not connect that quantity to a
+  \emph{difference of two currents}, which is what this lemma supplies. Unlike the $f$-slot case,
+  this direction has genuine content: the derivative of a pointwise sum of functions is the sum of
+  their derivatives only at points where both functions are differentiable, so the argument goes
+  through the almost-everywhere differentiability of the (absolutely continuous, because
+  Lipschitz) reparametrized $\pi$-components $\omega_1.\pi\circ\gamma$ and $\omega_2.\pi\circ\gamma$
+  along $\gamma$, rather than through a bare pointwise identity of integrands as in
+  \noderef{CurrentFormAddF}.
+\end{lemma}
+\begin{proof}
+  Write $G(t) := \omega_1.f(\gamma(t)) = \omega_2.f(\gamma(t)) = \omega_{12}.f(\gamma(t))$ for $t
+  \in \mathbb{R}$ (using $\omega_1.f = \omega_2.f = \omega_{12}.f$). By \noderef{CurveLipschitz},
+  $\gamma$ is globally $1$-Lipschitz. For $i \in \set{1,2}$, $\omega_i.\pi$ is
+  $\mathrm{Lip}(\omega_i.\pi)$-Lipschitz (\noderef{Form1}), so $\omega_i.\pi\circ\gamma$ is
+  globally $\mathrm{Lip}(\omega_i.\pi)$-Lipschitz, hence Lipschitz (so absolutely continuous,
+  \texttt{LipschitzOnWith.absolutelyContinuousOnInterval}) on $[0,\length(\gamma)]$; consequently
+  it is almost-everywhere differentiable on $[0,\length(\gamma)]$
+  (\texttt{AbsolutelyContinuousOnInterval.ae\_differentiableAt}, \texttt{Preamble}) and its
+  derivative is interval-integrable on every $a..b$
+  (\texttt{AbsolutelyContinuousOnInterval.intervalIntegrable\_deriv}). Also $G = \omega_1.f\circ
+  \gamma$ is continuous (a Lipschitz function composed with $\gamma$, \noderef{Form1}), hence
+  continuous and bounded on every compact interval. The product of an interval-integrable function
+  with a continuous function is interval-integrable, so
+  \[
+    t \mapsto G(t)\cdot\mathrm{deriv}(\omega_1.\pi\circ\gamma)(t)
+    \quad\text{and}\quad
+    t \mapsto G(t)\cdot\mathrm{deriv}(\omega_2.\pi\circ\gamma)(t)
+  \]
+  are interval-integrable on every $a..b$, in particular on $0..\length(\gamma)$; by the standard
+  additivity of the interval integral over a sum of integrands
+  (\texttt{intervalIntegral.integral\_add}, \texttt{Preamble}),
+  \[
+    [[\gamma]](\omega_1) + [[\gamma]](\omega_2)
+    = \int_0^{\length(\gamma)} G(t)\cdot\bigl(\mathrm{deriv}(\omega_1.\pi\circ\gamma)(t) +
+        \mathrm{deriv}(\omega_2.\pi\circ\gamma)(t)\bigr)\,dt
+    . \tag{$\ast$}
+  \]
+  Let $N \subseteq [0,\length(\gamma)]$ be the (measure-zero) exceptional set off which both
+  $\omega_1.\pi\circ\gamma$ and $\omega_2.\pi\circ\gamma$ are differentiable at every point of
+  $[0,\length(\gamma)]$ (the union of the two individual almost-everywhere exceptional sets, each
+  of measure zero, established above). For $t \in [0,\length(\gamma)] \setminus N$, both
+  $\omega_1.\pi\circ\gamma$ and $\omega_2.\pi\circ\gamma$ are differentiable at $t$, so the sum rule
+  for derivatives gives
+  \[
+    \mathrm{deriv}\bigl((\omega_1.\pi\circ\gamma) + (\omega_2.\pi\circ\gamma)\bigr)(t)
+    = \mathrm{deriv}(\omega_1.\pi\circ\gamma)(t) + \mathrm{deriv}(\omega_2.\pi\circ\gamma)(t)
+    .
+  \]
+  Since $\omega_{12}.\pi(x) = \omega_1.\pi(x) + \omega_2.\pi(x)$ for every $x$ (the hypothesis), the
+  function $\omega_{12}.\pi\circ\gamma$ equals $(\omega_1.\pi\circ\gamma) +
+  (\omega_2.\pi\circ\gamma)$ everywhere on $\mathbb{R}$, so
+  $\mathrm{deriv}(\omega_{12}.\pi\circ\gamma)(t) = \mathrm{deriv}(\omega_1.\pi\circ\gamma)(t) +
+  \mathrm{deriv}(\omega_2.\pi\circ\gamma)(t)$ for every $t \in [0,\length(\gamma)]\setminus N$, i.e.\
+  almost everywhere on $[0,\length(\gamma)]$. Substituting this a.e.\ identity into the integrand of
+  the right-hand side of $(\ast)$ and using that an interval integral is unchanged by modifying the
+  integrand on a null set (\texttt{intervalIntegral.integral\_congr\_ae}, \texttt{Preamble}) --
+  legitimate because both sides of the a.e.\ identity are integrands of interval-integrable
+  functions as shown above -- gives
+  \[
+    [[\gamma]](\omega_1) + [[\gamma]](\omega_2)
+    = \int_0^{\length(\gamma)} G(t)\cdot\mathrm{deriv}(\omega_{12}.\pi\circ\gamma)(t)\,dt
+    .
+  \]
+  Finally $G(t) = \omega_{12}.f(\gamma(t))$ for every $t$ (using $\omega_1.f = \omega_{12}.f$), so
+  the right-hand side is exactly $[[\gamma]](\omega_{12})$ (\noderef{curveCurrent}), giving
+  \[
+    [[\gamma]](\omega_1) + [[\gamma]](\omega_2) = [[\gamma]](\omega_{12})
+    ,
+  \]
+  which is the claimed identity.
+\end{proof}

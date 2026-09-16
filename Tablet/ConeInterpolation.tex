@@ -1,0 +1,85 @@
+\begin{lemma}[Truncated cone functions: bounds, and finite Lipschitz interpolation]
+  Let $E$ be a metric space, let $l \in \mathbb{N}$, and let $e_0,\dots,e_l$ be points of $E$ (not
+  necessarily distinct). Let $c_0,\dots,c_l$ be real numbers and let $M, C$ be real numbers with
+  $M \ge 0$ and $C \ge 0$. Let $g \colon E \to \mathbb{R}$ be the function given by the explicit
+  formula
+  \[
+    g(x) = \tau_M\Bigl(\max_{0 \le j \le l}\bigl(c_j - C\,d(x,e_j)\bigr)\Bigr)
+    ,
+    \qquad
+    \tau_M(t) := \max\set{-M, \min\set{M, t}}
+    .
+  \]
+  Then
+  \begin{enumerate}
+  \item $g$ is Lipschitz with constant $C$;
+  \item $\abs{g(x)} \le M$ for every $x \in E$; and
+  \item if in addition the coefficients satisfy
+    \begin{enumerate}
+    \item (compatibility) $\abs{c_j - c_{j'}} \le C\,d(e_j,e_{j'})$ for all $j,j' \in
+      \set{0,\dots,l}$, and
+    \item (boundedness) $\abs{c_j} \le M$ for all $j \in \set{0,\dots,l}$,
+    \end{enumerate}
+    then $g$ interpolates them: $g(e_j) = c_j$ for every $j \in \set{0,\dots,l}$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  Write $F(x) := \max_{0 \le j \le l}(c_j - C\,d(x,e_j))$, a maximum over the nonempty finite index
+  set $\set{0,\dots,l}$, so that $g(x) = \tau_M(F(x))$. We record the defining properties of a
+  finite maximum: for every $x \in E$ and every $j$,
+  \begin{equation}\label{eq:coneterm}
+    c_j - C\,d(x,e_j) \le F(x)
+    ,
+  \end{equation}
+  and $F(x) \le b$ whenever $c_j - C\,d(x,e_j) \le b$ holds for all $j$.
+
+  \emph{Step 1: the one-sided bound $F(x) \le F(y) + C\,d(x,y)$ for all $x,y \in E$.} By the second
+  property of the maximum just recorded, it suffices to show, for each fixed $j \in
+  \set{0,\dots,l}$, that $c_j - C\,d(x,e_j) \le F(y) + C\,d(x,y)$. The triangle inequality gives
+  $d(y,e_j) \le d(y,x) + d(x,e_j) = d(x,e_j) + d(x,y)$, and multiplying by $C \ge 0$ preserves this
+  inequality:
+  \[
+    C\,d(y,e_j) \le C\,d(x,e_j) + C\,d(x,y)
+    .
+  \]
+  Combining with \eqref{eq:coneterm} applied at $y$, namely $c_j - C\,d(y,e_j) \le F(y)$, we get
+  \[
+    c_j - C\,d(x,e_j) - C\,d(x,y) \le c_j - C\,d(y,e_j) \le F(y)
+    ,
+  \]
+  which rearranges to the desired inequality.
+
+  \emph{Step 2: $F$ is $C$-Lipschitz.} Let $x,y \in E$. Step 1 gives $F(x) - F(y) \le C\,d(x,y)$,
+  and Step 1 with the roles of $x$ and $y$ exchanged gives $F(y) - F(x) \le C\,d(y,x) = C\,d(x,y)$.
+  Hence $\abs{F(x)-F(y)} \le C\,d(x,y)$, i.e.\ $F$ is $C$-Lipschitz.
+
+  \emph{Step 3: Conclusion (i).} The map $t \mapsto \min\set{M,t}$ is $1$-Lipschitz on $\mathbb{R}$,
+  and so is $t \mapsto \max\set{-M,t}$; hence $\tau_M$, their composite, is $1$-Lipschitz, and
+  $g = \tau_M \circ F$ is Lipschitz with constant $1 \cdot C = C$ by Step 2.
+
+  \emph{Step 4: Conclusion (ii).} Fix $x \in E$. By definition $g(x) = \max\set{-M,\min\set{M,F(x)}}
+  \ge -M$. For the upper bound, $\max\set{-M, \min\set{M,F(x)}} \le M$ because both arguments of the
+  outer maximum are at most $M$: the first is $-M \le M$ (as $M \ge 0$), and the second satisfies
+  $\min\set{M,F(x)} \le M$. Hence $-M \le g(x) \le M$, i.e.\ $\abs{g(x)} \le M$.
+
+  \emph{Step 5: $F(e_{j'}) = c_{j'}$ for each $j' \in \set{0,\dots,l}$, assuming (a).} For the upper
+  bound $F(e_{j'}) \le c_{j'}$, fix $j \in \set{0,\dots,l}$; by hypothesis (a) and $d(e_j,e_{j'}) =
+  d(e_{j'},e_j)$,
+  \[
+    c_j - c_{j'} \le \abs{c_j - c_{j'}} \le C\,d(e_j,e_{j'}) = C\,d(e_{j'},e_j)
+    ,
+  \]
+  i.e.\ $c_j - C\,d(e_{j'},e_j) \le c_{j'}$. As this holds for every $j$, the second property of the
+  maximum gives $F(e_{j'}) \le c_{j'}$. For the lower bound, \eqref{eq:coneterm} applied at $x =
+  e_{j'}$ and the index $j = j'$ gives $c_{j'} - C\,d(e_{j'},e_{j'}) \le F(e_{j'})$, and
+  $d(e_{j'},e_{j'}) = 0$, so $c_{j'} \le F(e_{j'})$. The two bounds give $F(e_{j'}) = c_{j'}$.
+
+  \emph{Step 6: Conclusion (iii).} Assume (a) and (b), and fix $j' \in \set{0,\dots,l}$. By (b),
+  $\abs{c_{j'}} \le M$, i.e.\ $-M \le c_{j'} \le M$. Hence $\min\set{M,c_{j'}} = c_{j'}$ and then
+  $\max\set{-M,c_{j'}} = c_{j'}$, so $\tau_M(c_{j'}) = c_{j'}$. Combining with Step 5,
+  \[
+    g(e_{j'}) = \tau_M(F(e_{j'})) = \tau_M(c_{j'}) = c_{j'}
+    ,
+  \]
+  as claimed.
+\end{proof}

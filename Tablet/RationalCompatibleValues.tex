@@ -1,0 +1,101 @@
+\begin{lemma}[Compatible rational approximation of a Lipschitz function on a finite set]
+  Let $E$ be a metric space, let $\pi \colon E \to \mathbb{R}$ be Lipschitz with constant $K$, and
+  suppose $K > 0$. Let $k \in \mathbb{N}$ and let $e_0,\dots,e_k$ be points of $E$ (not necessarily
+  distinct). Let $\epsilon, r, \delta$ be real numbers with
+  \[
+    0 < \epsilon < 1
+    ,\qquad
+    0 < r
+    ,\qquad
+    0 < \delta \le \tfrac{1}{4}\epsilon r K
+    ,
+  \]
+  and suppose the points are $r$-separated in the sense that $r \le d(e_j,e_{j'})$ whenever $e_j \ne
+  e_{j'}$ (for $j,j' \in \set{0,\dots,k}$). Then there exist rational numbers $c_0,\dots,c_k$ and a
+  rational number $C$ such that
+  \begin{enumerate}
+  \item $(1 - \tfrac12\epsilon) K \le C \le K$;
+  \item $\abs{c_j - (1-\epsilon)\pi(e_j)} \le \delta$ for every $j \in \set{0,\dots,k}$; and
+  \item (compatibility) $\abs{c_j - c_{j'}} \le C\,d(e_j,e_{j'})$ for all $j,j' \in
+    \set{0,\dots,k}$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \emph{Step 1: a rational grid of mesh at most $\delta$.} Since $\delta > 0$, by the Archimedean
+  property of $\mathbb{R}$ there is a natural number $N$ with $1/(N+1) < \delta$; put $n := N+1$, so
+  $n \ge 1$ and $1/n \le \delta$. Define the rounding map
+  \[
+    h(t) := \frac{\lfloor t n \rfloor}{n} \in \mathbb{Q}
+    ,\qquad t \in \mathbb{R}
+    .
+  \]
+  For every real $t$ we have $\lfloor tn \rfloor \le tn < \lfloor tn \rfloor + 1$, hence
+  $\abs{\lfloor tn\rfloor - tn} \le 1$, and dividing by $n > 0$,
+  \begin{equation}\label{eq:mesh}
+    \abs{h(t) - t} = \frac{\abs{\lfloor tn\rfloor - tn}}{n} \le \frac1n \le \delta
+    .
+  \end{equation}
+  Note that $h$ is a function of the real number $t$ alone.
+
+  \emph{Step 2: choice of $C$.} Since $\epsilon > 0$ and $K > 0$ we have $\tfrac12 \epsilon K > 0$,
+  so $(1-\tfrac12\epsilon)K = K - \tfrac12\epsilon K < K$. By density of $\mathbb{Q}$ in
+  $\mathbb{R}$ choose a rational $C$ with $(1-\tfrac12\epsilon)K < C < K$; in particular conclusion
+  (i) holds. Moreover $\epsilon < 1$ gives $1 - \tfrac12\epsilon > \tfrac12 > 0$, so
+  $(1-\tfrac12\epsilon)K > 0$ and hence $C > 0$; in particular $C \ge 0$.
+
+  \emph{Step 3: choice of the $c_j$, and conclusion (ii).} Set
+  \[
+    c_j := h\bigl((1-\epsilon)\pi(e_j)\bigr)
+    ,\qquad j \in \set{0,\dots,k}
+    .
+  \]
+  Conclusion (ii) is exactly \eqref{eq:mesh} applied at $t = (1-\epsilon)\pi(e_j)$. Observe that
+  $c_j$ depends on the point $e_j$ only through the real number $\pi(e_j)$; consequently, if $e_j =
+  e_{j'}$ then $c_j = c_{j'}$. (This is what makes a possibly non-injective list $e_0,\dots,e_k$
+  harmless.)
+
+  \emph{Step 4: conclusion (iii), the compatibility estimate.} Fix $j,j' \in \set{0,\dots,k}$.
+
+  \emph{Case $e_j = e_{j'}$.} Then $c_j = c_{j'}$ by Step 3, so the left-hand side is $0$, while the
+  right-hand side is $C\,d(e_j,e_{j'}) \ge 0$ since $C \ge 0$ (Step 2) and $d \ge 0$. The inequality
+  holds.
+
+  \emph{Case $e_j \ne e_{j'}$.} Write $d := d(e_j,e_{j'})$. By the separation hypothesis, $d \ge r >
+  0$. Three applications of the triangle inequality for the absolute value, splitting at the two
+  damped values $(1-\epsilon)\pi(e_j)$ and $(1-\epsilon)\pi(e_{j'})$, give
+  \[
+    \abs{c_j - c_{j'}}
+      \le \abs{c_j - (1-\epsilon)\pi(e_j)}
+        + \abs{(1-\epsilon)\pi(e_j) - (1-\epsilon)\pi(e_{j'})}
+        + \abs{(1-\epsilon)\pi(e_{j'}) - c_{j'}}
+    .
+  \]
+  The first and third terms are each at most $\delta$ by conclusion (ii) (using
+  $\abs{u - v} = \abs{v - u}$ for the third). For the middle term, $1 - \epsilon \ge 0$ gives
+  \[
+    \abs{(1-\epsilon)\pi(e_j) - (1-\epsilon)\pi(e_{j'})}
+      = (1-\epsilon)\abs{\pi(e_j)-\pi(e_{j'})}
+      \le (1-\epsilon) K d
+    ,
+  \]
+  the last step because $\pi$ is $K$-Lipschitz. Hence
+  \[
+    \abs{c_j - c_{j'}} \le 2\delta + (1-\epsilon)Kd
+    .
+  \]
+  Now $\delta \le \tfrac14 \epsilon r K$ and $r \le d$, with $\epsilon > 0$ and $K > 0$, give
+  \[
+    2\delta \le \tfrac12 \epsilon r K \le \tfrac12 \epsilon d K
+    ,
+  \]
+  so that
+  \[
+    \abs{c_j - c_{j'}}
+      \le \tfrac12\epsilon K d + (1-\epsilon)Kd
+      = \bigl(1 - \tfrac12\epsilon\bigr) K d
+      \le C d
+    ,
+  \]
+  the final inequality by $(1-\tfrac12\epsilon)K \le C$ from Step 2 together with $d > 0$. This is
+  conclusion (iii).
+\end{proof}

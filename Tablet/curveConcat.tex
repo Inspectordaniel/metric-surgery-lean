@@ -1,0 +1,45 @@
+\begin{definition}[Concatenation $\gamma_1 * \gamma_2$]
+  Let $E$ be a metric space and $\gamma_1, \gamma_2 \in \Theta(E)$ (\noderef{Curve}) with matching
+  endpoints, $\gamma_1(\length(\gamma_1)) = \gamma_2(0)$. Define the concatenation
+  $\gamma_1 * \gamma_2 \in \Theta(E)$, written $\mathrm{curveConcat}(\gamma_1,\gamma_2)$, by
+  \[
+    \length(\gamma_1 * \gamma_2) = \length(\gamma_1) + \length(\gamma_2)
+    , \qquad
+    (\gamma_1 * \gamma_2)(t) =
+    \begin{cases}
+      \gamma_1(t) & 0 \le t \le \length(\gamma_1) , \\
+      \gamma_2(t - \length(\gamma_1)) & \length(\gamma_1) \le t \le \length(\gamma_1)+\length(\gamma_2) ,
+    \end{cases}
+  \]
+  extended outside $[0,\length(\gamma_1)+\length(\gamma_2)]$ by the usual clamping convention of
+  $\Theta(E)$ (\noderef{Curve}). This is exactly the paper's concatenation convention for $k=2$
+  curves (paper.tex lines 461-464): with $s_0=0$, $s_1=\length(\gamma_1)$,
+  $s_2=\length(\gamma_1)+\length(\gamma_2)$, the paper sets $\gamma(t) = \gamma_i(t-s_{i-1})$ for
+  $t \in [s_{i-1},s_i]$, which is exactly the formula above, and the endpoint-matching hypothesis
+  is precisely the paper's standing requirement (paper.tex line 464) needed for $\gamma$ to be
+  well-defined at the shared point $t=\length(\gamma_1)$: both branches of the definition agree
+  there because $\gamma_1(\length(\gamma_1)) = \gamma_2(0)$.
+
+  \paragraph{Well-definedness (clamping is preserved).} As with \noderef{curveRestrict}, the two
+  displayed branches only pin down $(\gamma_1 * \gamma_2)(t)$ for
+  $t \in [0,\length(\gamma_1)+\length(\gamma_2)]$; we take the actual underlying map to be
+  $t \mapsto \gamma_1(t)$ if $t \le \length(\gamma_1)$ and $t \mapsto \gamma_2(t-\length(\gamma_1))$
+  otherwise, which agrees with the displayed formula on
+  $[0,\length(\gamma_1)+\length(\gamma_2)]$ (using $\gamma_1,\gamma_2$'s own clamping there) and
+  satisfies the clamping condition of $\Theta(E)$ on all of $\mathbb{R}$: for $t < 0$ it reduces,
+  via $\gamma_1$'s clamping, to $\gamma_1(0) = (\gamma_1*\gamma_2)(0)$, and for
+  $t > \length(\gamma_1)+\length(\gamma_2)$ it reduces, via $\gamma_2$'s clamping (using the
+  endpoint hypothesis when $\length(\gamma_2)=0$), to $\gamma_2(\length(\gamma_2)) =
+  (\gamma_1*\gamma_2)(\length(\gamma_1)+\length(\gamma_2))$.
+
+  \paragraph{Unit speed.} On $[0,\length(\gamma_1)]$, $\gamma_1 * \gamma_2$ agrees with $\gamma_1$,
+  which is unit-speed there by hypothesis (\noderef{Curve}). On
+  $[\length(\gamma_1),\length(\gamma_1)+\length(\gamma_2)]$, $\gamma_1*\gamma_2$ agrees with
+  $t \mapsto \gamma_2(t-\length(\gamma_1))$ (using the endpoint hypothesis to match values at
+  $t=\length(\gamma_1)$), which is unit-speed there because translation by the constant
+  $\length(\gamma_1)$ is an order isomorphism of $\mathbb{R}$ and hence preserves total variation
+  (the same translation-invariance argument as in \noderef{curveRestrict}), transporting the
+  unit-speed property of $\gamma_2$ on $[0,\length(\gamma_2)]$. Gluing these two unit-speed
+  pieces at the shared point $\length(\gamma_1)$ gives unit speed on the whole interval
+  $[0,\length(\gamma_1)+\length(\gamma_2)]$.
+\end{definition}

@@ -1,0 +1,72 @@
+\begin{definition}[Circular arc $\gamma|_{[t,t']}$, uniform in the order of $t,t'$]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}) a closed curve
+  (\noderef{IsClosedCurve}), and $t,t' \in [0,\length(\gamma)]$. Define the circular arc
+  $\gamma|_{[t,t']} \in \Theta(E)$, written $\mathrm{curveArc}(\gamma,t,t')$, by
+  \[
+    \gamma|_{[t,t']} :=
+    \begin{cases}
+      \mathrm{curveRestrict}(\gamma,t,t') & t \le t' , \\
+      \mathrm{curveWrapRestrict}(\gamma,t,t') & t' < t ,
+    \end{cases}
+  \]
+  i.e.\ the ordinary restriction (\noderef{curveRestrict}) when $t \le t'$, and the wrap-around
+  restriction (\noderef{curveWrapRestrict}) when $t' < t$.
+
+  \paragraph{This is a naming, not a new construction.} This is exactly paper.tex lines 556-568:
+  ``the definition of $\gamma|_{[t,t']}$ ... for the case $t<t'$ ... can be naturally extended to
+  the case $t'<t$ while still respecting the orientation of $\gamma$ ... for $\gamma \in
+  \Theta_c(E)$ and $0 \le t' < t \le \length(\gamma)$, we interpret $\gamma|_{[t,t']}$ as the
+  concatenation of $\gamma|_{[t,\length(\gamma)]}$ and $\gamma|_{[0,t']}$'', together with line 569:
+  ``we interpret $[0,\length(\gamma)]$ as the circle of length $\length(\gamma)$ traversed
+  counter-clockwise with the endpoints $0$ and $\length(\gamma)$ identified, and we interpret
+  $[t,t']$ as the counter-clockwise interval from $t$ to $t'$, either $[t,t']$ or
+  $[t',\length(\gamma)]\cup[0,t]$ depending on whether $t\le t'$ or $t>t'$.'' The two cases of the
+  definition above are literally the paper's two cases (ordinary restriction, resp.\ wrap-around
+  concatenation), and $\mathrm{curveArc}$ introduces no content beyond naming this case split as a
+  single object of $\Theta(E)$ uniform in the order of $t,t'$. It is exactly the object
+  \noderef{BasicCut} already case-splits on internally: \noderef{BasicCut}'s definition of
+  $C(\gamma,t,t')=(\gamma',g)$ builds $g$ as the concatenation of
+  $\mathrm{curveRestrict}(\gamma,t,t')$ (when $t\le t'$) or $\mathrm{curveWrapRestrict}(\gamma,t,t')$
+  (when $t'<t$) with a closing geodesic edge -- precisely $\gamma|_{[t,t']} *
+  G_{\gamma(t'),\gamma(t)}$ with $\gamma|_{[t,t']}$ read as $\mathrm{curveArc}(\gamma,t,t')$.
+
+  \paragraph{Both length formulas.} By \noderef{curveRestrict}'s length formula,
+  $\length(\mathrm{curveRestrict}(\gamma,t,t')) = t'-t$ when $t \le t'$. By
+  \noderef{curveWrapRestrict}'s definition as the concatenation of
+  $\mathrm{curveRestrict}(\gamma,t,\length(\gamma))$ (length $\length(\gamma)-t$) and
+  $\mathrm{curveRestrict}(\gamma,0,t')$ (length $t'$), and \noderef{curveConcat}'s length-additivity,
+  $\length(\mathrm{curveWrapRestrict}(\gamma,t,t')) = (\length(\gamma)-t)+t'$ when $t'<t$. Hence
+  \[
+    \length(\gamma|_{[t,t']}) =
+    \begin{cases}
+      t'-t & t \le t' , \\
+      (\length(\gamma)-t)+t' & t' < t .
+    \end{cases}
+  \]
+  Both formulas are consumed downstream: \Cref{typeI-cut-point-exists}'s attainment step needs
+  $\beta = \length(\gamma|_{[t,t']})$ to be a single well-defined real number regardless of which
+  case applies, and \Cref{cut-type-I}'s $\beta = \length(g)$-type bookkeeping needs the wrap-case
+  value $(\length(\gamma)-t)+t'$ explicitly (this is the value the Morrey/length bounds of
+  \noderef{BasicCutLength} are already stated with, via its own ``if $t\le t'$'' case split).
+
+  \paragraph{Behavior at and near the diagonal $t=t'$.} The two formulas do \emph{not} literally
+  agree as $t'\to t$ from either side unless $\length(\gamma)=0$: from the $t\le t'$ side,
+  $\length(\gamma|_{[t,t']}) = t'-t \to 0$, while from the $t'<t$ side (letting $t'\to t^-$ with $t$
+  fixed), $\length(\gamma|_{[t,t']}) = (\length(\gamma)-t)+t' \to \length(\gamma)$. This is not an
+  inconsistency in the definition: it reflects that ``the forward arc from $t$ to a point just
+  short of $t$'' is geometrically almost the whole circle, while ``the forward arc from $t$ to
+  itself'' is the degenerate point curve, matching paper line 577's identity
+  $\length(\gamma|_{[t,t']})+\length(\gamma|_{[t',t]})=\length(\gamma)$ specialized to $t'\to t$ (one
+  side $\to \length(\gamma)$, the other $\to 0$, and indeed at $t'=t$ exactly, the definition above
+  selects the $t\le t'$ branch, giving the value $0$ consistently with $\length(\gamma|_{[t,t]})=0$).
+  Consequently $\length(\gamma|_{[\cdot,\cdot]})$, viewed as a function of $(t,t') \in
+  [0,\length(\gamma)]^2$, is continuous at every point with $t\ne t'$ (a small enough neighborhood of
+  such a point lies entirely within one of the two closed order-regions $\{t\le t'\}$, $\{t'\le t\}$,
+  on each of which the corresponding formula is a continuous function of $(t,t')$) but may fail to be continuous exactly on the
+  diagonal $t=t'$ when $\length(\gamma)>0$. This is exactly the region \Cref{typeI-cut-point-exists}'s
+  compactness argument needs to avoid, and it does: by paper line 577, $d_\gamma(t,t)=0$ for every
+  $t$ (one of the two arcs from $t$ to itself is degenerate of length $0$), so the admissible set
+  $\{(s,s') : \delta \le d_\gamma(s,s')\}$ with $\delta>0$ is disjoint from the diagonal, and
+  continuity of $\length(\gamma|_{[\cdot,\cdot]})$ on that admissible set is exactly the continuity
+  established above.
+\end{definition}

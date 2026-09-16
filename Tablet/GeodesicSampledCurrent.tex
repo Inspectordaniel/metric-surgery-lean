@@ -1,0 +1,173 @@
+\begin{lemma}[Quantitative convergence of the piecewise-geodesic sampling]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}),
+  $\gamma \in \Theta(E)$ (\noderef{Curve}), $\delta \in \mathbb{R}$ with $0 < \delta <
+  \length(\gamma)$, and $\omega = (f,\pi) \in \mathcal{D}^1(E)$ (\noderef{Form1}). Let
+  $\gamma^\delta$ be the piecewise-geodesic sampling of $\gamma$ at scale $\delta$
+  (\noderef{curveSampling}). Then
+  \[
+    \length(\gamma^\delta) \le \length(\gamma)
+    \qquad\text{and}\qquad
+    \bigl| [[\gamma^\delta]](\omega) - [[\gamma]](\omega) \bigr|
+      \le \mathrm{Lip}(f) \cdot \mathrm{Lip}(\pi) \cdot \delta \cdot \length(\gamma)
+    ,
+  \]
+  where $[[\cdot]](\omega)$ is the current of \noderef{curveCurrent} and $\mathrm{Lip}(f),
+  \mathrm{Lip}(\pi)$ are the Lipschitz constants carried by $\omega$ (\noderef{Form1}).
+
+  \paragraph{Relation to paper Lemma 4.4 (repair, not a deviation).} Paper Lemma~4.4 (paper.tex
+  line 1239) asserts only $\length(\gamma^\delta) \le \length(\gamma)$ and
+  $\lim_{\delta \to 0} [[\gamma^\delta]](\omega) = [[\gamma]](\omega)$, proved by bounding
+  $d_\Theta(\gamma^\delta,\gamma) \le 2\delta$ and citing \cite{PS_2012}*{Lemma~4.1}. This tablet
+  does not construct the metric $d_\Theta$ on $\Theta(E)$ (process memory pm-0005: $d_\Theta$ and
+  \cite{PS_2012}*{Lemma~4.1} are refused routes), so that argument cannot be formalized as written.
+  The statement above is strictly stronger than paper Lemma~4.4: it gives an explicit rate
+  $\mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\delta\cdot\length(\gamma)$ instead of a bare limit, and the
+  bare limit statement follows from it immediately (for any $\varepsilon>0$, taking
+  $\delta < \varepsilon / (\mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\length(\gamma)+1)$ forces
+  $|[[\gamma^\delta]](\omega)-[[\gamma]](\omega)|<\varepsilon$), so this lemma returns to paper
+  Lemma~4.4's conclusion without needing $d_\Theta$ or \cite{PS_2012}*{Lemma~4.1}. It requires no
+  \texttt{DEVIATIONS.md} entry: nothing about the paper's stated conclusion is weakened, only
+  strengthened, and the proof route it replaces was already unformalizable under standing process
+  memory.
+
+  \paragraph{Why the rate matters downstream.} In the eventual use of $\gamma^\delta_{i,l}$ (paper.tex
+  1330), $\length(\gamma_{i,l}) = l$ (paper eq.~\eqref{stronglawlength}), so this lemma bounds the
+  error in $\frac{1}{n l}\sum_{i \le n} [[\gamma^{\delta}_{i,l}]](\omega)$ by
+  $\mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\delta$, \emph{uniformly in both $n$ and $l$}. The paper's
+  first diagonal extraction ($\tilde\delta_n$, paper.tex 1330--1345) exists only to interchange
+  $\lim_n$ and $\lim_\delta$ in \eqref{TidentityFixedl}; with a rate uniform in $n$, that interchange
+  becomes unnecessary and one may take $\delta_l = 1/l$ directly, so the diagonal argument needed
+  downstream (\noderef{BBSamplingDiagonal}, once written) reduces to the $\psi$-side extraction alone.
+\end{lemma}
+\begin{proof}
+  Write $L := \length(\gamma)$. By \noderef{curveSampling}, with $k = \lceil L/\delta \rceil$ and
+  $s_j := \min(j\delta, L)$ for $j = 0,\dots,k$, $\gamma^\delta$ is the concatenation
+  \[
+    \gamma^\delta = G_0 * G_1 * \cdots * G_{k-1}
+    , \qquad G_j := G_{\gamma(s_j),\gamma(s_{j+1})} \ (= GP.G(\gamma(s_j),\gamma(s_{j+1})))
+    ,
+  \]
+  built via \noderef{curveConcat}, with the endpoint-matching chain verified exactly as in
+  \noderef{curveSampling}'s own well-definedness paragraph.
+
+  \emph{Preliminary facts about $s$.} Since $j \mapsto j\delta$ is non-decreasing and $\min(\cdot,L)$
+  is non-decreasing in its first argument, $j \mapsto s_j$ is non-decreasing on $\{0,\dots,k\}$.
+  Also $s_0 = \min(0,L) = 0$ (as $L \ge 0$ by \noderef{Curve}), and $s_k = \min(k\delta,L) = L$: since
+  $k = \lceil L/\delta\rceil \ge L/\delta$ (\texttt{Nat.le\_ceil}, \texttt{Preamble}) and $\delta>0$,
+  $k\delta \ge L$, so $\min(k\delta,L)=L$.
+
+  For each $j \in \{0,\dots,k-1\}$ we claim $0 \le s_{j+1}-s_j \le \delta$. Non-negativity is
+  monotonicity of $s$. For the upper bound: if $j\delta \ge L$ then $s_j = L$ and, since
+  $(j+1)\delta \ge j\delta \ge L$, also $s_{j+1}=L$, so $s_{j+1}-s_j=0\le\delta$. If $j\delta < L$,
+  then $s_j = j\delta$; if additionally $(j+1)\delta \le L$ then $s_{j+1}=(j+1)\delta$ and
+  $s_{j+1}-s_j=\delta$; otherwise $(j+1)\delta > L$, so $s_{j+1}=L$ and
+  $s_{j+1}-s_j = L - j\delta < (j+1)\delta - j\delta = \delta$. In every case
+  $0 \le s_{j+1}-s_j\le\delta$, proving the claim. Summing telescopically,
+  $\sum_{j=0}^{k-1}(s_{j+1}-s_j) = s_k - s_0 = L$.
+
+  \emph{The two families of pieces.} For $j=0,\dots,k-1$, let
+  $\eta_j := \gamma|_{[s_j,s_{j+1}]}$ (\noderef{curveRestrict}, legal since $0\le s_j\le s_{j+1}\le L$
+  by the previous paragraph). By \noderef{curveRestrict}'s defining formula, $\length(\eta_j) =
+  s_{j+1}-s_j$, $\eta_j(0) = \gamma(s_j)$ and $\eta_j(\length(\eta_j)) = \gamma(s_{j+1})$ (both
+  endpoints are un-clamped values of the restriction formula since $0$ and $s_{j+1}-s_j$ are exactly
+  the two endpoints of $\eta_j$'s own domain $[0,\length(\eta_j)]$). By \noderef{GeodesicPairing}'s
+  $\mathrm{len\_eq}$, $\mathrm{start\_eq}$, $\mathrm{end\_eq}$ fields, $\length(G_j) =
+  d(\gamma(s_j),\gamma(s_{j+1}))$, $G_j(0)=\gamma(s_j)$, and $G_j(\length(G_j)) = \gamma(s_{j+1})$.
+  In particular $\eta_j$ and $G_j$ share both endpoints $\gamma(s_j)$ and $\gamma(s_{j+1})$, so they
+  share the same \emph{chord main term}
+  \[
+    M_j := f(\gamma(s_j)) \cdot \bigl(\pi(\gamma(s_{j+1})) - \pi(\gamma(s_j))\bigr)
+    .
+  \]
+
+  By \noderef{CurveLipschitz}, $\gamma$ is globally $1$-Lipschitz, so
+  $\length(G_j) = d(\gamma(s_j),\gamma(s_{j+1})) \le |s_{j+1}-s_j| = s_{j+1}-s_j$. Combined with the
+  bound of the previous paragraph, both $\length(\eta_j) = s_{j+1}-s_j$ and $\length(G_j)$ lie in
+  $[0,\delta]$ for every $j$, and $\sum_{j=0}^{k-1}\length(\eta_j) = \sum_{j=0}^{k-1}(s_{j+1}-s_j) = L$
+  while $\sum_{j=0}^{k-1}\length(G_j) \le \sum_{j=0}^{k-1}\length(\eta_j) = L$.
+
+  \emph{Step 1: the length bound.} By \noderef{curveConcat}'s length-additivity (iterated over the
+  $k$-fold concatenation defining $\gamma^\delta$, by induction on the number of already-concatenated
+  pieces exactly as in \noderef{curveSampling}'s well-definedness paragraph),
+  $\length(\gamma^\delta) = \sum_{j=0}^{k-1}\length(G_j)$. By the previous paragraph this is
+  $\le L = \length(\gamma)$, proving the first conclusion.
+
+  \emph{Step 2: additivity of $[[\gamma]]$ and $[[\gamma^\delta]]$ over the two families.} Since $s$
+  is non-decreasing on $\{0,\dots,k\}$ with $s_0=0$, $s_k=L$, \noderef{CurrentResolutionAdditive}
+  gives
+  \[
+    [[\gamma]](\omega) = \sum_{j=0}^{k-1} \int_{s_j}^{s_{j+1}} f(\gamma(t))\cdot
+      \mathrm{deriv}(\pi\circ\gamma)(t)\,dt
+    ,
+  \]
+  and by \noderef{RestrictCurrentFormula} (applicable since $0\le s_j\le s_{j+1}\le L$ for each $j$),
+  each summand equals $[[\eta_j]](\omega)$; hence
+  \[
+    [[\gamma]](\omega) = \sum_{j=0}^{k-1} [[\eta_j]](\omega)
+    . \tag{A}
+  \]
+  Likewise, applying \noderef{CurrentConcatAdditive} at each step of the $k$-fold concatenation
+  building $\gamma^\delta = G_0 * G_1 * \cdots * G_{k-1}$ (by induction on the number of
+  already-concatenated pieces, exactly as in Step~1),
+  \[
+    [[\gamma^\delta]](\omega) = \sum_{j=0}^{k-1} [[G_j]](\omega)
+    . \tag{B}
+  \]
+
+  \emph{Step 3: bounding each term against the shared chord.} Fix $j$. Applying
+  \noderef{CurrentChordEstimate} to $\eta_j$ (with $\eta_j(0)=\gamma(s_j)$,
+  $\eta_j(\length(\eta_j))=\gamma(s_{j+1})$, so its chord main term is exactly $M_j$),
+  \[
+    \bigl| [[\eta_j]](\omega) - M_j \bigr| \le \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot
+      \length(\eta_j)^2/2
+    . \tag{$C_j$}
+  \]
+  Applying \noderef{CurrentChordEstimate} to $G_j$ (with $G_j(0)=\gamma(s_j)$,
+  $G_j(\length(G_j))=\gamma(s_{j+1})$, chord main term also $M_j$),
+  \[
+    \bigl| [[G_j]](\omega) - M_j \bigr| \le \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\length(G_j)^2/2
+    . \tag{$D_j$}
+  \]
+  By the triangle inequality, $|[[G_j]](\omega)-[[\eta_j]](\omega)| \le |[[G_j]](\omega)-M_j| +
+  |M_j - [[\eta_j]](\omega)|$, so $(C_j)$ and $(D_j)$ give
+  \[
+    \bigl|[[G_j]](\omega) - [[\eta_j]](\omega)\bigr|
+      \le \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\bigl(\length(G_j)^2+\length(\eta_j)^2\bigr)/2
+    . \tag{$E_j$}
+  \]
+
+  \emph{Step 4: sum and bound.} By (A), (B) and the triangle inequality for a finite sum,
+  \[
+    \bigl|[[\gamma^\delta]](\omega) - [[\gamma]](\omega)\bigr|
+    = \Bigl|\sum_{j=0}^{k-1}\bigl([[G_j]](\omega)-[[\eta_j]](\omega)\bigr)\Bigr|
+    \le \sum_{j=0}^{k-1} \bigl|[[G_j]](\omega)-[[\eta_j]](\omega)\bigr|
+    \overset{(E_j)}{\le} \sum_{j=0}^{k-1} \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot
+      \bigl(\length(G_j)^2+\length(\eta_j)^2\bigr)/2
+    .
+  \]
+  It remains to bound the last sum by $\mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\delta\cdot L$. This
+  is an elementary computation: for any $c \in [0,\delta]$, $c(\delta-c)\ge 0$ gives $c^2 \le \delta c$,
+  so (since $\mathrm{Lip}(f),\mathrm{Lip}(\pi)\ge 0$)
+  $\mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot c^2/2 \le (\mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\delta/2)\cdot c$.
+  Applying this with $c=\length(\eta_j)$ and summing over $j$, using
+  $\sum_j \length(\eta_j) = L$ (established above),
+  \[
+    \sum_{j=0}^{k-1} \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\length(\eta_j)^2/2
+      \le (\mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\delta/2) \sum_{j=0}^{k-1}\length(\eta_j)
+      = \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\delta\cdot L/2
+    .
+  \]
+  Applying the same estimate with $c=\length(G_j)$ and using $\sum_j\length(G_j)\le L$ (established
+  above),
+  \[
+    \sum_{j=0}^{k-1} \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\length(G_j)^2/2
+      \le \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\delta\cdot L/2
+    .
+  \]
+  Adding the two bounds gives
+  $\sum_{j=0}^{k-1}\mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot(\length(G_j)^2+\length(\eta_j)^2)/2 \le
+  \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\delta\cdot L$, which combined with Step~4's opening
+  display gives exactly
+  $\bigl|[[\gamma^\delta]](\omega)-[[\gamma]](\omega)\bigr| \le
+  \mathrm{Lip}(f)\cdot\mathrm{Lip}(\pi)\cdot\delta\cdot L$, the second conclusion.
+\end{proof}

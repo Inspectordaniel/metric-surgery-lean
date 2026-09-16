@@ -1,0 +1,96 @@
+\begin{lemma}[Large-ball estimate]
+  \label{large-ball-lem}
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, $\gamma \in \Theta(E)$
+  (\noderef{Curve}), $\delta > 0$, $0 < \epsilon < 1$, and suppose $\gamma \in
+  \Xlsi(\delta,\epsilon)$ (\noderef{IsLSI}). Then for every $x \in E$ and every $r \geq \delta/2$,
+  \[
+    \mu_\gamma(B_r(x)) \leq 4(1+\epsilon^{-1}) r
+    ,
+  \]
+  where $\mu_\gamma$ is $\gamma$'s measure (\noderef{curveMeasure}).
+
+  This is paper Lemma 3.4 (paper.tex lines 677--685), stated pointwise for a given $r \geq
+  \delta/2$ rather than as a supremum over such $r$: the paper's displayed conclusion
+  $\sup_{r\geq\delta/2,x\in E} \mu_\gamma(B_r(x))/r \leq 4(1+\epsilon^{-1})$ is, since the bound
+  $4(1+\epsilon^{-1})$ does not depend on $r$ or $x$, exactly the statement that
+  $\mu_\gamma(B_r(x)) \leq 4(1+\epsilon^{-1})r$ holds for every individual $x \in E$ and $r \geq
+  \delta/2$; the two formulations are logically equivalent, and the pointwise form is what
+  \noderef{FullBallLem} directly consumes.
+
+  As in \noderef{IsLSI}, the constraint $0 < \epsilon < 1$ is the ambient Def.~3.3 convention under
+  which $\Xlsi(\delta,\epsilon)$ is used throughout the paper, not a genuine restriction on the
+  estimate proved here: the proof below establishes $\mu_\gamma(B_r(x)) \leq 4(1+\epsilon^{-1})r$
+  for every $\epsilon > 0$, $\delta > 0$, and $r \geq \delta/2$, with no use of $\epsilon < 1$.
+
+  \noderef{IsLSI} records $\Xlsi(\delta,\epsilon)$ with a non-strict inequality
+  $d(\gamma(s),\gamma(t)) \geq \epsilon\, d_\gamma(s,t)$ rather than the paper's literal strict
+  form; the proof below is written against that non-strict hypothesis, and the constant
+  $4(1+\epsilon^{-1})$ is unaffected.
+\end{lemma}
+\begin{proof}
+  Write $l := \length(\gamma)$. Fix $x \in E$ and $r \geq \delta/2$.
+
+  If $\set{t \in [0,l] : \gamma(t) \in B_r(x)} = \emptyset$, then by the defining formula of
+  $\mu_\gamma$ (\noderef{curveMeasure}), $\mu_\gamma(B_r(x)) = \abs{\emptyset} = 0 \leq
+  4(1+\epsilon^{-1})r$, and we are done. Otherwise, choose $s \in [0,l]$ with $\gamma(s) \in
+  B_r(x)$, i.e.\ $d(x,\gamma(s)) \leq r$.
+
+  \emph{Step 1: $B_r(x) \subseteq B_{2r}(\gamma(s))$.} For $y \in B_r(x)$, $d(y,\gamma(s)) \leq
+  d(y,x) + d(x,\gamma(s)) \leq r + r = 2r$ by the triangle inequality, so $y \in B_{2r}(\gamma(s))$.
+  By monotonicity of the measure $\mu_\gamma$ under set inclusion,
+  \[
+    \mu_\gamma(B_r(x)) \leq \mu_\gamma(B_{2r}(\gamma(s)))
+    = \abs{\set{t \in [0,l] : d(\gamma(s),\gamma(t)) \leq 2r}}
+    ,
+  \]
+  the equality again by the defining formula of $\mu_\gamma$ (\noderef{curveMeasure}).
+
+  \emph{Step 2: splitting by $d_\gamma(s,t)$.} We claim
+  \[
+    \set{t \in [0,l] : d(\gamma(s),\gamma(t)) \leq 2r}
+    \subseteq
+    \set{t \in [0,l] : d_\gamma(s,t) < \delta} \cup \set{t \in [0,l] : d_\gamma(s,t) \leq 2\epsilon^{-1} r}
+    ,
+  \]
+  where $d_\gamma$ is the circle distance (\noderef{dGamma}). Indeed, let $t \in [0,l]$ with
+  $d(\gamma(s),\gamma(t)) \leq 2r$. Either $d_\gamma(s,t) < \delta$, in which case $t$ is in the
+  first set on the right, or $d_\gamma(s,t) \geq \delta$. In the latter case, since $s,t \in
+  [0,l]$ and $\gamma \in \Xlsi(\delta,\epsilon)$ (\noderef{IsLSI}, non-strict form), we get
+  $\epsilon\, d_\gamma(s,t) \leq d(\gamma(s),\gamma(t)) \leq 2r$, so (as $\epsilon > 0$)
+  $d_\gamma(s,t) \leq 2\epsilon^{-1}r$, and $t$ is in the second set on the right.
+
+  \emph{Step 3: bounding each piece.} Since $s \in [0,l]$ and $\delta > 0$,
+  \noderef{DGammaBallMeasure} (applied with $\rho = \delta$) gives
+  $\abs{\set{t \in [0,l] : d_\gamma(s,t) < \delta}} \leq 2\delta$.
+
+  For the second piece, fix any $\rho' > 2\epsilon^{-1}r$. Since $\rho' > 0$,
+  \noderef{DGammaBallMeasure} (applied with this $\rho'$) gives $\abs{\set{t \in [0,l] :
+  d_\gamma(s,t) < \rho'}} \leq 2\rho'$, and $\set{t \in [0,l] : d_\gamma(s,t) \leq 2\epsilon^{-1}r}
+  \subseteq \set{t \in [0,l] : d_\gamma(s,t) < \rho'}$ since $2\epsilon^{-1}r < \rho'$, so
+  \[
+    \abs{\set{t \in [0,l] : d_\gamma(s,t) \leq 2\epsilon^{-1}r}} \leq 2\rho'
+    \qquad \text{for every } \rho' > 2\epsilon^{-1}r
+    .
+  \]
+  The left-hand side does not depend on $\rho'$, while the right-hand side $2\rho'$ tends to
+  $4\epsilon^{-1}r$ as $\rho' \downarrow 2\epsilon^{-1}r$; letting $\rho' \downarrow 2\epsilon^{-1}r$
+  therefore gives $\abs{\set{t \in [0,l] : d_\gamma(s,t) \leq 2\epsilon^{-1}r}} \leq 4\epsilon^{-1}r$.
+  (This is the only place the non-strict reading of \noderef{IsLSI} requires an extra limiting
+  step beyond citing \noderef{DGammaBallMeasure} directly; the bound recovered is identical to the
+  one the strict reading would have given immediately.)
+
+  By subadditivity of Lebesgue measure and Steps 1--2,
+  \[
+    \mu_\gamma(B_r(x)) \leq \abs{\set{t \in [0,l] : d(\gamma(s),\gamma(t)) \leq 2r}}
+    \leq 2\delta + 4\epsilon^{-1}r
+    .
+  \]
+
+  \emph{Step 4: closing the estimate.} Since $r \geq \delta/2$, we have $\delta \leq 2r$, so
+  $2\delta \leq 4r$. Hence
+  \[
+    \mu_\gamma(B_r(x)) \leq 4r + 4\epsilon^{-1}r = 4(1+\epsilon^{-1})r
+    ,
+  \]
+  which is the claim. \qedhere
+\end{proof}

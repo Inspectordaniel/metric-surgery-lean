@@ -1,0 +1,71 @@
+\begin{definition}[Paolini--Stepanov family for $T$]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra and $T \colon \mathcal{D}^1(E) \to \mathbb{R}$ a
+  functional (\noderef{Form1}). A \emph{Paolini--Stepanov family} for $T$ consists of a sequence of
+  finite positive Borel measures $\overline{\eta}_l$ on $\Theta(E)$, $l \in \mathbb{N}$
+  (\noderef{CurveMeasurableSpace}), together with:
+  \begin{itemize}
+    \item \emph{Support.} For $l \ge 1$, $\overline{\eta}_l(\Theta_l(E)^c) = 0$
+      (\noderef{ThetaL}).
+    \item \emph{Length exactly $l$} (eq.~(4.8), paper.tex line 1204). For $l \ge 1$,
+      $\length(\gamma) = l$ for $\overline{\eta}_l$-a.e.\ $\gamma$.
+    \item \emph{Weak length} (eq.~(4.6), paper.tex line 1196). For $l \ge 1$ and every
+      $\omega \in \mathcal{D}^1(E)$,
+      \[
+        T(\omega) = \frac{1}{l} \int_{\Theta(E)} [[\gamma]](\omega) \, d\overline{\eta}_l(\gamma)
+        .
+      \]
+    \item \emph{The mass measure $\mu_T$} (paper.tex line 1100), carried as data: a finite Borel
+      measure $\mu_T$ on $E$.
+    \item \emph{Mass marginal} (eq.~(4.7), paper.tex line 1201). For $l \ge 1$ and every
+      nonnegative measurable $\phi \colon E \to \cointerval{0,\infty}$,
+      \[
+        \int_E \phi \, d\mu_T = \int_{\Theta(E)} \phi(\gamma(0)) \, d\overline{\eta}_l(\gamma)
+        = \int_{\Theta(E)} \phi(\gamma(\length(\gamma))) \, d\overline{\eta}_l(\gamma)
+        .
+      \]
+    \item \emph{Marginal of a unit subcurve} (Lemma A.5, paper.tex line 1860). For $l \ge 1$,
+      $j \in \{1,\dotsc,l\}$, and every nonnegative measurable $h \colon \Theta(E) \to
+      \cointerval{0,\infty}$,
+      \[
+        \int_{\Theta(E)} h\bigl(\gamma|^{\mathrm{tot}}_{[j-1,j]}\bigr) \, d\overline{\eta}_l(\gamma)
+        = \int_{\Theta(E)} h(\gamma) \, d\overline{\eta}_1(\gamma)
+        ,
+      \]
+      using the total restriction $\gamma|^{\mathrm{tot}}_{[j-1,j]}$ (\noderef{curveRestrictTot}).
+  \end{itemize}
+  This packages, as a single hypothesis carrier, exactly the by-products that
+  \cite{PS}*{Proposition~4.2} produces alongside the existence of $\overline{\eta}_1$ (\cite{PS}*{
+  Theorem~3.1}), namely eqs.~(4.6)--(4.8) and Lemma A.5 (paper.tex lines 1178--1216, 1860--1868).
+
+  \paragraph{Modeling notes (interface decisions, not deviations).}
+  \begin{itemize}
+    \item \emph{Total restriction.} Lemma A.5 and its use in Corollary A.6 restrict $\gamma$ to
+      $[j-1,j]$ under the integral against $\overline{\eta}_l$, where $\length(\gamma) = l$ holds
+      only $\overline{\eta}_l$-a.e., not identically; the proof-carrying \noderef{curveRestrict}
+      therefore cannot appear here, and we use the total \noderef{curveRestrictTot} instead
+      (\noderef{CurveRestrictTotAgrees} records that the two agree wherever the side conditions
+      hold, so no content is lost).
+    \item \emph{Nonnegative $\cointerval{0,\infty}$-valued $h$ and $\phi$.} The paper's Lemma A.5 is
+      stated for bounded measurable $h$, and eq.~(4.7) for arbitrary nonnegative measurable $\phi$.
+      We state both fields for arbitrary $\cointerval{0,\infty}$-valued measurable functions (via
+      the extended-real ($\ell$-)integral), which is strictly more general for $h$: the bounded case
+      follows from the general one via monotone convergence (write a bounded nonnegative measurable
+      $h$ as an increasing limit of the truncations $h \wedge n$, apply the identity to each
+      truncation, and pass to the limit using the monotone convergence theorem on both sides).
+      Stating the stronger, unbounded version removes a boundedness side condition that would
+      otherwise have to be re-derived at every use site (in particular, $\psi_{m,Q,\epsilon,C}$,
+      \noderef{psi}, is only bounded once $\gamma$ is restricted to a bounded-length piece, which is
+      exactly what \noderef{marginal} is invoked to justify).
+    \item \emph{Mass measure as data.} Rather than deriving $\mu_T$ as the (Ambrosio--Kirchheim)
+      minimal admissible measure for $T$ (\noderef{massOfFunctional}), we carry it directly as a
+      field of this structure, characterized only by the property eq.~(4.7) actually uses. This
+      mirrors the paper's own logical order: eq.~(4.7) is stated for the (assumed-existing) mass
+      measure of the (assumed-existing) current $T$, exactly as it appears once Paolini--Stepanov's
+      theorem is invoked.
+    \item \emph{Forward pointer.} The functional $T$ above is left abstract here; the node
+      constructing a Paolini--Stepanov family for a genuine metric $1$-current (paper.tex lines
+      1183--1216, \cite{PS}*{Theorem~3.1} and \cite{PS}*{Proposition~4.2}) will instantiate $T$ as
+      $T_0.\mathrm{toFun}$ for a metric $1$-current $T_0$ (\noderef{MetricCurrent1}). No change to
+      this node is needed for that instantiation.
+  \end{itemize}
+\end{definition}

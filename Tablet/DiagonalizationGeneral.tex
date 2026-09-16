@@ -1,0 +1,362 @@
+\begin{lemma}[Diagonalization at every $1$-form]\label{DiagonalizationGeneral}
+  Let $E$ be a complete, separable metric space equipped with a compatible Borel
+  $\sigma$-algebra, $T \in \mathcal{M}_1(E)$ a metric $1$-current (\noderef{MetricCurrent1}), $F$ a
+  Paolini--Stepanov family for $T$ (\noderef{PSFamily}), and $D \subseteq E$ countable, nonempty,
+  and dense. Then there is a countable family $(\omega_k)_{k\in\mathbb{N}}$ of metric $1$-forms
+  (\noderef{Form1}) such that: for every sequence of positive integers $(n_l)_{l\in\mathbb{N}}$ and
+  every doubly-indexed family of curves $\gamma_{l,i} \in \Theta(E)$ ($l\in\mathbb{N}$,
+  $i<n_l$) with $\length(\gamma_{l,i}) = l$ for every $l\ge1$ and every $i<n_l$, such that
+  \begin{itemize}
+    \item[(I)] for every $k\in\mathbb{N}$,
+      \[
+        \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\gamma_{l,i}]](\omega_k)
+        \;\longrightarrow\; T(\omega_k)
+        \qquad (l\to\infty)
+        ,
+      \]
+    \item[(II)] for every admissible $(m,Q,\epsilon,C)$ -- i.e.\ $m\ge1$, $Q$ a nonempty finite
+      subset of $D$, and $\epsilon,C\in\mathbb{Q}\cap(0,\infty)$ --
+      \begin{align*}
+        \frac{1}{n_l\cdot l}\sum_{i=0}^{n_l-1}\psi_{m\cdot l,Q,\epsilon,C}(\gamma_{l,i})
+        &\;\longrightarrow\; F.\mu_T(E)^{-1}\int_{\Theta(E)}\psi_{m,Q,\epsilon,C}\,dF.\mathrm{eta}(1)
+        ,\\
+        \frac{1}{n_l\cdot l}\sum_{i=0}^{n_l-1}\tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma_{l,i})
+        &\;\longrightarrow\; F.\mu_T(E)^{-1}\int_{\Theta(E)}\tilde\psi_{m,Q,\epsilon,C}\,dF.\mathrm{eta}(1)
+      \end{align*}
+      as $l\to\infty$,
+  \end{itemize}
+  it follows that, for \emph{every} metric $1$-form $\omega = (f,\pi) \in \mathcal{D}^1(E)$ (not
+  only the members of the family $(\omega_k)$),
+  \[
+    \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\gamma_{l,i}]](\omega)
+    \;\longrightarrow\; T(\omega)
+    \qquad(l\to\infty)
+    .
+  \]
+
+  \paragraph{Provenance.} This is paper.tex 1382--1435, eq.~\eqref{diagonalization_general}: the
+  step of the proof of Theorem~4.4 that upgrades the current identity from the countable dense
+  family $(f_n)$ (\noderef{LipschitzSeparable}, Lemma A.1) to \emph{every} $f\in\Lip(E,\mathbb{R})$,
+  $\pi\in\Lipb(E,\mathbb{R})$. \noderef{LipschitzSeparable} supplies only the countable family and
+  its approximation property; it does not itself supply the extension to a general $1$-form. Given
+  this lemma and \noderef{BBSamplingDiagonal} -- whose conclusion \emph{is} exactly hypotheses (I)
+  and (II) above, instantiated at the family $(\omega_k)$ this lemma outputs -- the composition
+  gives the current identity at every $\omega$, ready to serve as \noderef{ClosingUp}'s hypothesis
+  \texttt{hcur}.
+
+  \paragraph{Why the existential is on the family, not a bare hypothesis.} The family $(\omega_k)$
+  must be fixed \emph{before} $n$, $\gamma$ are chosen, because it is $(\omega_k)$ that
+  \noderef{BBSamplingDiagonal} needs as an input to produce $n,\gamma$ satisfying (I)/(II) in the
+  first place. Hence the natural statement is: there exists a family such that, whatever $n,\gamma$
+  satisfy (I)/(II) for that family, the conclusion holds at every $\omega$. This is exactly the
+  \noderef{BBSamplingDiagonal}$\to$ this lemma $\to$ \noderef{ClosingUp} composition pattern the
+  target-covering assembly node (\texttt{bbassertion}) uses.
+
+  \paragraph{Why no hypothesis on $F.\mu_T(E)$.} Unlike a first draft of this route, no hypothesis
+  $F.\mu_T(E)\ne0$ is imposed here (contrast \noderef{BBSamplingDiagonal}, which does assume it).
+  When $F.\mu_T(E)=0$ the conclusion holds for the trivial reason that both sides of the displayed
+  limit are identically $0$ for every $\omega$: the left side because it carries an explicit factor
+  of $F.\mu_T(E)=0$, and the right side, $T(\omega)$, because $F.\mu_T(E)=0$ forces $F$'s eq.~(4.6)
+  family $\eta_1$ to be the zero measure (\noderef{PSFamily}'s \texttt{massMarginal} field with
+  $\phi\equiv1$, see the proof), which forces $T(\omega)=0$ for every $\omega$ via
+  \noderef{PSFamily}'s \texttt{weakLength} field at $l=1$. This degenerate branch needs neither the
+  family $(\omega_k)$ nor hypotheses (I)/(II) at all, so dropping the hypothesis costs nothing and
+  strictly generalizes the statement actually needed downstream (where $F.\mu_T(E)\ne0$ is
+  established separately, from $T\ne0$, at the point \noderef{BBSamplingDiagonal} is invoked).
+
+  \paragraph{Why $n$, $\gamma$ carry the same $0<n_l$ and $\length(\gamma_{l,i})=l$ hypotheses as
+  \noderef{BBSamplingDiagonal}'s conclusion.} These two hypotheses are carried verbatim so that
+  this lemma's implication can be applied directly, with no repackaging, to whatever $n,\gamma$
+  \noderef{BBSamplingDiagonal} produces. Neither is used in the proof below (the argument only ever
+  uses (I) and (II), and the fact -- needed nowhere here -- that $\gamma_{l,i}$ has a well-defined
+  length is not invoked); they are retained purely for interface uniformity with
+  \noderef{BBSamplingDiagonal}'s output, exactly as \noderef{ClosingUp} also receives (and largely
+  does not need beyond bookkeeping) the same two facts.
+
+  \paragraph{Relation to the paper's proof strategy.} The paper's argument (paper.tex 1408--1427)
+  takes a joint $\limsup_{j,k,l\to\infty}$ across three indices and then separately argues ``the
+  first term does not depend on $l$ and the second does not depend on $j,k$'' to conclude. A joint
+  limit indexed by an unordered triple of naturals tending jointly to infinity is not directly a
+  Lean/Mathlib object. The proof below replaces it with a logically equivalent, and strictly more
+  elementary, $\theta$-argument: for every $\theta>0$, a single explicit \emph{finite} search
+  produces one pair $(k,j)$ and one large-$l$ threshold witnessing that the averaged current is
+  within $3\theta$ of $T(\omega)$; letting $\theta\to0$ this is exactly the $\epsilon$-$N$
+  definition of the displayed limit. The order of choices reproduces the paper's own dependency
+  order (paper.tex 1422, ``we may take $\epsilon\to0,Q\nearrow E_{\mathbb{Q}},m\to\infty$ in that
+  order''): $C$ depends only on $\omega$; $(m,Q,\epsilon)$ depend on $C$ and $\theta$
+  (\noderef{PsiVanishes}); and the approximant indices $k,j$ depend on $Q,\epsilon$ (for the
+  finite-set sup-norm bounds) and on $\theta$ (for the two current-continuity bounds), chosen last
+  and in sequence ($k$ before $j$, since the $\pi$-continuity step needs $f=f_k$ already fixed).
+\end{lemma}
+\begin{proof}
+  \emph{Step 0: construction of the family $(\omega_k)_{k\in\mathbb{N}}$.} By
+  \noderef{LipschitzSeparable} (Lemma A.1) applied to $E$, fix once and for all a countable family
+  $P\colon \mathbb{N}\to(E\to\mathbb{R})$ with bound and Lipschitz-constant fields $B,L\colon
+  \mathbb{N}\to\mathbb{R}_{\ge0}$ (so $|P_n(x)|\le B_n$ and $P_n$ is $L_n$-Lipschitz for every $n$),
+  and the approximation property: for every Lipschitz $h\colon E\to\mathbb{R}$ and Lipschitz
+  constant $K\ge0$ for $h$, a subsequence $\phi\colon\mathbb{N}\to\mathbb{N}$ with $P_{\phi(k)}$
+  $K$-Lipschitz for every $k$, $P_{\phi(k)}(x)\to h(x)$ for every $x$, and (for any given bound $M$
+  on $h$) $|P_{\phi(k)}(x)|\le M$ for every $k,x$. Using the standard bijective pairing
+  $\mathrm{pair}\colon\mathbb{N}\times\mathbb{N}\to\mathbb{N}$ with inverse
+  $\mathrm{unpair}\colon\mathbb{N}\to\mathbb{N}\times\mathbb{N}$
+  (\texttt{Nat.pair}/\texttt{Nat.unpair}, \texttt{Preamble}; $\mathrm{unpair}(\mathrm{pair}(p,q)) =
+  (p,q)$ for all $p,q$), define $\omega_a$, for $a\in\mathbb{N}$, to be the metric $1$-form with
+  $f$-part $P_{\mathrm{unpair}(a)_1}$ (bound $B_{\mathrm{unpair}(a)_1}$, Lipschitz constant
+  $L_{\mathrm{unpair}(a)_1}$) and $\pi$-part $P_{\mathrm{unpair}(a)_2}$ (Lipschitz constant
+  $L_{\mathrm{unpair}(a)_2}$). This is the required family: as $a$ ranges over $\mathbb{N}$, the
+  pair $(\mathrm{unpair}(a)_1,\mathrm{unpair}(a)_2)$ ranges over every element of
+  $\mathbb{N}\times\mathbb{N}$ (by surjectivity of $\mathrm{unpair}$, itself immediate from
+  $\mathrm{unpair}(\mathrm{pair}(p,q))=(p,q)$), so in particular $\omega_{\mathrm{pair}(p,q)}$ has
+  $f$-part $P_p$ and $\pi$-part $P_q$ for every $p,q\in\mathbb{N}$; this is the only property of
+  the family used below.
+
+  Fix now $n$, $\gamma$ satisfying the length hypothesis and (I), (II) as in the statement.
+
+  \emph{Step 1: reduction to a fixed $\omega=(f,\pi)$, and the case $F.\mu_T(E)=0$.} Fix an
+  arbitrary $\omega=(f,\pi)\in\mathcal{D}^1(E)$; we must show
+  $\frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega)\to T(\omega)$. Write
+  $M:=F.\mu_T(E)\in[0,\infty)$ (finite by \noderef{PSFamily}'s \texttt{massMeasure\_finite} field).
+
+  If $M=0$: for every $l$, the left-hand sequence is identically $0$, since it carries the factor
+  $M=0$ (division by $n_l\cdot l$ does not affect a numerator of $0$). It remains to show
+  $T(\omega)=0$. By \noderef{PSFamily}'s \texttt{massMarginal} field at $l=1$ (legal since $1\le1$)
+  and the constant function $\phi\equiv1$ (measurable), $\int_E 1\,dF.\mu_T = \int_{\Theta(E)}
+  1\,dF.\mathrm{eta}(1)$, i.e.\ $F.\mu_T(E) = F.\mathrm{eta}(1)(\Theta(E))$; since the left side is
+  $M=0$, the finite measure $F.\mathrm{eta}(1)$ has total mass $0$, hence $F.\mathrm{eta}(1)$ is the
+  zero measure. By \noderef{PSFamily}'s \texttt{weakLength} field at $l=1$, $T(\omega) = 1^{-1}\cdot
+  \int_{\Theta(E)}[[\gamma]](\omega)\,dF.\mathrm{eta}(1) = \int_{\Theta(E)}[[\gamma]](\omega)\,d0 =
+  0$ (the integral of any function against the zero measure is $0$). So $T(\omega)=0$, matching the
+  identically-$0$ left-hand sequence, and the claimed limit ($0\to0$) holds trivially. Assume from
+  now on $M>0$.
+
+  \emph{Step 2: the bound $C$.} Let $M_0 := \max\{\omega.\mathrm{fBound},\omega.\mathrm{fLip},
+  \omega.\mathrm{piLip}\}\in[0,\infty)$ and $C := \lceil M_0\rceil+1\in\mathbb{Q}\cap(0,\infty)$
+  (positive since $\lceil M_0\rceil\ge0$). Then $C$ depends only on $\omega$, and
+  $\omega.\mathrm{fBound},\omega.\mathrm{fLip},\omega.\mathrm{piLip}\le M_0\le\lceil M_0\rceil\le C$
+  (\texttt{Int.le\_ceil}, \texttt{Preamble}).
+
+  \emph{Step 3: an admissible index from \noderef{PsiVanishes}.} Fix $\theta>0$. By
+  \noderef{PSFamily}'s \texttt{finite} field, $F.\mathrm{eta}(1)$ is a finite measure, and by its
+  \texttt{lengthExactly} field at $l=1$, $\length(\gamma)=1$ for $F.\mathrm{eta}(1)$-a.e.\
+  $\gamma$. Apply \noderef{PsiVanishes} with this $D$, $C$ (Step 2, $C>0$), $l:=1$,
+  $\eta:=F.\mathrm{eta}(1)$, and threshold $\theta$: this produces $m\in\mathbb{N}$ with $m\ge1$, a
+  nonempty finite $Q\subseteq D$, and $\epsilon\in\mathbb{Q}\cap(0,\infty)$ such that
+  $\gamma\mapsto\psi_{m,Q,\epsilon,C}(\gamma)$ and $\gamma\mapsto\tilde\psi_{m,Q,\epsilon,C}(\gamma)$
+  are $F.\mathrm{eta}(1)$-integrable and
+  \[
+    \int_{\Theta(E)}\psi_{m,Q,\epsilon,C}\,dF.\mathrm{eta}(1)
+    + \int_{\Theta(E)}\tilde\psi_{m,Q,\epsilon,C}\,dF.\mathrm{eta}(1)
+    < \theta
+    . \tag{3.1}
+  \]
+  Here $(m,Q,\epsilon)$ depend on $C$ (hence on $\omega$) and on $\theta$.
+
+  \emph{Step 4: two Lipschitz-separable subsequences approximating $f$ and $\pi$.} Apply the
+  approximation property of Step 0's family $(P,B,L)$ twice: once to $h:=f=\omega.f$ with Lipschitz
+  constant $K:=\omega.\mathrm{fLip}$ (witnessed by \noderef{Form1}'s \texttt{f\_lipschitz} field),
+  obtaining a subsequence $\phi_f\colon\mathbb{N}\to\mathbb{N}$ such that, writing
+  $f_k:=P_{\phi_f(k)}$: $f_k$ is $\omega.\mathrm{fLip}$-Lipschitz for every $k$; $f_k(x)\to f(x)$ as
+  $k\to\infty$ for every $x\in E$; and (applying the family's third clause with the bound
+  $M:=\omega.\mathrm{fBound}$ on $f$, from \noderef{Form1}'s \texttt{f\_bounded} field)
+  $|f_k(x)|\le\omega.\mathrm{fBound}$ for every $k,x$. And once to $h:=\pi=\omega.\pi$ with
+  Lipschitz constant $K:=\omega.\mathrm{piLip}$ (\noderef{Form1}'s \texttt{pi\_lipschitz} field),
+  obtaining $\phi_\pi\colon\mathbb{N}\to\mathbb{N}$ such that, writing $\pi_j:=P_{\phi_\pi(j)}$:
+  $\pi_j$ is $\omega.\mathrm{piLip}$-Lipschitz for every $j$, and $\pi_j(x)\to\pi(x)$ as
+  $j\to\infty$ for every $x\in E$.
+
+  Since $Q$ is finite and, for each fixed $q\in Q$, $f_k(q)\to f(q)$ as $k\to\infty$, there is
+  (taking the maximum, over the finitely many $q\in Q$, of the individual convergence thresholds at
+  margin $\epsilon$) some $k_Q\in\mathbb{N}$ such that $|f_k(q)-f(q)|\le\epsilon$ for every $k\ge
+  k_Q$ and every $q\in Q$. Likewise there is $j_Q\in\mathbb{N}$ such that $|\pi_j(q)-\pi(q)|\le
+  \epsilon$ for every $j\ge j_Q$ and every $q\in Q$.
+
+  \emph{Step 5: a single good pair $(k,j)$, via the two continuity steps in order.} By
+  \noderef{CurrentContinuousF} applied to $T$ with the fixed pair $(f,\pi)$ (bounds
+  $\omega.\mathrm{fBound},\omega.\mathrm{fLip},\omega.\mathrm{piLip}$) and the approximating
+  sequence $(f_k)_{k}$ (each $\omega.\mathrm{fLip}$-Lipschitz, uniformly bounded by
+  $b_0:=\omega.\mathrm{fBound}$, converging pointwise to $f$, all from Step 4),
+  \[
+    T(f_k,\pi) \longrightarrow T(f,\pi) = T(\omega) \qquad (k\to\infty)
+    ,
+  \]
+  so there is $k_1$ with $|T(f_k,\pi)-T(\omega)| < \theta/2$ for every $k\ge k_1$. Set
+  $k:=\max\{k_Q,k_1\}$; then both $|f_k(q)-f(q)|\le\epsilon$ for every $q\in Q$ and
+  $|T(f_k,\pi)-T(\omega)|<\theta/2$ hold for this single $k$.
+
+  With $f_k$ now fixed, apply \noderef{MetricCurrent1}'s \texttt{continuous\_pi} field to $T$ with
+  fixed $f_k$ (bound $\omega.\mathrm{fBound}$, Lipschitz $\omega.\mathrm{fLip}$) and fixed $\pi$
+  (Lipschitz $\omega.\mathrm{piLip}$), and the approximating sequence $(\pi_j)_j$ (each
+  $\omega.\mathrm{piLip}$-Lipschitz, so uniformly bounded by $L_0:=\omega.\mathrm{piLip}$,
+  converging pointwise to $\pi$, from Step 4):
+  \[
+    T(f_k,\pi_j) \longrightarrow T(f_k,\pi) \qquad (j\to\infty)
+    ,
+  \]
+  so there is $j_1$ with $|T(f_k,\pi_j)-T(f_k,\pi)|<\theta/2$ for every $j\ge j_1$. Set
+  $j:=\max\{j_Q,j_1\}$; then both $|\pi_j(q)-\pi(q)|\le\epsilon$ for every $q\in Q$ and
+  $|T(f_k,\pi_j)-T(f_k,\pi)|<\theta/2$ hold for this single $j$. By the triangle inequality,
+  \[
+    |T(f_k,\pi_j) - T(\omega)|
+    \le |T(f_k,\pi_j)-T(f_k,\pi)| + |T(f_k,\pi)-T(\omega)|
+    < \theta/2+\theta/2 = \theta
+    . \tag{5.1}
+  \]
+
+  \emph{Step 6: identifying $\omega_{\mathrm{pair}(\phi_f(k),\phi_\pi(j))}$ with a tightly-fielded
+  copy of $(f_k,\pi_j)$.} Let $a:=\mathrm{pair}(\phi_f(k),\phi_\pi(j))$; by Step 0,
+  $\omega_a$ has $f$-part $f_k$ and $\pi$-part $\pi_j$ \emph{as functions}, though (since $\omega_a$
+  inherits the family's own, possibly loose, bound/Lipschitz witnesses $B_{\phi_f(k)},
+  L_{\phi_f(k)},L_{\phi_\pi(j)}$ rather than the tight constants $\omega.\mathrm{fBound},
+  \omega.\mathrm{fLip},\omega.\mathrm{piLip}$ established for $f_k,\pi_j$ in Step 4) possibly with
+  different bound/Lipschitz \emph{fields}. Let $\omega_{kj}\in\mathcal{D}^1(E)$ be the
+  \emph{tightly}-fielded form with $f$-part $f_k$ (bound $\omega.\mathrm{fBound}$, Lipschitz
+  $\omega.\mathrm{fLip}$, both from Step 4) and $\pi$-part $\pi_j$ (Lipschitz $\omega.\mathrm{piLip}$,
+  from Step 4). Since $\mathcal{D}^1(E)$'s functional value depends only on the underlying $f,\pi$
+  \emph{functions}, not on which valid bound/Lipschitz witnesses accompany them, $\omega_a$ and
+  $\omega_{kj}$ have literally identical current and $T$-value:
+  \begin{itemize}
+    \item $[[\gamma]](\omega_a)=[[\gamma]](\omega_{kj})$ for every curve $\gamma$, since
+      \noderef{curveCurrent} unfolds to $\int_0^{\length(\gamma)}
+      \omega.f(\gamma(t))\cdot\deriv(\omega.\pi\circ\gamma)(t)\,dt$, a formula reading only the
+      $f,\pi$ \emph{function} components of its form argument, which coincide (both are $f_k,\pi_j$)
+      for $\omega_a$ and $\omega_{kj}$;
+    \item $T(\omega_a)=T(\omega_{kj})$, by \noderef{MetricCurrent1}'s \texttt{smul\_pi} field
+      applied with $\omega:=\omega_{kj}$, $\omega_c:=\omega_a$, $c:=1$: its hypotheses
+      $\omega_a.f=\omega_{kj}.f$ (both $f_k$) and $\forall x,\ \omega_a.\pi(x) =
+      1\cdot\omega_{kj}.\pi(x)$ (both sides $\pi_j(x)$) hold, giving $T(\omega_a) = 1\cdot
+      T(\omega_{kj}) = T(\omega_{kj})$.
+  \end{itemize}
+  (Both bullets are immediate, one- or two-line consequences of a single cited node's statement --
+  \noderef{curveCurrent}'s definition and \noderef{MetricCurrent1}'s \texttt{smul\_pi} field,
+  respectively -- so they are proved inline here rather than as separate tablet nodes.)
+
+  By hypothesis (I) applied at $k:=a$ (recall the family in (I) is exactly $(\omega_k)_{k}$ of the
+  statement, i.e.\ Step 0's family, so this is legitimate), together with the identification
+  $T(\omega_a)=T(\omega_{kj})$ and $[[\gamma_{l,i}]](\omega_a)=[[\gamma_{l,i}]](\omega_{kj})$ just
+  established,
+  \[
+    \frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega_{kj})
+    \;\longrightarrow\; T(\omega_{kj})
+    \qquad(l\to\infty)
+    . \tag{6.1}
+  \]
+
+  \emph{Step 7: multilinearity split and the $\psi$/$\tilde\psi$ bound, curve by curve.} Fix
+  $l\ge1$ and $i<n_l$, and write $\gamma:=\gamma_{l,i}$ for brevity. Let $\omega_k'\in\mathcal{D}^1(E)$
+  be the form with $f$-part $f_k$ (bound $\omega.\mathrm{fBound}$, Lipschitz $\omega.\mathrm{fLip}$,
+  as in $\omega_{kj}$) and $\pi$-part $\pi=\omega.\pi$ (Lipschitz $\omega.\mathrm{piLip}$, i.e.\
+  $\omega$'s own $\pi$-field). By \noderef{CurrentFormAddF} applied with $\omega_{12}:=\omega$,
+  $\omega_1:=$ the form with $f$-part $x\mapsto f(x)-f_k(x)$ (bound $2\,\omega.\mathrm{fBound}$,
+  Lipschitz $2\,\omega.\mathrm{fLip}$) and $\pi$-part $\omega.\pi$ unchanged (as produced by
+  \noderef{PiBoundsF} below), $\omega_2:=\omega_k'$ (both share the $\pi$-component $\omega.\pi$,
+  and $\omega.f(x)=(f(x)-f_k(x))+f_k(x)$ pointwise),
+  \[
+    [[\gamma]](\omega) = [[\gamma]](f-f_k,\pi) + [[\gamma]](\omega_k')
+    . \tag{7.1}
+  \]
+  By \noderef{CurrentFormAddPi} applied with $\omega_{12}:=\omega_k'$, $\omega_1:=$ the form with
+  $f$-part $f_k$ (as in $\omega_k'$, $\omega_{kj}$) and $\pi$-part $x\mapsto\pi(x)-\pi_j(x)$
+  (Lipschitz $2\,\omega.\mathrm{piLip}$, as produced by \noderef{PiBoundsPi} below), $\omega_2:=
+  \omega_{kj}$ (both share the $f$-component $f_k$, and $\omega_k'.\pi(x)=\pi(x)=
+  (\pi(x)-\pi_j(x))+\pi_j(x)$ pointwise),
+  \[
+    [[\gamma]](\omega_k') = [[\gamma]](f_k,\pi-\pi_j) + [[\gamma]](\omega_{kj})
+    . \tag{7.2}
+  \]
+  Combining (7.1)-(7.2),
+  \[
+    [[\gamma]](\omega) - [[\gamma]](\omega_{kj}) = [[\gamma]](f-f_k,\pi) + [[\gamma]](f_k,\pi-\pi_j)
+    . \tag{7.3}
+  \]
+  Since $1\le m$ and $1\le l$ (the latter by the standing assumption $l\ge1$ of this step), $1\le
+  m\cdot l$; $Q$ is nonempty (Step 3); $\epsilon,C\in\mathbb{Q}\cap(0,\infty)$ (Steps 2-3); the
+  bound hypotheses $\omega.\mathrm{fBound},f_k\text{'s bound }\omega.\mathrm{fBound},
+  \omega.\mathrm{fLip},f_k\text{'s Lipschitz }\omega.\mathrm{fLip},\omega.\mathrm{piLip}\le C$ all
+  hold (Step 2); and $|f(q)-f_k(q)|\le\epsilon$ for $q\in Q$ (Step 4, $k\ge k_Q$). So
+  \noderef{PiBoundsF} (at $m\cdot l$ in place of $m$) gives
+  \[
+    |[[\gamma]](f-f_k,\pi)| \le \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma)
+    . \tag{7.4}
+  \]
+  Likewise, with $\omega.\mathrm{fBound},\omega.\mathrm{fLip},\omega.\mathrm{piLip},\pi_j\text{'s
+  Lipschitz }\omega.\mathrm{piLip}\le C$ (Step 2) and $|\pi(q)-\pi_j(q)|\le\epsilon$ for $q\in Q$
+  (Step 4, $j\ge j_Q$), \noderef{PiBoundsPi} (at $m\cdot l$ in place of $m$) gives
+  \[
+    |[[\gamma]](f_k,\pi-\pi_j)| \le \psi_{m\cdot l,Q,\epsilon,C}(\gamma)
+    . \tag{7.5}
+  \]
+  Combining (7.3)-(7.5) by the triangle inequality,
+  \[
+    \bigl|[[\gamma]](\omega) - [[\gamma]](\omega_{kj})\bigr|
+    \le \tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma) + \psi_{m\cdot l,Q,\epsilon,C}(\gamma)
+    \qquad \text{for every } l\ge1,\ i<n_l
+    . \tag{7.6}
+  \]
+
+  \emph{Step 8: the averaged bound tends to something below $\theta$.} Summing (7.6) over
+  $i<n_l$, multiplying by $M/(n_l\cdot l)\ge0$, and using the triangle inequality for finite sums,
+  \[
+    \left|\frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega)
+      - \frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega_{kj})\right|
+    \le M\left(\frac{1}{n_l\cdot l}\sum_{i<n_l}\psi_{m\cdot l,Q,\epsilon,C}(\gamma_{l,i})
+      + \frac{1}{n_l\cdot l}\sum_{i<n_l}\tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma_{l,i})\right)
+    \tag{8.1}
+  \]
+  for every $l\ge1$. By hypothesis (II) at this admissible $(m,Q,\epsilon,C)$, the two averages on
+  the right of (8.1) converge, as $l\to\infty$, to $M^{-1}\int\psi_{m,Q,\epsilon,C}\,dF.\mathrm{eta}(1)$
+  and $M^{-1}\int\tilde\psi_{m,Q,\epsilon,C}\,dF.\mathrm{eta}(1)$ respectively (sum of two convergent
+  sequences converges to the sum of the limits), so the right-hand side of (8.1), as a function of
+  $l$, converges to
+  \[
+    M\cdot M^{-1}\Bigl(\int\psi_{m,Q,\epsilon,C}\,dF.\mathrm{eta}(1)
+      + \int\tilde\psi_{m,Q,\epsilon,C}\,dF.\mathrm{eta}(1)\Bigr)
+    = \int\psi_{m,Q,\epsilon,C}\,dF.\mathrm{eta}(1) + \int\tilde\psi_{m,Q,\epsilon,C}\,dF.\mathrm{eta}(1)
+    < \theta
+  \]
+  (using $M\cdot M^{-1}=1$ since $M>0$, Step 1, and (3.1)). Since this limit is a real number
+  strictly less than $\theta$, the sequence on the right of (8.1) is eventually (for all $l$ from
+  some $l_2$ on) strictly less than $\theta$ (a real sequence converging to a value below a fixed
+  threshold is eventually below that threshold). Hence, for every $l\ge\max\{1,l_2\}$,
+  \[
+    \left|\frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega)
+      - \frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega_{kj})\right|
+    < \theta
+    . \tag{8.2}
+  \]
+
+  \emph{Step 9: assembling the $3\theta$ bound and concluding.} By (6.1), the sequence
+  $l\mapsto \frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega_{kj})$ converges to
+  $T(\omega_{kj})$, so there is $l_3$ with
+  \[
+    \left|\frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega_{kj}) - T(\omega_{kj})\right|
+    < \theta
+    \qquad \text{for every } l\ge l_3
+    . \tag{9.1}
+  \]
+  For every $l\ge\max\{1,l_2,l_3\}$, combining (8.2), (9.1), and (5.1) ($|T(\omega_{kj}) -
+  T(\omega)| = |T(f_k,\pi_j)-T(\omega)| < \theta$) by the triangle inequality,
+  \begin{align*}
+    \left|\frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega) - T(\omega)\right|
+    &\le \left|\frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega)
+          - \frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega_{kj})\right|
+    \\&\quad
+      + \left|\frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega_{kj}) - T(\omega_{kj})\right|
+      + |T(\omega_{kj}) - T(\omega)|
+    \\
+    &< \theta+\theta+\theta = 3\theta
+    .
+  \end{align*}
+  Thus: for every $\theta>0$ there is $l_\theta:=\max\{1,l_2,l_3\}$ (depending, through $C,m,Q,
+  \epsilon,k,j,l_2,l_3$, on $\omega$ and $\theta$) such that
+  $\bigl|\frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega) - T(\omega)\bigr| < 3\theta$ for
+  every $l\ge l_\theta$. Equivalently -- substituting $\theta:=\theta'/3$ for arbitrary $\theta'>0$
+  -- for every $\theta'>0$ there is a threshold beyond which the same quantity is $<\theta'$, which
+  is exactly the statement that
+  \[
+    \frac{M}{n_l\cdot l}\sum_{i<n_l}[[\gamma_{l,i}]](\omega) \longrightarrow T(\omega)
+    \qquad (l\to\infty)
+    .
+  \]
+  As $\omega\in\mathcal{D}^1(E)$ was arbitrary, this proves the claim for every $1$-form, completing
+  the proof.
+\end{proof}

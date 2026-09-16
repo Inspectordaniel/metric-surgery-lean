@@ -1,0 +1,24 @@
+\begin{definition}[Admissible measure for a $1$-dimensional functional]
+  Let $E$ be a metric space and $T \colon \mathcal{D}^1(E) \to \mathbb{R}$ a (not necessarily
+  linear or continuous) functional on metric $1$-forms (\noderef{Form1}). A finite Borel measure
+  $\mu$ on $E$ is \emph{admissible} for $T$ when
+  \[
+    \abs{T(f,\pi)} \le \mathrm{Lip}(\pi) \int_E \abs{f} \, d\mu
+  \]
+  for every $\omega = (f,\pi) \in \mathcal{D}^1(E)$. This is exactly the condition of paper.tex
+  line 1099 (display \eqref{massmeasure}), specialized to dimension $k=1$ (so the product
+  $\prod_{i=1}^k \mathrm{Lip}(\pi_i)$ has the single factor $\mathrm{Lip}(\pi)$): every genuine
+  $T \in \mathcal{M}_1(E)$ is asserted by Ambrosio--Kirchheim to admit at least one such $\mu$.
+
+  \paragraph{Modeling note.} We quantify over $\omega$'s \emph{declared} witnessing constants
+  $\|f\|_\infty$ (unused here) and $\mathrm{Lip}(\pi)$ (\noderef{Form1}) rather than over the
+  optimal (infimal) Lipschitz constant of $\pi$. This changes no mathematical content: for a fixed
+  function $\pi$, the set of reals $K$ for which $\pi$ is $K$-Lipschitz is a closed upper set
+  $[\mathrm{Lip}^*(\pi),\infty)$ containing its own infimum $\mathrm{Lip}^*(\pi)$ (the tight
+  constant), so the condition holds for the declared $\mathrm{Lip}(\pi)$ of some $\omega$ with that
+  $\pi$-component exactly when it holds for the tight constant $\mathrm{Lip}^*(\pi)$, and every
+  larger declared constant only weakens (never strengthens) the condition on that $\omega$. Since
+  \noderef{Form1} lets $\pi$ range together with an arbitrarily chosen valid Lipschitz witness, the
+  condition ``admissible for every $\omega \in \mathcal{D}^1(E)$'' is unaffected by this choice of
+  presentation.
+\end{definition}

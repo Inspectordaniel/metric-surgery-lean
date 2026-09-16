@@ -1,0 +1,298 @@
+\begin{lemma}[Lemma A.3, $\psi$-vanishing, threshold form]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra, $D \subset E$
+  countable, nonempty, and dense, $C \in \mathbb{R}$ with $C > 0$, $l \in \mathbb{N}$, and $\eta$ a
+  finite Borel measure on $\Theta(E)$ such that $\length(\gamma) = l$ for $\eta$-a.e.\ $\gamma$.
+  Then for every $\theta > 0$ there exist $m \in \mathbb{N}$ with $m \ge 1$, a finite $Q$ with
+  $Q$ nonempty and $Q \subset D$, and $\epsilon \in \mathbb{Q}$ with $\epsilon > 0$, such that
+  $\gamma \mapsto \psi_{m,Q,\epsilon,C}(\gamma)$ and $\gamma \mapsto \tilde\psi_{m,Q,\epsilon,C}(\gamma)$
+  (\noderef{psi}, \noderef{psiTilde}) are both $\eta$-integrable and
+  \[
+    \int_{\Theta(E)} \psi_{m,Q,\epsilon,C}(\gamma) \, d\eta(\gamma)
+    + \int_{\Theta(E)} \tilde\psi_{m,Q,\epsilon,C}(\gamma) \, d\eta(\gamma)
+    < \theta
+    .
+  \]
+
+  \paragraph{Relation to the paper's statement.} Paper Lemma A.3 (paper.tex 1817--1843) states the
+  iterated limit $\lim_{m\to\infty}\lim_{Q\nearrow E_\mathbb{Q}}\lim_{\epsilon\to0} \int
+  \psi_{m,Q,\epsilon,C}\,d\overline\eta_l = 0$ (and likewise for $\tilde\psi$), for $\overline\eta_l$
+  a finite Borel measure on $\Theta_l(E)$. This node states the single-threshold consequence that
+  is actually consumed downstream (paper.tex 1408--1422, in the proof of Theorem 4.4): given
+  $\theta>0$, produce \emph{one} admissible index $(m,Q,\epsilon)$ at which the two integrals
+  already sum to less than $\theta$. This is exactly what "following \Cref{psi_vanishes} we may
+  take $\epsilon\to0,Q\nearrow E_\mathbb{Q},m\to\infty$ in that order" (paper.tex 1422) is used to
+  produce at the use site, and it is the natural non-net formulation of the same limit statement.
+  The measure $\eta$ here generalizes $\overline\eta_l$: the proof below uses only the a.e.\
+  length-$l$ hypothesis, not any support statement about $\Theta_l(E)$ specifically, so the node
+  is stated for an arbitrary such $\eta$ and applies to $\overline\eta_l$ as a special case.
+
+  \paragraph{Why $\epsilon$ is rational.} By the admissible-index convention fixed once for the
+  whole paper (paper.tex 1291--1293), $\psi_{m,Q,\epsilon,C}$ and $\tilde\psi_{m,Q,\epsilon,C}$ are
+  only ever used, throughout the rest of the argument, for $\epsilon,C$ ranging over
+  $\mathbb{Q}\cap(0,\infty)$ -- this is exactly what makes the family of all admissible
+  $(m,Q,\epsilon,C)$ countable, which the planned downstream assembly node (paper Theorem 4.4's
+  formalization) needs to merge it with the other countable families and extract a single diagonal
+  subsequence. The proof's own use of $\epsilon$
+  (paper.tex 1408, "let $\epsilon \in \mathbb{Q}\cap(0,\infty)$") already restricts to rationals at
+  the point of application. Stating $\epsilon:\mathbb{Q}$ here, rather than $\epsilon:\mathbb{R}$
+  as the lemma's display might suggest in isolation, is therefore not a weakening but the correct
+  reading under the paper's own indexing convention; it costs nothing in the proof below, since the
+  witness constructed there is already a rational number ($1/N$ for a natural $N$). ($C$, by
+  contrast, remains a real parameter here: it is supplied by the caller (fixed before this lemma is
+  invoked), and it is the caller's responsibility -- discharged where the planned target node
+  instantiates $C$ from a bound on the ambient $1$-forms (paper.tex 1382) -- to supply a rational
+  value when the countable admissible family is assembled.)
+
+  \paragraph{Why $1 \le m$ is required.} With \noderef{psi} and \noderef{psiTilde}'s literal Lean
+  definitions (a sum over $\mathtt{Finset.Icc\ 1\ m}$ and division by $(m:\mathbb{R})$), at $m=0$
+  the sum is empty and every division is by $0$, so Lean's junk-value convention $x/0=0$ makes
+  $\psi_{0,Q,\epsilon,C}=\tilde\psi_{0,Q,\epsilon,C}=0$ identically; an existential witness without
+  $1\le m$ could be satisfied vacuously by $m=0$ regardless of $\theta$, matching this tablet's
+  general convention (\noderef{PiBoundsPi}, \noderef{PiBoundsF}) of requiring $m\ge1$ explicitly.
+
+  \paragraph{Why $Q$ nonempty is required.} $\mathrm{infDist}(x,\emptyset)=0$ in Lean (the junk
+  value for the infimum of an empty set of distances), which is the opposite of the intended
+  reading $d(x,\emptyset)=+\infty$; at $Q=\emptyset$ every term of \noderef{psi}'s sum collapses to
+  its \emph{small} branch $2\epsilon$ (similarly for \noderef{psiTilde}), so an existential witness
+  without $Q$ nonempty could again be satisfied vacuously (take $Q=\emptyset$ and $\epsilon$ small),
+  matching \noderef{PiBoundsPi}/\noderef{PiBoundsF}'s own requirement.
+
+  \paragraph{Why $D$ is required nonempty.} The hypothesis $D$ countable and dense is, by itself,
+  satisfiable with $D=\emptyset$ whenever $E$ itself is empty (the closure of $\emptyset$ is
+  $\emptyset$, which equals $E$ when $E=\emptyset$; and $\Theta(E)$ is then also empty, since a
+  curve's $\mathrm{toFun}$ would have to be a total function $\mathbb{R}\to E$ into an empty
+  codomain from the nonempty domain $\mathbb{R}$, which cannot exist, so $\eta$ is necessarily the
+  zero measure and every other hypothesis is satisfied vacuously). In that situation
+  $Q \subset D = \emptyset$ forces $Q=\emptyset$, contradicting $Q$ nonempty, so the conclusion
+  would be unprovable for this (otherwise vacuously-hypothesised) instance. This is exactly the
+  same shape of degeneracy the tablet already guards against for $m$ and $Q$ above; the paper's own
+  ambient space $E$ is implicitly a nonempty (indeed complete, separable) metric space throughout
+  (it is the space in which the surgery and approximation theorems operate), so requiring $D$
+  nonempty here -- equivalently, by density, requiring $E$ nonempty -- only makes that standing
+  implicit assumption explicit, exactly as \noderef{PiBoundsPi}/\noderef{PiBoundsF} make $1\le m$
+  and $Q$ nonempty explicit. (Once $D$ is nonempty, so is $E$, since $D\subset E$; and the converse
+  -- $E$ nonempty forces $D$ nonempty, since $D$ dense in a nonempty space cannot have empty
+  closure -- shows the two hypotheses are interchangeable here.)
+
+  \paragraph{Why the integrability conjuncts are required.} Lean's Bochner integral of a
+  non-(a.e.-strongly-)measurable function is $0$ by the junk-value convention. Without asserting
+  integrability of the two witnesses, the displayed inequality could be satisfied vacuously by
+  choosing $Q,\epsilon,C,m$ so that $\psi_{m,Q,\epsilon,C}$ or $\tilde\psi_{m,Q,\epsilon,C}$ is
+  formally non-measurable (impossible for the honest functions here, by \noderef{PsiMeasurable} and
+  \noderef{PsiTildeMeasurable}, but the existential in isolation carries no such guarantee without
+  stating it) or otherwise non-integrable, giving zero integrals with no information about the
+  functions' actual values -- the same shape of vacuity recorded on this tablet's process memory
+  for $\psi$ at $m=0$. Recording integrability here also directly supplies what the planned
+  downstream assembly needs when it assembles the countable admissible family into one family of
+  $\eta_l$-integrable functions.
+\end{lemma}
+\begin{proof}
+  Write $\mu := \eta(\Theta(E)) < \infty$ (finiteness of $\eta$) and fix $D,C,l,\eta,\theta$ as in
+  the statement.
+
+  \emph{Step 1: a uniform, $(Q,\epsilon)$-independent dominator, for any fixed $m\ge1$.} Fix any
+  $m\in\mathbb{N}$ with $m\ge1$, any finite $Q\subset E$, and any $\epsilon>0$.
+
+  \emph{Step 1a: nonnegativity of $\psi_{m,Q,\epsilon,C}$ and $\tilde\psi_{m,Q,\epsilon,C}$.} By
+  \noderef{Curve}, $\length(\gamma)\ge0$ (field $\mathrm{len\_nonneg}$) for every $\gamma\in\Theta(E)$,
+  and $\mathrm{infDist}(\cdot,\cdot)\ge0$ always (an infimum of a set of nonnegative reals, or the
+  junk value $0$ on the empty set). Since $C>0$, $\epsilon>0$, and $m\ge1$: in \noderef{psi}'s $i$-th
+  $\min$, the first argument $2C\length(\gamma)/m\ge0$, and the second argument
+  $2\epsilon+2C(\mathrm{infDist}(\cdots)+\mathrm{infDist}(\cdots))\ge0$ as a sum of nonnegative terms;
+  the minimum of two nonnegative reals is nonnegative, so every summand of \noderef{psi}'s sum is
+  $\ge0$, hence $\sum_{i=1}^m\min\{\cdots\}\ge0$, and multiplying by $C>0$ gives
+  $C\sum_{i=1}^m\min\{\cdots\}\ge0$. The added term $2C^2\length(\gamma)^2/m\ge0$ (a square times a
+  nonnegative real, divided by the positive integer $m$). Hence
+  \begin{equation}\label{psi-nonneg}
+    \psi_{m,Q,\epsilon,C}(\gamma) \ge 0 \qquad\text{for every }\gamma\in\Theta(E), \text{ every }
+    m\ge1,\text{ finite }Q,\text{ and }\epsilon>0
+    .
+  \end{equation}
+  Identically, in \noderef{psiTilde}'s $i$-th summand $\min\{2C,\,\epsilon+2C\,\mathrm{infDist}(\cdots)\}$
+  both arguments are nonnegative ($2C>0$; $\epsilon+2C\,\mathrm{infDist}(\cdots)\ge0$ since $\epsilon>0$,
+  $C>0$, $\mathrm{infDist}\ge0$), so the minimum, and hence the sum of $m$ such minima, is $\ge0$; the
+  prefactor $C\length(\gamma)/m\ge0$ (by \noderef{Curve}, $\length(\gamma)\ge0$, together with $C>0$,
+  $m\ge1$), so the product of the two is $\ge0$; adding the nonnegative term $2C^2\length(\gamma)^2/m$
+  gives
+  \begin{equation}\label{psitilde-nonneg}
+    \tilde\psi_{m,Q,\epsilon,C}(\gamma) \ge 0 \qquad\text{for every }\gamma\in\Theta(E), \text{ every }
+    m\ge1,\text{ finite }Q,\text{ and }\epsilon>0
+    .
+  \end{equation}
+
+  \emph{Step 1b: the uniform bound, stated in absolute value.} By
+  \noderef{psi}'s definition, every summand of
+  $\psi_{m,Q,\epsilon,C}(\gamma) = C\sum_{i=1}^m \min\{2C\length(\gamma)/m,\,\cdots\}$ is at most its
+  first argument $2C\length(\gamma)/m$ (definition of $\min$), so the sum of the $m$ summands is at
+  most $m\cdot(2C\length(\gamma)/m) = 2C\length(\gamma)$, giving
+  $C\sum_{i=1}^m\min\{\cdots\} \le 2C^2\length(\gamma)$. Since $m\ge1$ and $\length(\gamma)^2\ge0$,
+  dividing by $m$ can only decrease a nonnegative quantity relative to dividing by $1$:
+  $2C^2\length(\gamma)^2/m \le 2C^2\length(\gamma)^2$. Adding the two displayed bounds and using
+  \eqref{psi-nonneg} to rewrite the nonnegative quantity $\psi_{m,Q,\epsilon,C}(\gamma)$ as its own
+  absolute value,
+  \begin{equation}\label{psi-dom}
+    |\psi_{m,Q,\epsilon,C}(\gamma)| = \psi_{m,Q,\epsilon,C}(\gamma) \le 2C^2\length(\gamma) + 2C^2\length(\gamma)^2
+    \qquad\text{for every } \gamma \in \Theta(E)
+    ,
+  \end{equation}
+  independently of the particular $Q$ and $\epsilon$ chosen (only $m\ge1$ and $C>0$ were used).
+  The identical argument for \noderef{psiTilde}'s definition
+  $\tilde\psi_{m,Q,\epsilon,C}(\gamma) = 2C^2\length(\gamma)^2/m +
+  (C\length(\gamma)/m)\sum_{i=1}^m\min\{2C,\,\cdots\}$ -- bounding each summand of the sum by its
+  first argument $2C$, so the sum is at most $2Cm$, and, since $C\length(\gamma)/m\ge0$ (by
+  \noderef{Curve}, $\length(\gamma)\ge0$; also $C>0$, $m\ge1$) multiplying by it preserves the
+  inequality direction, the second term is at most
+  $(C\length(\gamma)/m)(2Cm) = 2C^2\length(\gamma)$, then bounding
+  $2C^2\length(\gamma)^2/m\le2C^2\length(\gamma)^2$ as before -- gives, using \eqref{psitilde-nonneg}
+  to rewrite $\tilde\psi_{m,Q,\epsilon,C}(\gamma)$ as its own absolute value, the same bound
+  \begin{equation}\label{psitilde-dom}
+    |\tilde\psi_{m,Q,\epsilon,C}(\gamma)| = \tilde\psi_{m,Q,\epsilon,C}(\gamma) \le 2C^2\length(\gamma) + 2C^2\length(\gamma)^2
+    \qquad\text{for every } \gamma\in\Theta(E)
+    .
+  \end{equation}
+  This is exactly the paper's own display (paper.tex 1833), here obtained for \emph{every} $Q,
+  \epsilon$ at a fixed $m$, not merely restricted to curves of length at most $l$ (and, by
+  \eqref{psi-nonneg}--\eqref{psitilde-nonneg}, stated as a genuine two-sided absolute-value bound
+  rather than only an upper bound). Substituting the
+  a.e.\ hypothesis $\length(\gamma)=l$, \eqref{psi-dom} and \eqref{psitilde-dom} give
+  \begin{equation}\label{psi-dom-l}
+    \max\{|\psi_{m,Q,\epsilon,C}(\gamma)|, |\tilde\psi_{m,Q,\epsilon,C}(\gamma)|\} \le 2C^2l+2C^2l^2
+    \qquad\text{for } \eta\text{-a.e.\ }\gamma
+    ,
+  \end{equation}
+  for every $m\ge1$, $Q$ finite, $\epsilon>0$. By \noderef{PsiMeasurable} and
+  \noderef{PsiTildeMeasurable}, $\gamma\mapsto\psi_{m,Q,\epsilon,C}(\gamma)$ and
+  $\gamma\mapsto\tilde\psi_{m,Q,\epsilon,C}(\gamma)$ are measurable for every such $m,Q,\epsilon$; a
+  measurable function that is a.e.\ bounded in absolute value by a constant, against a finite
+  measure, is integrable (the constant function dominates it and is integrable against a finite
+  measure) -- this applies literally here, by \eqref{psi-dom-l}, since the bound there is already
+  stated as a bound on absolute values. Hence \emph{both $\psi_{m,Q,\epsilon,C}$ and
+  $\tilde\psi_{m,Q,\epsilon,C}$ are
+  $\eta$-integrable for every $m\ge1$, every finite $Q$, and every $\epsilon>0$} -- this already
+  establishes the two integrability conjuncts for whatever witness is produced below.
+
+  \emph{Step 2: fix $m$ from $\theta$.} Since $\mu<\infty$ is a fixed nonnegative real and $\theta>0$,
+  the Archimedean property of $\mathbb{R}$ gives $m_0 \in \mathbb{N}$ with
+  $m_0 \ge \max\{1,\ \lceil 8C^2l^2\mu/\theta\rceil+1\}$ (interpreting $8C^2l^2\mu/\theta \le 0$, which
+  forces the second term of the max to $\lceil 8C^2l^2\mu/\theta\rceil+1 \le 1$, as the case $\mu=0$
+  or $l=0$, where any $m_0\ge1$ works). In particular $m_0\ge1$, and, since
+  $\lceil x\rceil+1 > x$ for every real $x$, taking $x=8C^2l^2\mu/\theta$ gives the \emph{strict}
+  inequality $m_0 > 8C^2l^2\mu/\theta$ (this strictness is the point: $m_0\ge\lceil x\rceil$ alone
+  would only give $m_0\ge x$, with equality possible whenever $x\in\mathbb{N}$, e.g.\
+  $C=l=\mu=\theta=1$ gives $x=8=\lceil x\rceil$, and $m_0=8$ would only yield
+  $4C^2l^2\mu/m_0=1/2=\theta/2$, not $<\theta/2$). Multiplying the strict inequality
+  $m_0>8C^2l^2\mu/\theta$ by $\theta/m_0>0$ (valid since $\theta>0$ and $m_0\ge1>0$) gives
+  $\theta > 8C^2l^2\mu/m_0$, i.e.\ dividing by $2$,
+  \begin{equation}\label{m-choice}
+    \frac{4C^2l^2\mu}{m_0} < \frac\theta2
+    .
+  \end{equation}
+  Fix $m := m_0$ for the remainder of the proof.
+
+  \emph{Step 3: enumerate $D$.} Since $D$ is countable and nonempty, there is a surjection
+  $f : \mathbb{N} \to D$ (a standard fact about nonempty countable sets: enumerate $D$, repeating an
+  arbitrary fixed element of $D$ to pad if $D$ is finite). For $N \ge 1$, define $Q_N :=
+  \{f(0),\dots,f(N-1)\} \subset D$, a finite, nonempty (it contains $f(0)$) subset of $D$; the
+  sequence $(Q_N)_{N\ge1}$ is increasing in $N$ (as finite sets, $Q_N \subset Q_{N+1}$), and
+  $\bigcup_{N\ge1} Q_N = D$ since $f$ is surjective onto $D$. Define $\epsilon_N := 1/N \in
+  \mathbb{Q}$, so $\epsilon_N > 0$ and $\epsilon_N \to 0$ as $N \to \infty$.
+
+  \emph{Step 4: pointwise convergence of $\psi_{m,Q_N,\epsilon_N,C}$ and
+  $\tilde\psi_{m,Q_N,\epsilon_N,C}$, for the fixed $m$ of Step 2.} Fix $x \in E$. Since $D$ is dense
+  in $E$, $\mathrm{infDist}(x,D) = 0$ (density gives, for every $r>0$, a point of $D$ within $r$ of
+  $x$, so the infimum of distances from $x$ to $D$ is $0$); and for every $r > \mathrm{infDist}(x,D)
+  = 0$ there is $q \in D$ with $d(x,q) < r$, and since $\bigcup_N Q_N = D$ (Step 3), $q \in Q_{N_0}$
+  for some $N_0$, so $\mathrm{infDist}(x,Q_N) \le d(x,q) < r$ for every $N \ge N_0$ (using
+  $Q_{N_0} \subset Q_N$, monotone in $N$). As $r>0$ was arbitrary, $\mathrm{infDist}(x,Q_N) \to 0$
+  as $N \to \infty$, for every fixed $x \in E$.
+
+  Now fix any $\gamma \in \Theta(E)$ and any $i \in \{1,\dots,m\}$ (with $m$ from Step 2, fixed
+  throughout this step). Applying the previous paragraph at $x = \gamma(i\cdot\length(\gamma)/m)$
+  and at $x=\gamma((i-1)\cdot\length(\gamma)/m)$ (both fixed points of $E$, independent of $N$),
+  \[
+    \mathrm{infDist}(\gamma(i\cdot\length(\gamma)/m),Q_N) \to 0
+    ,\qquad
+    \mathrm{infDist}(\gamma((i-1)\cdot\length(\gamma)/m),Q_N) \to 0
+    \qquad(N\to\infty)
+    .
+  \]
+  Since also $\epsilon_N \to 0$, the second argument of \noderef{psi}'s $i$-th $\min$,
+  $2\epsilon_N + 2C\bigl(\mathrm{infDist}(\gamma(i\cdot\length(\gamma)/m),Q_N) +
+  \mathrm{infDist}(\gamma((i-1)\cdot\length(\gamma)/m),Q_N)\bigr)$, tends to $0$ as $N\to\infty$; and
+  the first argument $2C\length(\gamma)/m$ is a fixed nonnegative real, independent of $N$. Since
+  $\min$ is (jointly) continuous, the $i$-th summand $\min\{2C\length(\gamma)/m,\,\cdots\} \to
+  \min\{2C\length(\gamma)/m,0\} = 0$ (as $2C\length(\gamma)/m\ge0$, using \noderef{Curve}'s
+  $\mathrm{len\_nonneg}$ field for $\length(\gamma)\ge0$ together with $C>0$, $m\ge1$). As $m$ is
+  fixed and finite,
+  this holds for each of the $m$ summands, so their (finite) sum tends to $0$, and hence
+  \[
+    \psi_{m,Q_N,\epsilon_N,C}(\gamma) = C\sum_{i=1}^m\min\{\cdots\} + \frac{2C^2\length(\gamma)^2}{m}
+    \;\longrightarrow\; 0 + \frac{2C^2\length(\gamma)^2}{m}
+    \qquad (N\to\infty)
+    ,
+  \]
+  for every fixed $\gamma \in \Theta(E)$. The identical argument applied to \noderef{psiTilde}'s
+  $i$-th summand $\min\{2C,\,\epsilon_N+2C\,\mathrm{infDist}(\gamma(i\cdot\length(\gamma)/m),Q_N)\}
+  \to \min\{2C,0\}=0$ gives $\sum_{i=1}^m\min\{\cdots\}\to0$, so
+  \[
+    \tilde\psi_{m,Q_N,\epsilon_N,C}(\gamma) = \frac{2C^2\length(\gamma)^2}{m} +
+      \frac{C\length(\gamma)}{m}\sum_{i=1}^m\min\{\cdots\}
+    \;\longrightarrow\; \frac{2C^2\length(\gamma)^2}{m} + 0
+    \qquad(N\to\infty)
+    ,
+  \]
+  again for every fixed $\gamma \in \Theta(E)$.
+
+  \emph{Step 5: dominated convergence.} For each $N \ge 1$, the function
+  $\gamma \mapsto \psi_{m,Q_N,\epsilon_N,C}(\gamma) + \tilde\psi_{m,Q_N,\epsilon_N,C}(\gamma)$ is
+  measurable (\noderef{PsiMeasurable}, \noderef{PsiTildeMeasurable}, $m,Q_N,\epsilon_N,C$ fixed for
+  each $N$) and, by \eqref{psi-dom-l} and the triangle inequality,
+  \[
+    |\psi_{m,Q_N,\epsilon_N,C}(\gamma)+\tilde\psi_{m,Q_N,\epsilon_N,C}(\gamma)|
+    \le |\psi_{m,Q_N,\epsilon_N,C}(\gamma)| + |\tilde\psi_{m,Q_N,\epsilon_N,C}(\gamma)|
+    \le 2(2C^2l+2C^2l^2) = 4C^2l+4C^2l^2
+    \qquad\eta\text{-a.e.}
+    ,
+  \]
+  i.e.\ this function is dominated in absolute value $\eta$-a.e.\ by the constant $4C^2l+4C^2l^2$,
+  which is $\eta$-integrable since $\eta$ is finite. By
+  Step 4, this sequence of functions converges pointwise, everywhere on $\Theta(E)$ (in particular
+  $\eta$-a.e.), to $\gamma \mapsto 4C^2\length(\gamma)^2/m$. By the dominated convergence theorem,
+  \[
+    \int_{\Theta(E)} \bigl(\psi_{m,Q_N,\epsilon_N,C}(\gamma)+\tilde\psi_{m,Q_N,\epsilon_N,C}(\gamma)\bigr)
+      \,d\eta(\gamma) \;\longrightarrow\; \int_{\Theta(E)} \frac{4C^2\length(\gamma)^2}{m}\,d\eta(\gamma)
+    \qquad(N\to\infty)
+    .
+  \]
+  Since $\length(\gamma)=l$ for $\eta$-a.e.\ $\gamma$, the functions $\gamma\mapsto\length(\gamma)^2$
+  and the constant function $l^2$ agree $\eta$-a.e., so their integrals against the finite measure
+  $\eta$ agree: $\int_{\Theta(E)}\length(\gamma)^2\,d\eta(\gamma) = l^2\mu$. Hence the right-hand
+  side above equals $4C^2l^2\mu/m$, i.e.
+  \[
+    \int_{\Theta(E)} \bigl(\psi_{m,Q_N,\epsilon_N,C}(\gamma)+\tilde\psi_{m,Q_N,\epsilon_N,C}(\gamma)\bigr)
+      \,d\eta(\gamma) \;\longrightarrow\; \frac{4C^2l^2\mu}{m}
+    \qquad(N\to\infty)
+    .
+  \]
+
+  \emph{Step 6: extract a single $N$.} By \eqref{m-choice}, $4C^2l^2\mu/m < \theta/2$. Since the
+  sequence in Step 5 converges to this quantity, there is $N_0$ such that for every $N \ge N_0$,
+  \[
+    \int_{\Theta(E)} \bigl(\psi_{m,Q_N,\epsilon_N,C}(\gamma)+\tilde\psi_{m,Q_N,\epsilon_N,C}(\gamma)\bigr)
+      \,d\eta(\gamma) < \frac{4C^2l^2\mu}{m} + \frac\theta2 < \frac\theta2+\frac\theta2 = \theta
+    .
+  \]
+  Fix any $N \ge \max\{N_0,1\}$, and set $Q := Q_N$, $\epsilon := \epsilon_N = 1/N \in \mathbb{Q}$.
+
+  \emph{Step 7: assemble the witness.} Take $m$ as fixed in Step 2, $Q := Q_N$, $\epsilon :=
+  \epsilon_N$ as just fixed. Then: $1 \le m$ by Step 2; $Q$ is nonempty and $Q \subset D$ by Step 3
+  (as $N \ge 1$); $\epsilon = 1/N > 0$ is rational by construction; $\psi_{m,Q,\epsilon,C}$ and
+  $\tilde\psi_{m,Q,\epsilon,C}$ are $\eta$-integrable by Step 1 (applied at this particular
+  $m,Q,\epsilon$); and, since both are $\eta$-integrable, linearity of the Bochner integral gives
+  \[
+    \int_{\Theta(E)} \psi_{m,Q,\epsilon,C}\,d\eta + \int_{\Theta(E)} \tilde\psi_{m,Q,\epsilon,C}\,d\eta
+      = \int_{\Theta(E)} \bigl(\psi_{m,Q,\epsilon,C}+\tilde\psi_{m,Q,\epsilon,C}\bigr)\,d\eta
+      < \theta
+  \]
+  by Step 6. This exhibits the required $(m,Q,\epsilon)$, completing the proof.
+\end{proof}

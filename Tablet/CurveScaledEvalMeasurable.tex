@@ -1,0 +1,22 @@
+\begin{helper}[Evaluation at a length-proportional point is measurable]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra, and let
+  $c \in \mathbb{R}$ be a fixed constant. Then $\gamma \mapsto \gamma(c \cdot \length(\gamma))$ is a
+  measurable map $\Theta(E) \to E$, with $\Theta(E)$ carrying the evaluation $\sigma$-algebra
+  (\noderef{CurveMeasurableSpace}).
+
+  This is exactly the shape of evaluation point needed by $\psi_{m,Q,\epsilon,C}$ and
+  $\tilde\psi_{m,Q,\epsilon,C}$ (paper.tex line 1718), whose summands evaluate $\gamma$ at
+  $s_i = i\cdot\length(\gamma)/m$ for fixed rational constants $i/m$: unlike a fixed real time $t$,
+  this evaluation point moves with $\gamma$ itself, so joint (Carath\'eodory-type) measurability in
+  $(t,\gamma)$ is genuinely needed here, not just measurability in $\gamma$ at a fixed $t$.
+\end{helper}
+\begin{proof}
+  The map $\gamma \mapsto (c \cdot \length(\gamma), \gamma)$ is measurable: its first coordinate is
+  $c \cdot \length(\gamma)$, measurable since $\gamma \mapsto \length(\gamma)$ is measurable
+  (\noderef{CurveLenMeasurable}) and multiplication by the constant $c$ is continuous hence
+  measurable, and its second coordinate is the identity, trivially measurable. Composing this
+  measurable map $\Theta(E) \to \mathbb{R} \times \Theta(E)$ with the jointly measurable evaluation
+  map $(t,\gamma) \mapsto \gamma(t)$ (\noderef{CurveEvalJointMeasurable}) gives that
+  $\gamma \mapsto \gamma(c \cdot \length(\gamma))$ is measurable, as the composite of measurable
+  maps.
+\end{proof}

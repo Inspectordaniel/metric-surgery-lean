@@ -1,0 +1,296 @@
+\begin{lemma}[Existence of the Type~I cut point]
+  \label{typeI-cut-point-exists}
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}) a closed curve
+  (\noderef{IsClosedCurve}) that is piecewise geodesic (\noderef{IsPiecewiseGeodesic}),
+  $\epsilon \in (0,1)$, $\delta > 0$, and suppose $\gamma$ is \emph{not} $(\delta,\epsilon)$-l.s.i.\
+  (\noderef{IsLSI}). Then there exist $t,t' \in [0,\length(\gamma)]$ and $\beta \in \mathbb{R}$ such
+  that, writing $A := \gamma|_{[t,t']}$ (\noderef{curveArc}) for the counter-clockwise circular arc
+  between them,
+  \[
+    \beta = \length(A)
+    ,\qquad
+    \beta = d_\gamma(t,t')
+    ,\qquad
+    \delta \le \beta \le \tfrac{1}{2}\length(\gamma)
+    ,
+  \]
+  \[
+    d(\gamma(t),\gamma(t')) \le \epsilon\beta
+    ,
+  \]
+  and, whenever $\delta < \beta$,
+  \[
+    \epsilon\beta \le d(\gamma(t),\gamma(t'))
+    ,\qquad
+    A \text{ is not a closed curve}
+    ,\qquad
+    A \text{ is } (\delta,\epsilon)\text{-l.s.i.}
+  \]
+  No claim of definiteness is made about $(t,t',\beta)$: the paper's choice of the
+  lexicographically-smallest attaining pair (paper.tex 864) carries no mathematical content beyond
+  attainment, and no node in this tablet uses functionality of the choice.
+
+  \paragraph{Relation to the paper.} This is Lemma~3.8 of the paper (paper.tex 798-838, proof
+  840-913), specialized to exactly the data needed to construct the Type~I cut point; the
+  ball-growth and length bounds on the two cut pieces $\gamma',g$ that the full Lemma~3.8 asserts
+  are the content of \Cref{cut-type-I}, which consumes $(t,t',\beta)$ from the present lemma. In
+  particular this lemma does \emph{not} hypothesize that $\gamma$ is a $(\delta,\epsilon,n)$-curve:
+  inspecting the paper's own proof (840-875), only the failure of l.s.i.\ is used to locate the cut
+  point $(t,t')$ and the value $\beta(\gamma)$; the $(\delta,\epsilon,n)$-hypothesis is used only
+  afterwards, in bounding $\Morrey{g}$ (876-907), which is \Cref{cut-type-I}'s job, not this
+  lemma's.
+
+  \paragraph{Why the three characterizations of $\beta$ are all kept.} $\beta = \length(A)$ is the
+  quantity the paper's infimum \eqref{betagammainf} literally minimizes; $\beta = d_\gamma(t,t')$ is
+  the form \Cref{cut-type-I} and \Cref{arc-resolution-split-point}'s consumers need when relating
+  $A$'s own l.s.i.\ statement back to $\gamma$. The two are consistent (in \emph{either} order of
+  $t,t'$) precisely because $\beta \le \tfrac12\length(\gamma)$: this is exactly why that bound is
+  load-bearing rather than decorative (it is what the proof below, General Fact~3, uses to identify
+  $d_\gamma$ with the arc length $\ell$, both at $(t,t')$ itself and, later, for pairs strictly
+  inside the arc -- the mechanization of paper.tex 891-894). It is not automatic that the pair with
+  $\length(A)\le\tfrac12\length(\gamma)$ has $t\le t'$: as recorded in the process memory on the
+  wrap-arc counterexample, the minimizing pair can force $t' < t$, i.e.\ the \emph{wrap} branch of
+  $A$; nothing in this statement or proof singles out either order.
+
+  \paragraph{Repair of paper.tex 858.} The paper asserts that "$\length(\gamma|_{[s,s']})$,
+  $d_\gamma(s,s')$ and $d(\gamma(s),\gamma(s'))$ are continuous functions of $s,s'$" and concludes
+  attainment from compactness. The first of these three is \emph{false} as a function on the whole
+  square $[0,L]^2$: writing $\ell(s,s')$ for the ccw arc length (General Fact~2 below), $\ell$ has a
+  jump of size $L=\length(\gamma)$ across the entire diagonal $s=s'$ whenever $L>0$. The proof below
+  repairs this: the admissible set $S$ (General Facts~4-5) is bounded away from the diagonal
+  (Step~3), and $\ell$ restricted to $S$, though not the restriction of a function continuous on the
+  whole square, is nonetheless continuous on $S$ itself, which is what attainment (Step~4) actually
+  needs.
+
+  \paragraph{Why the non-strict conclusions, and why only the boundary pair needs a limit.} The two
+  conjuncts guarded by $\delta<\beta$ that assert $\epsilon\beta \le d(\gamma(t),\gamma(t'))$ and the
+  l.s.i.\ inequality on $A$ are stated \emph{non-strictly}. This is the repair recorded at
+  \Cref{IsLSI} (cycle~12). For a pair \emph{strictly} inside the arc (Step~10's first case below),
+  minimality of $\beta$ over $S$ gives the l.s.i.\ inequality \emph{strictly}, with no limit needed.
+  Only the single boundary pair $(t,t')$ itself -- the case $p=0,p'=\beta$ in Step~10, and the
+  content of Step~8 -- cannot be handled this way (there is no pair of $S$ strictly shorter to
+  compare against \emph{at} the boundary), and is reached only as a limit of strictly-shorter
+  interior pairs, which produces a non-strict inequality in the limit (Step~8). The paper's
+  assertion of a strict inequality at that boundary pair (line 897) does not follow from its own
+  argument and is not repeated here.
+\end{lemma}
+\begin{proof}
+  Write $L := \length(\gamma)$. For $a,b \in [0,L]$ define
+  \[
+    \ell(a,b) := \begin{cases} b - a & a \le b \\ L - a + b & a > b\end{cases}
+    ,
+  \]
+  and let
+  \[
+    S := \{(a,b) \in [0,L]^2 : \delta \le d_\gamma(a,b) \text{ and } d(\gamma(a),\gamma(b)) \le
+    \epsilon\, d_\gamma(a,b)\}
+    .
+  \]
+  ($S$ is exactly the admissible set of the paper's infimum \eqref{betagammainf}, and $\ell(a,b)$ is
+  exactly the length that infimum minimizes -- General Fact~2 below.)
+
+  \paragraph{General Fact 1 (interior values of a restriction).} For $a\le b$ in $[0,L]$ and $u \in
+  [0,b-a]$: $\mathrm{curveRestrict}(\gamma,a,b)(u) = \gamma(a+u)$. Indeed by
+  \noderef{curveRestrict}'s defining formula, $\mathrm{curveRestrict}(\gamma,a,b)(u) = \gamma(a +
+  \min(b-a,\max(0,u)))$; since $0\le u\le b-a$, $\max(0,u)=u$ and $\min(b-a,u)=u$, giving
+  $\gamma(a+u)$.
+
+  \paragraph{General Fact 2 (arc length formula).} For $a,b\in[0,L]$ (and any proofs of $0\le a,b
+  \le L$), the circular arc $\gamma|_{[a,b]}$ (\noderef{curveArc}) has $\length(\gamma|_{[a,b]}) =
+  \ell(a,b)$: if $a\le b$, $\gamma|_{[a,b]} = \mathrm{curveRestrict}(\gamma,a,b)$, whose length field
+  is $b-a$ (\noderef{curveRestrict}); otherwise $\gamma|_{[a,b]} =
+  \mathrm{curveWrapRestrict}(\gamma,a,b)$, whose length is the sum of the lengths of
+  $\mathrm{curveRestrict}(\gamma,a,L)$ and $\mathrm{curveRestrict}(\gamma,0,b)$
+  (\noderef{curveWrapRestrict}, \noderef{curveConcat}), i.e.\ $(L-a)+(b-0) = (L-a)+b$.
+
+  \paragraph{General Fact 3 (circle distance equals arc length when short enough).} For $a,b\in
+  [0,L]$ with $\ell(a,b) \le L/2$: $d_\gamma(a,b) = \ell(a,b)$. Since $\gamma$ is closed,
+  $d_\gamma(a,b) = \min(|a-b|, L-|a-b|)$ (\noderef{dGamma}). If $a\le b$: $\ell(a,b)=b-a=|a-b|$, and
+  $|a-b|\le L/2$ (hypothesis) gives $|a-b| \le L - |a-b|$, so the minimum is $|a-b|=\ell(a,b)$. If
+  $a>b$: $\ell(a,b) = L-a+b = L-|a-b|$ (using $|a-b|=a-b$), and $\ell(a,b)\le L/2$ gives
+  $L-|a-b|\le|a-b|$, so the minimum is $L-|a-b|=\ell(a,b)$.
+
+  \paragraph{General Fact 4 (symmetry of $S$, and length complementarity).} For $a,b\in[0,L]$:
+  $(a,b)\in S \iff (b,a)\in S$, since $d_\gamma(a,b)=d_\gamma(b,a)$ (the formula
+  $\min(|a-b|,L-|a-b|)$ is manifestly symmetric, \noderef{dGamma}) and $d(\gamma(a),\gamma(b)) =
+  d(\gamma(b),\gamma(a))$ (symmetry of the metric $d$ on $E$). If in addition $a \ne b$, then
+  $\ell(a,b)+\ell(b,a) = L$: if $a<b$, $\ell(a,b)=b-a$ and (since $b>a$) $\ell(b,a) = L-b+a$, summing
+  to $L$; if $a>b$, symmetrically $\ell(a,b)=L-a+b$ and $\ell(b,a)=a-b$, again summing to $L$.
+
+  \paragraph{General Fact 5 (every element of $S$ has $a\ne b$ and $\ell(a,b)\ge\delta$).} Let
+  $(a,b)\in S$, so $\delta \le d_\gamma(a,b) = \min(|a-b|,L-|a-b|)$; since a lower bound on a minimum
+  of two quantities bounds each of them, this gives both $\delta \le |a-b|$ and $\delta \le
+  L-|a-b|$ (equivalently $|a-b|\le L-\delta$). From $\delta\le|a-b|$: $a\ne b$ (else $|a-b|=0<
+  \delta$). If $a\le b$: $\ell(a,b)=b-a=|a-b|\ge\delta$ (using $\delta\le|a-b|$). If $a>b$:
+  $\ell(a,b)=L-a+b=L-|a-b|\ge L-(L-\delta)=\delta$ (using $|a-b|\le L-\delta$).
+
+  \paragraph{Step 1: $S$ is non-empty.} Since $\gamma$ is not $(\delta,\epsilon)$-l.s.i.\
+  (\noderef{IsLSI}) while $\gamma$ \emph{is} piecewise geodesic (hypothesis), the l.s.i.\ inequality
+  itself must fail: there exist $s_0,s_0'\in[0,L]$ with $\delta \le d_\gamma(s_0,s_0')$ and
+  $d(\gamma(s_0),\gamma(s_0')) < \epsilon\, d_\gamma(s_0,s_0')$ (negating the universally-quantified
+  inequality in \noderef{IsLSI}, whose first conjunct, $\mathrm{IsPiecewiseGeodesic}(\gamma)$,
+  already holds). In particular $d(\gamma(s_0),\gamma(s_0')) \le \epsilon\, d_\gamma(s_0,s_0')$, so
+  $(s_0,s_0') \in S$.
+
+  \paragraph{Step 2: $S$ is compact.} $S = [0,L]^2 \cap \{(a,b) : \delta \le d_\gamma(a,b)\} \cap
+  \{(a,b) : d(\gamma(a),\gamma(b)) - \epsilon\, d_\gamma(a,b) \le 0\}$. The square $[0,L]^2$ is
+  compact (a product of compact intervals). The map $(a,b) \mapsto d_\gamma(a,b) =
+  \min(|a-b|,L-|a-b|)$ is continuous on $\mathbb{R}^2$ (a composition of continuous arithmetic
+  operations, \noderef{dGamma}, using closedness of $\gamma$ to fix the branch), so $\{\delta \le
+  d_\gamma(a,b)\}$ is closed (preimage of the closed set $[\delta,\infty)$). $\gamma$'s underlying
+  map is $1$-Lipschitz on all of $\mathbb{R}$ (\noderef{CurveLipschitz}), hence continuous, so
+  $(a,b) \mapsto d(\gamma(a),\gamma(b))$ is continuous on $\mathbb{R}^2$ (composition of continuous
+  maps), and so is $(a,b)\mapsto d(\gamma(a),\gamma(b))-\epsilon\, d_\gamma(a,b)$; hence the second
+  set is closed too (preimage of $(-\infty,0]$). $S$ is an intersection of a compact set with two
+  closed sets, hence compact.
+
+  \paragraph{Step 3: $\ell$ restricted to $S$ is continuous.} Let $B_1 := \{(a,b)\in[0,L]^2 :
+  \delta \le b-a \le L-\delta\}$ and $B_2 := \{(a,b)\in[0,L]^2 : \delta \le a-b \le L-\delta\}$,
+  each closed (defined by non-strict inequalities on the continuous maps $b-a$, $a-b$) and disjoint
+  (the first forces $b>a$, the second $a>b$). By General Fact~5, every $(a,b)\in S$ has $a\ne b$
+  and $\delta \le |a-b| \le L-\delta$ (the second inequality since $\delta \le
+  \min(|a-b|,L-|a-b|)\le L-|a-b|$); if $a<b$ this places $(a,b)\in B_1$, if $a>b$ this places
+  $(a,b)\in B_2$. So $S \subseteq B_1 \cup B_2$, and $S \cap B_1$, $S \cap B_2$ partition $S$ into
+  two disjoint sets, each closed in $S$ (intersections of $S$ with a closed set) and hence, being
+  complementary within $S$, also open in $S$. On $B_1$ (where $a<b$), $\ell(a,b)=b-a$, an affine and
+  hence continuous function; on $B_2$ (where $a>b$), $\ell(a,b) = L-a+b$, likewise affine and
+  continuous. So $\ell$ is continuous on each of the two clopen pieces $S\cap B_1$, $S \cap B_2$ of
+  $S$, hence continuous on all of $S$.
+
+  \paragraph{Step 4: attainment.} $S$ is non-empty (Step~1) and compact (Step~2), and $\ell$ is
+  continuous on $S$ (Step~3); by the extreme value theorem, $\ell$ attains a minimum value on $S$.
+  Fix $(t,t')\in S$ with $\ell(t,t') \le \ell(a,b)$ for every $(a,b)\in S$, and set $\beta :=
+  \ell(t,t')$.
+
+  \paragraph{Step 5: $\delta \le \beta \le L/2$.} $\delta\le\beta$ is General Fact~5 applied to
+  $(t,t')\in S$. For the upper bound: by General Fact~4, $(t',t)\in S$ too, so by minimality of
+  $\beta$, $\beta \le \ell(t',t)$. Also $t\ne t'$ (General Fact~5), so General Fact~4 gives
+  $\ell(t,t')+\ell(t',t)=L$. Combining, $2\beta \le \ell(t,t')+\ell(t',t) = L$, i.e.\ $\beta \le
+  L/2$.
+
+  \paragraph{Step 6: $\beta = \length(A)$ and $\beta = d_\gamma(t,t')$.} By General Fact~2 (with
+  $a:=t,b:=t'$), $\length(A) = \ell(t,t') = \beta$. By General Fact~3 (using $\beta \le L/2$ from
+  Step~5), $d_\gamma(t,t') = \ell(t,t') = \beta$.
+
+  \paragraph{Step 7: $d(\gamma(t),\gamma(t')) \le \epsilon\beta$.} Immediate from $(t,t')\in S$
+  (its defining inequality) together with $d_\gamma(t,t')=\beta$ (Step~6).
+
+  For the remaining three conjuncts, assume $\delta < \beta$.
+
+  \paragraph{General Fact 6 (arc-to-ambient correspondence).} Define $\sigma : [0,\beta] \to [0,L]$
+  by: if $t\le t'$, $\sigma(p) := t+p$; if $t'<t$, writing $R:=L-t$ (the length of the tail piece
+  $\gamma|_{[t,L]}$), $\sigma(p) := t+p$ if $p\le R$, else $\sigma(p) := p-R$. Then for every $p \in
+  [0,\beta]$, $A(p) = \gamma(\sigma(p))$; and for every $p,p'\in[0,\beta]$ with $p \le p'$,
+  $\ell(\sigma(p),\sigma(p')) = p'-p$.
+
+  \emph{$\sigma$ maps into $[0,L]$.} If $t\le t'$: $\sigma(p)=t+p \in [t,t+\beta]=[t,t']\subseteq
+  [0,L]$ (using $\beta = \ell(t,t') = t'-t$ in this case, Step~6 and $\ell$'s definition). If
+  $t'<t$: for $p\le R$, $\sigma(p)=t+p\in[t,t+R]=[t,L]\subseteq[0,L]$; for $p>R$, $\beta =
+  \ell(t,t')=(L-t)+t'=R+t'$ (Step~6 and $\ell$'s $a>b$ branch, as $t'<t$), so $p \le \beta$ gives
+  $\sigma(p)=p-R \in (0,\beta-R]=(0,t']\subseteq[0,L]$.
+
+  \emph{$A(p)=\gamma(\sigma(p))$.} If $t\le t'$: $A = \mathrm{curveRestrict}(\gamma,t,t')$
+  (\noderef{curveArc}), and $p\in[0,\beta]=[0,t'-t]$, so General Fact~1 (with $a:=t,b:=t',u:=p$)
+  gives $A(p)=\gamma(t+p)=\gamma(\sigma(p))$. If $t'<t$: $A =
+  \mathrm{curveWrapRestrict}(\gamma,t,t') = \mathrm{curveRestrict}(\gamma,t,L) *
+  \mathrm{curveRestrict}(\gamma,0,t')$ (\noderef{curveWrapRestrict}), and by \noderef{curveConcat}'s
+  defining formula, $A(p) = \mathrm{curveRestrict}(\gamma,t,L)(p)$ if $p \le R$ (the length of the
+  first piece), else $\mathrm{curveRestrict}(\gamma,0,t')(p-R)$. In the first case, General Fact~1
+  (with $a:=t,b:=L,u:=p\in[0,R]$) gives $\mathrm{curveRestrict}(\gamma,t,L)(p) = \gamma(t+p) =
+  \gamma(\sigma(p))$. In the second case, General Fact~1 (with $a:=0,b:=t',u:=p-R\in(0,t']$, using
+  $p\le\beta=R+t'$ from above) gives $\mathrm{curveRestrict}(\gamma,0,t')(p-R) = \gamma(p-R) =
+  \gamma(\sigma(p))$.
+
+  \emph{$\ell(\sigma(p),\sigma(p'))=p'-p$ for $p\le p'$.} If $t\le t'$, or if $t'<t$ and $p,p'$ are
+  both $\le R$ or both $> R$: $\sigma$ agrees with a single increasing shift ($+t$ or $-R$) on both
+  $p,p'$, so $\sigma(p) \le \sigma(p')$, and $\ell(\sigma(p),\sigma(p')) = \sigma(p')-\sigma(p) =
+  p'-p$ directly from $\ell$'s $a\le b$ branch. The remaining case is $t'<t$ with $p \le R < p'$:
+  then $\sigma(p) = t+p \ge t$ and $\sigma(p') = p'-R \le \beta - R = t' < t \le \sigma(p)$ (using
+  $t'<t$), so $\sigma(p') < \sigma(p)$, and, using $\ell$'s $a>b$ branch and $R=L-t$,
+  \[
+    \ell(\sigma(p),\sigma(p')) = L - \sigma(p) + \sigma(p') = L - (t+p) + (p'-R) = (L-t-R) + p'-p =
+    p'-p
+    .
+  \]
+
+  \paragraph{Step 8: $\epsilon\beta \le d(\gamma(t),\gamma(t'))$.} $A$'s underlying map is
+  $1$-Lipschitz on all of $\mathbb{R}$ (\noderef{CurveLipschitz} applied to $A$), hence continuous.
+  For $\eta \in (0,\beta-\delta]$, apply General Fact~6 at $p:=\eta/2 \le p':=\beta-\eta/2$ (valid
+  since $\eta<\beta$): writing $a_\eta:=\sigma(\eta/2)$, $b_\eta:=\sigma(\beta-\eta/2)$, we get
+  $A(\eta/2)=\gamma(a_\eta)$, $A(\beta-\eta/2)=\gamma(b_\eta)$, and $\ell(a_\eta,b_\eta) =
+  (\beta-\eta/2)-\eta/2 = \beta-\eta$.
+
+  Since $\beta-\eta < \beta \le L/2$, General Fact~3 gives $d_\gamma(a_\eta,b_\eta) =
+  \ell(a_\eta,b_\eta) = \beta-\eta$, and $\beta-\eta \ge \delta$ (as $\eta\le\beta-\delta$). If
+  $(a_\eta,b_\eta)\in S$, minimality of $\beta$ over $S$ (Step~4) would give $\beta \le
+  \ell(a_\eta,b_\eta) = \beta-\eta < \beta$, absurd; so $(a_\eta,b_\eta)\notin S$, and since $\delta
+  \le d_\gamma(a_\eta,b_\eta)$ holds, the other defining condition of $S$ must fail:
+  \[
+    d(\gamma(a_\eta),\gamma(b_\eta)) > \epsilon\, d_\gamma(a_\eta,b_\eta) = \epsilon(\beta-\eta)
+    ,\qquad\text{i.e.}\qquad
+    d(A(\eta/2),A(\beta-\eta/2)) > \epsilon(\beta-\eta)
+    .
+  \]
+  As $\eta \to 0^+$: $\eta/2 \to 0$ and $\beta-\eta/2 \to \beta$, so by continuity of $A$'s
+  underlying map, $A(\eta/2) \to A(0)$ and $A(\beta-\eta/2)\to A(\beta)$, hence
+  $d(A(\eta/2),A(\beta-\eta/2)) \to d(A(0),A(\beta))$ by continuity of $d$; and $\epsilon(\beta-\eta)
+  \to \epsilon\beta$. Taking the limit of the inequality above (strict weakening to non-strict in
+  the limit -- the cycle-12 repair) gives $d(A(0),A(\beta)) \ge \epsilon\beta$. By General Fact~6 at
+  $p:=0,p':=\beta$: $A(0)=\gamma(\sigma(0))=\gamma(t)$ (both cases of $\sigma$ give $\sigma(0)=t$
+  directly), and $A(\beta) = \gamma(\sigma(\beta))$ with $\sigma(\beta)=t'$ when $t\le t'$, or when
+  $t'<t$ and $t'>0$ (so $\beta=R+t'>R$, the second branch); in the remaining sub-case $t'<t$ and
+  $t'=0$, $\beta=R$ exactly and $\sigma(\beta)=t+R=L$, but $\gamma(L)=\gamma(0)=\gamma(t')$ by
+  closedness (\noderef{IsClosedCurve}), so $\gamma(\sigma(\beta))=\gamma(t')$ holds in this
+  sub-case too. In every case $A(\beta)=\gamma(t')$. Hence $d(\gamma(t),\gamma(t')) =
+  d(A(0),A(\beta)) \ge \epsilon\beta$.
+
+  \paragraph{Step 9: $A$ is not a closed curve.} By Step~8, $d(\gamma(t),\gamma(t')) \ge \epsilon
+  \beta$; since $\epsilon>0$ and $\beta>\delta>0$, $\epsilon\beta>0$, so $\gamma(t) \ne \gamma(t')$.
+  By the identification $A(0)=\gamma(t)$, $A(\beta)=\gamma(t')=A(\length(A))$ (Step~8, using
+  $\length(A)=\beta$ from Step~6), $A(\length(A)) \ne A(0)$, i.e.\ $A$ is not a closed curve
+  (\noderef{IsClosedCurve}).
+
+  \paragraph{Step 10: $A$ is $(\delta,\epsilon)$-l.s.i.} By \noderef{IsLSI}'s definition, we must
+  show $A$ is piecewise geodesic and that its l.s.i.\ inequality holds.
+
+  \emph{Piecewise geodesic.} Since $\gamma$ is piecewise geodesic, fix $k,s$ with
+  $\mathrm{IsGeodesicResolution}(\gamma,k,s)$ (\noderef{IsPiecewiseGeodesic},
+  \noderef{IsPiecewiseGeodesicWith}). Apply \noderef{ArcGeodesicResolution} to $\gamma$, this
+  resolution, and $t,t'$: it supplies $k_A,s_A$ with $k_A \ge 1$ and
+  $\mathrm{IsGeodesicResolution}(A,k_A,s_A)$ (the correspondence data \noderef{ArcGeodesicResolution}
+  also supplies is not needed here). Hence $A$ is piecewise geodesic
+  (\noderef{IsPiecewiseGeodesicWith}, \noderef{IsPiecewiseGeodesic}).
+
+  \emph{The l.s.i.\ inequality.} Let $p,p' \in [0,\length(A)]=[0,\beta]$ with $\delta \le d_A(p,p')$;
+  we must show $\epsilon\, d_A(p,p') \le d(A(p),A(p'))$. Since $A$ is not closed (Step~9), $d_A(p,p')
+  = |p-p'|$ (\noderef{dGamma}), so the hypothesis reads $\delta \le |p-p'|$; in particular $p \ne
+  p'$, and since $|p-p'|$ and $d(A(p),A(p'))$ are each symmetric in $p,p'$, we may assume $p<p'$
+  without loss of generality. So $\delta \le p'-p$.
+
+  By General Fact~6, $A(p)=\gamma(\sigma(p))$, $A(p')=\gamma(\sigma(p'))$, and
+  $\ell(\sigma(p),\sigma(p'))=p'-p$.
+
+  \emph{Case $p'-p < \beta$.} Since $p'-p \le \beta \le L/2$, General Fact~3 gives
+  $d_\gamma(\sigma(p),\sigma(p')) = \ell(\sigma(p),\sigma(p')) = p'-p \ge \delta$. If
+  $(\sigma(p),\sigma(p')) \in S$, minimality of $\beta$ over $S$ (Step~4) would give $\beta \le
+  \ell(\sigma(p),\sigma(p')) = p'-p < \beta$, absurd; so $(\sigma(p),\sigma(p'))\notin S$, and since
+  $\delta \le d_\gamma(\sigma(p),\sigma(p'))$ holds, the other defining condition of $S$ fails:
+  \[
+    d(\gamma(\sigma(p)),\gamma(\sigma(p'))) > \epsilon\, d_\gamma(\sigma(p),\sigma(p')) =
+    \epsilon(p'-p)
+    .
+  \]
+  Since $A(p)=\gamma(\sigma(p))$ and $A(p')=\gamma(\sigma(p'))$, this reads $d(A(p),A(p')) >
+  \epsilon(p'-p) = \epsilon\,|p-p'|$, which gives the required (non-strict) inequality $\epsilon\,
+  d_A(p,p') \le d(A(p),A(p'))$. (This is the strict, no-limit-needed half of the minimality
+  argument: General Fact~6 exhibits $(p,p')$ as strictly shorter than the full window whenever
+  $p'-p<\beta$, so minimality bites immediately.)
+
+  \emph{Case $p'-p = \beta$.} Then $p,p'\in[0,\beta]$ with $p'-p=\beta$ forces $p=0,p'=\beta$. So
+  $A(p)=A(0)$, $A(p')=A(\beta)$, and the required inequality $\epsilon\beta = \epsilon(p'-p) \le
+  d(A(p),A(p')) = d(A(0),A(\beta)) = d(\gamma(t),\gamma(t'))$ is exactly Step~8 (this is the single
+  case that genuinely needs the limiting argument, since $p,p'$ here are not strictly inside
+  $[0,\beta]$).
+
+  This proves the l.s.i.\ inequality for $A$, completing Step~10 and the proof.
+\end{proof}

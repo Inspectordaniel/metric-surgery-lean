@@ -1,0 +1,68 @@
+\begin{definition}[Basic cut $C(\gamma,t,t')$]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}), $\gamma \in
+  \Theta(E)$ (\noderef{Curve}) a closed curve (\noderef{IsClosedCurve}), and $t,t' \in
+  [0,\length(\gamma)]$. Define the \emph{basic cut} $C(\gamma,t,t') := (\gamma',g)$, a pair of
+  curves in $\Theta(E)$, by
+  \[
+    \gamma' := \gamma|_{[t',t]} * G_{\gamma(t),\gamma(t')}
+    , \qquad
+    g := \gamma|_{[t,t']} * G_{\gamma(t'),\gamma(t)}
+    ,
+  \]
+  where $*$ denotes concatenation (\noderef{curveConcat}), $G_{x,y}$ denotes the geodesic pairing's
+  chosen geodesic from $x$ to $y$ (\noderef{GeodesicPairing}), and $\gamma|_{[a,b]}$ denotes the
+  restriction of $\gamma$ to the counter-clockwise circular interval from $a$ to $b$: the ordinary
+  restriction $\mathrm{curveRestrict}(\gamma,a,b)$ (\noderef{curveRestrict}) when $a \le b$, and the
+  wrap-around restriction $\mathrm{curveWrapRestrict}(\gamma,a,b)$ (\noderef{curveWrapRestrict})
+  when $b < a$. This is exactly paper.tex lines 581-583: ``$C(\gamma,t,t')$ is defined to be the
+  pair $(\gamma',g)$ of closed curves, where $\gamma'$ is the concatenation of $\gamma|_{[t',t]}$
+  and $G_{\gamma(t),\gamma(t')}$, while $g$ is the concatenation of $\gamma|_{[t,t']}$ and
+  $G_{\gamma(t'),\gamma(t)}$.''
+
+  \paragraph{Well-definedness: a single uniform endpoint fact, via \noderef{curveArc}.} By
+  \noderef{curveArc}, $\gamma|_{[a,b]}$ is the ordinary restriction $\mathrm{curveRestrict}(\gamma,a,b)$
+  when $a \le b$ and the wrap-around restriction $\mathrm{curveWrapRestrict}(\gamma,a,b)$ when
+  $b < a$; both cases of the definition are packaged into that single named object, so $C(\gamma,t,t')$
+  needs only ONE endpoint fact, stated uniformly in the order of $a,b$ and not as a three-way case
+  split:
+  \[
+    \gamma|_{[a,b]}(\length(\gamma|_{[a,b]})) = \gamma(b)
+    \qquad \text{for every } a,b \in [0,\length(\gamma)]
+    .
+  \]
+  \begin{itemize}
+    \item If $a \le b$: $\gamma|_{[a,b]} = \mathrm{curveRestrict}(\gamma,a,b)$, whose value at its
+      own length $b-a$ is $\gamma(a+(b-a))=\gamma(b)$ by \noderef{curveRestrict}'s defining formula.
+      (This covers both the case $a<b$ and the degenerate case $a=b$, where $\gamma|_{[a,a]}$ is the
+      constant curve at $\gamma(a)$ and the claimed value is $\gamma(a)$ itself.)
+    \item If $b < a$: $\gamma|_{[a,b]} = \mathrm{curveWrapRestrict}(\gamma,a,b)$, which is by
+      definition (\noderef{curveWrapRestrict}) the concatenation of $\gamma|_{[a,\length(\gamma)]}$
+      and $\gamma|_{[0,b]}$ (both ordinary restrictions); its value at its own total length is the
+      value of the second piece at ITS length, namely $\gamma(b)$, by the $a\le b$ case above
+      applied to $\gamma|_{[0,b]}$.
+  \end{itemize}
+  Applying this single fact at $(a,b)=(t',t)$ gives $\gamma|_{[t',t]}(\length(\cdot))=\gamma(t)$, so
+  the endpoint-matching condition for $\gamma' = \gamma|_{[t',t]} * G_{\gamma(t),\gamma(t')}$
+  (\noderef{curveConcat}) is $\gamma|_{[t',t]}(\length(\cdot)) = G_{\gamma(t),\gamma(t')}(0)$, and
+  both sides equal $\gamma(t)$ (the right side by the geodesic pairing's $\mathrm{start\_eq}$ field,
+  \noderef{GeodesicPairing}). Applying it at $(a,b)=(t,t')$ gives
+  $\gamma|_{[t,t']}(\length(\cdot))=\gamma(t')$, so the endpoint-matching condition for
+  $g = \gamma|_{[t,t']} * G_{\gamma(t'),\gamma(t)}$ is
+  $\gamma|_{[t,t']}(\length(\cdot)) = G_{\gamma(t'),\gamma(t)}(0)$, and both sides equal $\gamma(t')$
+  (right side again by $\mathrm{start\_eq}$). No case split on the order of $t,t'$ is needed beyond
+  the one already internal to \noderef{curveArc}: $\gamma'$ and $g$'s well-definedness proofs are
+  each a single rewrite by the fact above, uniform in whether $t \le t'$ or $t' < t$.
+
+  In every case, the closing geodesic edge is well-defined because $t,t' \in [0,\length(\gamma)]$
+  are within $\gamma$'s domain of parametrization and \noderef{GeodesicPairing} supplies a geodesic
+  $G_{x,y}$ between any two points $x,y \in E$; closedness of $\gamma$ (\noderef{IsClosedCurve}) is
+  used inside \noderef{curveArc}'s wrap-around case (via \noderef{curveWrapRestrict}), to justify
+  that the wrap-around concatenation's own two pieces (the tail $\gamma|_{[a,\length(\gamma)]}$ and
+  the head $\gamma|_{[0,b]}$) match at the identified endpoint $\gamma(\length(\gamma))=\gamma(0)$.
+
+  \paragraph{Modeling choice: existential geodesic pairing as an explicit parameter (interface
+  decision, not a deviation).} As in \noderef{GeodesicPairing}, the basic cut is defined relative to
+  a fixed, explicitly supplied geodesic pairing $GP$ on $E$, matching the paper's standing use of a
+  once-and-for-all chosen family $G_{x,y}$ (paper.tex line 526) throughout Section~3 (the Surgery
+  Lemma), rather than being derived anew from a bare geodesic-space hypothesis on $E$.
+\end{definition}

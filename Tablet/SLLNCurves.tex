@@ -1,0 +1,203 @@
+\begin{lemma}[Strong law of large numbers for a Paolini--Stepanov family, single stage]\label{SLLNCurves}
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra,
+  $T \colon \mathcal{D}^1(E) \to \mathbb{R}$, and $F$ a Paolini--Stepanov family for $T$
+  (\noderef{PSFamily}). Fix a stage $l \in \mathbb{N}$, $l \ge 1$, with
+  $\overline{\eta}_l(\Theta(E)) \ne 0$ (\noderef{PSFamily}, measure $\overline{\eta}_l$).
+  Let $(\omega_k)_{k \in \mathbb{N}}$ be an arbitrary countable family of metric $1$-forms
+  (\noderef{Form1}), and let $(g_j)_{j \in \mathbb{N}}$ be an arbitrary countable family of
+  measurable functions $g_j \colon \Theta(E) \to \mathbb{R}$, each $\overline{\eta}_l$-integrable.
+  Then there is a single sequence of curves $(\gamma_i)_{i \in \mathbb{N}} \subseteq \Theta(E)$
+  such that:
+  \begin{itemize}
+    \item[(i)] $\length(\gamma_i) = l$ for every $i$;
+    \item[(ii)] $\mathbb{M}([[\gamma_i]]) = l$ for every $i$ (equivalently $\gamma_i \in
+      \Theta_l(E)$, \noderef{ThetaL});
+    \item[(iii)] for every $k \in \mathbb{N}$,
+      \[
+        \frac{\overline{\eta}_l(\Theta(E))}{n \cdot l} \sum_{i=0}^{n-1} [[\gamma_i]](\omega_k)
+        \;\longrightarrow\; T(\omega_k)
+        \qquad (n \to \infty)
+        ;
+      \]
+    \item[(iv)] for every $j \in \mathbb{N}$,
+      \[
+        \frac{1}{n} \sum_{i=0}^{n-1} g_j(\gamma_i)
+        \;\longrightarrow\; \overline{\eta}_l(\Theta(E))^{-1} \int_{\Theta(E)} g_j \, d\overline{\eta}_l
+        \qquad (n \to \infty)
+        .
+      \]
+  \end{itemize}
+  Here $\overline{\eta}_l(\Theta(E))$ (a finite, nonzero real number, since $\overline{\eta}_l$ is a
+  finite measure by hypothesis) denotes the real number obtained from the extended-real
+  $\overline{\eta}_l(\Theta(E))$ by \texttt{ENNReal.toReal}, and the sums in (iii)--(iv) are
+  indexed $i=0,\dots,n-1$ (\texttt{Finset.range n}); this is a pure reindexing of the paper's
+  $i=1,\dots,n$ convention (paper.tex 1295--1310) and carries no mathematical difference.
+
+  \paragraph{Role of this lemma.} This is the Strong Law of Large Numbers step of the proof of
+  Theorem~4.4 (\eqref{countable_identity} and \eqref{stronglawlength}, paper.tex 1295--1310),
+  restated at a single fixed stage $l$ and for an arbitrary pair of countable families
+  $(\omega_k)_k$, $(g_j)_j$ (rather than the paper's specific families $\tilde f_k, \tilde\pi_j$
+  and the marginal-cutoff / $\psi$-average functions), so that \noderef{BBSamplingDiagonal} may
+  instantiate $(g_j)_j$ with whichever specific $\overline\eta_l$-integrable countable family it
+  needs (the endpoint-cutoff indicators and the $\psi$/$\tilde\psi$-averages) without this node
+  itself naming them. Clause (iii) is the substantive content beyond
+  \noderef{SamplingRealizesAverages}: it exhibits the explicit
+  $\overline{\eta}_l(\Theta(E))$ (later identified with $\mathbb{M}(T)$, an identification this
+  node does not need and does not make) that eq.~(4.6) forces into the normalizing constant of
+  \eqref{closed1}, and does so by combining \noderef{SamplingRealizesAverages}, applied once, with
+  \noderef{PSFamily}'s \emph{weakLength} field. Clause (iv) is the generic (unnormalized-except-by
+  $\overline\eta_l(\Theta(E))$) strong-law average, stated once so that every other countable
+  strong-law family the assembly needs is obtained by instantiating $g$, rather than by re-running
+  \noderef{SamplingRealizesAverages} again.
+
+  \paragraph{Design point: a single, internally-merged application of
+  \noderef{SamplingRealizesAverages}.} Both the current-family $(\omega_k)_k$ and the auxiliary
+  family $(g_j)_j$ are folded into one $\mathbb{N}$-indexed family $h$ (even indices carry the
+  currents against $\omega_k$, odd indices carry $g_j$) \emph{inside the proof}, so that
+  \noderef{SamplingRealizesAverages} is invoked exactly once, on $h$, rather than requiring a
+  separate packaging node for the merge. Integrability of $\gamma \mapsto [[\gamma]](\omega_k)$
+  with respect to $\overline\eta_l$ is likewise established inside this proof (from
+  \noderef{CurveCurrentBound} together with \noderef{PSFamily}'s \emph{lengthExactly} field and
+  finiteness of $\overline\eta_l$), so it is not a hypothesis of the statement.
+
+  \paragraph{Design point: $\Theta_l(E)$ need not be shown measurable.} The set $\Theta_l(E)$
+  (\noderef{ThetaL}) is a condition on the mass of a curve's current and is not known to be
+  measurable with respect to the evaluation $\sigma$-algebra on $\Theta(E)$ this tablet uses, nor
+  is that needed here: \noderef{PSFamily}'s \emph{supported} field only gives that the
+  \emph{complement} of $\Theta_l(E)$ is $\overline\eta_l$-null, and Mathlib's
+  \texttt{MeasureTheory.exists\_measurable\_superset\_of\_null} produces, from any
+  $\overline\eta_l$-null set, a \emph{measurable} superset $U$ that is still $\overline\eta_l$-null;
+  taking $S := U^c \cap \{\gamma : \length(\gamma) = l\}$ (measurable, since $U$ is measurable and
+  $\{\length(\cdot)=l\}$ is measurable by \noderef{CurveLenMeasurable}) gives a measurable,
+  co-null, subset of $\Theta_l(E) \cap \{\length(\cdot)=l\}$ to feed
+  \noderef{SamplingRealizesAverages} without ever asking whether $\Theta_l(E)$ itself is
+  measurable.
+
+  \paragraph{Design point: the only nondegeneracy hypothesis is $\overline\eta_l(\Theta(E)) \ne
+  0$.} No hypothesis of \noderef{PaoliniStepanovExists} or \noderef{MassPosOfNonzero} is needed at
+  this stage; the downstream target-covering assembly is responsible for discharging
+  $\overline\eta_l(\Theta(E)) \ne 0$ later, from \noderef{PSFamily}'s \emph{massMarginal} field at
+  $\phi \equiv 1$ together with \noderef{PaoliniStepanovExists} and \noderef{MassPosOfNonzero}. The
+  identity $\overline\eta_l(\Theta(E)) = \mathbb{M}(T)$ (which is where eq.~(4.6)'s implicit
+  $\mathbb{M}(T)$ factor of \eqref{closed1} ultimately comes from) is likewise established
+  downstream, not here.
+
+  \paragraph{Why no separate $[\mathrm{Nonempty}\ E]$ hypothesis is needed.} The conclusion
+  asserts the existence of curves $\gamma_i \in \Theta(E)$, and $\Theta(E)$ is empty exactly when
+  $E$ is (\noderef{Curve} carries $\mathrm{toFun}\colon\mathbb{R}\to E$, and no total function from
+  the nonempty domain $\mathbb{R}$ into an empty codomain exists). But if $E=\emptyset$ then
+  $\Theta(E)$ itself is empty, so $\mathrm{Set.univ}\subseteq\Theta(E)$ is the empty set, and every
+  measure assigns the empty set mass $0$; hence $\overline\eta_l(\Theta(E)) =
+  \overline\eta_l(\emptyset) = 0$ automatically whenever $E=\emptyset$, contradicting the standing
+  hypothesis $\overline\eta_l(\Theta(E))\ne0$. So $E=\emptyset$ is already excluded, and no
+  additional $[\mathrm{Nonempty}\ E]$ is required.
+\end{lemma}
+\begin{proof}
+  Write $M := \overline\eta_l(\Theta(E)) \in \cointerval{0,\infty}$ for the total
+  $\overline\eta_l$-mass. By hypothesis $M \ne 0$, and $M \ne \infty$ since $\overline\eta_l$ is a
+  finite measure (\noderef{PSFamily}, field \emph{finite}); write $M_{\mathbb R} :=
+  \mathrm{toReal}(M) \in (0,\infty)$ for its real value, so $M_{\mathbb R} \ne 0$ and
+  $M^{-1} \ne \infty$.
+
+  \emph{Step 1: integrability of the current family.} Fix $k \in \mathbb{N}$. By
+  \noderef{CurveCurrentMeasurable}, $\gamma \mapsto [[\gamma]](\omega_k)$ is measurable. By
+  \noderef{PSFamily} (field \emph{lengthExactly}), $\length(\gamma) = l$ for $\overline\eta_l$-a.e.\
+  $\gamma$; on this event, \noderef{CurveCurrentBound} gives
+  $\bigl|[[\gamma]](\omega_k)\bigr| \le \mathrm{fBound}(\omega_k)\cdot\mathrm{piLip}(\omega_k)\cdot
+  \length(\gamma) = \mathrm{fBound}(\omega_k)\cdot\mathrm{piLip}(\omega_k)\cdot l$, a constant.
+  A measurable function that is $\overline\eta_l$-a.e.\ dominated by an $\overline\eta_l$-integrable
+  constant function (constants are integrable against a finite measure) is itself
+  $\overline\eta_l$-integrable; hence $\gamma \mapsto [[\gamma]](\omega_k)$ is
+  $\overline\eta_l$-integrable, for every $k$.
+
+  \emph{Step 2: the merged family.} Define $h \colon \mathbb{N} \to \Theta(E) \to \mathbb{R}$ by
+  \[
+    h(2k) := \bigl(\gamma \mapsto [[\gamma]](\omega_k)\bigr)
+    ,\qquad
+    h(2j+1) := g_j
+    \qquad (j,k \in \mathbb{N})
+    .
+  \]
+  Every $h(n)$ is measurable and $\overline\eta_l$-integrable: for even $n=2k$ this is Step~1, and
+  for odd $n=2j+1$ this is the hypothesis on $g_j$.
+
+  \emph{Step 3: the normalized probability measure.} Let $\mu := M^{-1} \bullet \overline\eta_l$
+  (the measure $\overline\eta_l$ scaled by the extended-real constant $M^{-1}$). Since
+  $\mu(\Theta(E)) = M^{-1}\cdot\overline\eta_l(\Theta(E)) = M^{-1}\cdot M = 1$ (using $M \ne 0,\infty$
+  so that $M^{-1}\cdot M = 1$), $\mu$ is a probability measure on $\Theta(E)$. Scaling a measure by
+  a finite nonzero extended-real constant preserves both measurability and integrability of a
+  function, and rescales the integral by the same factor: each $h(n)$ ($n \in \mathbb{N}$) is
+  therefore $\mu$-measurable and $\mu$-integrable, with
+  \[
+    \int_{\Theta(E)} h(n) \, d\mu = M_{\mathbb R}^{-1} \int_{\Theta(E)} h(n) \, d\overline\eta_l
+    \qquad (n \in \mathbb{N})
+    . \tag{$\ast$}
+  \]
+
+  \emph{Step 4: a full-$\mu$-measure subset of $\Theta_l(E) \cap \{\length=l\}$.} By
+  \noderef{PSFamily} (field \emph{supported}) applied at this $l$, $\overline\eta_l(\Theta_l(E)^c)
+  = 0$. By Mathlib's \texttt{exists\_measurable\_superset\_of\_null}, there is a measurable set
+  $U \supseteq \Theta_l(E)^c$ with $\overline\eta_l(U) = 0$. Let
+  $S := U^c \cap \{\gamma : \length(\gamma) = l\}$; $S$ is measurable, since $U$ is measurable and
+  $\{\gamma : \length(\gamma)=l\}$ is measurable by \noderef{CurveLenMeasurable}. Since
+  $\overline\eta_l(U) = 0$ and, by \noderef{PSFamily} (field \emph{lengthExactly}),
+  $\overline\eta_l(\{\gamma : \length(\gamma) \ne l\}) = 0$, the union bound gives
+  $\overline\eta_l(S^c) = \overline\eta_l\bigl(U \cup \{\length(\cdot)\ne l\}\bigr) \le
+  \overline\eta_l(U) + \overline\eta_l(\{\length(\cdot)\ne l\}) = 0$, so $\overline\eta_l(S^c)=0$.
+  Consequently $\mu(S^c) = M^{-1}\cdot\overline\eta_l(S^c) = M^{-1}\cdot 0 = 0$ as well.
+
+  \emph{Step 5: apply \noderef{SamplingRealizesAverages}.} By Step~2 the family $(h(n))_{n \in
+  \mathbb{N}}$ is measurable and $\mu$-integrable (Step~3), and by Step~4, $S$ is a measurable set
+  with $\mu(S^c)=0$; \noderef{SamplingRealizesAverages} (with $X = \Theta(E)$, the probability
+  measure $\mu$, the family $h$, and the set $S$) produces a sequence $(\gamma_i)_{i\in\mathbb{N}}$
+  with $\gamma_i \in S$ for every $i$, and, for every $n \in \mathbb{N}$,
+  \[
+    \frac{1}{n}\sum_{i=0}^{n-1} h(n')(\gamma_i) \;\longrightarrow\; \int_{\Theta(E)} h(n')\,d\mu
+    \qquad (n\to\infty)
+    ,
+    \tag{$\ast\ast$}
+  \]
+  simultaneously for every index $n' \in \mathbb{N}$ (writing $n'$ for the family index to avoid a
+  clash with the averaging variable $n$).
+
+  \emph{Conclusion of (i)--(ii).} Fix $i$. Since $\gamma_i \in S \subseteq \{\length(\cdot)=l\}$,
+  $\length(\gamma_i) = l$, which is~(i). Since $\gamma_i \in S \subseteq U^c$ and
+  $\Theta_l(E)^c \subseteq U$, $\gamma_i \notin \Theta_l(E)^c$, i.e.\ $\gamma_i \in \Theta_l(E)$,
+  i.e.\ $\mathbb{M}([[\gamma_i]]) = l$ (\noderef{ThetaL}), which is~(ii).
+
+  \emph{Conclusion of (iii).} Fix $k \in \mathbb{N}$ and apply $(\ast\ast)$ at $n' = 2k$:
+  \[
+    \frac{1}{n}\sum_{i=0}^{n-1} h(2k)(\gamma_i)
+    = \frac{1}{n}\sum_{i=0}^{n-1} [[\gamma_i]](\omega_k)
+    \;\longrightarrow\; \int_{\Theta(E)} h(2k)\,d\mu = \int_{\Theta(E)} [[\cdot]](\omega_k)\,d\mu
+    .
+  \]
+  By $(\ast)$ at $n=2k$ and \noderef{PSFamily} (field \emph{weakLength}, which states
+  $T(\omega_k) = l^{-1}\int_{\Theta(E)} [[\gamma]](\omega_k)\,d\overline\eta_l(\gamma)$, i.e.
+  $\int_{\Theta(E)} [[\cdot]](\omega_k)\,d\overline\eta_l = l \cdot T(\omega_k)$),
+  \[
+    \int_{\Theta(E)} [[\cdot]](\omega_k)\,d\mu
+    = M_{\mathbb R}^{-1} \cdot \int_{\Theta(E)} [[\cdot]](\omega_k)\,d\overline\eta_l
+    = M_{\mathbb R}^{-1} \cdot l \cdot T(\omega_k)
+    .
+  \]
+  Multiplying the displayed convergence by the constant $M_{\mathbb R}/l$ (which is legitimate
+  since $l\ne0$, and preserves the limit by continuity of multiplication by a constant) gives
+  \[
+    \frac{M_{\mathbb R}}{n\cdot l}\sum_{i=0}^{n-1} [[\gamma_i]](\omega_k)
+    \;\longrightarrow\;
+    \frac{M_{\mathbb R}}{l}\cdot M_{\mathbb R}^{-1}\cdot l \cdot T(\omega_k)
+    = T(\omega_k)
+    ,
+  \]
+  using $M_{\mathbb R} \ne 0$ and $l \ne 0$ to cancel. This is exactly~(iii).
+
+  \emph{Conclusion of (iv).} Fix $j \in \mathbb{N}$ and apply $(\ast\ast)$ at $n' = 2j+1$:
+  \[
+    \frac{1}{n}\sum_{i=0}^{n-1} h(2j+1)(\gamma_i) = \frac{1}{n}\sum_{i=0}^{n-1} g_j(\gamma_i)
+    \;\longrightarrow\; \int_{\Theta(E)} h(2j+1)\,d\mu = \int_{\Theta(E)} g_j\,d\mu
+    = M_{\mathbb R}^{-1}\int_{\Theta(E)} g_j\,d\overline\eta_l
+    ,
+  \]
+  the last equality by $(\ast)$ at $n=2j+1$. This is exactly~(iv), completing the proof.
+\end{proof}

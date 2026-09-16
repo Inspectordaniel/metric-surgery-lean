@@ -1,0 +1,17 @@
+\begin{definition}[$\tilde\psi_{m,Q,\epsilon,C}$]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $m \in \mathbb{N}$,
+  $Q \subset E$ a finite set, and $\epsilon, C \in \mathbb{R}$. Write $s_i := i \cdot
+  \length(\gamma)/m$ for $i = 0,\dotsc,m$. Define
+  \[
+    \tilde\psi_{m,Q,\epsilon,C}(\gamma) := 2C^2\frac{\length(\gamma)^2}{m}
+      + C\frac{\length(\gamma)}{m} \sum_{i=1}^m \min\left\{2C,\; \epsilon+
+        2Cd(\gamma(s_i),Q)\right\}
+    ,
+  \]
+  where $d(x,Q) = \inf_{q \in Q} d(x,q)$ (Mathlib's \texttt{Metric.infDist}, with the convention
+  $d(x,\emptyset) = 0$). This is exactly the second display of paper Lemma~A.2 (paper.tex line
+  1722--1723), with the same widening of the quantification over $Q,\epsilon,C$ to arbitrary finite
+  $Q \subset E$ and real $\epsilon, C$ as in \noderef{psi}, for the same reason (the paper's
+  restriction to rationals and to a fixed countable dense $E_{\mathbb{Q}}$ is a countability device
+  for the Strong Law step, not part of Lemma~A.2's or Corollary~A.6's mathematical content).
+\end{definition}

@@ -1,0 +1,220 @@
+\begin{lemma}[Type II cut operation]
+  \label{cut_II}
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, let $GP$ be a geodesic
+  pairing on $E$ (\noderef{GeodesicPairing}), let $\gamma \in \Theta(E)$ (\noderef{Curve}) be a
+  closed (\noderef{IsClosedCurve}), piecewise-geodesic (\noderef{IsPiecewiseGeodesic}) curve, let
+  $\epsilon,\delta \in \mathbb{R}$ with $0 < \epsilon < 1$ and $0 < \delta$, and let $n \in
+  \mathbb{N}$ with $\gamma \notin \Xden(\delta,\epsilon,n)$ (\noderef{IsDeltaEpsN}). Then there
+  exist $\gamma',g \in \Theta(E)$, both closed (\noderef{IsClosedCurve}) and piecewise-geodesic
+  (\noderef{IsPiecewiseGeodesic}), such that
+  \begin{align}
+    \label{eq:SameSumTypeII}
+    [[\gamma]](\omega) &= [[\gamma']](\omega) + [[g]](\omega) \qquad \text{for every } \omega \in
+    \mathcal{D}^1(E)
+    \quad\text{(\noderef{curveCurrent})}, \\
+    \label{eq:MorreyTypeII}
+    \Morrey{\mu_g} &\le 2\bigl((n:\mathbb{R})+2\epsilon^{-1}+2\bigr) \quad\text{(\noderef{curveMeasure},
+    \noderef{morreyNorm})}, \\
+    \label{eq:LengthBoundTypeIIgamma}
+    \length(\gamma') &\le \length(\gamma) , \\
+    \label{eq:LengthBoundTypeIItotal}
+    \length(\gamma') + \length(g) &\le \length(\gamma) + 4\epsilon^{-1}\delta , \\
+    \label{eq:SmallCountBoundTypeII}
+    \nsmallpieces(\gamma',\delta) + n &\le \nsmallpieces(\gamma,\delta) \quad\text{(\noderef{smallPieceCount})}
+    .
+  \end{align}
+
+  This is paper Lemma~3.9 (paper.tex lines 916-945), stated existentially: the paper packages
+  $\gamma \mapsto (\gamma',g)$ as a function $C_{\mathrm{II}}$ on $\Xgeo\setminus\Xden(\delta,
+  \epsilon,n)$, but nothing in the paper's use of Lemma~3.9 (the case split inside the surgery
+  induction, paper.tex around line 1030) needs $C_{\mathrm{II}}$ to be a definite function of
+  $\gamma$ rather than merely an existence statement, so we state existence only, with no
+  accompanying choice function.
+
+  \paragraph{Why $\gamma$ closed is both hypothesised and asserted of both outputs.} The basic cut
+  operation $C(\gamma,t,t')$ is defined by the paper only for $\gamma \in \Theta_c(E)$, the closed
+  piecewise-geodesic curves, and its own statement records that it ``returns a pair of closed
+  curves'' (paper.tex lines 581-583; \noderef{BasicCut}, \noderef{BasicCutClosed}). Correspondingly
+  the surgery algorithm that this lemma feeds runs entirely inside $\Xgeo_c$ (paper.tex line 975,
+  ``running on $\Xgeo_c$''), and Lemma~3.9's own domain $\Xgeo\setminus\Xden(\delta,\epsilon,n)$
+  notwithstanding its notation, is used by the paper only at closed curves. Hypothesising
+  $\mathrm{IsClosedCurve}(\gamma)$ and asserting it of both $\gamma'$ and $g$ is therefore the
+  faithful reading of the paper's own construction, not a strengthening of Lemma~3.9's literal
+  statement: it makes explicit exactly the closure-under-the-surgery-class property that every
+  downstream application of this lemma (and of the analogous Type~I cut) silently relies on.
+
+  \paragraph{Why $\eqref{eq:SmallCountBoundTypeII}$ is subtraction-free.} Paper eq.~(SmallCountBoundTypeII)
+  (paper.tex line 942) reads $\nsmallpieces(\gamma',\delta) \le \nsmallpieces(\gamma,\delta) - n$.
+  Since $\nsmallpieces$ takes values in $\mathbb{N}$ (\noderef{smallPieceCount}), and natural-number
+  subtraction is truncated (not the genuine integer difference when the subtrahend exceeds the
+  minuend), we state the equivalent, subtraction-free form $\nsmallpieces(\gamma',\delta)+n \le
+  \nsmallpieces(\gamma,\delta)$: for $A,B,C \in \mathbb{N}$, $A \le B - C$ is exactly $A + C \le B$
+  whenever $B \ge C$ (and both readings degenerate correctly when $B<C$, since truncated
+  subtraction gives $B-C=0$ and no $A\in\mathbb{N}$ can satisfy $A+C\le B<C$ either), and the
+  argument below in fact establishes $B \ge C$ along the way, so the two readings coincide here;
+  we state the form that is total and requires no side condition.
+
+  \paragraph{Why $\epsilon<1$ is hypothesised but not used.} Paper Lemma~3.9 is stated for $\epsilon
+  \in (0,1)$ (paper.tex line 917, matching the standing hypothesis of the whole surgery
+  construction, paper.tex line 917 restating Def.~3.5's own range for $\epsilon$), and the caller
+  \noderef{SurgeryInduction} supplies it; we record it as a hypothesis for paper-faithfulness even
+  though, as the proof below shows, the argument only ever uses $0<\epsilon$ and $0<\delta$.
+\end{lemma}
+\begin{proof}
+  \paragraph{Step 0: a minimizing resolution and a controlled violating window.} By
+  \noderef{DeltaEpsNFailureAtBreakpoints} (applicable since $\epsilon,\delta>0$, $\gamma$ closed
+  and piecewise-geodesic, and $\gamma \notin \Xden(\delta,\epsilon,n)$), there exist $k \in
+  \mathbb{N}$, a resolution $s$ of $\gamma$ into $k$ geodesic edges with $\mathrm{IsGeodesicResolution}
+  (\gamma,k,s)$ (\noderef{IsGeodesicResolution}) realizing $\nsmallpieces(\gamma,\delta)$
+  (\noderef{smallPieceCount}), strictly monotone on $\set{0,\dots,k}$, and $p,q \in \set{0,\dots,k}$
+  with $s(p) \ne s(q)$ such that, writing $\mathrm{inArc}(j) := (p<j\le q$ if $p<q$, else $j\le q$
+  or $p<j)$ for $j\in\set{1,\dots,k}$,
+  \begin{align}
+    \label{eq:exact-n1}
+    \#\set{j\in\set{1,\dots,k} : \mathrm{inArc}(j) \text{ and } s(j)-s(j-1)<\delta} &= n+1 ,\\
+    \label{eq:total-bound}
+    \#\set{j\in\set{1,\dots,k} : \mathrm{inArc}(j)} &\le 2\epsilon^{-1}+(n+1) ,\\
+    \label{eq:arc-length}
+    \bigl(\text{if } p<q \text{ then } s(q)-s(p) \text{ else } (\length(\gamma)-s(p))+s(q)\bigr)
+      &\le 2\epsilon^{-1}\delta .
+  \end{align}
+  Fix such $k,s,p,q$ for the rest of the proof.
+
+  \paragraph{Step 1: the cut points $s(p),s(q)$ lie in $[0,\length(\gamma)]$.} Since
+  $\mathrm{IsGeodesicResolution}(\gamma,k,s)$ gives $s$ monotone (non-decreasing) on
+  $\set{0,\dots,k}$ with $s(0)=0$ and $s(k)=\length(\gamma)$ (\noderef{IsGeodesicResolution}), and
+  $0\le p\le k$, $0\le q\le k$ (from $p,q\in\set{0,\dots,k}$), monotonicity applied to the pairs
+  $0\le p$ and $p\le k$ (respectively $0\le q$ and $q\le k$) gives
+  \[
+    0 = s(0) \le s(p) \le s(k) = \length(\gamma)
+    , \qquad
+    0 = s(0) \le s(q) \le s(k) = \length(\gamma)
+    .
+  \]
+  Write $t_0 := s(p)$, $t_0' := s(q)$; both lie in $[0,\length(\gamma)]$, so
+  $(\gamma',g) := C(\gamma,t_0,t_0')$ (\noderef{BasicCut}) is well-defined, and since $s(p)\ne s(q)$,
+  $t_0 \ne t_0'$, so \noderef{BasicCutCurrent} and \noderef{BasicCutClosed} both apply to this pair.
+  This is exactly the shrinking step paper Lemma~3.9's proof invokes without proof (``As in the
+  proof of \Cref{cut_I}, we choose $t=t(\gamma)$ and $t'=t'(\gamma)$ [...] the lexicographically
+  smallest pair of endpoints of geodesic edges with the properties above'', paper.tex line 952):
+  we take $t_0,t_0'$ to be any such pair rather than a definite (lexicographically smallest) choice,
+  since -- as noted above -- no later use of the lemma requires functionality.
+
+  \paragraph{Step 2: the current identity \eqref{eq:SameSumTypeII}.} By \noderef{BasicCutCurrent}
+  applied to $\gamma,t_0,t_0'$ (valid by Step~1, using $t_0\ne t_0'$), for every $\omega \in
+  \mathcal{D}^1(E)$, $[[\gamma]](\omega) = [[\gamma']](\omega)+[[g]](\omega)$, which is
+  \eqref{eq:SameSumTypeII}. This is exactly paper eq.~\eqref{SameSumTypeII} (paper.tex lines
+  924-926, ``\eqref{SameSumTypeII} follows as a property of the basic cut operation'', paper.tex
+  line 953).
+
+  \paragraph{Step 3: closedness and piecewise-geodesic-ness.} By \noderef{BasicCutClosed} applied to
+  $\gamma,t_0,t_0'$ (valid by Step~1: $\gamma$ closed and piecewise-geodesic by hypothesis, $t_0\ne
+  t_0'$), $\gamma'$ and $g$ are both closed and piecewise-geodesic.
+
+  \paragraph{Step 4: the branch-reconciliation identity, load-bearing for Steps 5-6.} We claim
+  \begin{equation}
+    \label{eq:branch-agree}
+    \bigl(\text{if } t_0 \le t_0' \text{ then } t_0'-t_0 \text{ else } (\length(\gamma)-t_0)+t_0'
+    \bigr)
+    = \bigl(\text{if } p<q \text{ then } s(q)-s(p) \text{ else } (\length(\gamma)-s(p))+s(q)\bigr)
+    .
+  \end{equation}
+  The left side is exactly the excised-arc-length expression appearing in \noderef{BasicCutLength}'s
+  statement (which branches on the order of the two cut points $t_0=s(p),t_0'=s(q)$ themselves);
+  the right side is exactly the expression appearing in \eqref{eq:arc-length},
+  \eqref{eq:exact-n1}-implicit index window, and in \noderef{BasicCutResolutionAtBreakpoints} and
+  \noderef{BasicCutDiscardedResolution}'s statements (which branch on the order of the
+  \emph{indices} $p,q$). These two branchings agree, but only because $s$ is \emph{strictly}
+  monotone on $\set{0,\dots,k}$ (supplied by \noderef{DeltaEpsNFailureAtBreakpoints}, in turn built
+  on \noderef{MinimizingResolutionStrict}): since $p,q\in\set{0,\dots,k}$ and $s$ is strictly
+  monotone there, $p<q \iff s(p)<s(q)$ and $q<p \iff s(q)<s(p)$; together with $s(p)\ne s(q)$
+  (equivalently $p\ne q$, since $s$ is in particular injective on $\set{0,\dots,k}$ by strict
+  monotonicity), exactly one of $p<q$ or $q<p$ holds, matching exactly one of $t_0\le t_0'$ (in fact
+  $t_0<t_0'$) or $t_0'<t_0$, and in each case the two case conditions select the same branch. If
+  $p<q$: $s(p)<s(q)$, i.e.\ $t_0<t_0' \le t_0'$, so both sides select their ``then'' branch, giving
+  $t_0'-t_0 = s(q)-s(p)$ on both sides directly. If $q<p$: $s(q)<s(p)$, i.e.\ $t_0'<t_0$, so
+  $t_0\le t_0'$ is false and $p<q$ is false, so both sides select their ``else'' branch, giving
+  $(\length(\gamma)-t_0)+t_0' = (\length(\gamma)-s(p))+s(q)$ on both sides directly (using
+  $t_0=s(p)$, $t_0'=s(q)$). This proves \eqref{eq:branch-agree}. Without strictness, a degenerate
+  edge of $s$ sitting exactly at $s(p)$ or $s(q)$ could leave $p<q$ true while $s(p)=s(q)$ or
+  vice versa, breaking this identification; strictness rules this out.
+
+  \paragraph{Step 5: the length bounds \eqref{eq:LengthBoundTypeIIgamma} and
+  \eqref{eq:LengthBoundTypeIItotal}.} By \noderef{BasicCutLength} applied to $\gamma,t_0,t_0'$
+  (valid by Step~1), writing $A := (\text{if } t_0\le t_0' \text{ then } t_0'-t_0 \text{ else }
+  (\length(\gamma)-t_0)+t_0')$ and $d := \mathrm{dist}(\gamma(t_0),\gamma(t_0'))$,
+  \[
+    \length(\gamma') = \length(\gamma) - A + d
+    , \qquad
+    \length(g) = A + d
+    , \qquad
+    d \le A
+    .
+  \]
+  By \eqref{eq:branch-agree}, $A$ equals the right side of \eqref{eq:branch-agree}, which by
+  \eqref{eq:arc-length} is at most $2\epsilon^{-1}\delta$.
+
+  From $d \le A$ and $\length(\gamma') = \length(\gamma)-A+d \le \length(\gamma)-A+A =
+  \length(\gamma)$, we get \eqref{eq:LengthBoundTypeIIgamma}.
+
+  From $\length(\gamma')+\length(g) = (\length(\gamma)-A+d)+(A+d) = \length(\gamma)+2d$ and $d \le A
+  \le 2\epsilon^{-1}\delta$ (the last by \eqref{eq:arc-length} via \eqref{eq:branch-agree}), we get
+  $\length(\gamma')+\length(g) \le \length(\gamma)+2\cdot 2\epsilon^{-1}\delta = \length(\gamma)+
+  4\epsilon^{-1}\delta$, which is \eqref{eq:LengthBoundTypeIItotal}. This matches paper's own
+  derivation (paper.tex line 959, ``two additional geodesic edges each of length
+  $d(\gamma(t),\gamma(t'))\le\length(\gamma|_{[t,t']})\le2\epsilon^{-1}\delta$'').
+
+  \paragraph{Step 6: the small-count bound \eqref{eq:SmallCountBoundTypeII}.} By
+  \noderef{BasicCutResolutionAtBreakpoints} applied to $\gamma,k,s,p,q$ (valid by Step~1: $p\le k$,
+  $q\le k$, $s(p)\ne s(q)$) and $\delta$,
+  \[
+    \nsmallpieces(\gamma',\delta) + \#\set{j\in\set{1,\dots,k} : \mathrm{inArc}(j) \text{ and }
+    s(j)-s(j-1)<\delta} \le \#\set{j\in\set{1,\dots,k}:s(j)-s(j-1)<\delta} + 1
+    .
+  \]
+  The middle term is exactly the left side of \eqref{eq:exact-n1}, which equals $n+1$; the right
+  side's finite-set cardinality is exactly $\nsmallpieces(\gamma,\delta)$, since $(k,s)$ was chosen
+  in Step~0 (via \noderef{DeltaEpsNFailureAtBreakpoints}) to realize
+  $\nsmallpieces(\gamma,\delta)$ (\noderef{smallPieceCount}). Substituting both,
+  \[
+    \nsmallpieces(\gamma',\delta) + (n+1) \le \nsmallpieces(\gamma,\delta) + 1
+    ,
+  \]
+  and cancelling $1$ from both sides (ordinary, non-truncated addition of naturals) gives
+  $\nsmallpieces(\gamma',\delta)+n \le \nsmallpieces(\gamma,\delta)$, which is
+  \eqref{eq:SmallCountBoundTypeII}. This is exactly paper's own count (paper.tex line 957, ``the
+  removed part [...] contains $n+1$ geodesic edges of length smaller than $\delta$ [...], and these
+  are replaced by a single geodesic edge [...], for an overall decrease of at least $n$ small
+  geodesic edges'').
+
+  \paragraph{Step 7: the Morrey bound \eqref{eq:MorreyTypeII}.} By
+  \noderef{BasicCutDiscardedResolution} applied to $\gamma,k,s,p,q$ (valid by Step~1), the
+  discarded output $g$ satisfies $\mathrm{IsPiecewiseGeodesicWith}(g, K+1)$
+  (\noderef{IsPiecewiseGeodesicWith}), where $K := \#\set{j\in\set{1,\dots,k}:\mathrm{inArc}(j)}$.
+  By \noderef{C1SmallBall} applied to $g,K+1$,
+  \[
+    \Morrey{\mu_g} \le 2\bigl((K+1:\mathbb{N}):\mathbb{R}_{\ge0}\cup\set{\infty}\bigr)
+    .
+  \]
+  By \eqref{eq:total-bound}, $K \le 2\epsilon^{-1}+(n+1)$ as real numbers, so $(K:\mathbb{R})+1 \le
+  2\epsilon^{-1}+(n+1)+1 = (n:\mathbb{R})+2\epsilon^{-1}+2$; converting the natural-number cast
+  $2\cdot((K+1:\mathbb{N}):\mathbb{R}_{\ge0}\cup\set{\infty})$ to the extended-real form
+  $\mathrm{ofReal}\bigl(2\cdot((K:\mathbb{R})+1)\bigr)$ (a natural number cast into
+  $\mathbb{R}_{\ge0}\cup\set{\infty}$ always equals $\mathrm{ofReal}$ of its real value, since
+  natural numbers are nonnegative) and applying monotonicity of $\mathrm{ofReal}$ on the (nonnegative,
+  by \noderef{morreyNorm} taking values in $\mathbb{R}_{\ge0}\cup\set{\infty}$) real inequality just
+  derived gives
+  \[
+    \Morrey{\mu_g} \le \mathrm{ofReal}\bigl(2\cdot((K:\mathbb{R})+1)\bigr) \le
+    \mathrm{ofReal}\bigl(2\bigl((n:\mathbb{R})+2\epsilon^{-1}+2\bigr)\bigr)
+    ,
+  \]
+  which is \eqref{eq:MorreyTypeII}. This matches the paper's own count (paper.tex lines 961-964:
+  ``$\gamma_{[t,t']}$ has length at most $2\epsilon^{-1}\delta$, so it contains at most
+  $2\epsilon^{-1}$ edges of length at least $\delta$ [...] contains exactly $n+1$ edges of length
+  smaller than $\delta$ [...] $g$ consists of these edges [...] together with one geodesic edge
+  [...] Thus [C1-small-ball] with $k\le2\epsilon^{-1}+(n+1)+1$ gives \eqref{MorreyTypeII}''), with
+  $K+1$ here playing the role of the paper's $k$.
+
+  Steps 2, 3, 5, 6, and 7 jointly establish all the required conjuncts, completing the proof.
+\end{proof}

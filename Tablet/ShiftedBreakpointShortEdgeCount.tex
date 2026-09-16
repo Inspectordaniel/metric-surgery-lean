@@ -1,0 +1,94 @@
+\begin{helper}[Windowed short-edge count transported along an affine reindexing of breakpoints]
+  Let $k,n,p,q,c,d \in \mathbb{N}$, let $\delta,\sigma,a',b' \in \mathbb{R}$, and let
+  $s, s_A \colon \mathbb{N} \to \mathbb{R}$. (Throughout, $i-1$, $p-1$ and $i+c-d$ denote
+  truncated natural-number subtraction.) Assume:
+  \begin{itemize}
+    \item $1 \le p$ and $d + 1 \le p + c$;
+    \item (affine correspondence) for every $i \in \mathbb{N}$ with $p-1 \le i \le q$ we have
+      $i + c - d \le k$ and
+      \[
+        s_A(i) = s\bigl(i + c - d\bigr) + \sigma
+        ;
+      \]
+    \item (window count)
+      \[
+        \#\set{ j \in \set{1,\dots,k} \colon a'-\sigma \le s(j-1),\ s(j) \le b'-\sigma,\
+          s(j)-s(j-1) < \delta }
+        \le n
+        .
+      \]
+  \end{itemize}
+  Then
+  \[
+    \#\set{ i \in \set{p,\dots,q} \colon a' \le s_A(i-1),\ s_A(i) \le b',\
+      s_A(i) - s_A(i-1) < \delta } \le n
+    .
+  \]
+
+  \paragraph{Role.} This is the reusable form of the pull-back step used in
+  \noderef{ArcShortWindowEdgeCount} and \noderef{ArcDeltaEpsNCount}: when the breakpoints of a
+  circular arc's resolution are, on some index stretch, the breakpoints of the ambient curve's
+  resolution under a single index map $i \mapsto i+c-d$ and a single value shift $\sigma$, the
+  arc's short edges lying in a window $[a',b']$ are literally short edges of the ambient curve
+  lying in the corresponding shifted window, so the ambient curve's own counting clause bounds
+  them. The hypotheses mention only the two breakpoint sequences, so the same statement covers the
+  ordinary (non-wrapping) case and both degenerate ends of the wrapping case, which differ only in
+  the values of $(p,q,c,d,\sigma)$: the index map specialises to $i \mapsto j_0+(i-1)$ at
+  $(c,d)=(j_0,1)$ and to $i \mapsto i-m$ at $(c,d)=(0,m)$. The window $[a',b']$ and the index range
+  $\set{p,\dots,q}$ are free parameters rather than the extreme choices
+  $[s_A(1),s_A(q)]$, $p=2$, which is what lets a consumer count inside a \emph{small} sub-window of
+  a long breakpoint sequence -- the situation of \noderef{ArcDeltaEpsNCount}, where the window
+  length is bounded by $2\epsilon^{-1}\delta$ but the whole interior window's length is not.
+\end{helper}
+\begin{proof}
+  Put $\varphi(i) := i+c-d$ and let
+  \[
+    S := \set{ i \in \set{p,\dots,q} \colon a' \le s_A(i-1),\ s_A(i) \le b',\
+      s_A(i) - s_A(i-1) < \delta },
+  \]
+  \[
+    T := \set{ j \in \set{1,\dots,k} \colon a'-\sigma \le s(j-1),\ s(j) \le b'-\sigma,\
+      s(j)-s(j-1) < \delta }
+    .
+  \]
+  We show $\varphi$ maps $S$ into $T$ and is injective on $S$; then $\#S \le \#T \le n$, which is
+  the claim.
+
+  \emph{No truncation on the range.} Let $i$ with $p \le i \le q$. Since $p \ge 1$ we have
+  $i \ge 1$, so $i-1$ is ordinary subtraction and $(i-1)+c = (i+c)-1$. Since $i \ge p$ we have
+  $i + c \ge p + c \ge d+1$, so $\varphi(i) = i+c-d \ge 1$ is ordinary subtraction, and
+  $(i-1)+c-d = (i+c)-1-d = \varphi(i)-1$, again ordinary subtraction.
+
+  \emph{$\varphi$ maps $S$ into $T$.} Let $i \in S$, so $p \le i \le q$, $a' \le s_A(i-1)$,
+  $s_A(i) \le b'$ and $s_A(i)-s_A(i-1) < \delta$. Both $i$ and $i-1$ lie in $\set{p-1,\dots,q}$
+  (for $i$: $p-1 \le p \le i \le q$; for $i-1$: $i-1 \ge p-1$ since $i \ge p$, and
+  $i-1 \le i \le q$), so the affine correspondence applies at both indices and gives
+  \[
+    \varphi(i) = i+c-d \le k,
+    \qquad
+    s\bigl(\varphi(i)\bigr) = s_A(i) - \sigma,
+    \qquad
+    s\bigl((i-1)+c-d\bigr) = s_A(i-1) - \sigma
+    .
+  \]
+  By the no-truncation paragraph, $(i-1)+c-d = \varphi(i)-1$, so the last identity reads
+  $s(\varphi(i)-1) = s_A(i-1)-\sigma$; and $\varphi(i) \ge 1$, so together with $\varphi(i) \le k$
+  we get $\varphi(i) \in \set{1,\dots,k}$.
+
+  It remains to verify the three defining conditions of $T$ at $j = \varphi(i)$.
+  \begin{itemize}
+    \item $a'-\sigma \le s(\varphi(i)-1)$: indeed $s(\varphi(i)-1) = s_A(i-1)-\sigma \ge
+      a'-\sigma$, using $a' \le s_A(i-1)$.
+    \item $s(\varphi(i)) \le b'-\sigma$: indeed $s(\varphi(i)) = s_A(i)-\sigma \le b'-\sigma$,
+      using $s_A(i) \le b'$.
+    \item $s(\varphi(i)) - s(\varphi(i)-1) = \bigl(s_A(i)-\sigma\bigr) - \bigl(s_A(i-1)-\sigma\bigr)
+      = s_A(i) - s_A(i-1) < \delta$, since $i \in S$.
+  \end{itemize}
+
+  \emph{$\varphi$ is injective on $S$.} If $i_1, i_2 \in S$ with $\varphi(i_1) = \varphi(i_2)$,
+  then by the no-truncation paragraph both $\varphi(i_1) = i_1+c-d$ and $\varphi(i_2) = i_2+c-d$
+  are ordinary subtractions of $d$ from $i_1+c$ resp.\ $i_2+c$, so $i_1+c = i_2+c$ and hence
+  $i_1 = i_2$.
+
+  Hence $\#S \le \#T \le n$.
+\end{proof}

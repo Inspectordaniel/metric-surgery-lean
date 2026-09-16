@@ -1,0 +1,144 @@
+\begin{lemma}[Two-slot perturbation estimate for $[[\gamma]]$]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $m \in \mathbb{N}$ with
+  $m \ge 1$, $Q \subset E$ a nonempty finite set, and $\epsilon, C \in \mathbb{R}$ with
+  $\epsilon > 0$, $C > 0$. Let $\omega, \omega_k, \omega_{kj} \in \mathcal{D}^1(E)$
+  (\noderef{Form1}) be three metric $1$-forms such that
+  \[
+    \omega_{kj}.f = \omega_k.f
+    \qquad\text{and}\qquad
+    \omega_k.\pi = \omega.\pi
+    ,
+  \]
+  (as functions $E \to \mathbb{R}$; informally $\omega=(f,\pi)$, $\omega_k=(f_k,\pi)$ and
+  $\omega_{kj}=(f_k,\pi_j)$), and such that all the bound and Lipschitz-constant fields in play are
+  at most $C$:
+  \[
+    \norm{\omega.f}_\infty,\ \norm{\omega_k.f}_\infty,\
+    \mathrm{Lip}(\omega.f),\ \mathrm{Lip}(\omega_k.f),\
+    \mathrm{Lip}(\omega.\pi),\ \mathrm{Lip}(\omega_k.\pi),\ \mathrm{Lip}(\omega_{kj}.\pi)
+    \ \le\ C
+    ,
+  \]
+  where $\norm{\cdot}_\infty$ and $\mathrm{Lip}(\cdot)$ denote the bound and Lipschitz-constant
+  \emph{fields} carried by the respective $1$-form (\noderef{Form1}), not optimal constants.
+  Assume finally the two $\epsilon$-closeness conditions on the finite set $Q$:
+  \[
+    |\omega.f(q) - \omega_k.f(q)| \le \epsilon
+    \quad\text{and}\quad
+    |\omega.\pi(q) - \omega_{kj}.\pi(q)| \le \epsilon
+    \qquad \text{for every } q \in Q
+    .
+  \]
+  Then
+  \[
+    \bigl| [[\gamma]](\omega) - [[\gamma]](\omega_{kj}) \bigr|
+    \ \le\ \tilde\psi_{m,Q,\epsilon,C}(\gamma) + \psi_{m,Q,\epsilon,C}(\gamma)
+    ,
+  \]
+  where $[[\cdot]](\cdot)$ is \noderef{curveCurrent}, $\psi_{m,Q,\epsilon,C}$ is \noderef{psi} and
+  $\tilde\psi_{m,Q,\epsilon,C}$ is \noderef{psiTilde}.
+
+  \paragraph{Provenance.} This is the combined content of paper.tex 1398--1410, inside the proof of
+  Theorem~4.4: the sentence ``use multilinearity'' (paper.tex 1398) followed by the display
+  \[
+    \bigl|[[\gamma]](f,\pi) - [[\gamma]](f_k,\pi_j)\bigr|
+    \le \bigl|[[\gamma]](f-f_k,\pi)\bigr| + \bigl|[[\gamma]](f_k,\pi-\pi_j)\bigr|
+  \]
+  (paper.tex 1399--1407, with the two difference slots taken in the tablet's order) and the appeal
+  ``we may therefore apply \Cref{pi_bounds} for this range of $j,k$'' (paper.tex 1410). Separately,
+  \noderef{CurrentFormAddF} and \noderef{CurrentFormAddPi} supply only the two additivity
+  identities, and \noderef{PiBoundsF} and \noderef{PiBoundsPi} supply only the two Lemma~A.2
+  estimates for \emph{one} perturbed slot at a time; none of the four states the per-curve bound on
+  the difference $[[\gamma]](\omega) - [[\gamma]](\omega_{kj})$ obtained by perturbing \emph{both}
+  slots, which is the quantity the proof of Theorem~4.4 actually averages over $i$ and $l$.
+\end{lemma}
+\begin{proof}
+  Write $f := \omega.f$, $f_k := \omega_k.f$, $\pi := \omega.\pi$, $\pi_j := \omega_{kj}.\pi$, so
+  that by the two hypotheses $\omega_{kj}.f = f_k$ and $\omega_k.\pi = \pi$.
+
+  \emph{Step 1: the $f$-slot split.} Let $D_1 \in \mathcal{D}^1(E)$ be the metric $1$-form
+  (\noderef{Form1}) with $f$-part $x \mapsto f(x) - f_k(x)$, bound field
+  $\norm{\omega.f}_\infty + \norm{\omega_k.f}_\infty$ and Lipschitz field
+  $\mathrm{Lip}(\omega.f) + \mathrm{Lip}(\omega_k.f)$ (these are legitimate: a difference of two
+  functions bounded by $b_1$, $b_2$ is bounded by $b_1+b_2$, and a difference of an $L_1$- and an
+  $L_2$-Lipschitz function is $(L_1+L_2)$-Lipschitz), and with $\pi$-part $\pi$, Lipschitz field
+  $\mathrm{Lip}(\omega.\pi)$, inherited unchanged from $\omega$. This $D_1$ is exactly the $1$-form
+  appearing in the conclusion of \noderef{PiBoundsF} when that lemma is applied with its
+  ``$\omega$'' $:= \omega$ and its ``$\omega'$'' $:= \omega_k$.
+
+  Apply \noderef{CurrentFormAddF} with $\omega_{12} := \omega$, $\omega_1 := D_1$,
+  $\omega_2 := \omega_k$. Its three hypotheses hold: $D_1.\pi = \pi = \omega.\pi$ by construction of
+  $D_1$; $\omega_k.\pi = \omega.\pi$ by the standing hypothesis; and for every $x \in E$,
+  $\omega.f(x) = f(x) = (f(x) - f_k(x)) + f_k(x) = D_1.f(x) + \omega_k.f(x)$. Hence
+  \[
+    [[\gamma]](\omega) = [[\gamma]](D_1) + [[\gamma]](\omega_k)
+    . \tag{1}
+  \]
+
+  \emph{Step 2: the $\pi$-slot split.} Let $D_2 \in \mathcal{D}^1(E)$ be the metric $1$-form with
+  $f$-part $f_k$ and bound/Lipschitz fields $\norm{\omega_k.f}_\infty$, $\mathrm{Lip}(\omega_k.f)$
+  inherited unchanged from $\omega_k$, and with $\pi$-part $x \mapsto \omega_k.\pi(x) -
+  \omega_{kj}.\pi(x)$ and Lipschitz field $\mathrm{Lip}(\omega_k.\pi) + \mathrm{Lip}(\omega_{kj}.\pi)$
+  (again legitimate, a difference of Lipschitz functions). This $D_2$ is exactly the $1$-form
+  appearing in the conclusion of \noderef{PiBoundsPi} when that lemma is applied with its
+  ``$\omega$'' $:= \omega_k$ and its ``$\omega'$'' $:= \omega_{kj}$.
+
+  Apply \noderef{CurrentFormAddPi} with $\omega_{12} := \omega_k$, $\omega_1 := D_2$,
+  $\omega_2 := \omega_{kj}$. Its three hypotheses hold: $D_2.f = f_k = \omega_k.f$ by construction of
+  $D_2$; $\omega_{kj}.f = \omega_k.f$ by the standing hypothesis; and for every $x \in E$,
+  $\omega_k.\pi(x) = (\omega_k.\pi(x) - \omega_{kj}.\pi(x)) + \omega_{kj}.\pi(x) = D_2.\pi(x) +
+  \omega_{kj}.\pi(x)$. Hence
+  \[
+    [[\gamma]](\omega_k) = [[\gamma]](D_2) + [[\gamma]](\omega_{kj})
+    . \tag{2}
+  \]
+
+  Substituting (2) into (1) and subtracting $[[\gamma]](\omega_{kj})$ from both sides (all four
+  quantities are real numbers),
+  \[
+    [[\gamma]](\omega) - [[\gamma]](\omega_{kj}) = [[\gamma]](D_1) + [[\gamma]](D_2)
+    . \tag{3}
+  \]
+
+  \emph{Step 3: bounding $[[\gamma]](D_1)$.} Apply \noderef{PiBoundsF} with this $\gamma$, this
+  $m$ (with $m \ge 1$), this $Q$ (nonempty), this $\epsilon > 0$, this $C > 0$, and the two forms
+  $\omega$ and $\omega_k$. Its five bound hypotheses are, in order,
+  $\norm{\omega.f}_\infty \le C$, $\norm{\omega_k.f}_\infty \le C$, $\mathrm{Lip}(\omega.f) \le C$,
+  $\mathrm{Lip}(\omega_k.f) \le C$ and $\mathrm{Lip}(\omega.\pi) \le C$, all of which are among the
+  standing hypotheses; and its closeness hypothesis is
+  $|\omega.f(q) - \omega_k.f(q)| \le \epsilon$ for every $q \in Q$, which is the first standing
+  closeness hypothesis verbatim. Its conclusion is a bound on the current of exactly the $1$-form
+  $D_1$ constructed in Step~1:
+  \[
+    \bigl| [[\gamma]](D_1) \bigr| \le \tilde\psi_{m,Q,\epsilon,C}(\gamma)
+    . \tag{4}
+  \]
+
+  \emph{Step 4: bounding $[[\gamma]](D_2)$.} First note that for every $q \in Q$,
+  \[
+    |\omega_k.\pi(q) - \omega_{kj}.\pi(q)| = |\omega.\pi(q) - \omega_{kj}.\pi(q)| \le \epsilon
+    ,
+  \]
+  using $\omega_k.\pi = \omega.\pi$ and the second standing closeness hypothesis. Now apply
+  \noderef{PiBoundsPi} with this $\gamma, m, Q, \epsilon, C$ and the two forms $\omega_k$ and
+  $\omega_{kj}$. Its four bound hypotheses are, in order, $\norm{\omega_k.f}_\infty \le C$,
+  $\mathrm{Lip}(\omega_k.f) \le C$, $\mathrm{Lip}(\omega_k.\pi) \le C$ and
+  $\mathrm{Lip}(\omega_{kj}.\pi) \le C$, all among the standing hypotheses; and its closeness
+  hypothesis is the display just proved. Its conclusion is a bound on the current of exactly the
+  $1$-form $D_2$ constructed in Step~2:
+  \[
+    \bigl| [[\gamma]](D_2) \bigr| \le \psi_{m,Q,\epsilon,C}(\gamma)
+    . \tag{5}
+  \]
+
+  \emph{Step 5: conclusion.} By (3), the triangle inequality for the absolute value on
+  $\mathbb{R}$, and then (4) and (5),
+  \[
+    \bigl| [[\gamma]](\omega) - [[\gamma]](\omega_{kj}) \bigr|
+    = \bigl| [[\gamma]](D_1) + [[\gamma]](D_2) \bigr|
+    \le \bigl| [[\gamma]](D_1) \bigr| + \bigl| [[\gamma]](D_2) \bigr|
+    \le \tilde\psi_{m,Q,\epsilon,C}(\gamma) + \psi_{m,Q,\epsilon,C}(\gamma)
+    ,
+  \]
+  which is the claimed bound.
+\end{proof}

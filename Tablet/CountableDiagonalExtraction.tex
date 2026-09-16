@@ -1,0 +1,87 @@
+\begin{lemma}[Countable diagonal extraction]
+  Let $(a_{j,l})_{j,l\in\mathbb{N}}$ be a doubly-indexed family of sequences $a_{j,l}\colon
+  \mathbb{N}\to\mathbb{R}$, and let $(A_j)_{j\in\mathbb{N}}$ be a family of reals such that for
+  every $j,l\in\mathbb{N}$,
+  \[
+    \lim_{n\to\infty} a_{j,l}(n) = A_j
+    .
+  \]
+  Note that the limit $A_j$ does not depend on $l$. Then there is a single strictly increasing
+  function $N\colon\mathbb{N}\to\mathbb{N}$ such that, simultaneously for every $j\in\mathbb{N}$,
+  \[
+    \lim_{l\to\infty} a_{j,l}(N(l)) = A_j
+    .
+  \]
+
+  \paragraph{Role of this lemma; why it is standalone.} This is the abstract shape of a diagonal
+  extraction applied to countably many families of limits, each of which is independent of a
+  second index $l$ once $n\to\infty$ has been taken. It is stated here as a bare fact about real
+  sequences, with no reference to curves, currents, or measures, so that it can be instantiated at
+  its use site(s) purely by supplying the concrete doubly-indexed families and verifying, there,
+  that each limit $A_j$ is genuinely $l$-independent. It therefore carries no \noderef{} citations.
+
+  \paragraph{Why this is the only diagonal argument needed, and why the paper's own presentation
+  is more elaborate.} paper.tex 1349--1356 states, without proof, that a "further diagonal
+  argument" applied to certain countably-many limits produces a single sequence $n_l\to\infty$
+  witnessing all of them simultaneously; the paper's own use of this diagonal principle sits
+  downstream of an earlier diagonal argument, over the sampling scale $\tilde\delta_n$, that is
+  needed only because the paper evaluates its estimating functions ($\psi$ and its perturbation
+  cousins) at the piecewise-geodesic sampling $\gamma^\delta$ rather than at the original curve
+  $\gamma$. When the main estimate is instead organized so that every quantity is bounded at the
+  unsampled curves $\gamma_{i,l}$ first, and the (uniform, sampling-scale-independent) error from
+  replacing $\gamma_{i,l}$ by $\gamma^{\delta_l}_{i,l}$ is folded in once at the very end, only a
+  single family of limits, each already $l$-independent, needs to be diagonalized -- exactly the
+  shape of this lemma. (The lemma is stated for a single index $j$ ranging over $\mathbb{N}$; at
+  the use site the various countable families of limits -- current values, endpoint-cutoff
+  averages, $\psi$-averages -- are merged into one $\mathbb{N}$-indexed family before this lemma is
+  applied, matching the display's "the countable many limits" quantified jointly over $j,k$ and
+  over admissible $(m,Q,\epsilon,C)$.)
+\end{lemma}
+\begin{proof}
+  \emph{Step 1: at each stage $l$, find a threshold good for all $j\le l$ simultaneously.} Fix
+  $l\in\mathbb{N}$ and let $\eta_l := 1/(l+1) > 0$. For each $j\in\mathbb{N}$, since $a_{j,l}(n)\to
+  A_j$ as $n\to\infty$, there is $M_j\in\mathbb{N}$ such that $|a_{j,l}(n)-A_j| < \eta_l$ for every
+  $n\ge M_j$. Since $\{0,\dots,l\}$ is finite, taking
+  \[
+    M(l) := \max\{M_0,M_1,\dots,M_l\}
+  \]
+  gives a single threshold with the property that for every $j\le l$ and every $n\ge M(l)$,
+  \[
+    |a_{j,l}(n) - A_j| < \eta_l = \frac{1}{l+1}
+    . \tag{$\ast_l$}
+  \]
+  (This uses only finitely many convergence facts at each fixed $l$; no uniformity in $l$ is
+  claimed or needed here.)
+
+  \emph{Step 2: make the choice of cutoffs strictly increasing.} Define $N\colon\mathbb{N}\to
+  \mathbb{N}$ recursively by
+  \[
+    N(0) := M(0)
+    , \qquad
+    N(l+1) := \max\{N(l)+1,\ M(l+1)\}
+    .
+  \]
+  By construction $N(l+1) \ge N(l)+1 > N(l)$ for every $l$, so $N$ is strictly increasing.
+  Moreover $N(l) \ge M(l)$ for every $l$: at $l=0$ this is the definition, and at $l+1$ it follows
+  from $N(l+1)\ge M(l+1)$ directly by the second branch of the maximum.
+
+  \emph{Step 3: verify the diagonal convergence for each fixed $j$.} Fix $j\in\mathbb{N}$ and
+  $\varepsilon>0$; we must produce $L\in\mathbb{N}$ such that $|a_{j,l}(N(l))-A_j| < \varepsilon$
+  for every $l\ge L$. Choose (Archimedean property of $\mathbb{R}$) a natural number $L_0$ with
+  $L_0 > 1/\varepsilon$, and set $L := \max\{j, L_0\}$. Let $l \ge L$; then $j \le L \le l$ and
+  $L_0 \le l$, so $L_0 < l+1$, hence
+  \[
+    \frac{1}{l+1} < \frac{1}{L_0} < \varepsilon
+    ,
+  \]
+  the middle inequality from $L_0 > 1/\varepsilon > 0$ (so $1/L_0 < \varepsilon$) and the first
+  from $L_0 < l+1$ (both positive). Since $j \le l$ and $N(l) \ge M(l)$ (Step 2), $(\ast_l)$ applies
+  with $n = N(l)$ to give
+  \[
+    |a_{j,l}(N(l)) - A_j| < \frac{1}{l+1} < \varepsilon
+    .
+  \]
+  As $\varepsilon>0$ and $l\ge L$ were arbitrary (with $L$ depending only on $j$ and $\varepsilon$),
+  this is exactly $\lim_{l\to\infty} a_{j,l}(N(l)) = A_j$. Since $j$ was arbitrary, this holds for
+  every $j\in\mathbb{N}$, completing the proof.
+\end{proof}

@@ -1,0 +1,72 @@
+\begin{lemma}[Mass of a nonzero functional is nonzero]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra and $T \colon
+  \mathcal{D}^1(E) \to \mathbb{R}$ a functional (\noderef{Form1}) with $T \ne 0$ (i.e.\ $T(\omega)
+  \ne 0$ for some $\omega\in\mathcal{D}^1(E)$). Then
+  \[
+    \mathbb{M}(T) \ne 0
+  \]
+  (\noderef{massOfFunctional}), i.e.\ $\mathrm{massOfFunctional}(T) \ne 0$.
+
+  \paragraph{Why this does not follow from finiteness of mass.} A current's finite-mass axiom
+  (\noderef{MetricCurrent1}, field \emph{finiteMass}) gives $\mathbb{M}(T) \ne \infty$, the
+  \emph{opposite} end of the value range from what is needed here. Nothing in
+  \noderef{MetricCurrent1}'s definition, nor in \noderef{massOfFunctional}'s definition as an
+  infimum, rules out $\mathbb{M}(T)=0$ for a nonzero $T$ without the argument given below.
+
+  \paragraph{Why this is needed.} Every normalization on the route to \noderef{bbassertion} divides
+  a quantity by $\mathbb{M}(T)$ (for instance, replacing the measure $\eta_l$ of a Paolini--Stepanov
+  family by the probability measure $\eta_l/\mathbb{M}(T)$, and the final cancellation of
+  $\mathbb{M}(T)\le\mathbb{M}(T)\cdot c$ to $c\ge 1$); each such step is meaningless, or division by
+  zero, unless $\mathbb{M}(T)\ne 0$ is available for the specific $T\ne 0$ hypothesized by
+  \noderef{bbassertion}.
+\end{lemma}
+\begin{proof}
+  We argue by contradiction: suppose $\mathbb{M}(T) = 0$; we show $T = 0$ (contradicting the
+  hypothesis $T \ne 0$), i.e.\ we show $T(\omega) = 0$ for every $\omega \in \mathcal{D}^1(E)$. Fix
+  an arbitrary $\omega = (f,\pi) \in \mathcal{D}^1(E)$, with bound $\|f\|_\infty$ and Lipschitz
+  constant $\mathrm{Lip}(\pi)$ as carried by $\omega$ (\noderef{Form1}).
+
+  \emph{Step 1: at least one admissible measure exists.} If no measure were admissible for $T$
+  (\noderef{IsAdmissible}), then by \noderef{massOfFunctional}'s convention for the infimum of the
+  empty set, $\mathbb{M}(T) = \infty \ne 0$, contradicting $\mathbb{M}(T)=0$. Hence some admissible
+  measure exists.
+
+  \emph{Step 2: a uniform bound, valid for every admissible $\mu$, on $|T(\omega)|$ in terms of
+  $\mu(E)$.} Let $\mu$ be any admissible measure for $T$. By \noderef{IsAdmissible}'s defining
+  inequality,
+  \[
+    |T(\omega)| \le \mathrm{Lip}(\pi) \int_E |f| \, d\mu
+    .
+  \]
+  Since $|f(x)| \le \|f\|_\infty$ for every $x\in E$ (\noderef{Form1}'s bound field) and $\mu$ is a
+  (finite, in particular $\sigma$-finite) measure, monotonicity of the integral gives
+  \[
+    \int_E |f| \, d\mu \le \int_E \|f\|_\infty \, d\mu = \|f\|_\infty \cdot \mu(E)
+    ,
+  \]
+  so combining,
+  \[
+    |T(\omega)| \le \mathrm{Lip}(\pi) \cdot \|f\|_\infty \cdot \mu(E)
+    . \tag{$\ast_\mu$}
+  \]
+  This holds for \emph{every} admissible $\mu$, with the same finite nonnegative constant
+  $K := \mathrm{Lip}(\pi)\cdot\|f\|_\infty$ on the right.
+
+  \emph{Step 3: pass to the infimum over admissible $\mu$.} By Step 1 the family of admissible
+  measures for $T$ is nonempty, so taking the infimum of the right-hand side of $(\ast_\mu)$ over
+  admissible $\mu$ is well-formed and (since $K$ is a finite constant, so multiplication by $K$
+  commutes with taking an infimum over a nonempty index set) equals $K$ times the infimum of
+  $\mu(E)$ over admissible $\mu$, i.e.\ $K \cdot \mathbb{M}(T)$. Since the left-hand side
+  $|T(\omega)|$ of $(\ast_\mu)$ does not depend on $\mu$, taking the infimum over admissible $\mu$
+  on both sides of $(\ast_\mu)$ gives
+  \[
+    |T(\omega)| \le K \cdot \mathbb{M}(T) = \mathrm{Lip}(\pi)\cdot\|f\|_\infty \cdot \mathbb{M}(T)
+    .
+  \]
+
+  \emph{Step 4: conclude.} By the contradiction hypothesis $\mathbb{M}(T)=0$, the right-hand side
+  is $\mathrm{Lip}(\pi)\cdot\|f\|_\infty\cdot 0 = 0$, so $|T(\omega)| \le 0$, hence (since absolute
+  value is nonnegative) $T(\omega)=0$. As $\omega\in\mathcal{D}^1(E)$ was arbitrary, $T(\omega)=0$
+  for every $\omega$, i.e.\ $T=0$, contradicting the hypothesis $T\ne 0$. This contradiction shows
+  $\mathbb{M}(T)\ne 0$.
+\end{proof}

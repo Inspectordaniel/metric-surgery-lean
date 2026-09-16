@@ -1,0 +1,107 @@
+\begin{lemma}[Continuity of a metric $1$-current with respect to pointwise convergence of $f$]\label{CurrentContinuousF}
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra, and $T \in
+  \mathcal{M}_1(E)$ a metric $1$-current (\noderef{MetricCurrent1}). Fix $\pi \colon E \to
+  \mathbb{R}$ Lipschitz with constant $\mathrm{Lip}(\pi)$, and $f \colon E \to \mathbb{R}$ bounded
+  ($\norm{f}_\infty \le b_F$) and Lipschitz (constant $L_F$). Let $(f_n)_{n \in \mathbb{N}}$ be a
+  sequence of bounded Lipschitz functions, bounded ($\norm{f_n}_\infty \le b_n$) and Lipschitz
+  (constant $L_n$), with the bounds $(b_n)$ uniformly bounded by some $b_0$, such that
+  $f_n(x) \to f(x)$ as $n\to\infty$ for every $x \in E$. Then
+  \[
+    T(f_n,\pi) \to T(f,\pi) \quad \text{as } n \to \infty
+    ,
+  \]
+  where $T(f_n,\pi)$ and $T(f,\pi)$ denote $T$ applied to the metric $1$-form (\noderef{Form1})
+  with the indicated $f$- and $\pi$-components (and the stated witnessing bound/Lipschitz data).
+
+  \paragraph{Provenance and why this is a new node.} Paper.tex line 1393, in the proof of
+  Theorem~4.4, states: ``we recall that by definition, a metric $1$-current $T$ is continuous with
+  respect to the pointwise convergence [of $\pi$, eq.~\eqref{pi_converge}], while the continuity
+  with respect to [the analogous pointwise convergence of $f$, eq.~\eqref{f_converge}] follows from
+  [the mass-measure inequality, eq.~\eqref{massmeasure}] and Lebesgue's dominated convergence
+  theorem.'' \noderef{MetricCurrent1}'s own docstring records the same fact and, correspondingly,
+  \emph{excludes} this statement from that structure's fields: continuity in $\pi$
+  (\texttt{continuous\_pi}) is axiomatized directly, but continuity in $f$ is deliberately left
+  underivable from the structure fields alone, to be derived at whichever node needs it, precisely
+  because the paper itself derives it (rather than positing it) from finite mass together with
+  dominated convergence. This lemma is exactly that derivation, stated once as its own node so
+  that \noderef{DiagonalizationGeneral} (which needs it as one of the two halves of
+  eq.~\eqref{TfpiTfkpij}, the other half being \noderef{MetricCurrent1}'s \texttt{continuous\_pi}
+  directly) can cite a single clean statement rather than repeating a genuine Lebesgue
+  dominated-convergence argument (using \texttt{finiteMass}, additivity in the $f$-slot, and the
+  admissible-measure domination bound) inline. This is not a Substantiveness Clause-2 wrapper: it
+  is not a repackaging of any single existing node's content into a shorter proof of the same fact,
+  since no existing tablet node states or proves it, and its own proof requires a genuine
+  application of the dominated convergence theorem, not a one- or few-line consequence of a single
+  cited node.
+\end{lemma}
+\begin{proof}
+  \emph{Step 1: exhibit an admissible measure.} By \noderef{MetricCurrent1}'s \texttt{finiteMass}
+  field, $\mathrm{massOfFunctional}(T) \ne \infty$ (\noderef{massOfFunctional}). By
+  \noderef{massOfFunctional}'s definition as an infimum over the subtype of measures admissible for
+  $T$ (\noderef{IsAdmissible}), if that subtype were empty the infimum over it would be $\infty$
+  (the infimum of the empty set in $[0,\infty]$, by convention), contradicting
+  \texttt{finiteMass}. Hence the subtype is nonempty: there exists a measure $\mu$ on $E$ that is
+  admissible for $T$, i.e.\ (\noderef{IsAdmissible}) $\mu$ is a finite Borel measure and
+  \[
+    |T(\omega)| \le \mathrm{Lip}(\omega.\pi) \int_E |\omega.f| \, d\mu
+    \qquad \text{for every } \omega \in \mathcal{D}^1(E)
+    . \tag{$\ast$}
+  \]
+  Fix such a $\mu$ for the rest of the proof.
+
+  \emph{Step 2: split off the difference form.} For each $n$, let $D_n \in \mathcal{D}^1(E)$ be the
+  metric $1$-form with $f$-part $x \mapsto f_n(x) - f(x)$ (bound $b_n + b_F$, by the triangle
+  inequality $|f_n(x)-f(x)| \le |f_n(x)|+|f(x)| \le b_n+b_F$; Lipschitz constant $L_n+L_F$, since a
+  difference of an $L_n$-Lipschitz and an $L_F$-Lipschitz function is $(L_n+L_F)$-Lipschitz) and
+  $\pi$-part $\pi$ unchanged (Lipschitz constant $\mathrm{Lip}(\pi)$). Since $f_n(x) = (f_n(x)-
+  f(x)) + f(x)$ pointwise and $D_n.\pi = \pi = (f,\pi).\pi$ and $(f_n,\pi).\pi = \pi$ all coincide,
+  \noderef{MetricCurrent1}'s \texttt{add\_f} field (additivity in the $f$-slot, applied with
+  $\omega_{12} := (f_n,\pi)$, $\omega_1 := D_n$, $\omega_2 := (f,\pi)$) gives
+  \[
+    T(f_n,\pi) = T(D_n) + T(f,\pi)
+    \qquad \text{for every } n
+    . \tag{$\ast\ast$}
+  \]
+  It therefore suffices to show $T(D_n) \to 0$ as $n \to \infty$.
+
+  \emph{Step 3: the $L^1(\mu)$-norm of $D_n.f$ vanishes, by dominated convergence.} The function
+  $x \mapsto |D_n.f(x)| = |f_n(x)-f(x)|$ is measurable for each $n$ (it is continuous, being built
+  from the Lipschitz, hence continuous, functions $f_n,f$). It is dominated uniformly in $n$ by the
+  constant $b_0+b_F$: for every $x$, $|f_n(x)-f(x)| \le |f_n(x)|+|f(x)| \le b_n+b_F \le b_0+b_F$
+  (using $b_n \le b_0$ for every $n$, the hypothesis). This constant is $\mu$-integrable since $\mu$
+  is a finite measure (Step 1). And for every fixed $x \in E$, $|f_n(x)-f(x)| \to |f(x)-f(x)| = 0$
+  as $n \to \infty$, since $f_n(x) \to f(x)$ (the hypothesis) and subtraction and the absolute value
+  are continuous. By Lebesgue's dominated convergence theorem (in its $[0,\infty]$-valued lintegral
+  form, \texttt{MeasureTheory.tendsto\_lintegral\_of\_dominated\_convergence}, \texttt{Preamble}),
+  applied with the dominating function the constant $b_0+b_F$ and limit function identically $0$,
+  \[
+    \int_E |D_n.f| \, d\mu \longrightarrow 0 \qquad \text{as } n \to \infty
+    . \tag{$\dagger$}
+  \]
+
+  \emph{Step 4: squeeze $T(D_n)$ to $0$.} Multiplying $(\dagger)$ by the (finite) constant
+  $\mathrm{Lip}(\pi)$ preserves the limit:
+  \[
+    \mathrm{Lip}(\pi) \int_E |D_n.f| \, d\mu \longrightarrow 0
+    \qquad \text{as } n \to \infty
+    . \tag{$\ddagger$}
+  \]
+  By the domination bound $(\ast)$ applied to $\omega := D_n$ (whose $\pi$-part is $\pi$, so
+  $\mathrm{Lip}(D_n.\pi) = \mathrm{Lip}(\pi)$),
+  \[
+    0 \le |T(D_n)| \le \mathrm{Lip}(\pi) \int_E |D_n.f| \, d\mu
+    \qquad \text{for every } n
+    .
+  \]
+  Since the left bound is the constant sequence $0$ (which trivially tends to $0$) and the right
+  bound tends to $0$ by $(\ddagger)$, the squeeze theorem gives $|T(D_n)| \to 0$, and hence
+  $T(D_n) \to 0$, as $n \to \infty$.
+
+  \emph{Step 5: conclude.} Combining Step 4 with $(\ast\ast)$ and continuity of addition,
+  \[
+    T(f_n,\pi) = T(D_n) + T(f,\pi) \longrightarrow 0 + T(f,\pi) = T(f,\pi)
+    \qquad \text{as } n \to \infty
+    ,
+  \]
+  which is the claimed limit.
+\end{proof}

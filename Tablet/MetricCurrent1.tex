@@ -1,0 +1,70 @@
+\begin{definition}[Metric $1$-current $\mathcal{M}_1(E)$]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra. A \emph{metric
+  $1$-current} on $E$ is a structure consisting of a functional $T \colon \mathcal{D}^1(E) \to
+  \mathbb{R}$ (\noderef{Form1}) together with:
+  \begin{itemize}
+    \item \emph{Additivity and homogeneity in $f$.} For all $\omega_1,\omega_2,\omega_{12} \in
+      \mathcal{D}^1(E)$ with $\omega_1.\pi = \omega_2.\pi = \omega_{12}.\pi$ and $\omega_{12}.f =
+      \omega_1.f + \omega_2.f$ (pointwise), $T(\omega_{12}) = T(\omega_1) + T(\omega_2)$; and for
+      all $\omega,\omega_c \in \mathcal{D}^1(E)$ with $\omega_c.\pi = \omega.\pi$ and $c \in
+      \mathbb{R}$ with $\omega_c.f = c\cdot\omega.f$ (pointwise), $T(\omega_c) = c\cdot T(\omega)$.
+    \item \emph{Additivity and homogeneity in $\pi$.} The same two conditions with the roles of
+      $f$ and $\pi$ exchanged: additivity when $\omega_1.f=\omega_2.f=\omega_{12}.f$ and
+      $\omega_{12}.\pi = \omega_1.\pi + \omega_2.\pi$ pointwise, and homogeneity when
+      $\omega_c.f=\omega.f$ and $\omega_c.\pi = c\cdot\omega.\pi$ pointwise.
+    \item \emph{Continuity with respect to pointwise convergence of $\pi$.} For fixed $f$ (with
+      any bound and Lipschitz witnesses) and $\pi$ (Lipschitz constant $\mathrm{Lip}(\pi)$), and
+      any sequence $(\pi_n)$ with Lipschitz constants $(\mathrm{Lip}(\pi_n))$ uniformly bounded by
+      some $L_0$ and $\pi_n(x) \to \pi(x)$ for every $x \in E$,
+      \[
+        T(f,\pi_n) \to T(f,\pi) \quad \text{as } n \to \infty
+        .
+      \]
+    \item \emph{Locality.} For every $\omega=(f,\pi) \in \mathcal{D}^1(E)$, if there is an open set
+      $U \supseteq \{x \in E : f(x) \neq 0\}$ on which $\pi$ is constant, then $T(\omega) = 0$.
+    \item \emph{Finite mass.} $\mathbb{M}(T) := \mathrm{massOfFunctional}(T) \neq \infty$
+      (\noderef{massOfFunctional}).
+  \end{itemize}
+  This is Ambrosio--Kirchheim's definition of a $k$-dimensional metric current
+  \cite{AmbrosioKirchheim}*{Definition~3.1}, specialized to $k=1$ (paper.tex lines 1096--1109, which introduce
+  $\mathcal{D}^1(E)$ and $\mathcal{M}_1(E)$ and cite \cite{AmbrosioKirchheim} for the precise
+  definition rather than spelling it out). We record the transcription here as the external
+  definitional input it is.
+
+  \paragraph{Scope.} This node builds only the $k=1$ case (single $\pi$-argument), matching the
+  needs of paper Theorem~4.4 (target \texttt{bbassertion}); it is not a general $k$-current.
+
+  \paragraph{Why continuity with respect to $f$ is \emph{not} an axiom here.} Paper.tex line 1393
+  states this explicitly: ``we recall that by definition, a metric $1$-current $T$ is continuous
+  with respect to the pointwise convergence [of $\pi$], while the continuity with respect to [the
+  analogous convergence of $f$] follows from [the mass-measure inequality] and Lebesgue's
+  dominated convergence theorem.'' That is, continuity in $f$ is a \emph{consequence} of
+  \emph{finite mass} together with additivity/homogeneity in $f$ (to reduce $T(f_n,\pi)-T(f,\pi)$
+  to $T(f_n-f,\pi)$) and dominated convergence (to bound $\int_E |f_n-f|\,d\mu$ by the mass measure
+  once $|f_n-f|\le 2\sup_n\|f_n\|_\infty$ and $f_n-f\to 0$ pointwise). Axiomatizing it directly, in
+  addition to the finite-mass condition, would strengthen the definition of $\mathcal{M}_1(E)$
+  beyond what the paper justifies, so it is omitted as a field and left to be derived at whichever
+  node needs it.
+
+  \paragraph{Why locality is kept even though it is unused elsewhere in the paper.} A search of the
+  source shows no other use of the word ``local'' in this paper's argument. We nonetheless include
+  it, because it is part of the actual mathematical content of ``$T \in \mathcal{M}_1(E)$'' in the
+  Ambrosio--Kirchheim sense that paper.tex line 1101 invokes, and including it only
+  \emph{strengthens} the hypothesis available to later nodes (a stronger, paper-faithful
+  hypothesis on $T$ is safe to carry even when unused), rather than weakening any conclusion drawn
+  from it.
+
+  \paragraph{Modeling choice: bilinearity via matching side-conditions (interface decision, not a
+  deviation).} \noderef{Form1} bundles a specific witnessing bound $\|f\|_\infty$ and specific
+  witnessing Lipschitz constants $\mathrm{Lip}(f),\mathrm{Lip}(\pi)$ as data alongside the
+  functions $f,\pi$ themselves, rather than only asserting their existence. Consequently the
+  additivity/homogeneity conditions above are stated by universally quantifying over
+  \emph{any} triple (or pair) of $\mathcal{D}^1(E)$-elements whose function-components stand in
+  the stated pointwise relationship, rather than by explicitly constructing a ``sum'' or
+  ``scalar multiple'' $1$-form as a new piece of data. This changes no mathematical content: since
+  every valid combination of functions with matching pointwise relationships extends to \emph{some}
+  witnessed $\mathcal{D}^1(E)$-element (any bound/Lipschitz overestimate is a valid witness, as
+  \noderef{Form1}'s own modeling note observes), the universally-quantified form captures exactly
+  the classical bilinearity condition on the underlying functions, for every witnessed instance
+  that could occur.
+\end{definition}

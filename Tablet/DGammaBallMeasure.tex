@@ -1,0 +1,89 @@
+\begin{helper}[Circle-distance ball has measure at most $2\rho$]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $s \in [0,\length(\gamma)]$,
+  and $\rho > 0$. Then
+  \[
+    \abs{\set{t \in [0,\length(\gamma)] : d_\gamma(s,t) < \rho}} \leq 2\rho
+    ,
+  \]
+  where $d_\gamma$ is the circle distance (\noderef{dGamma}) and $\abs{\cdot}$ is Lebesgue measure.
+
+  This is precisely the estimate that the proof of paper Lemma 3.4 uses without separate
+  justification at line 702, ``$\abs{\set{t\in[0,\length(\gamma)]:d_\gamma(s,t)<\delta}} \leq
+  2\delta$'' (there specialized to $\rho = \delta$; we record it for general $\rho>0$ since it is
+  reused at $\rho = 2\epsilon^{-1}r$ in the same lemma and at $\rho = \epsilon^{-1}\delta$ in
+  \noderef{FullBallLem}). The hypothesis $s \in [0,\length(\gamma)]$, absent from the paper's
+  informal phrasing, is mandatory: \noderef{dGamma} is not clamped in its arguments, so for $s$
+  outside $[0,\length(\gamma)]$ the claim is false in general. For instance, on a closed curve
+  with $\length(\gamma) = 10$, taking $s = 20$ and $\rho = 0.1$ gives $d_\gamma(20,t) = \min(|20-t|,
+  10 - |20-t|) = t - 10 \leq 0 < \rho$ for every $t \in [0,10]$ (since $|20-t| \geq 10$ throughout
+  that range, forcing the second branch of the $\min$), so the set is all of $[0,10]$, of measure
+  $10 \not\leq 0.2$.
+\end{helper}
+\begin{proof}
+  Write $l := \length(\gamma)$ and $S := \set{t \in [0,l] : d_\gamma(s,t) < \rho}$. For $a \in
+  \mathbb{R}$ write $a^+ := \max(a,0)$; recall the elementary identity
+  \begin{equation}
+    \label{eq:pm-identity}
+    a^+ - (-a)^+ = a \qquad \text{for all } a \in \mathbb{R}
+    ,
+  \end{equation}
+  which follows immediately from splitting into the cases $a \geq 0$ and $a < 0$.
+
+  \textbf{Case 1: $\gamma$ is not closed.} By \noderef{dGamma}, $d_\gamma(s,t) = |s-t|$ for all
+  $s,t$, so $S = [0,l] \cap (s-\rho,s+\rho) \subseteq (s-\rho,s+\rho)$, an open interval of Lebesgue
+  measure $2\rho$. By monotonicity of Lebesgue measure under inclusion, $\abs{S} \leq 2\rho$.
+
+  \textbf{Case 2: $\gamma$ is closed.} By \noderef{dGamma}, $d_\gamma(s,t) = \min(|s-t|,\, l -
+  |s-t|)$ for all $s,t$. Since $\min(a,b) < \rho \iff a<\rho \text{ or } b<\rho$, with $a=|s-t|$
+  and $b = l - |s-t|$,
+  \[
+    S = S_1 \cup S_2
+    , \qquad
+    S_1 := \set{t \in [0,l] : |s-t| < \rho}
+    , \qquad
+    S_2 := \set{t \in [0,l] : |s-t| > l - \rho}
+    .
+  \]
+
+  \emph{Sub-case $\rho \geq l$.} Then $S \subseteq [0,l]$, so $\abs{S} \leq l \leq \rho \leq 2\rho$
+  (the first inequality since $\rho \geq l$, the second since $\rho \geq 0$).
+
+  \emph{Sub-case $\rho < l$.} Since $s \in [0,l]$ and $\rho > 0$, we have $\max(0,s-\rho) \leq s
+  \leq \min(l,s+\rho)$, so
+  \[
+    \abs{S_1} = \abs{[0,l] \cap (s-\rho,s+\rho)} = \min(l,s+\rho) - \max(0,s-\rho)
+    .
+  \]
+  Applying~\eqref{eq:pm-identity} with $a = s+\rho-l$ gives $\min(l,s+\rho) = l -
+  \max(0,l-s-\rho) = l - \bigl[(s+\rho-l)^+ - (s+\rho-l)\bigr] = (s+\rho) - (s+\rho-l)^+$.
+  Applying~\eqref{eq:pm-identity} with $a = s - \rho$ gives $\max(0,s-\rho) = (s-\rho) +
+  (\rho-s)^+$. Subtracting,
+  \begin{equation}
+    \label{eq:pm-S1}
+    \abs{S_1} = 2\rho - (s+\rho-l)^+ - (\rho-s)^+
+    .
+  \end{equation}
+
+  Next, $S_2 \subseteq S_{2a} \cup S_{2b}$ where $S_{2a} := \set{t \in [0,l] : t < s-l+\rho}$ and
+  $S_{2b} := \set{t \in [0,l] : t > s+l-\rho}$ (indeed $S_2 = S_{2a}\cup S_{2b}$, since $|s-t|>l-\rho$
+  means $t < s-(l-\rho)$ or $t > s+(l-\rho)$, but we only need the inclusion here). Since $s \leq l$
+  and $\rho < l$, we have $s - l + \rho \leq \rho < l$, so $S_{2a} = [0, (s-l+\rho)^+)$, of measure
+  $(s-l+\rho)^+ = (s+\rho-l)^+$. Since $s \geq 0$ and $\rho < l$, we have $s+l-\rho \geq l-\rho > 0$,
+  so $S_{2b} = ((s+l-\rho)^+, l] = (s+l-\rho,l]$ when $s + l - \rho < l$ (i.e.\ $s<\rho$) and
+  $S_{2b}=\emptyset$ otherwise; in both cases $\abs{S_{2b}} = (\rho-s)^+$. By subadditivity of
+  Lebesgue measure,
+  \begin{equation}
+    \label{eq:pm-S2}
+    \abs{S_2} \leq \abs{S_{2a}} + \abs{S_{2b}} = (s+\rho-l)^+ + (\rho-s)^+
+    .
+  \end{equation}
+
+  Combining \eqref{eq:pm-S1}, \eqref{eq:pm-S2}, and subadditivity once more,
+  \[
+    \abs{S} = \abs{S_1 \cup S_2} \leq \abs{S_1} + \abs{S_2}
+    \leq \Bigl[2\rho - (s+\rho-l)^+ - (\rho-s)^+\Bigr] + \Bigl[(s+\rho-l)^+ + (\rho-s)^+\Bigr]
+    = 2\rho
+    ,
+  \]
+  which is the claim. \qedhere
+\end{proof}

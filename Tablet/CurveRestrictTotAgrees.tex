@@ -1,0 +1,27 @@
+\begin{helper}[Total restriction agrees with the proof-carrying one]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), and $0 \le a \le b \le
+  \length(\gamma)$. Then $\mathrm{curveRestrictTot}(\gamma,a,b)$ (\noderef{curveRestrictTot})
+  equals $\gamma|_{[a,b]} = \mathrm{curveRestrict}(\gamma,a,b)$ (\noderef{curveRestrict}) as an
+  element of $\Theta(E)$.
+\end{helper}
+\begin{proof}
+  Two elements of $\Theta(E)$ are equal exactly when their length and underlying map agree
+  (\noderef{Curve}), so it suffices to check the two defining data of
+  $\mathrm{curveRestrictTot}(\gamma,a,b)$ reduce, under the hypotheses $0 \le a \le b \le
+  \length(\gamma)$, to the two defining data of $\mathrm{curveRestrict}(\gamma,a,b)$, namely
+  $a' = a$ and $b' = b$ for the clamped parameters
+  $a' = \min(\max(a,0),\length(\gamma))$, $b' = \max(a',\min(\max(b,0),\length(\gamma)))$ of
+  \noderef{curveRestrictTot}.
+
+  \emph{Reduction of $a'$.} Since $a \ge 0$, $\max(a,0) = a$. Since $a \le b \le \length(\gamma)$,
+  $a \le \length(\gamma)$, so $\min(a,\length(\gamma)) = a$. Hence $a' = a$.
+
+  \emph{Reduction of $b'$.} Since $a \ge 0$ and $a \le b$, $b \ge 0$, so $\max(b,0) = b$. Since
+  $b \le \length(\gamma)$, $\min(b,\length(\gamma)) = b$. Substituting $a' = a$ from the previous
+  step, $b' = \max(a, b)$, which equals $b$ since $a \le b$.
+
+  With $a' = a$ and $b' = b$, the definition of \noderef{curveRestrictTot} reduces literally to
+  $\mathrm{curveRestrict}(\gamma,a,b)$ applied with the given side-condition proofs; since $\Theta(E)$'s
+  defining conditions (\noderef{Curve}) beyond length and underlying map are propositions, and any
+  two proofs of the same proposition are interchangeable, the resulting curves are equal.
+\end{proof}

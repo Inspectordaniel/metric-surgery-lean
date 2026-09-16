@@ -1,0 +1,86 @@
+\begin{lemma}[Existence of a starting scale with no small edges]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}) piecewise geodesic
+  (\noderef{IsPiecewiseGeodesic}) and closed (\noderef{IsClosedCurve}) with $\length(\gamma) > 0$,
+  and $\epsilon > 0$. Then there exists $\delta > 0$ such that
+  \[
+    \mathrm{smallPieceCount}(\gamma,\delta) = 0
+    \qquad\text{and}\qquad
+    \mathrm{IsDeltaEpsN}(\gamma,\delta,\epsilon,0)
+    ,
+  \]
+  i.e.\ $\gamma$ has no geodesic-edge resolution edges shorter than $\delta$ at all
+  (\noderef{smallPieceCount}), and in particular $\gamma$ is (trivially) a $(\delta,\epsilon,0)$-curve
+  (\noderef{IsDeltaEpsN}).
+
+  This is exactly the content asserted at the start of the proof of paper Lemma~3.1 (paper.tex
+  lines 975-977): ``Fix a resolution $(s_0,\dots,s_k)$ of $\gamma$ into geodesic edges and set
+  $\delta = \min_{1\le j\le k} \length(\gamma|_{[s_{j-1},s_j]})$. By construction, $m(\gamma,\delta)=0$
+  and therefore $\gamma$ is a $(\delta,\epsilon,n)$-curve'' -- specialized here to $n=0$, which is
+  literally what ``by construction'' gives directly (no small edges at all, for any $n \ge 0$); the
+  paper's passage to a general $n$ is the trivial monotonicity remarked on at the end of this proof.
+
+  \paragraph{On the hypothesis $\mathrm{IsClosedCurve}(\gamma)$.} We retain it, matching the paper's
+  own standing hypothesis at this point in the proof (``Let $\gamma \in \Xgeo_c$ be a closed
+  piecewise-geodesic curve'', paper.tex line 975) and its intended use at the surgery algorithm's
+  only call site (the surgery induction of paper Lemma~3.1, where $\gamma$ is always closed). It is
+  not, however, logically needed
+  for the argument below: clause~(ii) of $\mathrm{IsDeltaEpsN}$ is gated on
+  $\mathrm{IsClosedCurve}(\gamma)$ as an antecedent, so it holds vacuously regardless of closedness
+  whenever its own conclusion holds unconditionally, which is exactly what happens here (see Step~2).
+\end{lemma}
+\begin{proof}
+  Since $\gamma$ is piecewise geodesic with $\length(\gamma) > 0$, \noderef{StrictResolutionExists}
+  gives $k \in \mathbb{N}$ with $k > 0$ and a resolution $s$ of $\gamma$ into $k$ geodesic edges
+  (\noderef{IsGeodesicResolution}) that is strictly increasing: $s(j-1) < s(j)$ for every $j \in
+  \set{1,\dots,k}$ (equivalently, $s(i) < s(i+1)$ for every $i < k$, reindexed by $j = i+1$).
+
+  \emph{Step 1: definition of $\delta$ and its positivity.} Define
+  \[
+    \delta := \min_{1 \le j \le k} \bigl(s(j) - s(j-1)\bigr)
+    ,
+  \]
+  the minimum over the nonempty finite index set $\set{1,\dots,k}$ (nonempty since $k>0$) of the
+  edge lengths $s(j)-s(j-1)$. Each such edge length is strictly positive, by strict monotonicity of
+  $s$ shown above; a minimum of finitely many positive reals over a nonempty index set is itself
+  positive, so $\delta > 0$.
+
+  \emph{Step 2: for this resolution, every edge has length $\ge \delta$, so no edge is ``small.''}
+  By construction of $\delta$ as the minimum of the edge lengths $s(j)-s(j-1)$ over $j \in
+  \set{1,\dots,k}$, we have $s(j) - s(j-1) \ge \delta$, i.e.\ NOT $s(j)-s(j-1) < \delta$, for every
+  $j \in \set{1,\dots,k}$.
+
+  \emph{Step 3: $\mathrm{smallPieceCount}(\gamma,\delta) = 0$.} By \noderef{smallPieceCount}, this
+  quantity is the minimum, over all $k' \in \mathbb{N}$ and resolutions $s'$ of $\gamma$ into $k'$
+  geodesic edges, of the number of edges of length less than $\delta$. The resolution $(k,s)$ from
+  Step~1 witnesses a value of $0$ for this count, by Step~2 (the set of $j \in \set{1,\dots,k}$ with
+  $s(j)-s(j-1) < \delta$ is empty). Since $\mathrm{smallPieceCount}(\gamma,\delta)$ is by definition
+  a minimum (over a set of natural numbers containing $0$) it is at most $0$, and being a natural
+  number it is at least $0$; hence it equals $0$.
+
+  \emph{Step 4: $\mathrm{IsDeltaEpsN}(\gamma,\delta,\epsilon,0)$.} By \noderef{IsDeltaEpsN}, it
+  suffices to exhibit $k \in \mathbb{N}$ and a resolution $s$ of $\gamma$ into $k$ geodesic edges
+  such that both:
+  \begin{itemize}
+    \item[(i)] for every $t,t'$ with $0 \le t \le t' \le \length(\gamma)$ and $t'-t \le
+      2\epsilon^{-1}\delta$, the number of $j \in \set{1,\dots,k}$ with $[s(j-1),s(j)] \subseteq
+      [t,t']$ and $s(j)-s(j-1) < \delta$ is at most $0$;
+    \item[(ii)] when $\gamma$ is closed, the same bound holds for wrap-around arcs.
+  \end{itemize}
+  We use the same $(k,s)$ from Step~1. In clause~(i), the set being counted is a subset of $\set{j
+  \in \set{1,\dots,k} : s(j)-s(j-1)<\delta}$, which is empty by Step~2, regardless of the values of
+  $t,t'$; so its count is $0 \le 0$, for every $t,t'$ (in particular, this holds without needing the
+  hypotheses $0\le t\le t'\le\length(\gamma)$ or $t'-t\le 2\epsilon^{-1}\delta$ at all). The same
+  reasoning applies verbatim to clause~(ii): the set being counted there is again a subset of $\set{j
+  : s(j)-s(j-1)<\delta}$, empty by Step~2, so its count is $0\le 0$ for every $t,t'$, whether or not
+  $\gamma$ is closed. Hence both clauses hold, giving $\mathrm{IsDeltaEpsN}(\gamma,\delta,\epsilon,0)$.
+
+  Combining Steps~1, 3 and 4 with $\delta > 0$ proves the lemma.
+
+  \paragraph{Remark (used by the surgery induction's base case).} The argument in Step~4 in fact
+  shows more: for the same witness $(k,s)$, the counted sets in both clauses are literally empty
+  (not merely of cardinality $\le 0$), so their cardinality is $\le n$ for \emph{every} $n \in
+  \mathbb{N}$, not just $n=0$. Hence the same $\delta$ produced above satisfies
+  $\mathrm{IsDeltaEpsN}(\gamma,\delta,\epsilon,n)$ for every $n \in \mathbb{N}$: the case $n=0$
+  proved above already carries, via the very same witness, the general case used later when
+  \noderef{IsDeltaEpsN} is invoked at an arbitrary $n$.
+\end{proof}

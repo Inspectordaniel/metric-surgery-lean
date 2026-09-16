@@ -1,0 +1,57 @@
+\begin{lemma}[Elementary bound on the current of a curve]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), and
+  $\omega = (f,\pi) \in \mathcal{D}^1(E)$ (\noderef{Form1}). Then
+  \[
+    \bigl| [[\gamma]](\omega) \bigr| \le \|f\|_\infty \cdot \mathrm{Lip}(\pi) \cdot \length(\gamma)
+  \]
+  where $\|f\|_\infty$ and $\mathrm{Lip}(\pi)$ are the bound and Lipschitz constant carried by
+  $\omega$ (\noderef{Form1}), and $[[\gamma]](\omega)$ is the current of \noderef{curveCurrent}.
+  This is exactly the second display of paper Lemma~4.1 (paper.tex line 1142):
+  $|[[\gamma]](f,\pi)| \le \|f\|_\infty \mathrm{Lip}(\pi) \length(\gamma)$. We isolate it here,
+  without the accompanying measure-comparison statement $\mu_{[[\gamma]]} \le \mu_\gamma$ of the
+  same lemma (which needs the mass-measure machinery of paper Section~4.1, paper.tex lines
+  1093--1120, and is not needed by the surgery branch), so that this elementary estimate is
+  available independently of any metric current / mass theory.
+\end{lemma}
+\begin{proof}
+  Write $g := \pi \circ \gamma$ for the composition $\mathbb{R} \to \mathbb{R}$. By
+  \noderef{CurveLipschitz}, $\gamma \colon \mathbb{R} \to E$ is globally $1$-Lipschitz, and $\pi$ is
+  $\mathrm{Lip}(\pi)$-Lipschitz by \noderef{Form1}; the composition of a $K_1$-Lipschitz map with a
+  $K_2$-Lipschitz map is $(K_1 K_2)$-Lipschitz, so $g$ is globally
+  $(\mathrm{Lip}(\pi) \cdot 1) = \mathrm{Lip}(\pi)$-Lipschitz on all of $\mathbb{R}$.
+
+  \emph{Pointwise bound on the integrand.} Fix $t \in \mathbb{R}$; we show
+  \[
+    \bigl|f(\gamma(t)) \cdot \mathrm{deriv}(g)(t)\bigr| \le \|f\|_\infty \cdot \mathrm{Lip}(\pi)
+    . \tag{$\ast$}
+  \]
+  There are two cases.
+  \begin{itemize}
+    \item If $g$ is differentiable at $t$, then since $g$ is (globally) $\mathrm{Lip}(\pi)$-Lipschitz,
+      the derivative at any point of differentiability is bounded in absolute value by the
+      Lipschitz constant (\texttt{HasDerivAt.le\_of\_lipschitz}, \texttt{Preamble}; this is the
+      converse to the mean value inequality: if $|g(t)-g(t')|\le\mathrm{Lip}(\pi)|t-t'|$ for all
+      $t'$, then dividing by $|t-t'|$ and letting $t'\to t$ gives $|\mathrm{deriv}(g)(t)|\le\mathrm{Lip}(\pi)$).
+      So $|\mathrm{deriv}(g)(t)| \le \mathrm{Lip}(\pi)$. Combined with $|f(\gamma(t))| \le \|f\|_\infty$
+      (\noderef{Form1}) and $\|f\|_\infty, \mathrm{Lip}(\pi) \ge 0$, multiplying the two
+      inequalities gives $(\ast)$.
+    \item If $g$ is not differentiable at $t$, then $\mathrm{deriv}(g)(t) = 0$ by the junk-value convention
+      for \texttt{deriv} (\texttt{Preamble}), so the left side of $(\ast)$ is $0$, which is
+      $\le \|f\|_\infty \cdot \mathrm{Lip}(\pi)$ since both factors are non-negative.
+  \end{itemize}
+  In either case $(\ast)$ holds; in particular it holds for every $t \in [0,\length(\gamma)]$.
+
+  \emph{From the pointwise bound to the integral bound.} By definition (\noderef{curveCurrent}),
+  $[[\gamma]](\omega) = \int_0^{\length(\gamma)} f(\gamma(t)) \cdot \mathrm{deriv}(g)(t)\,dt$. Since the
+  integrand is bounded in absolute value by the constant $\|f\|_\infty \cdot \mathrm{Lip}(\pi)$ at
+  every point of $[0,\length(\gamma)]$ by $(\ast)$, the standard bound on an interval integral by a
+  constant bound on the integrand (\texttt{intervalIntegral.norm\_integral\_le\_of\_norm\_le\_const},
+  \texttt{Preamble}) gives
+  \[
+    \bigl|[[\gamma]](\omega)\bigr| \le \|f\|_\infty \cdot \mathrm{Lip}(\pi) \cdot \bigl|\length(\gamma) - 0\bigr|
+    .
+  \]
+  Since $\length(\gamma) \ge 0$ (\noderef{Curve}), $|\length(\gamma) - 0| = \length(\gamma)$, giving
+  exactly the claimed bound
+  $|[[\gamma]](\omega)| \le \|f\|_\infty \cdot \mathrm{Lip}(\pi) \cdot \length(\gamma)$.
+\end{proof}

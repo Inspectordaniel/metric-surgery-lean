@@ -1,0 +1,122 @@
+\begin{helper}[Windowed short-edge count transported across a splice of two affine reindexings]
+  Let $k,n,K,c,m \in \mathbb{N}$, let $\delta,\sigma,\tau,a',b' \in \mathbb{R}$, and let
+  $s, s_A \colon \mathbb{N} \to \mathbb{R}$. (Throughout, $K-1$, $i-1$ and $i-m$ denote truncated
+  natural-number subtraction.) Assume:
+  \begin{itemize}
+    \item $s$ is monotone (non-decreasing) on $\set{0,1,\dots,k}$, with $s(0)=0$;
+    \item $1 \le m$ and $m + 2 \le K$;
+    \item (tail correspondence) for every $i$ with $1 \le i \le m$: $c+(i-1)\le k$ and
+      $s_A(i) = s\bigl(c+(i-1)\bigr)+\sigma$;
+    \item (head correspondence) for every $i$ with $m < i \le K-1$: $i-m\le k$ and
+      $s_A(i) = s(i-m)+\tau$;
+    \item (splice) $s\bigl(c+(m-1)\bigr)+\sigma = \tau$;
+    \item (margin) $b'-\tau < a'-\sigma$;
+    \item (circular window count)
+      \[
+        \#\set{ j \in \set{1,\dots,k} \colon \bigl(a'-\sigma \le s(j-1) \ \vee\ s(j) \le b'-\tau\bigr),\
+          s(j)-s(j-1) < \delta } \le n
+        .
+      \]
+  \end{itemize}
+  Then
+  \[
+    \#\set{ i \in \set{2,\dots,K-1} \colon a' \le s_A(i-1),\ s_A(i) \le b',\
+      s_A(i) - s_A(i-1) < \delta } \le n
+    .
+  \]
+
+  \paragraph{Role.} This is the genuinely two-piece case of the pull-back step used in
+  \noderef{ArcShortWindowEdgeCount} and \noderef{ArcDeltaEpsNCount}, the one that
+  \noderef{ShiftedBreakpointShortEdgeCount} does not cover: the arc's interior breakpoints are
+  breakpoints of the ambient curve's resolution under \emph{two} different offset/shift pairs,
+  because the arc crosses the ambient curve's basepoint. The splice hypothesis says the two
+  stretches meet exactly at the breakpoint $s_A(m)=\tau$, where the ambient parameter restarts at
+  $s(0)=0$, so no edge of the arc is lost at the join; the margin hypothesis $b'-\tau<a'-\sigma$
+  says the pulled-back window is a genuine \emph{circular} window of $s$ (it wraps), which is what
+  keeps the two stretches on disjoint index ranges and hence makes the combined map injective. The
+  window $[a',b']$ on the $s_A$ side is a free parameter rather than the extreme window
+  $[s_A(1),s_A(K-1)]$, which is what lets a consumer count inside a \emph{small} sub-window of a
+  long breakpoint sequence -- the situation of \noderef{ArcDeltaEpsNCount}, where the window length
+  is bounded by $2\epsilon^{-1}\delta$ but the whole interior window's length is not.
+\end{helper}
+\begin{proof}
+  Define $\Phi \colon \set{2,\dots,K-1} \to \mathbb{N}$ by
+  \[
+    \Phi(i) := \begin{cases} c+(i-1), & i \le m,\\ i-m, & i > m,\end{cases}
+  \]
+  and set
+  \[
+    S := \set{ i \in \set{2,\dots,K-1} \colon a' \le s_A(i-1),\ s_A(i) \le b',\
+      s_A(i)-s_A(i-1) < \delta },
+  \]
+  \[
+    T := \set{ j \in \set{1,\dots,k} \colon \bigl(a'-\sigma\le s(j-1) \vee s(j)\le b'-\tau\bigr),\
+      s(j)-s(j-1)<\delta }
+    .
+  \]
+  We show $\Phi$ maps $S$ into $T$ and is injective on $S$; then $\#S \le \#T \le n$.
+
+  We record the monotonicity fact used: for $p \le q \le k$ we have $s(p) \le s(q)$.
+
+  \emph{The splice value.} Applying the tail correspondence at $i=m$ (legitimate since
+  $1 \le m \le m$) gives $s_A(m) = s\bigl(c+(m-1)\bigr)+\sigma$, which equals $\tau$ by the splice
+  hypothesis. So
+  \begin{equation}\label{SBSEC-splice}
+    s_A(m) = \tau .
+  \end{equation}
+
+  \emph{Tail package.} \emph{Claim: for $2 \le i \le m$ we have $1 \le c+(i-1) \le k$,
+  $s\bigl(c+(i-1)\bigr) = s_A(i)-\sigma$ and $s\bigl(c+(i-1)-1\bigr) = s_A(i-1)-\sigma$.}
+  Indeed the tail correspondence applies at $i$ (as $1\le i\le m$) and at $i-1$ (as $i \ge 2$
+  gives $1 \le i-1$, and $i-1 \le m$), yielding $c+(i-1)\le k$,
+  $s_A(i) = s(c+(i-1))+\sigma$ and $s_A(i-1) = s(c+(i-1-1))+\sigma$. Since $i-1 \ge 1$ no
+  truncation occurs in $c+(i-1)-1 = c+(i-1-1)$, and $c+(i-1)\ge 1$. Rearranging the two identities
+  gives the claim.
+
+  \emph{Head package.} \emph{Claim: for $m < i \le K-1$ we have $1 \le i-m \le k$,
+  $s(i-m) = s_A(i)-\tau$ and $s(i-m-1) = s_A(i-1)-\tau$.} The head correspondence at $i$ gives
+  $i-m\le k$ and $s_A(i) = s(i-m)+\tau$, and $i-m\ge1$ since $i>m$; this is the first two
+  assertions and the third. For the last identity we distinguish two cases.
+  \begin{itemize}
+    \item $i = m+1$. Then $i-m-1 = 0$ and $i-1 = m$, so the required identity reads
+      $s(0) = s_A(m)-\tau$, which holds by $s(0)=0$ and \eqref{SBSEC-splice}.
+    \item $i \ge m+2$. Then $m < i-1 \le K-1$, so the head correspondence applies at $i-1$ and
+      gives $s_A(i-1) = s(i-1-m)+\tau$. Since $i > m$, $i-m-1 = i-1-m$, so
+      $s(i-m-1) = s(i-1-m) = s_A(i-1)-\tau$.
+  \end{itemize}
+
+  \emph{$\Phi$ maps $S$ into $T$.} Let $i \in S$, so $2 \le i \le K-1$, $a' \le s_A(i-1)$,
+  $s_A(i) \le b'$ and $s_A(i)-s_A(i-1)<\delta$.
+  \begin{itemize}
+    \item If $i \le m$, then $\Phi(i) = c+(i-1)$ and the tail package gives
+      $\Phi(i) \in \set{1,\dots,k}$, $s(\Phi(i)) = s_A(i)-\sigma$ and
+      $s(\Phi(i)-1) = s_A(i-1)-\sigma$. From $a' \le s_A(i-1)$ we get
+      $a'-\sigma \le s_A(i-1)-\sigma = s(\Phi(i)-1)$: the first disjunct holds. Moreover
+      $s(\Phi(i))-s(\Phi(i)-1) = s_A(i)-s_A(i-1) < \delta$.
+    \item If $i > m$, then $\Phi(i) = i-m$ and the head package gives
+      $\Phi(i)\in\set{1,\dots,k}$, $s(\Phi(i)) = s_A(i)-\tau$ and
+      $s(\Phi(i)-1) = s_A(i-1)-\tau$. From $s_A(i) \le b'$ we get
+      $s(\Phi(i)) = s_A(i)-\tau \le b'-\tau$: the second disjunct holds. Moreover
+      $s(\Phi(i))-s(\Phi(i)-1) = s_A(i)-s_A(i-1) < \delta$.
+  \end{itemize}
+  In both cases $\Phi(i) \in T$.
+
+  \emph{$\Phi$ is injective on $S$.} First we show that the two stretches never collide on $S$:
+  there are no $P,Q \in S$ with $2 \le P \le m < Q \le K-1$ and $c+(P-1) = Q-m$. Suppose there
+  were. By the tail package, $s\bigl(c+(P-1)-1\bigr) = s_A(P-1)-\sigma$, i.e.\
+  $s(Q-m-1) = s_A(P-1)-\sigma$ after substituting $c+(P-1)=Q-m$. By the head package,
+  $s(Q-m) = s_A(Q)-\tau$ and $Q-m\le k$, so monotonicity of $s$ with $Q-m-1 \le Q-m \le k$ gives
+  $s(Q-m-1)\le s(Q-m)$, i.e.
+  \[
+    s_A(P-1)-\sigma \le s_A(Q)-\tau .
+  \]
+  Since $P \in S$ we have $a' \le s_A(P-1)$, and since $Q \in S$ we have $s_A(Q) \le b'$, so
+  $a'-\sigma \le s_A(P-1)-\sigma \le s_A(Q)-\tau \le b'-\tau$, contradicting the margin hypothesis
+  $b'-\tau<a'-\sigma$.
+
+  Now let $i_1,i_2 \in S$ with $\Phi(i_1)=\Phi(i_2)$. If both $i_1,i_2 \le m$, then
+  $c+(i_1-1)=c+(i_2-1)$, so $i_1-1=i_2-1$ and, since both are $\ge 2$, $i_1=i_2$. If both
+  $i_1,i_2 > m$, then $i_1-m = i_2-m$ with $i_1,i_2>m$, so $i_1=i_2$. The two mixed cases are
+  excluded by the previous paragraph. So $\Phi$ is injective on $S$, and
+  $\#S \le \#T \le n$.
+\end{proof}

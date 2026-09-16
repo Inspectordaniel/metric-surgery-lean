@@ -1,0 +1,31 @@
+\begin{lemma}[Global $1$-Lipschitz extension]
+  Let $E$ be a metric space and $\gamma \in \Theta(E)$. Then the underlying map
+  $\gamma \colon \mathbb{R} \to E$ (\noderef{Curve}) is $1$-Lipschitz on all of $\mathbb{R}$:
+  $d(\gamma(s), \gamma(t)) \le |s - t|$ for all $s, t \in \mathbb{R}$.
+\end{lemma}
+\begin{proof}
+  \emph{Step 1 (on $[0,\length(\gamma)]$).} Let $s, t \in [0,\length(\gamma)]$; without loss of
+  generality $s \le t$ (the case $t \le s$ is symmetric). By the unit-speed condition of
+  \noderef{Curve} applied to $s,t \in [0,\length(\gamma)]$, the total variation of $\gamma$ on
+  $[0,\length(\gamma)] \cap [s,t]$ equals $t - s$. Since $s,t \in [0,\length(\gamma)]$ and $s \le t$,
+  $[0,\length(\gamma)] \cap [s,t] = [s,t]$. A standard property of total variation (recorded in
+  \texttt{Preamble} as \texttt{eVariationOn.edist\_le}) bounds the displacement between the values
+  at the endpoints of an interval by the variation on that interval, giving
+  $d(\gamma(s),\gamma(t)) \le t - s = |s-t|$.
+
+  \emph{Step 2 (the clamp is $1$-Lipschitz).} Define $c \colon \mathbb{R} \to \mathbb{R}$ by
+  $c(u) = \min(\length(\gamma), \max(0,u))$. The maps $u \mapsto \max(0,u)$ and
+  $v \mapsto \min(\length(\gamma), v)$ are each $1$-Lipschitz (each is a pointwise max/min of the
+  identity with a constant, and $\max,\min$ are $1$-Lipschitz in each argument on $\mathbb{R}$), so
+  their composite $c$ is $1$-Lipschitz: $|c(u) - c(u')| \le |u - u'|$ for all $u,u' \in \mathbb{R}$.
+
+  \emph{Step 3 (combine via clamping).} Let $s,t \in \mathbb{R}$ be arbitrary. By the clamping
+  condition of \noderef{Curve}, $\gamma(s) = \gamma(c(s))$ and $\gamma(t) = \gamma(c(t))$. Also
+  $c(s), c(t) \in [0,\length(\gamma)]$ always, since $\length(\gamma) \ge 0$ (the \texttt{len\_nonneg}
+  field of \noderef{Curve}) forces $0 \le c(u) \le \length(\gamma)$ for every $u$. Applying Step~1
+  to the pair $c(s), c(t) \in [0,\length(\gamma)]$ gives
+  \[
+    d(\gamma(s),\gamma(t)) = d(\gamma(c(s)), \gamma(c(t))) \le |c(s) - c(t)| \le |s - t|,
+  \]
+  where the last inequality is Step~2. This holds for all $s,t \in \mathbb{R}$, proving the claim.
+\end{proof}

@@ -1,0 +1,47 @@
+\begin{definition}[Wrap-around restriction $\gamma|_{[t,t']}$, $t' < t$]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}) a closed curve
+  (\noderef{IsClosedCurve}), and $0 \le t' < t \le \length(\gamma)$. Define the wrap-around
+  restriction $\gamma|_{[t,t']} \in \Theta(E)$, written $\mathrm{curveWrapRestrict}(\gamma,t,t')$,
+  as the concatenation (\noderef{curveConcat})
+  \[
+    \gamma|_{[t,t']} := \gamma|_{[t,\length(\gamma)]} * \gamma|_{[0,t']}
+    ,
+  \]
+  where both pieces on the right are ordinary restrictions (\noderef{curveRestrict}). This is
+  exactly the paper's convention for the case $t' < t$ (paper.tex line 558: ``we interpret
+  $\gamma|_{[t,t']}$ as the concatenation of $\gamma|_{[t,\length(\gamma)]}$ and
+  $\gamma|_{[0,t']}$''). The concatenation is well-defined because the endpoint of
+  $\gamma|_{[t,\length(\gamma)]}$ is $\gamma(\length(\gamma))$ and the initial point of
+  $\gamma|_{[0,t']}$ is $\gamma(0)$, and these agree exactly because $\gamma$ is closed
+  (\noderef{IsClosedCurve}): $\gamma(\length(\gamma)) = \gamma(0)$.
+
+  \paragraph{Correcting an apparent transcription slip in the paper's displayed formula.} The
+  paper additionally gives an explicit formula for the resulting map (paper.tex lines 559-568):
+  \[
+    \tilde\gamma(s) = \gamma(t+s) \ \ (0 \le s < \length(\gamma)-t)
+    , \qquad
+    \tilde\gamma(s) = \gamma(s-t) \ \ (\length(\gamma)-t \le s \le \length(\gamma)-t+t')
+    .
+  \]
+  As written, the second branch cannot be correct: continuity at the shared point
+  $s = \length(\gamma)-t$ requires the two branches to agree there, but the first branch gives
+  $\gamma(t+(\length(\gamma)-t)) = \gamma(\length(\gamma))$ while the literal second branch gives
+  $\gamma((\length(\gamma)-t)-t) = \gamma(\length(\gamma)-2t)$, which need not equal
+  $\gamma(\length(\gamma))$ for any given $t$. The intended formula, matching both the verbal
+  description (``concatenation of $\gamma|_{[t,\length(\gamma)]}$ and $\gamma|_{[0,t']}$'') and the
+  general concatenation formula of paper.tex lines 461-464 applied with
+  $s_0=0,\ s_1=\length(\gamma)-t,\ s_2 = \length(\gamma)-t+t'$, is
+  \[
+    \tilde\gamma(s) = \gamma\bigl(s-\length(\gamma)+t\bigr) \quad
+    (\length(\gamma)-t \le s \le \length(\gamma)-t+t')
+    ,
+  \]
+  i.e.\ the paper's ``$\gamma(s-t)$'' should read ``$\gamma(s-\length(\gamma)+t)$''. With this
+  correction, continuity at $s=\length(\gamma)-t$ holds by closedness of $\gamma$ exactly as
+  above, and at the right endpoint $s = \length(\gamma)-t+t'$ the formula gives $\gamma(t')$, the
+  correct endpoint of $\gamma|_{[0,t']}$. This corrected formula is precisely what
+  $\mathrm{curveConcat}$ produces: on $[0,\length(\gamma)-t]$ it agrees with
+  $\gamma|_{[t,\length(\gamma)]}$, i.e.\ $s \mapsto \gamma(t+s)$, and on
+  $[\length(\gamma)-t, \length(\gamma)-t+t']$ it agrees with $\gamma|_{[0,t']}$ shifted by
+  $\length(\gamma)-t$, i.e.\ $s \mapsto \gamma(s-(\length(\gamma)-t))$.
+\end{definition}

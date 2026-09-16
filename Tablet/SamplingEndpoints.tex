@@ -1,0 +1,85 @@
+\begin{lemma}[Piecewise-geodesic sampling preserves endpoints]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}),
+  $\gamma \in \Theta(E)$ (\noderef{Curve}), and $\delta \in \mathbb{R}$ with $0 < \delta <
+  \length(\gamma)$. Let $\gamma^\delta$ denote the piecewise-geodesic sampling of $\gamma$ at scale
+  $\delta$ (\noderef{curveSampling}). Then
+  \[
+    \gamma^\delta(0) = \gamma(0)
+    \qquad\text{and}\qquad
+    \gamma^\delta(\length(\gamma^\delta)) = \gamma(\length(\gamma))
+    .
+  \]
+
+  \paragraph{Why this is not automatic, and where it is used.} paper.tex 1327 and 1441 both assert
+  this fact without proof ("$\gamma_{i,l}$ and $\gamma^\delta_{i,l}$ have the same beginning and
+  ending points"), used respectively to justify that a downstream marginal-distribution property
+  (\eqref{stronglawmassmeasure}) is unaffected by piecewise-geodesic sampling, and to license
+  forming the closing-up concatenation of $\gamma^{\delta_l}_{i,l}$ with a connecting geodesic. The
+  fact is genuinely substantive rather than definitionally immediate: \noderef{curveSampling}
+  builds $\gamma^\delta$ as a chain of $k=\lceil\length(\gamma)/\delta\rceil$ geodesic edges
+  $G_{\gamma(s_{j-1}),\gamma(s_j)}$ sampled at $s_j=\min(j\delta,\length(\gamma))$, and \emph{a
+  priori} the last sample point $s_k = \min(k\delta,\length(\gamma))$ could equal $k\delta$ rather
+  than $\length(\gamma)$ if the chain overshot -- in which case the sampled curve's endpoint would
+  not be $\gamma(\length(\gamma))$ at all. The content of this lemma is precisely that
+  $\lceil\length(\gamma)/\delta\rceil \cdot \delta \ge \length(\gamma)$, so the clamp
+  $s_k=\min(k\delta,\length(\gamma))$ always lands on the second branch, $s_k=\length(\gamma)$;
+  without this clamping fact, the endpoint-preservation claim used at paper.tex 1327 and 1441
+  would be false.
+
+  \paragraph{Exclusion of $\length(\gamma)=0$.} The standing hypotheses $0<\delta<\length(\gamma)$
+  already force $\length(\gamma) > 0$; the degenerate case $\length(\gamma)=0$ (where
+  \noderef{curveSampling} is undefined, since no $\delta$ satisfies $\delta<0$) does not arise.
+\end{lemma}
+\begin{proof}
+  Write $L := \length(\gamma) > 0$, $k := \lceil L/\delta \rceil$, and $s_j := \min(j\delta, L)$
+  for $j=0,\dots,k$, as in \noderef{curveSampling}'s construction: $\gamma^\delta$ is built by
+  recursion on the number of edges already concatenated, with the $n$-th stage (for $n=0,\dots,
+  k-1$) a curve $c_n$ satisfying $c_n(\length(c_n)) = \gamma(s_{n+1})$, defined by $c_0 :=
+  G_{\gamma(s_0),\gamma(s_1)}$ and $c_{n+1} := c_n * G_{\gamma(s_{n+1}),\gamma(s_{n+2})}$
+  (\noderef{curveConcat}), and $\gamma^\delta := c_{k-1}$.
+
+  \emph{Two preliminary numerical facts.} First, since $0 < \delta < L$, $L/\delta > 0$, so
+  $k = \lceil L/\delta\rceil \ge 1$; write $k = (k-1)+1$, a genuine successor. Second, by the
+  defining property of the ceiling function, $L/\delta \le \lceil L/\delta\rceil = k$, and since
+  $\delta>0$ this rearranges to
+  \[
+    L \le k\delta
+    . \tag{$\dagger$}
+  \]
+
+  \paragraph{The end half: pure arithmetic, no induction.} By \noderef{curveSampling}'s recursion,
+  $\gamma^\delta = c_{k-1}$ satisfies, as part of its defining data,
+  \[
+    \gamma^\delta(\length(\gamma^\delta)) = \gamma(s_{(k-1)+1}) = \gamma(s_k)
+    ,
+  \]
+  using $(k-1)+1=k$ from the preliminary fact above. By definition $s_k = \min(k\delta, L)$, and by
+  $(\dagger)$, $L \le k\delta$, so the minimum is attained on the second argument:
+  $s_k = L$. Hence $\gamma^\delta(\length(\gamma^\delta)) = \gamma(L) = \gamma(\length(\gamma))$,
+  as claimed. (This half never uses the upper bound $\delta<L$; it holds for every $\delta>0$, and
+  indeed for every $k\ge1$ satisfying $(\dagger)$.)
+
+  \paragraph{The start half: induction on the number of concatenated edges.} We show, by induction
+  on $n=0,\dots,k-1$, that $c_n(0) = \gamma(s_0) = \gamma(0)$ (using $s_0=\min(0,L)=0$, since
+  $L\ge0$).
+
+  \emph{Base case $n=0$.} $c_0 = G_{\gamma(s_0),\gamma(s_1)}$, and by \noderef{GeodesicPairing}'s
+  $\mathrm{start\_eq}$ field, $G_{x,y}(0) = x$ for every $x,y$; applying this at
+  $x=\gamma(s_0),y=\gamma(s_1)$ gives $c_0(0) = \gamma(s_0) = \gamma(0)$.
+
+  \emph{Inductive step.} Suppose $c_n(0) = \gamma(0)$. By \noderef{curveSampling}'s recursion,
+  $c_{n+1} = c_n * G_{\gamma(s_{n+1}),\gamma(s_{n+2})}$ (\noderef{curveConcat}). By
+  \noderef{curveConcat}'s defining formula, evaluating a concatenation $a*b$ at $t=0$ takes the
+  branch $t \le \length(a)$ (since $0 \le \length(a)$ always, by \noderef{Curve}'s
+  $\mathrm{len\_nonneg}$ field), giving $(a*b)(0) = a(0)$; applying this with $a=c_n$,
+  $b=G_{\gamma(s_{n+1}),\gamma(s_{n+2})}$ gives
+  \[
+    c_{n+1}(0) = c_n(0) = \gamma(0)
+    ,
+  \]
+  the last equality by the inductive hypothesis. This completes the induction.
+
+  Taking $n=k-1$ (the top of the recursion, so $c_{k-1}=\gamma^\delta$) gives
+  $\gamma^\delta(0) = \gamma(0)$, the remaining half of the claim. (Like the end half, this
+  induction never uses the upper bound $\delta<L$; it holds for every $\delta>0$.)
+\end{proof}

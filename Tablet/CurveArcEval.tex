@@ -1,0 +1,129 @@
+\begin{lemma}[Arc-to-ambient evaluation dictionary]
+  \label{curve-arc-eval}
+  Let $E$ be a metric space and $\gamma \in \Theta(E)$ (\noderef{Curve}) a closed curve
+  (\noderef{IsClosedCurve}); write $L := \length(\gamma)$. For $a,b \in \mathbb{R}$ set
+  \[
+    \ell(a,b) := \begin{cases} b-a & a \le b \\ (L-a)+b & a > b \end{cases}
+    .
+  \]
+  Let $t,t' \in [0,L]$ be arbitrary, in either order, and write $A := \gamma|_{[t,t']}$
+  (\noderef{curveArc}) for the counter-clockwise circular arc from $t$ to $t'$. Then
+  \[
+    \length(A) = \ell(t,t')
+    ,
+  \]
+  and there exists a function $\sigma \colon \mathbb{R} \to \mathbb{R}$ such that
+  \begin{enumerate}
+    \item $\sigma(0) = t$;
+    \item $\gamma(\sigma(\length(A))) = \gamma(t')$;
+    \item for every $p \in [0,\length(A)]$: $\sigma(p) \in [0,L]$ and $A(p) = \gamma(\sigma(p))$;
+    \item for all $p,p' \in [0,\length(A)]$ with $p \le p'$: $\ell(\sigma(p),\sigma(p')) = p'-p$.
+  \end{enumerate}
+
+  \paragraph{Why clause (2) is stated at the level of points of $E$.} The natural reading
+  ``$\sigma(\length(A)) = t'$'' is \emph{false} in general: in the wrap case $t' < t$ with $t' = 0$
+  one has $\length(A) = L-t$ and $\sigma(\length(A)) = L \ne 0 = t'$. It is only closedness of
+  $\gamma$ that rescues the identity, and only after applying $\gamma$; clause (2) records exactly
+  what is true. Together with clause (3) at $p = 0$ and $p = \length(A)$ this gives the two
+  endpoint values $A(0) = \gamma(t)$ and $A(\length(A)) = \gamma(t')$.
+
+  \paragraph{Role.} This is the dictionary that translates statements about the arc $A$ -- which
+  carries its own parametrization by $[0,\length(A)]$ -- into statements about $\gamma$ itself.
+  It packages the three purely computational facts about $\gamma|_{[t,t']}$ that the proof of
+  paper Lemma~3.8 uses without comment: the arc-length formula (implicit at paper.tex 577 and
+  used throughout paper.tex 846-866), the pointwise identification of the arc with $\gamma$
+  (implicit wherever the paper writes $\gamma(s)$ for $s \in [t,t']$ and means a point of the arc,
+  e.g.\ paper.tex 888-894), and the fact that the identification preserves counter-clockwise arc
+  length. Clause (4) is the quantitative form of the paper's sentence at paper.tex 892-894 that
+  ``distances along the curves $\gamma|_{[t,t']}$ and $\gamma$ coincide'', shorn of the
+  $d_\gamma$-vs-$\ell$ comparison, which needs the extra hypothesis $\length(A) \le L/2$ and is
+  therefore kept out of this purely combinatorial statement.
+\end{lemma}
+\begin{proof}
+  Throughout, we use \noderef{curveRestrict}'s defining data: for $a \le b$ in $[0,L]$, the curve
+  $\mathrm{curveRestrict}(\gamma,a,b)$ has length field $b-a$ and underlying map
+  $u \mapsto \gamma(a + \min(b-a,\max(0,u)))$. We record once the consequence used repeatedly:
+
+  \paragraph{Interior values of a restriction.} For $a \le b$ in $[0,L]$ and $u \in [0,b-a]$,
+  $\mathrm{curveRestrict}(\gamma,a,b)(u) = \gamma(a+u)$. Indeed $0 \le u$ gives $\max(0,u) = u$,
+  and $u \le b-a$ then gives $\min(b-a,u) = u$, so the defining formula evaluates to
+  $\gamma(a+u)$.
+
+  We now split on the order of $t,t'$, which is exactly the case split internal to
+  \noderef{curveArc}.
+
+  \paragraph{Ordinary case $t \le t'$.} Here $A = \mathrm{curveRestrict}(\gamma,t,t')$
+  (\noderef{curveArc}), so $\length(A) = t'-t = \ell(t,t')$, which is the length formula. Take
+  $\sigma(p) := t+p$ for all $p \in \mathbb{R}$.
+
+  (1) $\sigma(0) = t+0 = t$.
+
+  (2) $\sigma(\length(A)) = t + (t'-t) = t'$, so $\gamma(\sigma(\length(A))) = \gamma(t')$.
+
+  (3) Let $p \in [0,\length(A)] = [0,t'-t]$. Then $\sigma(p) = t+p \ge t \ge 0$ and
+  $\sigma(p) = t+p \le t + (t'-t) = t' \le L$, so $\sigma(p) \in [0,L]$. By the interior-values
+  fact (with $a := t$, $b := t'$, $u := p$), $A(p) = \gamma(t+p) = \gamma(\sigma(p))$.
+
+  (4) Let $p \le p'$ in $[0,\length(A)]$. Then $\sigma(p) = t+p \le t+p' = \sigma(p')$, so the
+  first branch of $\ell$ applies and $\ell(\sigma(p),\sigma(p')) = (t+p')-(t+p) = p'-p$.
+
+  \paragraph{Wrap case $t' < t$.} Here $A = \mathrm{curveWrapRestrict}(\gamma,t,t')$
+  (\noderef{curveArc}), which by \noderef{curveWrapRestrict} is the concatenation
+  $P * Q$ (\noderef{curveConcat}) of $P := \mathrm{curveRestrict}(\gamma,t,L)$ and
+  $Q := \mathrm{curveRestrict}(\gamma,0,t')$. Write $R := L - t$, so $\length(P) = R \ge 0$ and
+  $\length(Q) = t' - 0 = t'$. By \noderef{curveConcat}, $\length(A) = R + t' = (L-t)+t' =
+  \ell(t,t')$ (the second branch of $\ell$, since $t > t'$), which is the length formula, and
+  \[
+    A(p) = \begin{cases} P(p) & p \le R \\ Q(p-R) & p > R\end{cases}
+    .
+  \]
+  Take
+  \[
+    \sigma(p) := \begin{cases} t+p & p \le R \\ p-R & p > R\end{cases}
+    .
+  \]
+
+  (1) Since $t \le L$ we have $0 \le R$, so the first branch applies at $p=0$ and
+  $\sigma(0) = t+0 = t$.
+
+  (2) $\length(A) = R+t'$. If $t' = 0$ then $R + t' = R$, the first branch applies, and
+  $\sigma(\length(A)) = t + R = t + (L-t) = L$; hence $\gamma(\sigma(\length(A))) = \gamma(L) =
+  \gamma(0) = \gamma(t')$, the middle equality being closedness of $\gamma$
+  (\noderef{IsClosedCurve}) and the last one $t' = 0$. If $t' > 0$ then $R + t' > R$, the second
+  branch applies, and $\sigma(\length(A)) = (R+t') - R = t'$, so
+  $\gamma(\sigma(\length(A))) = \gamma(t')$. These two sub-cases are exhaustive since
+  $t' \in [0,L]$.
+
+  (3) Let $p \in [0,\length(A)] = [0,R+t']$.
+
+  If $p \le R$: $\sigma(p) = t+p$, and $0 \le t \le t+p$ while $t+p \le t+R = L$, so
+  $\sigma(p) \in [0,L]$. Also $A(p) = P(p)$, and by the interior-values fact (with $a := t$,
+  $b := L$, $u := p \in [0,R]$), $P(p) = \gamma(t+p) = \gamma(\sigma(p))$.
+
+  If $p > R$: $\sigma(p) = p-R$, and $p > R$ gives $0 \le p-R$ while $p \le R+t'$ gives
+  $p - R \le t' \le L$, so $\sigma(p) \in [0,L]$. Also $A(p) = Q(p-R)$, and by the
+  interior-values fact (with $a := 0$, $b := t'$, $u := p-R \in [0,t']$),
+  $Q(p-R) = \gamma(0 + (p-R)) = \gamma(p-R) = \gamma(\sigma(p))$.
+
+  (4) Let $p \le p'$ in $[0,\length(A)] = [0,R+t']$. There are four combinations of the two
+  branches, one of which is vacuous.
+
+  If $p \le R$ and $p' \le R$: $\sigma(p) = t+p \le t+p' = \sigma(p')$, so the first branch of
+  $\ell$ gives $\ell(\sigma(p),\sigma(p')) = (t+p')-(t+p) = p'-p$.
+
+  If $p > R$ and $p' > R$: $\sigma(p) = p-R \le p'-R = \sigma(p')$, so the first branch of $\ell$
+  gives $\ell(\sigma(p),\sigma(p')) = (p'-R)-(p-R) = p'-p$.
+
+  If $p > R$ and $p' \le R$: then $R < p \le p' \le R$, a contradiction; this combination does not
+  occur.
+
+  The remaining case is $p \le R < p'$. Then $\sigma(p) = t+p \ge t$, while
+  $\sigma(p') = p'-R \le (R+t')-R = t' < t \le \sigma(p)$, so $\sigma(p') < \sigma(p)$ and the
+  second branch of $\ell$ applies:
+  \[
+    \ell(\sigma(p),\sigma(p')) = (L - \sigma(p)) + \sigma(p') = (L - t - p) + (p'-R)
+    = (R - p) + (p' - R) = p'-p
+    ,
+  \]
+  using $R = L-t$. This exhausts all cases and completes the proof.
+\end{proof}

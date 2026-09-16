@@ -1,0 +1,71 @@
+\begin{lemma}[Sampling realizes countably many strong-law averages at once]
+  Let $X$ be a measurable space, $\mu$ a probability measure on $X$, $S \subseteq X$ a measurable
+  set with $\mu(S^c) = 0$, and $(g_j)_{j \in \mathbb{N}}$ a countable family of measurable functions
+  $g_j \colon X \to \mathbb{R}$, each $\mu$-integrable. Then there is a single sequence
+  $x \colon \mathbb{N} \to X$ such that $x_i \in S$ for every $i$, and simultaneously, for every $j$,
+  \[
+    \frac{1}{n}\sum_{i=0}^{n-1} g_j(x_i) \;\longrightarrow\; \int_X g_j \, d\mu
+    \qquad\text{as } n \to \infty
+    .
+  \]
+
+  \paragraph{Role of this lemma.} This is the abstract content of the Strong Law of Large Numbers
+  delegation at paper.tex line 1295 (``Following the same argument as in \cite{GHS}*{Theorem~2.1},
+  the Strong Law of Large Numbers allows us to deduce\ldots''), stated for an arbitrary probability
+  space and an arbitrary countable family of integrable functions, with the extra full-measure-set
+  clause $S$ needed to carry \eqref{stronglawlength} (the constraint $\length(\gamma) = l$, which
+  holds only $\overline\eta_l$-almost everywhere, not for every $\gamma \in \Theta_l(E)$). It is
+  \emph{not} an external citation: it is a direct consequence of the classical Strong Law of Large
+  Numbers for i.i.d.\ sequences, applied to i.i.d.\ copies of $(g_j)_j$ obtained as the coordinate
+  projections of the countable product measure of $\mu$ with itself, together with a diagonal
+  argument (via a countable intersection of full-measure sets) that makes all countably many
+  averages, and membership in $S$, hold along a single common sample sequence.
+\end{lemma}
+\begin{proof}
+  Let $P := \bigotimes_{i \in \mathbb{N}} \mu$ be the countable product of $\mu$ with itself
+  (\texttt{MeasureTheory.Measure.infinitePi}, \texttt{Preamble}), a probability measure on
+  $\Omega := \mathbb{N} \to X$ (a product of probability measures is a probability measure). For
+  each coordinate $i \in \mathbb{N}$, write $\mathrm{ev}_i \colon \Omega \to X$,
+  $\mathrm{ev}_i(\omega) := \omega_i$; by the defining property of the countable product measure,
+  $\mathrm{ev}_i$ is measure-preserving from $P$ to $\mu$
+  (\texttt{measurePreserving\_eval\_infinitePi}, \texttt{Preamble}), and the family
+  $(\mathrm{ev}_i)_{i \in \mathbb{N}}$ is jointly independent under $P$
+  (\texttt{ProbabilityTheory.iIndepFun\_infinitePi}, \texttt{Preamble}).
+
+  \emph{Step 1: the strong law holds $P$-almost everywhere, for each fixed $j$.} Fix $j \in
+  \mathbb{N}$. Since $g_j$ is measurable, the family $Y^j_i := g_j \circ \mathrm{ev}_i$,
+  $i \in \mathbb{N}$, is jointly independent under $P$ (independence is preserved under composing
+  each coordinate with a measurable function of that coordinate alone); in particular the $Y^j_i$
+  are pairwise independent. Since $\mathrm{ev}_i$ is measure-preserving from $P$ to $\mu$ for every
+  $i$, the pushforward of $P$ along $Y^j_i = g_j \circ \mathrm{ev}_i$ equals the pushforward of $\mu$
+  along $g_j$, for every $i$; hence all the $Y^j_i$ are identically distributed (in particular to
+  $Y^j_0$), and since $g_j$ is $\mu$-integrable and $\mathrm{ev}_0$ is measure-preserving, $Y^j_0$
+  is $P$-integrable with $\mathbb{E}_P[Y^j_0] = \int_X g_j \, d\mu$ (integration against a
+  pushforward measure, using the equality of the pushforwards just established). By the classical
+  Strong Law of Large Numbers for a pairwise-independent, identically-distributed, integrable
+  sequence of real random variables (\texttt{ProbabilityTheory.strong\_law\_ae\_real},
+  \texttt{Preamble}), for $P$-almost every $\omega \in \Omega$,
+  \[
+    \frac{1}{n} \sum_{i=0}^{n-1} Y^j_i(\omega) = \frac{1}{n}\sum_{i=0}^{n-1} g_j(\omega_i)
+    \;\longrightarrow\; \mathbb{E}_P[Y^j_0] = \int_X g_j\,d\mu
+    \qquad (n \to \infty)
+    .
+  \]
+  Call this full-$P$-measure event $A_j \subseteq \Omega$.
+
+  \emph{Step 2: almost every sample stays in $S$.} For each $i \in \mathbb{N}$, since $\mathrm{ev}_i$
+  is measure-preserving from $P$ to $\mu$ and $\mu(S^c) = 0$,
+  $P(\mathrm{ev}_i^{-1}(S^c)) = \mu(S^c) = 0$; equivalently, $P$-almost every $\omega$ has
+  $\omega_i \in S$. Since $\mathbb{N}$ is countable, a countable intersection of full-$P$-measure
+  sets is again full-$P$-measure (\texttt{MeasureTheory.ae\_all\_iff}, \texttt{Preamble}), so the
+  event $B := \{\omega : \forall i,\ \omega_i \in S\}$ has $P(B^c) = 0$.
+
+  \emph{Step 3: intersect and pick a point.} Since $\mathbb{N}$ is countable, applying
+  \texttt{MeasureTheory.ae\_all\_iff} again to the countable family $(A_j)_{j \in \mathbb{N}}$ from
+  Step~1 together with $B$ from Step~2 gives a single event
+  $C := B \cap \bigcap_{j\in\mathbb{N}} A_j$ with $P(C^c) = 0$, i.e.\ $P(C) = 1$. Since $P$ is a
+  probability measure, $P(C) = 1 \ne 0$, so $C \ne \emptyset$ (an empty set has measure $0$); fix any
+  $x \in C \subseteq \mathbb{N} \to X$. By $x \in B$, $x_i \in S$ for every $i$; by $x \in A_j$ for
+  every $j$, the displayed convergence of Step~1 holds at $\omega = x$ for every $j$. This is exactly
+  the claimed conclusion.
+\end{proof}

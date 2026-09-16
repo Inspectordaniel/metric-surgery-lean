@@ -1,0 +1,135 @@
+\begin{lemma}[A minimizing resolution has no degenerate edges]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $\delta > 0$, $k \in
+  \mathbb{N}$, and $s \colon \mathbb{N} \to \mathbb{R}$ a resolution of $\gamma$ into $k$ geodesic
+  edges (\noderef{IsGeodesicResolution}) whose number of small edges attains
+  $\mathrm{smallPieceCount}(\gamma,\delta)$ (\noderef{smallPieceCount}), i.e.
+  \[
+    \#\set{j \in \set{1,\dots,k} : s(j)-s(j-1) < \delta} = \mathrm{smallPieceCount}(\gamma,\delta)
+    .
+  \]
+  Then $s$ is \emph{strictly} monotone on $\set{0,\dots,k}$: for all $a,b \in \set{0,\dots,k}$
+  with $a<b$, $s(a) < s(b)$.
+
+  \paragraph{Why this is needed.} \noderef{IsGeodesicResolution} deliberately allows consecutive
+  breakpoints to coincide (degenerate, zero-length edges), which is harmless for the definitions
+  built on it but means an arbitrary resolution attaining the minimum small-edge count need not
+  a priori be strictly increasing. The construction used to prove paper Lemma 3.10 (paper.tex
+  lines 947-957) singles out edges $j$ that are the endpoints of a specific violating window and
+  relies on those endpoints being genuinely distinct breakpoints of the chosen minimizing
+  resolution; this lemma supplies exactly that.
+\end{lemma}
+\begin{proof}
+  Write $M := \mathrm{smallPieceCount}(\gamma,\delta)$ and
+  $\mathrm{Small}(s) := \set{j \in \set{1,\dots,k} : s(j)-s(j-1)<\delta}$, so
+  $\#\mathrm{Small}(s) = M$ by hypothesis. Write $\mathrm{mono}$, $s(0)=0$, $s(k)=\length(\gamma)$,
+  and $\mathrm{edge}(i)$ for the three defining clauses of
+  $\mathrm{IsGeodesicResolution}(\gamma,k,s)$ (\noderef{IsGeodesicResolution}): $s$ is
+  monotone (non-decreasing) on $\set{0,\dots,k}$; $s(0)=0$, $s(k)=\length(\gamma)$; and for every
+  $i<k$, $\gamma$ is a geodesic on $[s(i),s(i+1)]$.
+
+  Suppose, for contradiction, that $s$ is not strictly monotone on $\set{0,\dots,k}$. Since $s$ is
+  already (non-strictly) monotone there by $\mathrm{mono}$, this means there exist $a<b$ in
+  $\set{0,\dots,k}$ with $s(a) \not< s(b)$, i.e., $s(a) \geq s(b)$; combined with $s(a)\le s(b)$
+  (monotonicity applied to $a\le b$) this forces $s(a) = s(b)$. For every $i$ with $a \le i \le b$,
+  monotonicity gives $s(a) \le s(i) \le s(b) = s(a)$, so $s(i) = s(a)$ for all such $i$; in
+  particular, setting $j_0 := a+1$ (so $1 \le j_0 \le b \le k$, using $a<b$), we get
+  \[
+    s(j_0-1) = s(a) = s(j_0)
+    ,
+  \]
+  i.e., $j_0$ is a degenerate breakpoint: $1 \le j_0 \le k$ and $s(j_0-1)=s(j_0)$.
+
+  \emph{Constructing a shorter resolution by dropping $j_0$.} Define
+  \[
+    s'(i) := \begin{cases} s(i) & i < j_0 \\ s(i+1) & i \ge j_0 \end{cases}
+    ,\qquad i \in \mathbb{N}
+    .
+  \]
+  We claim $\mathrm{IsGeodesicResolution}(\gamma,k-1,s')$ holds.
+
+  \emph{Monotonicity of $s'$ on $\set{0,\dots,k-1}$.} Let $0 \le a' \le b' \le k-1$. If $a'<j_0$ and
+  $b'<j_0$: $s'(a')=s(a') \le s(b')=s'(b')$ by $\mathrm{mono}$ (as $a'\le b' \le k$). If $a'<j_0 \le
+  b'$: by $\mathrm{mono}$, $s(a') \le s(j_0-1)$ (as $a' \le j_0-1 \le k$) $= s(j_0)$ (the degeneracy)
+  $\le s(b'+1)$ (as $j_0 \le b'+1 \le k$), so $s'(a')=s(a') \le s(b'+1)=s'(b')$. If $j_0 \le a' \le
+  b'$: $s'(a')=s(a'+1) \le s(b'+1)=s'(b')$ by $\mathrm{mono}$ (as $a'+1\le b'+1\le k$). The case
+  $b'<j_0\le a'$ cannot occur since $a'\le b'$. This exhausts all cases, so $s'$ is monotone on
+  $\set{0,\dots,k-1}$.
+
+  \emph{Endpoints of $s'$.} Since $j_0 \ge 1 > 0$, $s'(0) = s(0) = 0$ by $\mathrm{mono}$'s
+  base value. For the top endpoint, two cases on whether $j_0 = k$ or $j_0<k$ (both possible since
+  $1\le j_0\le k$): if $j_0=k$, then $k-1<j_0$, so $s'(k-1)=s(k-1)=s(j_0-1)=s(j_0)$ (the degeneracy)
+  $=s(k)=\length(\gamma)$; if $j_0<k$, then $k-1 \ge j_0$, so $s'(k-1)=s(k-1+1)=s(k)=\length(\gamma)$.
+  In either case $s'(k-1) = \length(\gamma)$.
+
+  \emph{Geodesic edges of $s'$.} Let $i<k-1$; we show $\gamma$ is a geodesic on
+  $[s'(i),s'(i+1)]$. If $i+1<j_0$: both $i<j_0$ and $i+1<j_0$, so $s'(i)=s(i)$, $s'(i+1)=s(i+1)$,
+  and $[s'(i),s'(i+1)]=[s(i),s(i+1)]$ is a geodesic edge of $\gamma$ by $\mathrm{edge}(i)$ (valid
+  since $i<k-1<k$). If $i+1=j_0$ (so $i=j_0-1<j_0$, and $i+1=j_0\ge j_0$): $s'(i)=s(i)=s(j_0-1)$
+  and $s'(i+1)=s(i+1+1)=s(j_0+1)$; using the degeneracy $s(j_0-1)=s(j_0)$,
+  $[s'(i),s'(i+1)]=[s(j_0),s(j_0+1)]$, a geodesic edge of $\gamma$ by $\mathrm{edge}(j_0)$ (valid
+  since $j_0<k$: if instead $j_0=k$ then $i+1=j_0=k$ would force $i=k-1$, contradicting $i<k-1$).
+  If $i+1>j_0$ (so $i \ge j_0$): $s'(i)=s(i+1)$, $s'(i+1)=s(i+1+1)$, and
+  $[s'(i),s'(i+1)]=[s(i+1),s(i+2)]$ is a geodesic edge of $\gamma$ by $\mathrm{edge}(i+1)$ (valid
+  since $i+1<k$, as $i<k-1$). These three cases are exhaustive and pairwise cover all $i<k-1$, so
+  every edge of $s'$ is geodesic.
+
+  Hence $\mathrm{IsGeodesicResolution}(\gamma,k-1,s')$ holds, so $s'$ is a legitimate resolution
+  of $\gamma$ into $k-1$ geodesic edges.
+
+  \emph{The small-edge count of $s'$.} Define $\varphi \colon \set{1,\dots,k-1} \to
+  \set{1,\dots,k}$ by $\varphi(j) := j$ if $j<j_0$ and $\varphi(j):=j+1$ if $j \ge j_0$. We record
+  three facts about $\varphi$:
+  \begin{enumerate}
+    \item[(a)] \emph{$\varphi$ is injective and its image is exactly $\set{1,\dots,k}\setminus
+    \set{j_0}$.} If $j<j_0$ then $\varphi(j)=j<j_0$, so $\varphi(j)\ne j_0$ and $\varphi(j)\in
+    \set{1,\dots,j_0-1}$; if $j\ge j_0$ then $\varphi(j)=j+1>j_0$, so $\varphi(j)\ne j_0$ and
+    $\varphi(j)\in\set{j_0+1,\dots,k}$ (using $j\le k-1$, so $\varphi(j)\le k$). These two ranges
+    are disjoint, and $\varphi$ is strictly increasing on each of $\set{1,\dots,j_0-1}$ and
+    $\set{j_0,\dots,k-1}$ separately (it is the identity, respectively a shift by $+1$, on each),
+    hence injective overall (an element of the first range and one of the second are automatically
+    distinct, being on opposite sides of $j_0$). Since $\varphi$ maps the $(k-1)$-element set
+    $\set{1,\dots,k-1}$ injectively into the $(k-1)$-element set $\set{1,\dots,k}\setminus\set{j_0}$
+    (using $1\le j_0\le k$, this set has exactly $k-1$ elements), $\varphi$ is a bijection onto it.
+    \item[(b)] \emph{Edge-length identity: for every $1\le j\le k-1$,
+    $s'(j)-s'(j-1) = s(\varphi(j)) - s(\varphi(j)-1)$.} Three cases, mirroring the case split in
+    the geodesic-edge verification above (with $i:=j-1$).
+    \begin{itemize}
+      \item $j<j_0$ (so $j-1<j_0$ too): $s'(j)=s(j)$, $s'(j-1)=s(j-1)$, and $\varphi(j)=j$, so
+      both sides equal $s(j)-s(j-1)$.
+      \item $j=j_0$: $s'(j-1) = s'(j_0-1) = s(j_0-1)$ (as $j_0-1<j_0$) and
+      $s'(j)=s'(j_0)=s(j_0+1)$ (as $j_0\ge j_0$). So $s'(j)-s'(j-1) = s(j_0+1)-s(j_0-1)$. On the
+      other side, $\varphi(j_0)=j_0+1$ (as $j_0\ge j_0$), so $s(\varphi(j))-s(\varphi(j)-1) =
+      s(j_0+1)-s(j_0)$. These two right-hand sides agree exactly because $s(j_0-1)=s(j_0)$ (the
+      degeneracy hypothesis): this is precisely where that hypothesis is used in the counting
+      argument.
+      \item $j>j_0$ (so $j-1\ge j_0$ too): $s'(j)=s(j+1)$, $s'(j-1)=s(j-1+1)=s(j)$, and
+      $\varphi(j)=j+1$ (as $j\ge j_0$), so both sides equal $s(j+1)-s(j)$.
+    \end{itemize}
+  \end{enumerate}
+  By (b), $j \in \set{1,\dots,k-1}$ is a small edge of $s'$ (i.e., $s'(j)-s'(j-1)<\delta$) exactly
+  when $\varphi(j)$ is a small edge of $s$ (i.e., $s(\varphi(j))-s(\varphi(j)-1)<\delta$). Combined
+  with (a) (that $\varphi$ is a bijection $\set{1,\dots,k-1} \to
+  \set{1,\dots,k}\setminus\set{j_0}$), $\varphi$ restricts to a bijection between
+  $\mathrm{Small}(s')$ and $\mathrm{Small}(s) \setminus \set{j_0}$, so
+  \[
+    \#\mathrm{Small}(s') = \#\bigl(\mathrm{Small}(s)\setminus\set{j_0}\bigr)
+    .
+  \]
+  Since $j_0$ is itself a small edge of $s$ ($s(j_0)-s(j_0-1)=0<\delta$ by the degeneracy and
+  $\delta>0$, and $1\le j_0\le k$), $j_0 \in \mathrm{Small}(s)$, so
+  $\#(\mathrm{Small}(s)\setminus\set{j_0}) + 1 = \#\mathrm{Small}(s) = M$. Combining,
+  \[
+    \#\mathrm{Small}(s') + 1 = M
+    ,
+  \]
+  in particular $\#\mathrm{Small}(s') < M$.
+
+  \emph{Contradiction.} By \noderef{smallPieceCount}, $M = \mathrm{smallPieceCount}(\gamma,\delta)$
+  is, by definition, the minimum over all resolutions $(\ell,r)$ of $\gamma$ into geodesic edges
+  of $\#\set{j \in \set{1,\dots,\ell} : r(j)-r(j-1)<\delta}$; equivalently, it is a lower bound for
+  the small-edge count of every such resolution. We have just exhibited a resolution of $\gamma$
+  (namely $(k-1,s')$, shown above to satisfy $\mathrm{IsGeodesicResolution}(\gamma,k-1,s')$) whose
+  small-edge count $\#\mathrm{Small}(s')$ is strictly less than $M$, contradicting that $M$ is a
+  lower bound for all such counts. This contradiction shows the assumption that $s$ is not
+  strictly monotone on $\set{0,\dots,k}$ is false, completing the proof.
+\end{proof}

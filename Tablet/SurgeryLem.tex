@@ -1,0 +1,87 @@
+\begin{lemma}[Surgery]
+  \label{surgery-lem}
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, let $GP$ be a geodesic
+  pairing on $E$ (\noderef{GeodesicPairing}), let $0 < \epsilon < 1$, let $n \in \mathbb{N}$ with
+  $n > 0$, and let $\gamma \in \Theta(E)$ (\noderef{Curve}) be a closed
+  (\noderef{IsClosedCurve}), piecewise-geodesic (\noderef{IsPiecewiseGeodesic}) curve. Then there
+  exist $N \in \mathbb{N}$ with $N \ge 1$ and closed, piecewise-geodesic curves $(g_j)_{j=1}^N$
+  such that
+  \begin{align}
+    \label{eq:SurgeryLemCurrent}
+    [[\gamma]](\omega) &= \sum_{j=1}^N [[g_j]](\omega) \qquad \text{for every } \omega \in
+    \mathcal{D}^1(E) \quad \text{(\noderef{curveCurrent})}, \\
+    \label{eq:SurgeryLemLength}
+    \sum_{j=1}^N \length(g_j) &\le \left(1 + \frac{2\epsilon}{1-\epsilon} +
+    \frac{12\epsilon^{-1}}{n(1-\epsilon)}\right) \length(\gamma), \\
+    \label{eq:SurgeryLemMorrey}
+    \Morrey{\mu_{g_j}} &\le 4\epsilon^{-1}+2n+10 \qquad \text{for every } j
+    \quad \text{(\noderef{curveMeasure}, \noderef{morreyNorm})}.
+  \end{align}
+
+  This is paper Lemma~3.1 (paper.tex line 597), with the standing hypothesis $n>0$ recorded and
+  justified exactly as at \noderef{SurgeryInduction}: the paper's own definition of an
+  $n$-dependent $(\delta,\epsilon,n)$-curve leaves $n\in\mathbb{N}$ unconstrained in general, but
+  the coefficient $12\epsilon^{-1}/(n(1-\epsilon))$ in the length factor above is literally
+  undefined at $n=0$, and every actual citing use of this lemma (paper Cor.~3.2, \texttt{surgery-eta},
+  paper.tex line 628, with $n=\lceil\epsilon^{-2}\rceil\ge1$) supplies $n\ge1$ regardless. Note
+  $\delta$ does not appear anywhere in the statement: as in the paper's proof (paper.tex lines
+  975-1075), it is a scale chosen and consumed entirely inside the proof.
+\end{lemma}
+\begin{proof}
+  We split on whether $\length(\gamma) = 0$.
+
+  \paragraph{Case $\length(\gamma) = 0$.} Take $N := 1$ and $g_1 := \gamma$. Then $N\ge1$
+  trivially, and $g_1=\gamma$ is closed and piecewise-geodesic by hypothesis.
+  Equation~\eqref{eq:SurgeryLemCurrent} has a single term on the right, namely
+  $[[g_1]](\omega)=[[\gamma]](\omega)$, so it holds trivially, for every $\omega$.
+
+  For \eqref{eq:SurgeryLemLength}: the left side is $\length(g_1)=\length(\gamma)=0$ (the sum over
+  the single index $j=1$), and the right side is
+  $\bigl(1+\tfrac{2\epsilon}{1-\epsilon}+\tfrac{12\epsilon^{-1}}{n(1-\epsilon)}\bigr) \cdot 0 = 0$
+  (any real factor times $\length(\gamma)=0$ is $0$), so the inequality holds with equality.
+
+  For \eqref{eq:SurgeryLemMorrey}: by \noderef{curveMeasure}, $\mu_\gamma$ is the pushforward,
+  under $\gamma$, of Lebesgue measure restricted to $[0,\length(\gamma)]=[0,0]=\{0\}$. The
+  one-point set $\{0\}$ has Lebesgue measure zero, so Lebesgue measure restricted to it is the
+  zero measure, and the pushforward of the zero measure under any map is again the zero measure;
+  hence $\mu_\gamma=0$, the zero measure on $E$, and since $g_1=\gamma$, $\mu_{g_1}=0$ as well. By
+  \noderef{morreyNorm}, $\Morrey{0}$ is the supremum, over $x\in E$ and $r>0$, of
+  $0(\overline{B}(x,r))/r = 0/r = 0$; since every term of this supremum is $0$, the supremum
+  itself is $0$. Hence $\Morrey{\mu_{g_1}}=0$, and since $\epsilon>0$ and $n\ge0$ (indeed $n>0$),
+  the right side $4\epsilon^{-1}+2n+10$ is a sum of nonnegative reals, hence nonnegative, so
+  $0\le4\epsilon^{-1}+2n+10$. This establishes \eqref{eq:SurgeryLemMorrey} and completes this case.
+
+  \paragraph{Case $\length(\gamma) > 0$.} By \noderef{InitialDeltaExists} applied to $\gamma$
+  (piecewise-geodesic and closed by hypothesis, $\length(\gamma)>0$ in this case) and $\epsilon$
+  ($\epsilon>0$ by hypothesis), there exists $\delta>0$ such that
+  $\mathrm{smallPieceCount}(\gamma,\delta)=0$.
+
+  By \noderef{SurgeryInduction} applied to $GP,\gamma,\delta,\epsilon,n$ (valid: $0<\epsilon<1$
+  and $n>0$ by hypothesis, $\delta>0$ from the previous paragraph, $\gamma$ closed and
+  piecewise-geodesic by hypothesis), there exist $N\in\mathbb{N}$ with $N\ge1$ and closed,
+  piecewise-geodesic curves $(g_j)_{j=1}^N$ such that
+  \[
+    [[\gamma]](\omega)=\sum_{j=1}^N[[g_j]](\omega) \ \ (\forall\omega), \qquad
+    \sum_{j=1}^N\length(g_j) \le \mathrm{surgeryPotential}\bigl(\epsilon,\delta,n,\length(\gamma),
+    \mathrm{smallPieceCount}(\gamma,\delta)\bigr), \qquad
+    \Morrey{\mu_{g_j}}\le4\epsilon^{-1}+2n+10 \ \ (\forall j)
+    .
+  \]
+  This already gives \eqref{eq:SurgeryLemCurrent} and \eqref{eq:SurgeryLemMorrey} verbatim; it
+  remains to derive \eqref{eq:SurgeryLemLength} from the length bound just obtained.
+
+  Substituting $\mathrm{smallPieceCount}(\gamma,\delta)=0$ (from \noderef{InitialDeltaExists})
+  into the right side, and unfolding the definition of $\mathrm{surgeryPotential}$
+  (\noderef{surgeryPotential}) as
+  $\mathrm{surgeryPotential}(\epsilon,\delta,n,L,m) = A\cdot L + C \cdot m$ with
+  $A = 1+\tfrac{2\epsilon}{1-\epsilon}+\tfrac{12\epsilon^{-1}}{n(1-\epsilon)}$ and
+  $C=\tfrac{4\epsilon^{-1}\delta}{n}$, we get
+  \[
+    \mathrm{surgeryPotential}(\epsilon,\delta,n,\length(\gamma),0) = A\cdot\length(\gamma) +
+    C\cdot0 = A\cdot\length(\gamma) = \left(1+\frac{2\epsilon}{1-\epsilon}+
+    \frac{12\epsilon^{-1}}{n(1-\epsilon)}\right)\length(\gamma)
+    ,
+  \]
+  using $C\cdot0=0$ for any real $C$. Combining this equality with the length bound above gives
+  exactly \eqref{eq:SurgeryLemLength}, completing this case and the proof.
+\end{proof}

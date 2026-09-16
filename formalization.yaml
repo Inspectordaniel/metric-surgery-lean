@@ -1,0 +1,174 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml v0.4
+version: "v0.4"
+
+project:
+  name: "An atomic decomposition of one-dimensional metric currents without boundary"
+  description: >-
+    This project formalizes all five main results of arXiv:2502.09871, "An atomic
+    decomposition of one-dimensional metric currents without boundary" (Chen, Goodman,
+    Hernandez, Spector), in Lean 4 against Mathlib.
+  authors:
+    - "Daniel Spector (NTNU, Taipei)"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Daniel Spector (NTNU, Taipei)"
+
+repository:
+  role: "substantive-development"
+
+classification:
+  arxiv: ["math.FA"]
+  msc2020: ["49Q15", "30L99", "28A75"]
+
+sources:
+  - title: "An atomic decomposition of one-dimensional metric currents without boundary"
+    authors:
+      - "You-Wei Benson Chen"
+      - "Jesse Goodman"
+      - "Felipe Hernandez"
+      - "Daniel Spector"
+    id: "arXiv:2502.09871"
+    type: "preprint"
+    location: "https://arxiv.org/abs/2502.09871"
+    relationship: "formalizes"
+    note: >-
+      Daniel Spector, the author and maintainer of this formalization, is an author of the
+      paper, which is why author_endorsement is participated. The preprint is under review and
+      is not yet accepted for publication. The formalization covers all five main results of
+      the paper; see status.scope and fidelity.divergences.
+    license: "arXiv.org perpetual non-exclusive license"
+    author_endorsement: "participated"
+
+related_formalizations: []
+
+status:
+  scope: >-
+    All five main results of arXiv:2502.09871 are formalized in Lean 4 against Mathlib, and
+    all five are proved: ApproximationMetric (Theorem 1.1), BBAssertion (Theorem 4.4),
+    SurgeryEta (Corollary 3.2), C1SmallBall (Corollary 2.6) and EtaRepeats (Corollary A.6, psi
+    display). No statement is weakened and no hypothesis is added beyond the instance-level
+    nonemptiness noted in fidelity.divergences. Two results the paper cites rather than proves
+    — Ambrosio-Kirchheim Proposition 2.7 (mass supremum formula, hard direction) and
+    Paolini-Stepanov Theorem 3.1 with Proposition 4.2 (existence of a mass-realizing family of
+    curves) — appear as explicit hypotheses of Theorems 1.1 and 4.4 rather than as axioms.
+    Corollaries 2.6, 3.2 and A.6 are unconditional. Every declaration depends only on propext,
+    Classical.choice and Quot.sound. The psi-tilde display of Corollary A.6 is formalized
+    separately as EtaRepeatsTilde in the proof development and is not part of the compared
+    surface. The numbered results of the paper other than these five, and the paper's
+    expository material, are present only insofar as the proof development needs them.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: []
+
+automation:
+  methods:
+    - method: "agent"
+      models: ["Claude Sonnet", "Claude Opus"]
+      framework: "Trellis (https://github.com/wpegden/trellis)"
+      tool_setup: >-
+        Trellis drove Claude over the Lean 4 proof development: Claude Sonnet ran the worker
+        bursts that write and repair Lean proofs, and Claude Opus ran the reviewer and the
+        correspondence, faithfulness, substantiveness and soundness verifiers. Every Lean
+        proof is machine-checked by the Lean 4 kernel via lake build.
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+        hardware: "not tracked"
+      prompting_notes: >-
+        Prompting was structured by the Trellis roles rather than by ad hoc prompts: worker
+        bursts were given a single proof obligation at a time, and the reviewer and the
+        correspondence, faithfulness, substantiveness and soundness verifiers each checked a
+        completed node against the paper before it was accepted. Individual prompts are not
+        recorded in this repository.
+  spend_usd: "not tracked"
+  notes: >-
+    The Lean development was produced with Trellis driving Claude, as described under
+    automation.methods, and every proof is machine-checked. The human contribution is
+    mathematical rather than tactic-level: the author selected and stated the five compared
+    theorems and the two citation hypotheses, and reviewed those statements against the paper.
+    The proofs themselves were not written by hand.
+
+fidelity:
+  divergences: >-
+    Four deliberate, documented divergences, none of them weakenings. (1) Universal constants
+    are pinned to numerals rather than left existential: C = 4*522 = 2088 in Theorem 1.1, C' =
+    522 in Corollary 3.2, and the paper's prescription epsilon = c*eta, n = ceil(epsilon^-2)
+    is pinned at c = 1/15, sharp at eta = 1 for this argument. The paper quantifies these
+    constants universally and outside the data, so a pinned numeral is at least as strong as
+    the paper's existential form. (2) Corollary 2.6 is stated for an arbitrary metric space
+    rather than for a complete, separable, geodesic one, since its proof uses none of those
+    hypotheses; this is a strengthening. (3) Theorems 1.1 and 4.4 carry a [Nonempty E]
+    instance hypothesis. This is an artifact of the Lean formulation, not of the mathematics:
+    the conclusions assert total functions into Curve E, and Curve E is uninhabited exactly
+    when E is. (4) Ambrosio-Kirchheim Proposition 2.7 and Paolini-Stepanov Theorem 3.1 with
+    Proposition 4.2, which the paper cites rather than proves, are explicit hypotheses of
+    Theorems 1.1 and 4.4 rather than axioms, so they are visible in the statements instead of
+    being assumed silently; Corollaries 2.6, 3.2 and A.6 are unconditional. No other
+    divergence from the cited source is known.
+
+review:
+  status: "preprint under review; formalization not independently peer reviewed"
+  reviewers:
+    - "Daniel Spector (NTNU, Taipei)"
+  notes: >-
+    The five theorem statements in Challenge.lean and the two citation hypotheses
+    MassSupFormulaStatement and PaoliniStepanovExistsStatement were audited against the paper
+    by the author, who is also an author of the paper. All Lean proofs are machine-checked by
+    the Lean 4 kernel, and each of the five compared declarations depends only on propext,
+    Classical.choice and Quot.sound. The underlying preprint is under review; the
+    formalization itself has had no independent peer review, and no reviewer other than the
+    author has audited the statement surface.
+
+alignment:
+  namespace: "AtomicDecomposition"
+  statements:
+    - source: "Theorem 1.1"
+      lean: "AtomicDecomposition.ApproximationMetric"
+      module: "Challenge (statement), Solution (proof)"
+      status: "proved"
+      note: >-
+        **ApproximationMetric** (paper Theorem 1.1): every boundaryless 1-dimensional metric
+        current on a complete, separable, geodesic metric space is a limit of finite
+        nonnegative combinations of closed piecewise-geodesic curves, with total weight at
+        most (1+ε) times the mass and each curve's Morrey norm at most 2088/ε². The paper's
+        universal constant C is pinned to the numeral 2088 = 4·522, which is stronger than the
+        paper's existential form since C is quantified outside the data.
+    - source: "Theorem 4.4"
+      lean: "AtomicDecomposition.BBAssertion"
+      module: "Challenge (statement), Solution (proof)"
+      status: "proved"
+      note: >-
+        **BBAssertion** (Theorem 4.4): the same current admits a normalized decomposition
+        along a sequence of closed piecewise-geodesic curves of length at most 2l, with the
+        mass and length averages both tending to 1.
+    - source: "Corollary 3.2"
+      lean: "AtomicDecomposition.SurgeryEta"
+      module: "Challenge (statement), Solution (proof)"
+      status: "proved"
+      note: >-
+        **SurgeryEta** (Corollary 3.2): a closed piecewise-geodesic curve splits into closed
+        piecewise-geodesic curves of total length at most (1+η) times the original, each of
+        Morrey norm at most 522/η². The paper's absolute constant c is pinned to 1/15, shown
+        sharp at η = 1 for this argument.
+    - source: "Corollary 2.6"
+      lean: "AtomicDecomposition.C1SmallBall"
+      module: "Challenge (statement), Solution (proof)"
+      status: "proved"
+      note: >-
+        **C1SmallBall** (Corollary 2.6): a concatenation of at most k geodesics has Morrey
+        norm at most 2k. Formalized for an arbitrary metric space, since the proof uses
+        neither completeness, separability nor ambient geodesy.
+    - source: "Corollary A.6 (psi display)"
+      lean: "AtomicDecomposition.EtaRepeats"
+      module: "Challenge (statement), Solution (proof)"
+      status: "proved"
+      note: >-
+        **EtaRepeats** (Corollary A.6, psi display): the rescaling identity between the
+        measures eta_l and eta_1; the psi-tilde display is formalized separately as
+        EtaRepeatsTilde.
+
+acknowledgements: >-
+  Mathlib and the Lean 4 community, whose library the formalization is built against; Trellis
+  (https://github.com/wpegden/trellis) and Claude, which produced the Lean proofs; and You-Wei
+  Benson Chen, Jesse Goodman and Felipe Hernandez, coauthors of the paper being formalized.

@@ -1,0 +1,70 @@
+\begin{lemma}[The measure of a restriction, as a pushforward on the original interval]
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, $\gamma \in \Theta(E)$
+  (\noderef{Curve}), and $0 \le a \le b \le \length(\gamma)$. Then
+  \[
+    \mu_{\gamma|_{[a,b]}} = (\gamma)_{*}\bigl(\mathrm{Leb}|_{[a,b]}\bigr)
+    ,
+  \]
+  where $\gamma|_{[a,b]} = \mathrm{curveRestrict}(\gamma,a,b)$ (\noderef{curveRestrict}), $\mu_\eta$
+  denotes the measure of a curve $\eta$ (\noderef{curveMeasure}), and the right-hand side is the
+  pushforward, under $\gamma$ itself (not the reparametrized restriction), of one-dimensional
+  Lebesgue measure restricted to the \emph{original} subinterval $[a,b] \subseteq [0,\length(\gamma)]$.
+
+  This identifies the measure of a restricted piece with a pushforward indexed on $\gamma$'s own
+  parameter interval, which is exactly what is needed to splice a restricted block back into a
+  decomposition of $\mu_\gamma$ over $\gamma$'s original parameter interval, as produced by
+  \noderef{MorreyResolutionAdditive}: without this identification, the measure
+  $\mu_{\gamma|_{[u,u']}}$ of a restricted arc (indexed on the restriction's own, shifted parameter
+  interval $[0,u'-u]$) cannot be recognized as one of the blocks
+  $(\gamma)_*(\mathrm{Leb}|_{[s(i),s(i+1)]})$ that \noderef{MorreyResolutionAdditive} decomposes
+  $\mu_\gamma$ into (indexed on $\gamma$'s original interval), so the two halves of paper.tex
+  lines 899--906 -- the bound on $\Morrey{\gamma|_{[u,u']}}$ from \Cref{full-ball-lem}, and the
+  decomposition of $\mu_g$ used to combine it with the bounds on the remaining geodesic
+  pieces -- could not otherwise be combined.
+\end{lemma}
+\begin{proof}
+  Write $\eta := \gamma|_{[a,b]}$, so $\length(\eta) = b - a$ (\noderef{curveRestrict}) and, by
+  \noderef{curveMeasure}, $\mu_\eta = (\eta)_*\bigl(\mathrm{Leb}|_{[0,b-a]}\bigr)$.
+
+  \emph{Step 1 (agreement on $[0,b-a]$).} By \noderef{curveRestrict}'s defining formula,
+  $\eta(u) = \gamma(a + \min(b-a,\max(0,u)))$ for every $u \in \mathbb{R}$; for $u \in [0,b-a]$ the
+  clamp is the identity ($\max(0,u)=u$ since $u \ge 0$, and $\min(b-a,u)=u$ since $u \le b-a$), so
+  $\eta(u) = \gamma(a+u)$ for every $u \in [0,b-a]$. That is, $\eta$ and $u \mapsto \gamma(a+u)$
+  agree pointwise on $[0,b-a]$, hence in particular Lebesgue-almost-everywhere on $[0,b-a]$ (with
+  respect to $\mathrm{Leb}|_{[0,b-a]}$, since $[0,b-a]$ is Borel measurable). Pushforward of a
+  measure is invariant under altering the pushed function on an a.e.-null set with respect to that
+  measure, so
+  \[
+    \mu_\eta = (\eta)_*\bigl(\mathrm{Leb}|_{[0,b-a]}\bigr)
+      = \bigl(u \mapsto \gamma(a+u)\bigr)_*\bigl(\mathrm{Leb}|_{[0,b-a]}\bigr)
+    .
+  \]
+
+  \emph{Step 2 (split off the translation).} The map $u \mapsto \gamma(a+u)$ is the composite
+  $\gamma \circ T_a$, where $T_a(u) := a+u$. $\gamma$ is (Borel) measurable, being continuous
+  (in fact globally $1$-Lipschitz, \noderef{CurveLipschitz}), and $T_a$ is measurable (translation
+  by a constant is continuous, hence measurable). Composing pushforwards along measurable maps
+  gives
+  \[
+    \bigl(\gamma \circ T_a\bigr)_*\bigl(\mathrm{Leb}|_{[0,b-a]}\bigr)
+      = (\gamma)_*\Bigl((T_a)_*\bigl(\mathrm{Leb}|_{[0,b-a]}\bigr)\Bigr)
+    .
+  \]
+
+  \emph{Step 3 (the translation pushes forward the restricted interval correctly).} Translation by
+  $a$ is measure-preserving for one-dimensional Lebesgue measure: $(T_a)_*(\mathrm{Leb}) =
+  \mathrm{Leb}$. Combined with the standard identity relating pushforward and restriction along a
+  measurable map, $(T_a)_*\bigl(\mathrm{Leb}|_{[0,b-a]}\bigr) =
+  \bigl((T_a)_*\mathrm{Leb}\bigr)|_{T_a([0,b-a])} = \mathrm{Leb}|_{T_a([0,b-a])}$. Since
+  $T_a([0,b-a]) = [a,b]$ (indeed $T_a^{-1}([a,b]) = [0,b-a]$, so, $T_a$ being a bijection of
+  $\mathbb{R}$, $T_a([0,b-a])=[a,b]$), this gives $(T_a)_*\bigl(\mathrm{Leb}|_{[0,b-a]}\bigr) =
+  \mathrm{Leb}|_{[a,b]}$.
+
+  Combining Steps 1--3,
+  \[
+    \mu_{\gamma|_{[a,b]}} = \mu_\eta = (\gamma)_*\Bigl((T_a)_*\bigl(\mathrm{Leb}|_{[0,b-a]}\bigr)\Bigr)
+      = (\gamma)_*\bigl(\mathrm{Leb}|_{[a,b]}\bigr)
+    ,
+  \]
+  as claimed.
+\end{proof}

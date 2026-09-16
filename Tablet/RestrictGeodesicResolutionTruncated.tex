@@ -1,0 +1,155 @@
+\begin{lemma}[A restriction to an arbitrary window inherits a geodesic resolution with only its two end edges truncated]
+  Let $E$ be a metric space, $\eta \in \Theta(E)$ (\noderef{Curve}), $k \in \mathbb{N}$ and $s
+  \colon \mathbb{N} \to \mathbb{R}$ with $\mathrm{IsGeodesicResolution}(\eta,k,s)$
+  (\noderef{IsGeodesicResolution}). Let $a,b \in \mathbb{R}$ satisfy $0 \le a$, $a < b$ and $b \le
+  \length(\eta)$. Let $j_A, j_B \in \mathbb{N}$ satisfy the inequalities
+  \[
+    j_A < k,\qquad s(j_A) \le a,\qquad a \le s(j_A+1),
+  \]
+  \[
+    1 \le j_B,\qquad j_B \le k,\qquad s(j_B-1) \le b,\qquad b \le s(j_B)
+  \]
+  (here $j_B-1$ is truncated subtraction in $\mathbb{N}$, unambiguous since $1 \le j_B$). Then the
+  restriction $\eta|_{[a,b]} = \mathrm{curveRestrict}(\eta,a,b)$ (\noderef{curveRestrict}) satisfies
+  \[
+    \mathrm{IsGeodesicResolution}\bigl(\eta|_{[a,b]},\ j_B-j_A,\ r\bigr),
+  \]
+  where $j_B-j_A$ is again truncated subtraction in $\mathbb{N}$ and $r \colon \mathbb{N} \to
+  \mathbb{R}$ is the explicitly named function
+  \[
+    r(i) \;:=\;
+    \begin{cases}
+      0, & i = 0,\\
+      b-a, & i = j_B-j_A,\\
+      s(j_A+i)-a, & \text{otherwise.}
+    \end{cases}
+  \]
+  (The three clauses are read in this order, so the value at $i=0$ is $0$ even if $j_B-j_A$ should
+  happen to be $0$; under the hypotheses $j_A < j_B$, so this does not occur.)
+
+  \paragraph{What the statement says and why it is the right strength.} The named witness $r$
+  places the (at most two) \emph{truncated} edges of $\eta|_{[a,b]}$ at the two ends of the
+  resolution: the first edge $[r(0),r(1)]$ carries the partial edge of $s$ overlapping $a$, the
+  last edge $[r(j_B-j_A-1),r(j_B-j_A)]$ carries the partial edge overlapping $b$, and every
+  intermediate breakpoint $r(i)$, $1 \le i \le j_B-j_A-1$, is a \emph{genuine} breakpoint
+  $s(j_A+i)$ of $\eta$, merely translated by the additive constant $-a$ into the window's own
+  parametrization. This is the direct mechanization of paper.tex 895--896: ``\dots{} formed by
+  concatenating those geodesic edges $\gamma_{[s_{j-1},s_j]}$ for which $[s_{j-1},s_j] \subseteq
+  [t,t']$, possibly excluding up to two partial edges of $\gamma$ that overlap the endpoints of
+  $[t,t']$''. The edge count is $j_B-j_A$, i.e.\ exactly the number of $s$-edges met by $[a,b]$,
+  with no padding depending on $k$.
+
+  The hypotheses on $j_A,j_B$ are deliberately the \emph{weakest} ones under which the conclusion
+  holds: $j_A$ is only required to be an index whose edge $[s(j_A),s(j_A+1)]$ contains $a$, and
+  $j_B$ only an index whose edge $[s(j_B-1),s(j_B)]$ contains $b$. No maximality or minimality of
+  $j_A,j_B$ is assumed, so a caller may supply any convenient such pair (in particular $j_A := 0$
+  when $a=0$, even when $s$ repeats the value $0$ at several initial indices). The conclusion is
+  also not stronger than justified: nothing is asserted about the two end edges beyond what
+  $\mathrm{IsGeodesicResolution}$ itself forces, and $\mathrm{IsGeodesicResolution}$ permits
+  consecutive values of $r$ to coincide, so the degenerate situations $a = s(j_A+1)$ or $b =
+  s(j_B-1)$ are covered without a separate claim.
+
+  \paragraph{Why this is not subsumed by \noderef{RestrictPiecewiseGeodesic}.} That node requires
+  \emph{both} window endpoints to be breakpoints of $s$ (its window is literally $[s(p),s(q)]$),
+  and its resolution is the unmodified shift $j \mapsto s(p+j)-s(p)$. The present lemma is exactly
+  the complementary, truncated-end case: $a$ and $b$ are arbitrary reals inside the curve's domain,
+  and the content is precisely the treatment of the two partial edges that overlap them, which is
+  the case paper.tex 895--896 actually needs and which \noderef{RestrictPiecewiseGeodesic} does not
+  cover.
+\end{lemma}
+\begin{proof}
+  Write $K := j_B - j_A$ and unfold $\mathrm{IsGeodesicResolution}(\eta,k,s)$
+  (\noderef{IsGeodesicResolution}) into its four conjuncts: $\mathrm{MonotoneOn}(s,\{0,\dots,k\})$;
+  $s(0)=0$; $s(k)=\length(\eta)$; and $\mathrm{IsGeodesicOn}(\eta,s(i),s(i+1))$
+  (\noderef{IsGeodesicOn}) for every $i<k$. From the first conjunct we record the form in which it
+  is used below:
+  \begin{equation}\label{eq:smono}
+    p \le q \le k \ \Longrightarrow\ s(p) \le s(q),
+  \end{equation}
+  which is $\mathrm{MonotoneOn}$ applied to $p,q \in \{0,\dots,k\}$ (both are $\le k$ because $p
+  \le q \le k$).
+
+  \paragraph{Step 1: $j_A < j_B$.} Suppose not, i.e.\ $j_B \le j_A$. Since $j_A < k$ we have $j_A
+  \le k$, so \eqref{eq:smono} applied to $j_B \le j_A \le k$ gives $s(j_B) \le s(j_A)$. Combining
+  with the hypotheses $b \le s(j_B)$ and $s(j_A) \le a$ gives $b \le s(j_B) \le s(j_A) \le a$,
+  contradicting $a<b$. Hence $j_A<j_B$, and therefore $K = j_B-j_A \ge 1$ (and truncated
+  subtraction agrees with ordinary subtraction here).
+
+  \paragraph{Step 2: two transport facts.} \emph{(2a) Restricting a geodesic edge of $\eta$.} Let
+  $x,y \in \mathbb{R}$ with $0 \le x$ and $y \le b-a$, and suppose
+  $\mathrm{IsGeodesicOn}(\eta,a+x,a+y)$. We claim
+  $\mathrm{IsGeodesicOn}(\eta|_{[a,b]},x,y)$. Indeed, let $u,v \in [x,y]$. By
+  \noderef{curveRestrict}, $\eta|_{[a,b]}(w) = \eta\bigl(a+\min(b-a,\max(0,w))\bigr)$ for every
+  $w$; since $0 \le x \le u \le y \le b-a$ we get $\max(0,u)=u$ and $\min(b-a,u)=u$, so
+  $\eta|_{[a,b]}(u) = \eta(a+u)$, and likewise $\eta|_{[a,b]}(v) = \eta(a+v)$. Both $a+u$ and $a+v$
+  lie in $[a+x,a+y]$, so the hypothesis $\mathrm{IsGeodesicOn}(\eta,a+x,a+y)$ (which, by
+  \noderef{IsGeodesicOn}, asserts $\mathrm{dist}(\eta(p),\eta(q)) = |p-q|$ for \emph{all} $p,q$ in
+  the stated interval) gives
+  \[
+    \mathrm{dist}\bigl(\eta|_{[a,b]}(u),\eta|_{[a,b]}(v)\bigr) = \mathrm{dist}(\eta(a+u),\eta(a+v))
+      = |(a+u)-(a+v)| = |u-v| ,
+  \]
+  which is the claim.
+
+  \emph{(2b) Shrinking a geodesic interval.} If $\mathrm{IsGeodesicOn}(\eta,p,q)$ and $p \le p'$,
+  $q' \le q$, then $\mathrm{IsGeodesicOn}(\eta,p',q')$: every $u \in [p',q']$ satisfies $p \le p'
+  \le u \le q' \le q$, so $u \in [p,q]$, and the required identity for $u,v \in [p',q']$ is an
+  instance of the one for $[p,q]$ (\noderef{IsGeodesicOn}).
+
+  \paragraph{Step 3: values of $r$.} Directly from the definition: $r(0)=0$; $r(K)=b-a$ (using $K
+  \ne 0$ from Step 1, so the first clause does not fire); and $r(i) = s(j_A+i)-a$ whenever $i \ne
+  0$ and $i \ne K$.
+
+  \paragraph{Step 4: $r$ is monotone on $\{0,\dots,K\}$.} We show $r(i) \le r(j)$ for all $i \le j
+  \le K$, by cases.
+  \begin{itemize}
+    \item $i=0$, so $r(i)=0$. If $j=0$ the claim is $0\le0$. If $j=K$ the claim is $0 \le b-a$,
+      true since $a<b$. Otherwise $1 \le j \le K-1$, so $r(j)=s(j_A+j)-a$; since $j \ge 1$ and
+      $j_A+j \le j_A+(K-1) = j_B-1 \le k$ (using $j_B \le k$), \eqref{eq:smono} applied to
+      $j_A+1 \le j_A+j \le k$ gives $s(j_A+1) \le s(j_A+j)$, whence $r(j) = s(j_A+j)-a \ge
+      s(j_A+1)-a \ge 0$ by the hypothesis $a \le s(j_A+1)$.
+    \item $i \ge 1$ and $j=K$, so $r(j)=b-a$. If $i=K$ the claim is an equality. Otherwise $1 \le i
+      \le K-1$, so $r(i)=s(j_A+i)-a$ and $j_A+i \le j_A+(K-1) = j_B-1 \le k$; \eqref{eq:smono}
+      applied to $j_A+i \le j_B-1 \le k$ gives $s(j_A+i) \le s(j_B-1)$, and the hypothesis
+      $s(j_B-1) \le b$ yields $r(i) = s(j_A+i)-a \le b-a = r(j)$.
+    \item $i \ge 1$ and $j \ne K$ (so $i \le j \le K-1$, and in particular $i \ne K$): then
+      $r(i)=s(j_A+i)-a$ and $r(j)=s(j_A+j)-a$, with $j_A+i \le j_A+j \le j_A+(K-1)=j_B-1 \le k$, so
+      \eqref{eq:smono} gives $s(j_A+i) \le s(j_A+j)$, i.e.\ $r(i) \le r(j)$.
+  \end{itemize}
+  These cases are exhaustive for $i \le j \le K$.
+
+  \paragraph{Step 5: the boundary values.} $r(0)=0$ is Step 3, and $r(K)=b-a =
+  \length(\eta|_{[a,b]})$, the length of $\mathrm{curveRestrict}(\eta,a,b)$ being $b-a$ by
+  \noderef{curveRestrict}.
+
+  \paragraph{Step 6: each edge is geodesic.} Fix $i<K$; we must show
+  $\mathrm{IsGeodesicOn}(\eta|_{[a,b]},r(i),r(i+1))$. By Step 4, $0 = r(0) \le r(i)$ and $r(i+1)
+  \le r(K) = b-a$, so by Step 2a it suffices to prove
+  $\mathrm{IsGeodesicOn}(\eta,a+r(i),a+r(i+1))$. Four cases.
+  \begin{itemize}
+    \item \emph{$i=0$ and $K=1$.} Then $a+r(0)=a$ and $a+r(1)=a+(b-a)=b$ by Step 3 (as $1=K$).
+      Since $K=1$ and $j_A<j_B$ we have $j_B=j_A+1$, so the hypothesis $b \le s(j_B)$ reads $b \le
+      s(j_A+1)$. The hypothesis $j_A<k$ gives $\mathrm{IsGeodesicOn}(\eta,s(j_A),s(j_A+1))$, and
+      Step 2b with $s(j_A) \le a$ and $b \le s(j_A+1)$ gives $\mathrm{IsGeodesicOn}(\eta,a,b)$.
+    \item \emph{$i=0$ and $K \ne 1$.} Then $a+r(0)=a$ and, by Step 3 (as $1 \ne 0$ and $1 \ne K$),
+      $a+r(1) = a + (s(j_A+1)-a) = s(j_A+1)$. Again $j_A<k$ gives
+      $\mathrm{IsGeodesicOn}(\eta,s(j_A),s(j_A+1))$, and Step 2b with $s(j_A) \le a$ and
+      $s(j_A+1) \le s(j_A+1)$ gives $\mathrm{IsGeodesicOn}(\eta,a,s(j_A+1))$.
+    \item \emph{$i \ne 0$ and $i+1=K$.} By Step 3, $a+r(i) = s(j_A+i)$ and $a+r(i+1) = a+(b-a) =
+      b$. From $i+1=K=j_B-j_A$ and $j_A<j_B$ we get $j_A+i = j_B-1$, so we must show
+      $\mathrm{IsGeodesicOn}(\eta,s(j_B-1),b)$. Since $1 \le j_B \le k$ we have $j_B-1<k$, so the
+      edge hypothesis gives $\mathrm{IsGeodesicOn}(\eta,s(j_B-1),s((j_B-1)+1)) =
+      \mathrm{IsGeodesicOn}(\eta,s(j_B-1),s(j_B))$ (using $(j_B-1)+1=j_B$, valid as $1 \le j_B$).
+      Step 2b with $s(j_B-1) \le s(j_B-1)$ and $b \le s(j_B)$ gives the claim.
+    \item \emph{$i \ne 0$ and $i+1 \ne K$.} Then $i \ne K$ and $i+1 \ne 0$, so Step 3 gives
+      $a+r(i) = s(j_A+i)$ and $a+r(i+1) = s(j_A+i+1)$. We must show
+      $\mathrm{IsGeodesicOn}(\eta,s(j_A+i),s(j_A+i+1))$, which is the edge hypothesis at index
+      $j_A+i$, valid because $i<K$ and $i+1 \ne K$ force $i+1 < K$, hence $j_A+i \le j_A + (K-2) =
+      j_B-2 < j_B \le k$.
+  \end{itemize}
+  These four cases are exhaustive, so every edge of $r$ is geodesic.
+
+  Steps 4, 5 and 6 are exactly the four conjuncts of
+  $\mathrm{IsGeodesicResolution}(\eta|_{[a,b]},K,r)$ (\noderef{IsGeodesicResolution}), completing
+  the proof.
+\end{proof}

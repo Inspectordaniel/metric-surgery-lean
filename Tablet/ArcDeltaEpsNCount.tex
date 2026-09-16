@@ -1,0 +1,261 @@
+\begin{lemma}[A sub-window of the arc's own resolution, avoiding its truncated end edges, inherits $(\delta,\epsilon,n)$-ness]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}) a closed curve
+  (\noderef{IsClosedCurve}), $\delta,\epsilon \in \mathbb{R}$, $n,k \in \mathbb{N}$, and $s \colon
+  \mathbb{N} \to \mathbb{R}$ a geodesic resolution of $\gamma$ into $k$ edges
+  (\noderef{IsGeodesicResolution}) such that, for this particular $s$, both counting clauses of
+  $\mathrm{IsDeltaEpsN}$ (\noderef{IsDeltaEpsN}) hold:
+  \[
+    \text{(linear)}\quad \forall\, a,b,\ 0 \le a \le b \le \length(\gamma),\ b-a \le
+    2\epsilon^{-1}\delta \implies \#\{j\in\set{1,\dots,k} : a\le s(j-1),\ s(j)\le b,\ s(j)-s(j-1)<\delta\}
+    \le n
+    ,
+  \]
+  \[
+    \text{(wrap)}\quad \forall\, a,b,\ 0 \le b < a \le \length(\gamma),\
+    (\length(\gamma)-a)+b \le 2\epsilon^{-1}\delta \implies
+    \#\{j\in\set{1,\dots,k} : (a\le s(j-1) \vee s(j)\le b),\ s(j)-s(j-1)<\delta\} \le n
+    .
+  \]
+  Let $t,t' \in [0,\length(\gamma)]$, and let $(k_A,s_A)$ be any geodesic resolution of the
+  circular arc $A := \gamma|_{[t,t']}$ (\noderef{curveArc}) with $k_A \ge 1$ carrying
+  \noderef{ArcGeodesicResolution}'s correspondence: in the ordinary case $t \le t'$, there is
+  $j_0$ with $s_A(i) = s(j_0+(i-1))-t$ for every $i \in \set{1,\dots,k_A-1}$ (with
+  $j_0+(i-1)\le k$); in the wrap case $t' < t$, there are $j_0,m$ with $s_A(i) = s(j_0+(i-1))-t$
+  for $1 \le i \le m$ and $s_A(i) = (\length(\gamma)-t)+s(i-m)$ for $m < i \le k_A-1$ (with the
+  stated index bounds), \emph{together with the fact that the two halves of this correspondence
+  meet at a genuine edge of $\gamma$}: $s(j_0+(m-1)) = \length(\gamma)$ whenever $m \ge 1$. (This
+  extra fact is now itself part of \noderef{ArcGeodesicResolution}'s stated wrap-case conclusion --
+  see the remark below -- so a call site instantiating $(k_A,s_A,j_0,m)$ from that lemma discharges
+  it directly from the cited conclusion, with no re-derivation; it is still recorded here as an
+  explicit hypothesis of the present lemma's own signature, since this lemma is stated for an
+  arbitrary resolution carrying the correspondence shape, not tied to
+  \noderef{ArcGeodesicResolution}'s specific construction.)
+
+  Suppose the sub-window of $A$ strictly between its own breakpoints $u := s_A(1)$ and $u' :=
+  s_A(k_A-1)$, i.e.\ $A|_{[u,u']} := \mathrm{curveRestrict}(A,u,u')$ (\noderef{curveRestrict}), is
+  \emph{not} a closed curve (\noderef{IsClosedCurve}). Then $A|_{[u,u']}$ is a
+  $(\delta,\epsilon,n)$-curve (\noderef{IsDeltaEpsN}).
+
+  \paragraph{Why the sub-window, not the whole arc.} paper.tex 899--901 asserts, in the setting of
+  \Cref{typeI-cut-point-exists}, that ``$\gamma|_{[u,u']}$'' -- the arc with its up to two partial
+  end edges dropped -- inherits $(\delta,\epsilon,n)$-ness from $\gamma$. The whole arc $A$ does
+  \emph{not} inherit it: its first and last edges are the (possibly) truncated partial edges
+  supplied by \noderef{ArcGeodesicResolution}, and a truncated edge can be short for every
+  $\delta>0$ regardless of $n$, exactly as in the counterexample recorded on
+  \noderef{RestrictDeltaEpsNAtBreakpoints}. Excluding exactly those two edges -- the window between
+  the arc's own interior breakpoints $s_A(1)$ and $s_A(k_A-1)$ -- is what makes the inheritance
+  true, and this is the shape \Cref{cut-type-I} Branch~C consumes directly.
+
+  \paragraph{Why this is the sole consumer of $\mathrm{IsDeltaEpsN}$'s wrap clause.} As of this
+  cycle, the (wrap) clause recorded above has no consumer anywhere in the tablet and is discharged
+  vacuously at every other call site. It is needed here because, in the wrap case $t'<t$, a window
+  of the sub-window can straddle the point where $A$'s tail piece $\gamma|_{[t,\length(\gamma)]}$
+  meets its head piece $\gamma|_{[0,t']}$ -- a circular window of $\gamma$ straddling the basepoint
+  $\gamma(0)=\gamma(\length(\gamma))$, exactly the situation the (wrap) clause was written for.
+
+  \paragraph{On the hypothesis $s(j_0+(m-1))=\length(\gamma)$.} This is true of the specific
+  resolution \noderef{ArcGeodesicResolution} constructs (its tail piece $\gamma|_{[t,\length(\gamma)]}$
+  has length exactly $\length(\gamma)-t$, so its own resolution's top breakpoint -- glued to $s_A$ at
+  index $m$ -- necessarily lands there), and, as of this cycle, \noderef{ArcGeodesicResolution}'s
+  stated wrap-case conclusion exposes it directly as its third conjunct. Without this fact, the edge
+  $[s_A(m-1),s_A(m)]$ and the edge $[s_A(m),s_A(m+1)]$ meeting at the split could fail to correspond
+  to genuine, single edges of $\gamma$, and the counting argument below would not close; that is why
+  it is needed here at all. A call site instantiating $(k_A,s_A,j_0,m)$ from
+  \noderef{ArcGeodesicResolution} therefore obtains this hypothesis directly from that lemma's own
+  stated conclusion, with no re-derivation -- it is no longer a gap awaiting a future
+  strengthening. It is kept as an explicit hypothesis of the present lemma's signature because the
+  present lemma is stated for an arbitrary resolution carrying the correspondence shape, and does
+  not itself assume that resolution came from \noderef{ArcGeodesicResolution}.
+
+  \paragraph{The general (non-breakpoint) restriction of $A$ does not inherit this.} Exactly as for
+  \noderef{RestrictDeltaEpsNAtBreakpoints}, restricting $A$ to an arbitrary sub-window (not a pair
+  of $s_A$'s own breakpoints) can truncate an edge of $s_A$ mid-edge; and restricting $A$ to all of
+  $[0,\length(A)]$ (i.e.\ not dropping the two end edges) is exactly the scenario
+  \noderef{RestrictDeltaEpsNAtBreakpoints} shows can fail, applied to a truncated end edge of $A$
+  itself.
+\end{lemma}
+\begin{proof}
+  Throughout write $A := \gamma|_{[t,t']}$ (\noderef{curveArc}), $u := s_A(1)$, $u' := s_A(k_A-1)$
+  and $R := A|_{[u,u']} = \mathrm{curveRestrict}(A,u,u')$ (\noderef{curveRestrict}). By
+  \noderef{IsGeodesicResolution} applied to $(k,s)$: $s$ is monotone on $\set{0,\dots,k}$,
+  $s(0)=0$ and $s(k)=\length(\gamma)$; hence
+  \begin{equation}\label{ADEN-srange}
+    0 \le s(j) \le \length(\gamma) \qquad \text{for every } j \in \set{0,\dots,k},
+  \end{equation}
+  by monotonicity from $s(0)=0$ resp.\ to $s(k)=\length(\gamma)$. Likewise $s_A$ is monotone on
+  $\set{0,\dots,k_A}$ with $s_A(0)=0$ and $s_A(k_A)=\length(A)$.
+
+  \textbf{Step 0: $k_A=1$ is impossible.} If $k_A=1$ then $s_A(k_A-1)=s_A(0)=0$, and the standing
+  hypotheses $0\le s_A(1)$ and $s_A(1)\le s_A(k_A-1)=0$ force $s_A(1)=0$. Hence
+  $\length(R)=u'-u=0-0=0$ (\noderef{curveRestrict}'s $\length$ field is definitionally $b-a$), so
+  $R.\mathrm{toFun}(\length(R)) = R.\mathrm{toFun}(0)$ literally, i.e.\ $R$ \emph{is} a closed
+  curve (\noderef{IsClosedCurve}), contradicting the standing hypothesis that it is not. So
+  $k_A\ge2$ from here on.
+
+  \textbf{Step 1: the resolution witness.} Since $k_A\ge2$ we have $1\le k_A-1\le k_A$, and
+  $0\le u$, $u\le u'$, $u'\le\length(A)$ are the standing hypotheses; so
+  \noderef{RestrictPiecewiseGeodesic}, applied to $(k_A,s_A)$ at $p=1$, $q=k_A-1$, says that
+  \[
+    s'(j) := s_A(1+j) - u
+  \]
+  is a geodesic resolution of $R$ into $(k_A-1)-1$ edges, i.e.\
+  $\mathrm{IsGeodesicResolution}(R,\,k_A-2,\,s')$. We use $(k_A-2,s')$ as the witness for
+  $\mathrm{IsDeltaEpsN}(R,\delta,\epsilon,n)$ (\noderef{IsDeltaEpsN}) and verify its two remaining
+  conjuncts.
+
+  \textbf{Step 2: the closed-curve (wrap) clause of $\mathrm{IsDeltaEpsN}$ is vacuous.} That clause
+  is guarded by ``$R$ is a closed curve'', and $R$ is hypothesised not to be
+  (\noderef{IsClosedCurve}). So there is nothing to prove.
+
+  \textbf{Step 3: reduction of the linear clause to a windowed count on $s_A$.} Fix $a,b$ with
+  $0\le a\le b\le\length(R)=u'-u$ and $b-a\le2\epsilon^{-1}\delta$. We must bound
+  \[
+    S := \#\set{ j\in\set{1,\dots,k_A-2} \colon a\le s'(j-1),\ s'(j)\le b,\ s'(j)-s'(j-1)<\delta }
+    .
+  \]
+  For $j\ge1$ we have $1+(j-1)=j$, so $s'(j-1)=s_A(j)-u$, while $s'(j)=s_A(1+j)-u=s_A(j+1)-u$.
+  Thus the three conditions on such a $j$ read, after adding $u$ throughout and writing $i:=j+1$
+  (so that $j = i-1$ and $2\le i\le k_A-1$):
+  \[
+    a+u \le s_A(i-1), \qquad s_A(i) \le b+u, \qquad s_A(i)-s_A(i-1) < \delta .
+  \]
+  The map $j\mapsto j+1$ is injective, so
+  \begin{equation}\label{ADEN-reindex}
+    S \;\le\; N := \#\set{ i\in\set{2,\dots,k_A-1} \colon a' \le s_A(i-1),\ s_A(i)\le b',\
+      s_A(i)-s_A(i-1)<\delta },
+  \end{equation}
+  where from now on $a' := a+u$ and $b' := b+u$. It remains to prove $N\le n$.
+
+  \textbf{Step 4: the clamped-linear bound.} By \eqref{ADEN-srange}, the monotonicity of $s$ on
+  $\set{0,\dots,k}$, and the hypothesis (linear), \noderef{ClampedLinearShortEdgeCount} applies
+  with $L:=\length(\gamma)$ and yields: for \emph{every} pair $x,y\in\mathbb{R}$ with
+  $y-x\le2\epsilon^{-1}\delta$,
+  \begin{equation}\label{ADEN-clamp}
+    \#\set{ j\in\set{1,\dots,k} \colon x\le s(j-1),\ s(j)\le y,\ s(j)-s(j-1)<\delta } \le n
+    .
+  \end{equation}
+  We use this three times below; each time the pair $(x,y)$ is $(a'+\theta,\,b'+\theta)$ for a
+  single real shift $\theta$, whose gap is $y-x = b'-a' = b-a \le 2\epsilon^{-1}\delta$ by the
+  standing hypothesis on $(a,b)$, so \eqref{ADEN-clamp} is applicable each time.
+
+  \textbf{Step 5: the ordinary case $t\le t'$.} Take $j_0$ from the hypothesis: for
+  $1\le i\le k_A-1$, $j_0+(i-1)\le k$ and $s_A(i)=s(j_0+(i-1))-t$. Since $i\ge1$ gives
+  $i+j_0-1=j_0+(i-1)$, this is exactly the affine-correspondence hypothesis of
+  \noderef{ShiftedBreakpointShortEdgeCount} with parameters
+  \[
+    (p,q,c,d,\sigma,a',b') = (2,\ k_A-1,\ j_0,\ 1,\ -t,\ a',\ b'),
+  \]
+  whose side conditions $1\le p$ and $d+1\le p+c$ read $1\le2$ and $1+1\le2+j_0$, both true, and
+  whose correspondence range $\set{p-1,\dots,q}=\set{1,\dots,k_A-1}$ is exactly the range where
+  the hypothesis supplies the formula. Its remaining hypothesis (window count) is
+  \eqref{ADEN-clamp} at $(x,y)=(a'-(-t),\,b'-(-t))=(a'+t,\,b'+t)$. Its conclusion is precisely
+  $N\le n$.
+
+  \textbf{Step 6: the wrap case $t'<t$.} Take $j_0,m$ from the hypothesis, with the tail formula
+  $s_A(i)=s(j_0+(i-1))-t$ for $1\le i\le m$, the head formula
+  $s_A(i)=(\length(\gamma)-t)+s(i-m)$ for $m<i\le k_A-1$, and the splice identity
+  $s(j_0+(m-1))=\length(\gamma)$ whenever $m\ge1$.
+
+  First a length fact. Unfolding \noderef{curveArc}'s wrap branch together with
+  \noderef{curveWrapRestrict}, \noderef{curveConcat} and \noderef{curveRestrict}'s length fields
+  (all definitional), $\length(A)=(\length(\gamma)-t)+(t'-0)$, and $t'<t$ gives
+  \begin{equation}\label{ADEN-margin}
+    \length(A) < \length(\gamma)
+    .
+  \end{equation}
+  Since $0\le a\le b\le u'-u$ and $0\le u\le u'\le\length(A)$, we get
+  $b-a\le b\le u'-u\le\length(A)$, so by \eqref{ADEN-margin}
+  \begin{equation}\label{ADEN-gapsmall}
+    b-a < \length(\gamma)
+    .
+  \end{equation}
+
+  \emph{The head bound.} Apply \noderef{ShiftedBreakpointShortEdgeCount} with
+  \[
+    (p,q,c,d,\sigma,a',b') = \bigl(\max(2,m+1),\ k_A-1,\ 0,\ m,\ \length(\gamma)-t,\ a',\ b'\bigr).
+  \]
+  Side conditions: $1\le\max(2,m+1)$ and $m+1\le\max(2,m+1)+0$, both true. Correspondence range:
+  $\set{\max(2,m+1)-1,\dots,k_A-1}$. Let $i$ be in that range. If $i>m$, the head formula gives
+  $i-m\le k$ and $s_A(i)=s(i-m)+(\length(\gamma)-t)$, and $i+0-m=i-m$, as required. If instead
+  $i\le m$, then $\max(2,m+1)-1\le i\le m$ forces $i=m$ and $m\ge1$ (because
+  $\max(2,m+1)-1\ge m$ and $\max(2,m+1)-1\ge1$); then $i+0-m=0$ and, by the tail formula at $i=m$
+  (legitimate as $1\le m\le m$) together with the splice identity (legitimate as $m\ge1$) and
+  $s(0)=0$,
+  \[
+    s_A(m) = s\bigl(j_0+(m-1)\bigr)-t = \length(\gamma)-t = s(0)+\bigl(\length(\gamma)-t\bigr),
+  \]
+  again as required, with index bound $0\le k$. The window-count hypothesis is \eqref{ADEN-clamp}
+  at $(x,y)=\bigl(a'-(\length(\gamma)-t),\ b'-(\length(\gamma)-t)\bigr)$. We obtain
+  \begin{equation}\label{ADEN-head}
+    N_H := \#\set{ i\in\set{\max(2,m+1),\dots,k_A-1} \colon a'\le s_A(i-1),\ s_A(i)\le b',\
+      s_A(i)-s_A(i-1)<\delta } \le n .
+  \end{equation}
+
+  \emph{The tail bound.} Apply \noderef{ShiftedBreakpointShortEdgeCount} with
+  $(p,q,c,d,\sigma,a',b')=(2,\ m,\ j_0,\ 1,\ -t,\ a',\ b')$. Side conditions $1\le2$ and
+  $1+1\le2+j_0$ hold; the correspondence range is $\set{1,\dots,m}$, exactly where the tail
+  formula is supplied (and $i+j_0-1=j_0+(i-1)$ for $i\ge1$); the window count is
+  \eqref{ADEN-clamp} at $(x,y)=(a'+t,\,b'+t)$. We obtain
+  \begin{equation}\label{ADEN-tail}
+    N_T := \#\set{ i\in\set{2,\dots,m} \colon a'\le s_A(i-1),\ s_A(i)\le b',\
+      s_A(i)-s_A(i-1)<\delta } \le n .
+  \end{equation}
+
+  \emph{Covering.} Write $F$, $F_T$, $F_H$ for the three index sets counted by $N$, $N_T$, $N_H$
+  respectively (all three carry the same three defining conditions; only the ambient index range
+  differs). Then $F\subseteq F_T\cup F_H$: if $i\in F$ then $2\le i\le k_A-1$, and either $i\le m$,
+  putting $i\in F_T$, or $i\ge m+1$, which with $i\ge2$ gives $i\ge\max(2,m+1)$ and puts
+  $i\in F_H$.
+
+  \emph{Sub-case $F_T=\emptyset$.} Then $F\subseteq F_H$, so $N\le N_H\le n$ by \eqref{ADEN-head}.
+
+  \emph{Sub-case $F_H=\emptyset$.} Then $F\subseteq F_T$, so $N\le N_T\le n$ by \eqref{ADEN-tail}.
+
+  \emph{Sub-case $F_T\ne\emptyset$ and $F_H\ne\emptyset$.} Fix $i_T\in F_T$ and $i_H\in F_H$; so
+  $2\le i_T\le m$ (whence $m\ge2\ge1$) and $\max(2,m+1)\le i_H\le k_A-1$ (whence $m+1\le k_A-1$,
+  i.e.\ $m+2\le k_A$, and $i_H>m$). We apply \noderef{SplicedBreakpointShortEdgeCount} with
+  \[
+    (K,c,m,\sigma,\tau,a',b') = \bigl(k_A,\ j_0,\ m,\ -t,\ \length(\gamma)-t,\ a',\ b'\bigr)
+  \]
+  and check each of its hypotheses.
+  \begin{itemize}
+    \item $s$ monotone on $\set{0,\dots,k}$ and $s(0)=0$: \noderef{IsGeodesicResolution} for
+      $(k,s)$.
+    \item $1\le m$ and $m+2\le k_A$: just established.
+    \item Tail correspondence, for $1\le i\le m$: $j_0+(i-1)\le k$ and
+      $s_A(i)=s(j_0+(i-1))-t=s(j_0+(i-1))+\sigma$ with $\sigma=-t$. This is the hypothesis
+      verbatim.
+    \item Head correspondence, for $m<i\le k_A-1$: $i-m\le k$ and
+      $s_A(i)=(\length(\gamma)-t)+s(i-m)=s(i-m)+\tau$ with $\tau=\length(\gamma)-t$. Again the
+      hypothesis verbatim.
+    \item Splice: $s(j_0+(m-1))+\sigma = \length(\gamma)-t = \tau$, using the splice identity
+      (available since $m\ge1$).
+    \item Margin: $b'-\tau < a'-\sigma$ reads $(b+u)-(\length(\gamma)-t) < (a+u)+t$, i.e.\
+      $b-a<\length(\gamma)$, which is \eqref{ADEN-gapsmall}.
+    \item Circular window count: we must bound
+      $\#\set{j\in\set{1,\dots,k} : (\alpha\le s(j-1)\vee s(j)\le\beta),\ s(j)-s(j-1)<\delta}$
+      by $n$, where $\alpha := a'-\sigma = a'+t$ and $\beta := b'-\tau = b'-(\length(\gamma)-t)$.
+      This is the hypothesis (wrap) at the pair $(\alpha,\beta)$, whose four side conditions we
+      verify.
+      \begin{itemize}
+        \item $0\le\beta$: since $i_H>m$ and $i_H\le k_A-1$, the head formula gives $i_H-m\le k$
+          and $s(i_H-m)=s_A(i_H)-(\length(\gamma)-t)$. As $i_H\in F_H$ we have $s_A(i_H)\le b'$,
+          so $s(i_H-m)\le b'-(\length(\gamma)-t)=\beta$; and $s(i_H-m)\ge0$ by
+          \eqref{ADEN-srange}. Hence $0\le\beta$.
+        \item $\alpha\le\length(\gamma)$: since $2\le i_T\le m$ we have $1\le i_T-1\le m$, so the
+          tail formula applies at $i_T-1$ and gives $j_0+(i_T-2)\le k$ and
+          $s(j_0+(i_T-2))=s_A(i_T-1)+t$. As $i_T\in F_T$ we have $a'\le s_A(i_T-1)$, so
+          $\alpha=a'+t\le s_A(i_T-1)+t=s(j_0+(i_T-2))$; and $s(j_0+(i_T-2))\le\length(\gamma)$ by
+          \eqref{ADEN-srange}. Hence $\alpha\le\length(\gamma)$.
+        \item $\beta<\alpha$: equivalent to $b-a<\length(\gamma)$, which is
+          \eqref{ADEN-gapsmall}.
+        \item $(\length(\gamma)-\alpha)+\beta\le2\epsilon^{-1}\delta$: indeed
+          $(\length(\gamma)-a-u-t)+(b+u-\length(\gamma)+t) = b-a \le 2\epsilon^{-1}\delta$.
+      \end{itemize}
+  \end{itemize}
+  The conclusion of \noderef{SplicedBreakpointShortEdgeCount} is exactly $N\le n$.
+
+  In every case $N\le n$, so $S\le n$ by \eqref{ADEN-reindex}. This is the linear counting clause
+  for the witness $(k_A-2,s')$, and with Steps~1 and 2 it completes the verification of
+  $\mathrm{IsDeltaEpsN}(R,\delta,\epsilon,n)$.
+\end{proof}

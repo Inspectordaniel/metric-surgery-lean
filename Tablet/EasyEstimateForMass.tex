@@ -1,0 +1,56 @@
+\begin{lemma}[Easy estimate for mass]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra and $\gamma \in \Theta(E)$ (\noderef{Curve}). Then
+  $\mu_\gamma$ (\noderef{curveMeasure}) is admissible for $[[\gamma]]$ (\noderef{curveCurrent},
+  \noderef{IsAdmissible}), and consequently $\mathbb{M}([[\gamma]]) \le \length(\gamma)$
+  (\noderef{massOfFunctional}). This is paper Lemma~4.1 (paper.tex line 1137), specialized to the
+  measure-comparison half and its immediate mass corollary; the elementary pointwise bound
+  $|[[\gamma]](f,\pi)| \le \|f\|_\infty \mathrm{Lip}(\pi) \length(\gamma)$ of the same lemma is
+  proved separately and independently of any mass machinery in \noderef{CurveCurrentBound}.
+\end{lemma}
+\begin{proof}
+  \emph{$\mu_\gamma$ is finite.} $\mu_\gamma$ is the pushforward, under $\gamma$, of Lebesgue
+  measure restricted to $[0,\length(\gamma)]$ (\noderef{curveMeasure}), whose total mass is
+  $\length(\gamma) - 0 = \length(\gamma) < \infty$ (using $\length(\gamma) \ge 0$,
+  \noderef{Curve}); pushforward does not increase total mass beyond that of the source measure
+  when the total mass is finite, and in fact here the total masses coincide, i.e.
+  $\mu_\gamma(E) = \length(\gamma)$.
+
+  \emph{$\mu_\gamma$ satisfies the admissibility bound.} Let $\omega = (f,\pi) \in \mathcal{D}^1(E)$
+  be arbitrary (\noderef{Form1}). Write $g := \pi \circ \gamma$. By \noderef{CurveLipschitz},
+  $\gamma$ is globally $1$-Lipschitz, and $\pi$ is $\mathrm{Lip}(\pi)$-Lipschitz
+  (\noderef{Form1}), so $g$ is globally $\mathrm{Lip}(\pi)$-Lipschitz. As in the pointwise-bound
+  step of \noderef{CurveCurrentBound}: for every $t \in \mathbb{R}$, either $g$ is differentiable at
+  $t$, in which case $|\mathrm{deriv}(g)(t)| \le \mathrm{Lip}(\pi)$ (the derivative of a Lipschitz
+  function is bounded by its Lipschitz constant at every point of differentiability), or $g$ is not
+  differentiable at $t$, in which case $\mathrm{deriv}(g)(t) = 0$ by the junk-value convention; in
+  either case $|\mathrm{deriv}(g)(t)| \le \mathrm{Lip}(\pi)$. Hence, for every
+  $t \in [0,\length(\gamma)]$,
+  \[
+    \bigl| f(\gamma(t)) \cdot \mathrm{deriv}(g)(t) \bigr| \le |f(\gamma(t))| \cdot \mathrm{Lip}(\pi)
+    .
+  \]
+  By \noderef{curveCurrent}, $[[\gamma]](\omega) = \int_0^{\length(\gamma)} f(\gamma(t)) \cdot
+  \mathrm{deriv}(g)(t) \, dt$, so by the triangle inequality for the interval integral together with
+  the pointwise bound above,
+  \[
+    \bigl| [[\gamma]](\omega) \bigr|
+    \le \int_0^{\length(\gamma)} \bigl| f(\gamma(t)) \bigr| \cdot \mathrm{Lip}(\pi) \, dt
+    = \mathrm{Lip}(\pi) \int_0^{\length(\gamma)} |f(\gamma(t))| \, dt
+    .
+  \]
+  Since $\mu_\gamma$ is the pushforward of Lebesgue measure on $[0,\length(\gamma)]$ under $\gamma$
+  (\noderef{curveMeasure}), the change-of-variables formula for the pushforward measure (valid since
+  $\gamma$ is continuous, hence measurable, by \noderef{CurveLipschitz}) gives
+  \[
+    \int_0^{\length(\gamma)} |f(\gamma(t))| \, dt = \int_E |f| \, d\mu_\gamma
+    .
+  \]
+  Combining the last two displays, $|[[\gamma]](\omega)| \le \mathrm{Lip}(\pi) \int_E |f| \,
+  d\mu_\gamma$, which is exactly the admissibility condition for $\mu_\gamma$ and $[[\gamma]]$
+  (\noderef{IsAdmissible}). Since $\omega$ was arbitrary, $\mu_\gamma$ is admissible for $[[\gamma]]$.
+
+  \emph{Mass bound.} By definition $\mathbb{M}([[\gamma]])$ is the infimum of $\mu(E)$ over measures
+  $\mu$ admissible for $[[\gamma]]$ (\noderef{massOfFunctional}). Since $\mu_\gamma$ is one such
+  admissible measure (previous paragraph) with $\mu_\gamma(E) = \length(\gamma)$ (first paragraph),
+  the infimum is at most $\length(\gamma)$, i.e.\ $\mathbb{M}([[\gamma]]) \le \length(\gamma)$.
+\end{proof}

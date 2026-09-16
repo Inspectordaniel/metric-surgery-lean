@@ -1,0 +1,24 @@
+\begin{definition}[Circle distance $d_\gamma$]
+  Let $E$ be a metric space and $\gamma \in \Theta(E)$ (\noderef{Curve}). For $t, t' \in \mathbb{R}$,
+  define
+  \[
+    d_\gamma(t,t') =
+    \begin{cases}
+      \min\bigl(|t-t'|,\ \length(\gamma) - |t-t'|\bigr) & \text{if $\gamma$ is closed
+        (\noderef{IsClosedCurve}),} \\
+      |t-t'| & \text{otherwise.}
+    \end{cases}
+  \]
+  This is exactly the paper's definition (paper.tex lines 572-579). For a closed curve
+  $\gamma \in \Theta_c(E)$, the paper defines $d_\gamma(t,t') = \min(\length(\gamma|_{[t,t']}),
+  \length(\gamma|_{[t',t]}))$ (line 573) and separately records the identity
+  $\length(\gamma|_{[t,t']}) + \length(\gamma|_{[t',t]}) = \length(\gamma)$ for all distinct
+  $t,t' \in [0,\length(\gamma)]$ (line 577). Writing $s = \min(t,t')$, $s' = \max(t,t')$, the
+  restriction convention of \noderef{curveRestrict} gives $\length(\gamma|_{[s,s']}) = s'-s =
+  |t-t'|$, so the identity of line 577 forces
+  $\length(\gamma|_{[s',s]}) = \length(\gamma) - |t-t'|$; substituting both into the paper's
+  $\min$ recovers exactly the formula above. For a non-closed curve
+  $\gamma \in \Theta(E) \setminus \Theta_c(E)$, the paper directly defines
+  $d_\gamma(s,s') = \length(\gamma|_{[\min(s,s'),\max(s,s')]})$ (line 579), which by the same
+  restriction identity equals $|s-s'|$.
+\end{definition}

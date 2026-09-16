@@ -1,0 +1,335 @@
+\begin{theorem}[Paper Theorem 4.4]\label{bbassertion}
+  Let $E$ be a complete, separable, geodesic metric space equipped with a compatible Borel
+  $\sigma$-algebra. Assume the two external literature citations on which this theorem rests, each
+  carried as an explicit hypothesis rather than asserted: $hAK \colon
+  \mathrm{MassSupFormulaStatement}(E)$ (\noderef{MassSupFormula}) and $hPS \colon
+  \mathrm{PaoliniStepanovExistsStatement}(E)$ (\noderef{PaoliniStepanovExists}). Let $GP$ be a
+  geodesic pairing on $E$ (\noderef{GeodesicPairing}), and let
+  $T \in \mathcal{M}_1(E)$ (\noderef{MetricCurrent1}) satisfy $T \neq 0$ and $\partial T = 0$
+  (\noderef{BoundaryZero}). Then there exist a sequence of positive integers $(n_l)_{l\in\mathbb N}$
+  with $n_l\to\infty$ and a doubly-indexed family of curves $\hat\gamma_{i,l}\in\Theta(E)$
+  ($l\in\mathbb N$, $i<n_l$) such that:
+  \begin{itemize}
+    \item[(a)] for every $l\ge1$ and $i<n_l$, $\hat\gamma_{i,l}$ is a closed curve
+      (\noderef{IsClosedCurve}) that is piecewise geodesic (\noderef{IsPiecewiseGeodesic});
+    \item[(b)] for every $l\ge1$ and $i<n_l$, $\mathbb{M}([[\hat\gamma_{i,l}]]) \le
+      \length(\hat\gamma_{i,l}) \le 2l$;
+    \item[(c)] (eq.~closed1) for every $\omega\in\mathcal D^1(E)$,
+      \[
+        T(\omega) = \lim_{l\to\infty} \frac{\mathrm{toReal}(\mathbb M(T))}{n_l\cdot l}\sum_{i=0}^{n_l-1}
+          [[\hat\gamma_{i,l}]](\omega)
+        ;
+      \]
+      (here $\mathrm{toReal}(\mathbb M(T))$ is the real number underlying $\mathbb M(T)$, well
+      defined since $\mathbb M(T)\ne\infty$, \noderef{MetricCurrent1}'s \texttt{finiteMass} field;
+      this matches the paper's own eq.~closed1, paper.tex 1222, which writes the bare, already
+      necessarily finite, real number $\mathbb M(T)$);
+    \item[(d)] (eq.~closed2)
+      \[
+        \lim_{l\to\infty}\frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}\mathbb M([[\hat\gamma_{i,l}]])
+        \;=\;
+        \lim_{l\to\infty}\frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}\length(\hat\gamma_{i,l})
+        \;=\;1
+        .
+      \]
+  \end{itemize}
+
+  This is paper Theorem 4.4 (paper.tex 1218--1226). $[\mathrm{Nonempty}\ E]$ is required: the
+  conclusion asserts the existence of curves $\hat\gamma_{i,l}\in\Theta(E)$, and $\Theta(E)$ is
+  empty exactly when $E$ is (\noderef{Curve} carries $\mathrm{toFun}\colon\mathbb R\to E$), while
+  nothing else in the hypotheses forces $E$ nonempty (in contrast to
+  \noderef{BBSamplingDiagonal}, where $E=\emptyset$ is already excluded by $F.\mu_T(E)\ne0$; here
+  no such hypothesis is given directly, so $[\mathrm{Nonempty}\ E]$ is added explicitly). The
+  basepoint used internally and the countable dense set used internally are proof-internal choices
+  available from $[\mathrm{CompleteSpace}\ E]$, $[\mathrm{SeparableSpace}\ E]$ and
+  $[\mathrm{Nonempty}\ E]$ alone, and are not added as hypotheses.
+
+  \paragraph{Textual correction, on record.} Paper.tex 1219 writes $M(\hat\gamma_{i,l})$ for the
+  first inequality of (b); since mass is defined only for currents, not curves, the intended
+  reading -- confirmed by the paper's own display \eqref{closed2} at paper.tex 1226, which writes
+  $\mathbb M([[\hat\gamma_{i,l}]])$ -- is $\mathbb M([[\hat\gamma_{i,l}]])$, and that corrected
+  reading is what is formalized above. Also, $l$ is indexed from $1$ throughout (as (b)--(d) show):
+  at $l=0$ the bound $\length(\hat\gamma_{i,l})\le 2l=0$ would force degenerate curves, and the
+  paper's own construction (paper.tex 1349 onward) indexes $l$ from $1$.
+\end{theorem}
+\begin{proof}
+  \paragraph{Step 0: setup.} Since $[\mathrm{SeparableSpace}\ E]$ holds, fix a countable dense set
+  $D\subseteq E$ with $D$ nonempty (density of $D$ together with $[\mathrm{Nonempty}\ E]$ forces
+  $D$ nonempty: if $D=\emptyset$ then $\overline D=\emptyset\ne E$, contradicting density). Fix a
+  basepoint $x_0\in E$, using $[\mathrm{Nonempty}\ E]$.
+
+  By the hypothesis $hPS$ (\noderef{PaoliniStepanovExists}) applied to $T,T\ne0,\partial T=0$,
+  obtain a Paolini--Stepanov family $F$ for $T.\mathrm{toFun}$ (\noderef{PSFamily}) with
+  \begin{equation}\label{eq:bba-hF}
+    F.\mu_T(E) = \mathbb M(T)
+    \tag{hF}
+  \end{equation}
+  (as elements of $\overline{\mathbb R}_{\ge0}$; recall $\mathbb M(T)=\mathrm{massOfFunctional}(T.\mathrm{toFun})$,
+  \noderef{massOfFunctional}). By \noderef{MassPosOfNonzero} applied to $T.\mathrm{toFun}\ne0$,
+  $\mathbb M(T)\ne0$; combined with \eqref{eq:bba-hF}, $F.\mu_T(E)\ne0$. By
+  \noderef{MetricCurrent1}'s \texttt{finiteMass} field, $\mathbb M(T)\ne\infty$; write
+  $M_{\mathbb R} := \mathrm{toReal}(\mathbb M(T)) \in (0,\infty)$ (finite and, by the previous
+  sentence, nonzero, hence strictly positive). Every occurrence of $\mathbb M(T)$ inside a
+  real-arithmetic expression below (as opposed to inside an extended-real, i.e.\ $\overline{\mathbb
+  R}_{\ge0}$-valued, (in)equality) denotes $M_{\mathbb R}$, matching \noderef{ClosingUp}'s own
+  convention for its normalizing factor $F.\mu_T(E)$ (there written $M_{\mathbb R} :=
+  \mathrm{toReal}(F.\mu_T(E))$) and the Lean statement's explicit \texttt{.toReal}.
+
+  By \noderef{DiagonalizationGeneral} applied to $T,F,D$ (using $D$ countable, nonempty, dense),
+  obtain a countable family $\mathrm{om}\colon\mathbb N\to\mathcal D^1(E)$ with the stated
+  every-form upgrade property.
+
+  By \noderef{BBSamplingDiagonal} applied to $T.\mathrm{toFun},F,F.\mu_T(E)\ne0,\mathrm{om},x_0,D$,
+  obtain $n\colon\mathbb N\to\mathbb N$ with $n_l>0$ for every $l$ and $n_l\to\infty$, and a
+  doubly-indexed family $\gamma_{i,l}\in\Theta(E)$ with $\length(\gamma_{i,l})=l$ for $l\ge1$,
+  $i<n_l$, together with its three clauses (I) (current averages against $\mathrm{om}$), (II)
+  (endpoint-cutoff mass-marginal averages), (III) ($\psi/\tilde\psi$-averages).
+
+  Applying \noderef{DiagonalizationGeneral}'s implication to $n,\gamma$ and clauses (I),(III) just
+  obtained gives, for every $\omega\in\mathcal D^1(E)$,
+  \begin{equation}\label{eq:bba-hcur}
+    \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\gamma_{i,l}]](\omega)
+    \;\longrightarrow\; T(\omega)
+    \qquad(l\to\infty)
+    . \tag{hcur}
+  \end{equation}
+  This is exactly \noderef{DiagonalizationGeneral}'s conclusion, and it is stated for every
+  $\omega$, not only for the members of $\mathrm{om}$ -- this is the whole reason
+  \noderef{DiagonalizationGeneral} sits between \noderef{BBSamplingDiagonal} and the present node.
+
+  By \noderef{ClosingUp} applied to $T.\mathrm{toFun},F,GP,x_0,n,n_l>0,\gamma,\length(\gamma_{i,l})=l$,
+  \eqref{eq:bba-hcur}, and clause (II) above (literally \noderef{ClosingUp}'s hypothesis
+  \texttt{hend}), obtain doubly-indexed families $\hat\gamma_{i,l},\overline\gamma_{i,l}\in\Theta(E)$
+  and edge-counts $k_{i,l}$ with clauses (a)--(e) as recorded in \noderef{ClosingUp}'s statement.
+  These are the curves $\hat\gamma_{i,l}$ of the present theorem, together with the sequence $n$
+  already obtained.
+
+  \paragraph{Step 1: clause (a) of the theorem.} Fix $l\ge1$, $i<n_l$. \noderef{ClosingUp} clause
+  (a) gives directly that $\hat\gamma_{i,l}$ is closed (\noderef{IsClosedCurve}) and piecewise
+  geodesic with $k_{i,l}$ edges (\noderef{IsPiecewiseGeodesicWith}); taking $k:=k_{i,l}$ as the
+  existential witness gives $\hat\gamma_{i,l}$ piecewise geodesic in the sense of
+  \noderef{IsPiecewiseGeodesic} (an existentially-quantified edge-count). This is exactly clause
+  (a).
+
+  \paragraph{Step 2: clause (b) of the theorem.} Fix $l\ge1$, $i<n_l$. By
+  \noderef{EasyEstimateForMass} applied to $\hat\gamma_{i,l}$,
+  $\mathbb M([[\hat\gamma_{i,l}]]) \le \mathrm{ENNReal.ofReal}(\length(\hat\gamma_{i,l}))$, i.e.\
+  (in the usual abuse of notation identifying a nonnegative real with its \texttt{ofReal} image)
+  $\mathbb M([[\hat\gamma_{i,l}]]) \le \length(\hat\gamma_{i,l})$. By \noderef{ClosingUp} clause
+  (b), $\length(\hat\gamma_{i,l}) \le 2l$. Chaining the two gives clause (b) of the theorem.
+
+  \paragraph{Step 3: clause (c) of the theorem (eq.~closed1).} Fix $\omega\in\mathcal D^1(E)$.
+  \noderef{ClosingUp} clause (c) gives
+  \begin{equation}\label{eq:bba-hid}
+    \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}\Bigl([[\hat\gamma_{i,l}]](\omega)
+      +[[\overline\gamma_{i,l}]](\omega)\Bigr)
+    \;\longrightarrow\; T(\omega)
+    \qquad(l\to\infty)
+    ,
+  \end{equation}
+  and \noderef{ClosingUp} clause (e) gives
+  \begin{equation}\label{eq:bba-hbarcur}
+    \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\overline\gamma_{i,l}]](\omega)
+    \;\longrightarrow\; 0
+    \qquad(l\to\infty)
+    .
+  \end{equation}
+  By distributivity, for every $l$,
+  \[
+    \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}\Bigl([[\hat\gamma_{i,l}]](\omega)
+      +[[\overline\gamma_{i,l}]](\omega)\Bigr)
+    =
+    \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\hat\gamma_{i,l}]](\omega)
+    +
+    \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\overline\gamma_{i,l}]](\omega)
+    ,
+  \]
+  so, writing $u_l$ for the first summand on the right and using \eqref{eq:bba-hbarcur} for the
+  second, $u_l$ equals \eqref{eq:bba-hid}'s left side minus \eqref{eq:bba-hbarcur}'s left side; by
+  the algebra of limits (difference of two convergent sequences converges to the difference of the
+  limits) and \eqref{eq:bba-hid}, \eqref{eq:bba-hbarcur},
+  \[
+    u_l \;\longrightarrow\; T(\omega) - 0 = T(\omega)
+    \qquad(l\to\infty)
+    .
+  \]
+  Finally, taking $\mathrm{toReal}$ of \eqref{eq:bba-hF} gives
+  $\mathrm{toReal}(F.\mu_T(E)) = M_{\mathbb R}$, so $u_l = \frac{M_{\mathbb R}}{n_l\cdot l}
+  \sum_{i=0}^{n_l-1}[[\hat\gamma_{i,l}]](\omega)$, giving exactly clause (c) (recalling that clause
+  (c)'s displayed normalizer $\mathrm{toReal}(\mathbb M(T))$ is, by definition, $M_{\mathbb R}$).
+
+  \paragraph{Step 4: clause (d) of the theorem (eq.~closed2), setup.} For $l\ge1$ define the two
+  nonnegative real sequences
+  \[
+    b_l := \frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}\mathbb M([[\hat\gamma_{i,l}]])
+    ,
+    \qquad
+    c_l := \frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}\length(\hat\gamma_{i,l})
+    .
+  \]
+  (Here $\mathbb M([[\hat\gamma_{i,l}]])$ is finite for every $i,l$ by \noderef{EasyEstimateForMass},
+  so its real value, rather than an extended-real value, is meaningful; both sequences are
+  well-defined finite nonnegative reals for $l\ge1$, since $n_l>0$.) By Step~2's pointwise
+  inequality $\mathbb M([[\hat\gamma_{i,l}]])\le\length(\hat\gamma_{i,l})$, summing over $i<n_l$
+  and dividing by $n_l\cdot l>0$ gives
+  \begin{equation}\label{eq:bba-ble}
+    b_l \le c_l \qquad\text{for every } l\ge1
+    . \tag{$\ast$}
+  \end{equation}
+
+  \paragraph{Step 5: the upper bound $\limsup_l c_l \le 1$.} Fix $l\ge1$, $i<n_l$. By
+  \noderef{ClosingUp} clause (b$'$), $\length(\hat\gamma_{i,l}) \le l+\length(\overline\gamma_{i,l})$.
+  Summing over $i<n_l$ and dividing by $n_l\cdot l>0$,
+  \[
+    c_l \le \frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}\bigl(l+\length(\overline\gamma_{i,l})\bigr)
+    = \frac1{n_l\cdot l}\cdot n_l\cdot l + \frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}\length(\overline\gamma_{i,l})
+    = 1+\frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}\length(\overline\gamma_{i,l})
+    .
+  \]
+  By \noderef{ClosingUp} clause (d), the second summand tends to $0$ as $l\to\infty$. Hence
+  $c_l \le 1+d_l$ where $d_l\to0$, so
+  \begin{equation}\label{eq:bba-limsupc}
+    \limsup_{l\to\infty} c_l \le 1
+    . \tag{$\ast\ast$}
+  \end{equation}
+  (A sequence bounded above, eventually, by $1$ plus a sequence tending to $0$ has $\limsup\le1$:
+  for every $\epsilon>0$, eventually $d_l<\epsilon$, so eventually $c_l<1+\epsilon$, so
+  $\limsup c_l\le1+\epsilon$ for every $\epsilon>0$, hence $\limsup c_l\le1$.)
+
+  Combining \eqref{eq:bba-ble} and \eqref{eq:bba-limsupc}: since $b_l\le c_l$ for every $l\ge1$,
+  monotonicity of $\liminf,\limsup$ under eventual pointwise inequality gives
+  $\limsup_l b_l\le\limsup_l c_l\le1$ and $\liminf_l b_l\le\liminf_l c_l\le\limsup_l c_l\le1$. Since
+  every term $b_l\ge0$, $(b_l)$ is bounded below, so $L:=\liminf_l b_l$ is a well-defined real
+  number, and we have shown
+  \begin{equation}\label{eq:bba-Lle1}
+    0\le L\le1
+    . \tag{$\dagger$}
+  \end{equation}
+
+  \paragraph{Step 6: the lower bound $L\ge1$, via the hypothesis $hAK$
+  (\noderef{MassSupFormula}).} Fix an arbitrary
+  $p\in\mathbb N$ and $\omega\colon\mathrm{Fin}\ p\to\mathcal D^1(E)$ with $(\omega_q).\mathrm{piLip}
+  \le1$ for every $q$ and $\sum_{q}\abs{(\omega_q).f(x)}\le1$ for every $x\in E$. We show
+  \begin{equation}\label{eq:bba-sup-bound}
+    \sum_{q<p}\abs{T(\omega_q)} \le M_{\mathbb R}\cdot L
+    . \tag{6.$\ast$}
+  \end{equation}
+
+  \emph{Step 6a: a convergent sequence with limit $\sum_{q<p}\abs{T(\omega_q)}$.} For $l\ge1$
+  define
+  \[
+    u_l := \sum_{q<p}\abs{\frac{M_{\mathbb R}}{n_l\cdot l}\sum_{i=0}^{n_l-1}
+      [[\hat\gamma_{i,l}]](\omega_q)}
+    .
+  \]
+  By clause (c) (Step~3) applied at each $\omega_q$, $q<p$,
+  $\frac{M_{\mathbb R}}{n_l\cdot l}\sum_i[[\hat\gamma_{i,l}]](\omega_q) \to T(\omega_q)$ as
+  $l\to\infty$; since $\abs{\cdot}$ is continuous, $\abs{\frac{M_{\mathbb R}}{n_l\cdot l}\sum_i
+  [[\hat\gamma_{i,l}]](\omega_q)} \to \abs{T(\omega_q)}$; since $p$ is finite, summing these $p$
+  convergent sequences gives
+  \begin{equation}\label{eq:bba-uconv}
+    u_l \;\longrightarrow\; \sum_{q<p}\abs{T(\omega_q)}
+    \qquad(l\to\infty)
+    . \tag{6a}
+  \end{equation}
+  (No infinite-sum interchange -- and in particular no Fatou's lemma for series -- is used here,
+  because $p$ is finite: this is exactly why \noderef{MassSupFormula} is stated over finite
+  families.)
+
+  \emph{Step 6b: bounding $u_l$ by $M_{\mathbb R}\cdot b_l$, for $l\ge1$.} Fix $l\ge1$. By the
+  triangle inequality (for the outer sum over $q<p$, pulling the nonnegative constant
+  $M_{\mathbb R}/(n_l\cdot l)$ out of each absolute value),
+  \[
+    u_l \le \frac{M_{\mathbb R}}{n_l\cdot l}\sum_{q<p}\sum_{i=0}^{n_l-1}
+      \abs{[[\hat\gamma_{i,l}]](\omega_q)}
+    = \frac{M_{\mathbb R}}{n_l\cdot l}\sum_{i=0}^{n_l-1}\sum_{q<p}
+      \abs{[[\hat\gamma_{i,l}]](\omega_q)}
+    ,
+  \]
+  the equality by finite-sum Fubini (swapping the order of the two finite sums over $q<p$ and
+  $i<n_l$). Fix $i<n_l$. By \noderef{MassFamilyBound} applied to the functional
+  $[[\hat\gamma_{i,l}]] = \mathrm{curveCurrent}(\hat\gamma_{i,l})$ and the family $\omega$,
+  \[
+    \mathrm{ENNReal.ofReal}\Bigl(\sum_{q<p}\abs{[[\hat\gamma_{i,l}]](\omega_q)}\Bigr)
+    \le \mathbb M([[\hat\gamma_{i,l}]])
+    .
+  \]
+  Since $\mathbb M([[\hat\gamma_{i,l}]])$ is finite (\noderef{EasyEstimateForMass}, as in Step~2)
+  and the left side's argument $\sum_{q<p}\abs{[[\hat\gamma_{i,l}]](\omega_q)}$ is a nonnegative
+  real, this \texttt{ofReal} inequality against a finite right-hand side is equivalent to the real
+  inequality
+  \[
+    \sum_{q<p}\abs{[[\hat\gamma_{i,l}]](\omega_q)} \le \bigl(\mathbb M([[\hat\gamma_{i,l}]])\bigr).\mathrm{toReal}
+    .
+  \]
+  Summing this over $i<n_l$ and multiplying by $M_{\mathbb R}/(n_l\cdot l)\ge0$,
+  \[
+    \frac{M_{\mathbb R}}{n_l\cdot l}\sum_{i=0}^{n_l-1}\sum_{q<p}\abs{[[\hat\gamma_{i,l}]](\omega_q)}
+    \le
+    M_{\mathbb R}\cdot\frac1{n_l\cdot l}\sum_{i=0}^{n_l-1}
+      \bigl(\mathbb M([[\hat\gamma_{i,l}]])\bigr).\mathrm{toReal}
+    = M_{\mathbb R}\cdot b_l
+    .
+  \]
+  Combining the last three displays,
+  \begin{equation}\label{eq:bba-uble}
+    u_l \le M_{\mathbb R}\cdot b_l \qquad\text{for every } l\ge1
+    . \tag{6b}
+  \end{equation}
+
+  \emph{Step 6c: passing to the limit.} By \eqref{eq:bba-uconv}, $(u_l)$ converges, so
+  $\liminf_l u_l = \lim_l u_l = \sum_{q<p}\abs{T(\omega_q)}$. By \eqref{eq:bba-uble} (an eventual
+  pointwise inequality, valid for all $l\ge1$) and monotonicity of $\liminf$ under eventual
+  pointwise inequality,
+  \[
+    \sum_{q<p}\abs{T(\omega_q)} = \liminf_l u_l \le \liminf_l \bigl(M_{\mathbb R}\cdot b_l\bigr)
+    = M_{\mathbb R}\cdot\liminf_l b_l = M_{\mathbb R}\cdot L
+    ,
+  \]
+  the second-to-last equality because $M_{\mathbb R}\ge0$ is a constant factor (pulling a
+  nonnegative constant out of a $\liminf$ does not change the inequality direction). This is
+  exactly \eqref{eq:bba-sup-bound}, completing Step~6.
+
+  \paragraph{Step 7: applying the hypothesis $hAK$ (\noderef{MassSupFormula}) and concluding
+  $L=1$.} Since $\omega$ in
+  Step~6 was an arbitrary finite admissible family, \eqref{eq:bba-sup-bound} holds for every such
+  family, with the single constant $c:=M_{\mathbb R}\cdot L$ (real, and $\ge0$ since
+  $M_{\mathbb R}\ge0$ and $L\ge0$ by \eqref{eq:bba-Lle1}) not depending on the family. By
+  $hAK$ (\noderef{MassSupFormula}) applied with this $c$,
+  \[
+    \mathbb M(T) \le \mathrm{ENNReal.ofReal}(c)
+    .
+  \]
+  Taking $\mathrm{toReal}$ of both sides (legitimate since both sides are finite: the left because
+  $\mathbb M(T)\ne\infty$, the right because $\mathrm{ofReal}$ of a real number is always finite),
+  and using $\mathrm{ENNReal.ofReal}(c).\mathrm{toReal}=c$ (since $c\ge0$) and
+  $\mathrm{toReal}(\mathbb M(T)) = M_{\mathbb R}$ (definition of $M_{\mathbb R}$),
+  \[
+    M_{\mathbb R} \le c = M_{\mathbb R}\cdot L
+    .
+  \]
+  Since $M_{\mathbb R}>0$ (established alongside its definition in Step~0), dividing the last
+  displayed inequality by $M_{\mathbb R}$ gives $1\le L$. Combined with \eqref{eq:bba-Lle1}, $L=1$.
+
+  \paragraph{Step 8: assembling clause (d).} By Step~7, $\liminf_l b_l = L = 1$. By
+  \eqref{eq:bba-ble} ($b_l\le c_l$ for $l\ge1$) and monotonicity of $\limsup$,
+  $\limsup_l b_l \le \limsup_l c_l \le 1$ (the second inequality is \eqref{eq:bba-limsupc}). Since
+  always $\liminf_l b_l\le\limsup_l b_l$, combining with $\liminf_l b_l=1$ and
+  $\limsup_l b_l\le1$ forces
+  \[
+    \liminf_l b_l = \limsup_l b_l = 1
+    ,
+  \]
+  and a real sequence whose $\liminf$ and $\limsup$ coincide (and are finite) converges to their
+  common value; hence $b_l\to1$ as $l\to\infty$, which is the first (mass) equality of clause (d).
+
+  For the second (length) equality: by \eqref{eq:bba-ble}, $\liminf_l c_l \ge \liminf_l b_l = 1$
+  (monotonicity of $\liminf$ under the eventual pointwise inequality $b_l\le c_l$). Combined with
+  \eqref{eq:bba-limsupc} ($\limsup_l c_l\le1$) and $\liminf_l c_l\le\limsup_l c_l$ always,
+  \[
+    \liminf_l c_l = \limsup_l c_l = 1
+    ,
+  \]
+  so $c_l\to1$ as $l\to\infty$ by the same fact, which is the second (length) equality of clause
+  (d). This completes the proof of clause (d), and with it the theorem.
+\end{proof}

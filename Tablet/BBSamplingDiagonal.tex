@@ -1,0 +1,316 @@
+\begin{lemma}[The remaining diagonal extraction, at the unsampled curves]\label{BBSamplingDiagonal}
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra,
+  $T \colon \mathcal{D}^1(E) \to \mathbb{R}$, and $F$ a Paolini--Stepanov family for $T$
+  (\noderef{PSFamily}) with $F.\mu_T(E) \ne 0$. Let $(\omega_k)_{k \in \mathbb{N}}$ be an arbitrary
+  countable family of metric $1$-forms, $x_0 \in E$ a basepoint, and $D \subseteq E$ a countable,
+  nonempty, dense set. Then there exist:
+  \begin{itemize}
+    \item a sequence of positive integers $(n_l)_{l \in \mathbb{N}}$ with $n_l \to \infty$ as
+      $l \to \infty$, and
+    \item a doubly-indexed family of curves $\gamma_{i,l} \in \Theta(E)$, $l \in \mathbb{N}$,
+      $i \in \{0,\dots,n_l-1\}$, with $\length(\gamma_{i,l}) = l$ and $\mathbb{M}([[\gamma_{i,l}]])
+      = l$ for every $l \ge 1$ and every $i$,
+  \end{itemize}
+  such that, simultaneously:
+  \begin{itemize}
+    \item[(I)] (current averages) for every $k \in \mathbb{N}$,
+      \[
+        \frac{F.\mu_T(E)}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\gamma_{i,l}]](\omega_k)
+        \;\longrightarrow\; T(\omega_k)
+        \qquad(l\to\infty)
+        ;
+      \]
+    \item[(II)] (endpoint-cutoff mass-marginal averages) for every rational $r > 0$,
+      \begin{align*}
+        \frac{1}{n_l}\sum_{i=0}^{n_l-1} \mathbf{1}\bigl[r \le d(\gamma_{i,l}(0),x_0)\bigr]
+        &\;\longrightarrow\; F.\mu_T(E)^{-1}\cdot F.\mu_T\bigl(\set{x\in E : r \le d(x,x_0)}\bigr)
+        ,
+        \\
+        \frac{1}{n_l}\sum_{i=0}^{n_l-1} \mathbf{1}\bigl[r \le d(\gamma_{i,l}(\length(\gamma_{i,l})),x_0)\bigr]
+        &\;\longrightarrow\; F.\mu_T(E)^{-1}\cdot F.\mu_T\bigl(\set{x\in E : r \le d(x,x_0)}\bigr)
+      \end{align*}
+      as $l\to\infty$; and
+    \item[(III)] ($\psi$/$\tilde\psi$-averages) for every admissible $(m,Q,\epsilon,C)$ -- i.e.\
+      $m \ge 1$, $Q$ a nonempty finite subset of $D$, and $\epsilon,C \in \mathbb{Q}$,
+      $\epsilon,C>0$ --
+      \begin{align*}
+        \frac{1}{n_l\cdot l}\sum_{i=0}^{n_l-1}\psi_{m\cdot l,Q,\epsilon,C}(\gamma_{i,l})
+        &\;\longrightarrow\; F.\mu_T(E)^{-1} \int_{\Theta(E)} \psi_{m,Q,\epsilon,C}\,d\overline\eta_1
+        ,
+        \\
+        \frac{1}{n_l\cdot l}\sum_{i=0}^{n_l-1}\tilde\psi_{m\cdot l,Q,\epsilon,C}(\gamma_{i,l})
+        &\;\longrightarrow\; F.\mu_T(E)^{-1} \int_{\Theta(E)} \tilde\psi_{m,Q,\epsilon,C}\,d\overline\eta_1
+      \end{align*}
+      as $l \to \infty$, where $\overline\eta_1 = F.\mathrm{eta}(1)$.
+  \end{itemize}
+
+  \paragraph{Role of this lemma.} This assembles the "further diagonal argument" of paper.tex
+  1349--1356 (\eqref{diag_T} and its two companion displays), stated concretely with all three
+  countable families of $l$-independent stage limits named: (I) is the current-value family
+  (\eqref{TidentityFixedl}, with the $F.\mu_T(E)$ normalizing factor of eq.~(4.6) made explicit,
+  cf.\ \eqref{closed1}); (II) is the mass-marginal endpoint-cutoff family (paper's
+  \eqref{stronglawmassmeasure}, needed later for \eqref{ExtraLengthSmall}); (III) is the
+  $\psi$/$\tilde\psi$-average family (\eqref{psiIdentitiesFixedl}, needed for
+  \noderef{PsiVanishes}-based estimates in the downstream target-covering assembly). Unlike the paper's own
+  presentation, no sampled curve $\gamma^\delta_{i,l}$ or sampling scale $\delta_l$ appears here:
+  by restructuring (B) (see \noderef{GeodesicSampledCurrent}), every quantity above is bounded
+  directly at the unsampled $\gamma_{i,l}$, and the (uniform, $(n,i)$-independent) sampling error
+  of replacing $\gamma_{i,l}$ by a piecewise-geodesic sampling $\gamma_{i,l}^{\delta_l}$ (for a
+  fixed, non-diagonalized null sequence such as $\delta_l = 1/(l+1)$) is transferred separately,
+  once, downstream, at the point where the curves are closed up into loops. Consequently
+  paper.tex 1326--1345's earlier diagonal argument over
+  a sampling scale $\tilde\delta_n$ (needed there only because $\psi$ was evaluated at sampled
+  curves) does not arise at all: \emph{this} lemma performs the paper's \emph{only} remaining
+  diagonal extraction.
+
+  \paragraph{Why $F.\mu_T(E)$, not $\overline\eta_l(\Theta(E))$, is the normalizer.} Taking
+  $\phi \equiv 1$ in \noderef{PSFamily} (field \emph{massMarginal}) gives
+  $\overline\eta_l(\Theta(E)) = F.\mu_T(E)$ for every $l \ge 1$: the normalizing constant is
+  therefore both nonzero (by hypothesis on $F.\mu_T(E)$) and, crucially, \emph{independent of
+  $l$}. Writing every occurrence of the normalizer as $F.\mu_T(E)$ (rather than
+  $\overline\eta_l(\Theta(E))$, which is the form \noderef{SLLNCurves} itself produces at each
+  fixed $l$) makes this $l$-independence visible in the statement, and is exactly what licenses
+  applying \noderef{CountableDiagonalExtraction} to (I)--(III) below.
+
+  \paragraph{Why no separate $[\mathrm{Nonempty}\ E]$ hypothesis is needed.} Since the conclusion
+  asserts the existence of curves $\gamma_{i,l}$, and $\Theta(E)$ is empty exactly when $E$ is
+  (\noderef{Curve} carries $\mathrm{toFun}\colon\mathbb{R}\to E$), a hypothesis of this shape can
+  become vacuously false on an empty $E$ unless something already forces $E$ nonempty. Here it
+  does: if $E=\emptyset$ then $\mathrm{Set.univ}\subseteq E$ is itself the empty set, and every
+  measure assigns the empty set mass $0$; hence $F.\mu_T(E)=F.\mu_T(\emptyset)=0$ automatically
+  whenever $E=\emptyset$, contradicting the standing hypothesis $F.\mu_T(E)\ne0$. So $E=\emptyset$
+  is already excluded by that hypothesis, and no additional $[\mathrm{Nonempty}\ E]$ is required.
+\end{lemma}
+\begin{proof}
+  Write $M := F.\mu_T(E) \in \cointerval{0,\infty}$. By hypothesis $M \ne 0$, and $M \ne \infty$
+  since $F.\mu_T$ is a finite measure (\noderef{PSFamily}, field \emph{massMeasure\_finite}); write
+  $M_{\mathbb R} := \mathrm{toReal}(M) \ne 0$.
+
+  \emph{Step 1: $\overline\eta_l(\Theta(E)) = M \ne 0$ for every $l \ge 1$.} Fix $l \ge 1$. By
+  \noderef{PSFamily} (field \emph{massMarginal}) applied at this $l$ with $\phi \equiv 1$
+  (measurable, constant),
+  \[
+    \int_E 1 \, dF.\mu_T = \int_{\Theta(E)} 1 \, d\overline\eta_l
+    ,
+  \]
+  i.e.\ $F.\mu_T(E) = \overline\eta_l(\Theta(E))$, i.e.\ $\overline\eta_l(\Theta(E)) = M$. In
+  particular $\overline\eta_l(\Theta(E)) \ne 0$, so \noderef{SLLNCurves} may be invoked at every
+  stage $l \ge 1$.
+
+  \emph{Step 2: the countable auxiliary family, at each stage $l$.} Fix $l \ge 1$. We build a
+  countable family $\bigl(g^l_p\bigr)_{p\in\mathbb{N}}$ of $\overline\eta_l$-integrable functions
+  $\Theta(E) \to \mathbb{R}$ realizing, via \noderef{SLLNCurves}'s generic clause, both families
+  (II) and (III) at this stage.
+
+  \emph{(II)-functions.} For $r \in \mathbb{Q}$, $r>0$, define
+  $\phi_{r,b}(\gamma) := \mathbf{1}[r\le d(\gamma(0),x_0)]$ and
+  $\phi_{r,e}(\gamma) := \mathbf{1}[r\le d(\gamma(\length(\gamma)),x_0)]$. Both are measurable:
+  $\gamma \mapsto \gamma(0)$ and $\gamma\mapsto\gamma(\length(\gamma))$ are measurable
+  (\noderef{CurveScaledEvalMeasurable} at the fixed constants $c=0,1$), $x\mapsto d(x,x_0)$ is
+  continuous hence measurable, and the indicator of a measurable (here, closed) subset of
+  $\mathbb R$ pulled back along a measurable map is measurable. Both are bounded by $1$, hence
+  $\overline\eta_l$-integrable ($\overline\eta_l$ is finite). Since $\mathbb{Q}$ is countable,
+  $\set{(r,\iota) : r\in\mathbb{Q}, r>0, \iota\in\set{b,e}}$ is countable.
+
+  \emph{(III)-functions.} Let $\iota := \set{(m,Q,\epsilon,C) : m\in\mathbb{N}, m\ge1,\ Q\in
+  \mathrm{Finset}(E),\ Q\ne\emptyset,\ Q\subseteq D,\ \epsilon,C\in\mathbb{Q},\ \epsilon,C>0}$. Since
+  $D$ is countable, the collection of nonempty finite subsets of $D$ is countable (a countable set
+  has countably many finite subsets); since $\mathbb{N}$ and $\mathbb{Q}$ are countable and
+  countable products/unions of countable sets are countable, $\iota$ is countable. For
+  $(m,Q,\epsilon,C)\in\iota$, define
+  \[
+    g^l_{(m,Q,\epsilon,C),\psi} := l^{-1}\cdot \psi_{m\cdot l,Q,\epsilon,C}
+    ,\qquad
+    g^l_{(m,Q,\epsilon,C),\tilde\psi} := l^{-1}\cdot \tilde\psi_{m\cdot l,Q,\epsilon,C}
+    .
+  \]
+  These are measurable by \noderef{PsiMeasurable}/\noderef{PsiTildeMeasurable} (at the parameters
+  $m\cdot l,Q,\epsilon,C$, scaled by the constant $l^{-1}$). For $\overline\eta_l$-integrability:
+  by \noderef{PSFamily} (field \emph{lengthExactly}), $\length(\gamma)=l$ for $\overline\eta_l$-a.e.\
+  $\gamma$; on this event, \noderef{psi}'s defining formula bounds
+  $\psi_{m\cdot l,Q,\epsilon,C}(\gamma) \le 2C^2 l + 2C^2 l^2/(ml)= 2C^2 l + 2C^2l/m$ (each of the
+  $ml$ summands is a minimum whose first argument is $2C\length(\gamma)/(ml)=2Cl/(ml)$, so the sum
+  over $ml$ terms is $\le ml\cdot 2Cl/(ml) = 2Cl$, giving
+  $\psi \le C\cdot 2Cl + 2C^2l^2/(ml) = 2C^2l+2C^2l/m$), a constant depending only on $m,l,C$; hence
+  \emph{dividing this bound on $\psi_{m\cdot l,Q,\epsilon,C}(\gamma)$ by $l$},
+  $l^{-1}\psi_{m\cdot l,Q,\epsilon,C}$ is $\overline\eta_l$-a.e.\ bounded by the constant
+  $2C^2+2C^2/m$, and a measurable a.e.-bounded function is integrable against the finite measure
+  $\overline\eta_l$. The analogous bound for $\tilde\psi$ (from \noderef{psiTilde}'s formula, whose
+  two terms are, on the same event, $2C^2l^2/(ml)=2C^2l/m$ and, respectively,
+  $\le (Cl/(ml))\cdot(ml)\cdot 2C = 2C^2l$, summing to the same raw bound $2C^2l/m+2C^2l$) gives,
+  after dividing by $l$, the same bound $2C^2/m+2C^2$ on $l^{-1}\tilde\psi_{m\cdot l,Q,\epsilon,C}$,
+  hence $\overline\eta_l$-integrability of $g^l_{(m,Q,\epsilon,C),\tilde\psi}$ as well. Since
+  $\iota$ is countable, $\iota \times \set{\psi,\tilde\psi}$ is countable.
+
+  \emph{Merging.} The index set
+  $J := \bigl(\mathbb{Q}_{>0}\times\set{b,e}\bigr) \sqcup \bigl(\iota\times\set{\psi,\tilde\psi}\bigr)$
+  is a countable, nonempty disjoint union of countable sets, hence countable; fix once and for all
+  (independently of $l$) a surjection $e\colon\mathbb{N}\to J$ (\texttt{Countable.exists\_surjective\_nat},
+  \texttt{Preamble}). Define $g^l_p := \phi_{r,\iota}$ if $e(p)=(r,\iota)$ with
+  $(r,\iota)\in\mathbb{Q}_{>0}\times\set{b,e}$, and $g^l_p := g^l_{(m,Q,\epsilon,C),\star}$ if
+  $e(p) = \bigl((m,Q,\epsilon,C),\star\bigr)$ with $\star\in\set{\psi,\tilde\psi}$. By the above,
+  every $g^l_p$ is measurable and $\overline\eta_l$-integrable.
+
+  \emph{Step 3: apply \noderef{SLLNCurves} at every stage $l\ge1$.} Fix $l\ge1$. By Step~1,
+  $\overline\eta_l(\Theta(E)) \ne 0$; by Step~2, $(g^l_p)_p$ is a countable family of measurable,
+  $\overline\eta_l$-integrable functions. Applying \noderef{SLLNCurves} with this $T,F,l$, the
+  family $(\omega_k)_k$, and the family $(g^l_p)_p$ produces a sequence $\Gamma_l\colon
+  \mathbb{N}\to\Theta(E)$ such that, for every $i$, $\length(\Gamma_l(i))=l$ and
+  $\mathbb{M}([[\Gamma_l(i)]])=l$; for every $k$,
+  \[
+    \frac{\overline\eta_l(\Theta(E))}{n\cdot l}\sum_{i=0}^{n-1}[[\Gamma_l(i)]](\omega_k)
+    \;\longrightarrow\; T(\omega_k)
+    \qquad(n\to\infty)
+    ;
+  \]
+  and for every $p$,
+  \[
+    \frac{1}{n}\sum_{i=0}^{n-1} g^l_p(\Gamma_l(i))
+    \;\longrightarrow\; \overline\eta_l(\Theta(E))^{-1}\int_{\Theta(E)} g^l_p\,d\overline\eta_l
+    \qquad(n\to\infty)
+    .
+  \]
+
+  \emph{Step 4: the merged, $l$-independent target limits.} Define, for $j\in\mathbb{N}$ and
+  $l\ge1$, a sequence $a_{j,l}\colon\mathbb{N}\to\mathbb{R}$, deliberately indexed so that
+  $a_{j,l}(n)$ sums over exactly $n+1$ terms $i=0,\dots,n$ (rather than the $n$ terms
+  $i=0,\dots,n-1$ that \noderef{SLLNCurves}'s own averages use), by
+  \[
+    a_{2k,l}(n) := \frac{M_{\mathbb R}}{(n+1)\cdot l}\sum_{i=0}^{n}[[\Gamma_l(i)]](\omega_k)
+    \qquad(k\in\mathbb{N})
+    ,
+    \qquad
+    a_{2p+1,l}(n) := \frac{1}{n+1}\sum_{i=0}^{n} g^l_p(\Gamma_l(i))
+    \qquad(p\in\mathbb{N})
+    ,
+  \]
+  and, for $l=0$, $a_{j,0}(n):=0$ (an arbitrary choice, never used below). Since
+  $a_{j,l}(n) = b_{j,l}(n+1)$ where $b_{j,l}$ denotes the corresponding \noderef{SLLNCurves}
+  average (summing over $i=0,\dots,n-1$, i.e.\ over \texttt{Finset.range}$(n+1)$, so $b_{j,l}(n+1)$
+  sums over exactly $i=0,\dots,n$), and precomposing a sequence with the strictly increasing map
+  $n\mapsto n+1$ does not change its limit as $n\to\infty$, $a_{j,l}$ converges to exactly the same
+  limit as $b_{j,l}$, for every $j,l$. By Step~1,
+  $\overline\eta_l(\Theta(E)) = M$, so Step~3's two displayed limits rewrite, for every $l\ge1$, as
+  \[
+    \lim_{n\to\infty} a_{2k,l}(n) = T(\omega_k)
+    ,
+    \qquad
+    \lim_{n\to\infty} a_{2p+1,l}(n) = M_{\mathbb R}^{-1}\int_{\Theta(E)} g^l_p\,d\overline\eta_l
+    .
+  \]
+  We claim the right-hand sides do not depend on $l$: the first, $T(\omega_k)$, manifestly does
+  not. For the second, split on the two shapes of $e(p)$.
+
+  \emph{Case $e(p)=(r,\iota)$.} Then $g^l_p=\phi_{r,\iota}$ does not itself depend on $l$ as a
+  \emph{function}, but its integral against $\overline\eta_l$ does a priori depend on $l$; by
+  \noderef{PSFamily} (field \emph{massMarginal}) at $\phi=\mathbf{1}[r\le d(\cdot,x_0)]$
+  (measurable), for every $l\ge1$,
+  \[
+    \int_E \mathbf{1}[r\le d(x,x_0)]\,dF.\mu_T
+    = \int_{\Theta(E)} \phi_{r,b}\,d\overline\eta_l = \int_{\Theta(E)} \phi_{r,e}\,d\overline\eta_l
+    ,
+  \]
+  an identity of extended-real Lebesgue integrals ($\int$ here denoting $\int^-$, i.e.\
+  \texttt{lintegral}, of the extended-nonnegative-real-valued indicators). Both sides are finite
+  ($F.\mu_T$ and $\overline\eta_l$ are finite measures and the indicators are $\le1$), and the
+  Bochner integral of a nonnegative, bounded, measurable function against a finite measure equals
+  the $\mathrm{toReal}$ of its extended-real Lebesgue integral (the standard identification used
+  identically in \noderef{EtaRepeats}'s own proof); applying this to both the left side (against
+  $F.\mu_T$) and the right side (against $\overline\eta_l$) of the display, and taking
+  $\mathrm{toReal}$ throughout, gives
+  $\int_{\Theta(E)}\phi_{r,\iota}\,d\overline\eta_l = \mathrm{toReal}\bigl(F.\mu_T(\set{x:r\le
+  d(x,x_0)})\bigr)$ (Bochner integral on the left) for $\iota\in\set{b,e}$ -- manifestly
+  $l$-independent. So
+  $M_{\mathbb R}^{-1}\int_{\Theta(E)}g^l_p\,d\overline\eta_l = M_{\mathbb
+  R}^{-1}\cdot\mathrm{toReal}\bigl(F.\mu_T(\set{x:r\le d(x,x_0)})\bigr)$, independent of $l$.
+
+  \emph{Case $e(p)=\bigl((m,Q,\epsilon,C),\psi\bigr)$.} Then $g^l_p = l^{-1}\cdot
+  \psi_{m\cdot l,Q,\epsilon,C}$, so
+  \[
+    \int_{\Theta(E)} g^l_p\,d\overline\eta_l
+    = \int_{\Theta(E)} l^{-1}\psi_{m\cdot l,Q,\epsilon,C}\,d\overline\eta_l
+    = \int_{\Theta(E)} \psi_{m,Q,\epsilon,C}\,d\overline\eta_1
+    ,
+  \]
+  the last equality by \noderef{EtaRepeats} applied at this $m,Q,\epsilon,C,l$ -- manifestly
+  $l$-independent (the right side names only $\overline\eta_1$). The case
+  $e(p)=\bigl((m,Q,\epsilon,C),\tilde\psi\bigr)$ is identical, using \noderef{EtaRepeatsTilde} in
+  place of \noderef{EtaRepeats}.
+
+  In every case, $\lim_{n\to\infty}a_{j,l}(n)$ equals a quantity $A_j$ that does not depend on
+  $l\ge1$; define $A_j$ to be this common value. Redefine, for this $j$, the previously-arbitrary
+  row $a_{j,0}$ to be the constant sequence $a_{j,0}(n):=A_j$ (a legitimate redefinition, since $l=0$
+  never appears in the statement's conclusion and this row was declared arbitrary above); the
+  constant sequence trivially satisfies $\lim_{n\to\infty}a_{j,0}(n)=A_j$. Hence
+  $\lim_{n\to\infty}a_{j,l}(n)=A_j$ for \emph{every} $j,l\in\mathbb{N}$, exactly
+  \noderef{CountableDiagonalExtraction}'s hypothesis.
+
+  \emph{Step 5: diagonalize.} By \noderef{CountableDiagonalExtraction} applied to $(a_{j,l})_{j,l}$
+  and $(A_j)_j$, there is a strictly increasing $N\colon\mathbb{N}\to\mathbb{N}$ such that, for
+  every $j\in\mathbb{N}$,
+  \[
+    \lim_{l\to\infty} a_{j,l}(N(l)) = A_j
+    .
+  \]
+  Set $n_l := N(l)+1$ for every $l\in\mathbb{N}$; then $n_l\ge1$ for every $l$ (so in particular
+  every $n_l$ with $l\ge1$ is a positive integer, matching the statement), and since $N$ is
+  strictly increasing, $N(l)\to\infty$, hence $n_l\to\infty$, as $l\to\infty$. Set
+  $\gamma_{i,l} := \Gamma_l(i)$ for $l\ge1$ and $0\le i<n_l$ (for $l=0$, set $\gamma_{i,0}$
+  arbitrarily, e.g.\ $\Gamma_0(i)$, since the statement makes no claim at $l=0$). Note that, by
+  construction, $a_{j,l}(N(l))$ sums over exactly $i=0,\dots,N(l)$, i.e.\ over exactly
+  $i=0,\dots,n_l-1$ -- the same range as the statement's sums over $i<n_l$.
+
+  \emph{Conclusion.} For every $l\ge1$ and every $i<n_l$: $\length(\gamma_{i,l}) =
+  \length(\Gamma_l(i)) = l$ and $\mathbb{M}([[\gamma_{i,l}]]) = \mathbb{M}([[\Gamma_l(i)]]) = l$, by
+  Step~3, giving the two length/mass clauses. For (I): fix $k$; by Step~5 at $j=2k$,
+  $a_{2k,l}(N(l)) \to A_{2k} = T(\omega_k)$ as $l\to\infty$. Unwinding the definition of $a_{2k,l}$
+  at $n=N(l)$, and using $n_l = N(l)+1$,
+  \[
+    a_{2k,l}(N(l)) = \frac{M_{\mathbb R}}{(N(l)+1)\cdot l}\sum_{i=0}^{N(l)}[[\Gamma_l(i)]](\omega_k)
+    = \frac{M_{\mathbb R}}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\gamma_{i,l}]](\omega_k)
+    ,
+  \]
+  so this gives exactly
+  \[
+    \frac{M_{\mathbb R}}{n_l\cdot l}\sum_{i=0}^{n_l-1}[[\gamma_{i,l}]](\omega_k)
+    \;\longrightarrow\; T(\omega_k)
+    \qquad(l\to\infty)
+    ,
+  \]
+  which is (I) (recalling $M_{\mathbb R} = \mathrm{toReal}(F.\mu_T(E))$).
+
+  For (II): fix $r\in\mathbb{Q}$, $r>0$, and let $p_b,p_e$ be indices with $e(p_b)=(r,b)$,
+  $e(p_e)=(r,e)$ (which exist since $e$ is surjective). By Step~5 at $j=2p_b+1$ (respectively
+  $2p_e+1$), $a_{2p_b+1,l}(N(l)) \to A_{2p_b+1} = M_{\mathbb R}^{-1}\cdot
+  \mathrm{toReal}\bigl(F.\mu_T(\set{x:r\le d(x,x_0)})\bigr)$ (respectively the same for $p_e$); as
+  noted above, $a_{2p_b+1,l}(N(l)) = \tfrac1{n_l}\sum_{i=0}^{n_l-1}\phi_{r,b}(\gamma_{i,l})$, so this
+  is exactly
+  \[
+    \frac1{n_l}\sum_{i=0}^{n_l-1}\phi_{r,b}(\gamma_{i,l})
+    \;\longrightarrow\; M_{\mathbb R}^{-1}\cdot\mathrm{toReal}\bigl(F.\mu_T(\set{x:r\le d(x,x_0)})\bigr)
+    ,
+  \]
+  and symmetrically for $\phi_{r,e}$, which (unfolding $\phi_{r,b},\phi_{r,e}$ as indicators) is
+  exactly (II).
+
+  For (III): fix admissible $(m,Q,\epsilon,C)$ and let $p_\psi,p_{\tilde\psi}$ be indices with
+  $e(p_\psi)=\bigl((m,Q,\epsilon,C),\psi\bigr)$, $e(p_{\tilde\psi})=\bigl((m,Q,\epsilon,C),
+  \tilde\psi\bigr)$. By Step~5 at $j=2p_\psi+1$, $a_{2p_\psi+1,l}(N(l)) \to A_{2p_\psi+1}$, and
+  \[
+    a_{2p_\psi+1,l}(N(l)) = \frac1{n_l}\sum_{i=0}^{n_l-1} l^{-1}\psi_{m\cdot
+    l,Q,\epsilon,C}(\gamma_{i,l})
+    = \frac1{n_l\cdot l}\sum_{i=0}^{n_l-1} \psi_{m\cdot l,Q,\epsilon,C}(\gamma_{i,l})
+    ,
+    \qquad
+    A_{2p_\psi+1} = M_{\mathbb R}^{-1}\int_{\Theta(E)}\psi_{m,Q,\epsilon,C}\,d\overline\eta_1
+    ,
+  \]
+  so
+  \[
+    \frac1{n_l\cdot l}\sum_{i=0}^{n_l-1} \psi_{m\cdot l,Q,\epsilon,C}(\gamma_{i,l})
+    \;\longrightarrow\; M_{\mathbb R}^{-1}\int_{\Theta(E)}\psi_{m,Q,\epsilon,C}\,d\overline\eta_1
+    ,
+  \]
+  which is (III)'s first display; the $\tilde\psi$ display follows identically at
+  $j=2p_{\tilde\psi}+1$. This completes the proof.
+\end{proof}

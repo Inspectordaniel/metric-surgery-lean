@@ -1,0 +1,79 @@
+\begin{lemma}[Reversal negates the current]
+  Let $E$ be a metric space, $\gamma, \gamma' \in \Theta(E)$ (\noderef{Curve}) with
+  $\length(\gamma') = \length(\gamma)$, and suppose $\gamma'(t) = \gamma(\length(\gamma)-t)$ for
+  all $t \in [0,\length(\gamma)]$ (i.e.\ $\gamma'$ is $\gamma$ traversed in reverse). Then for every
+  $\omega \in \mathcal{D}^1(E)$ (\noderef{Form1}),
+  \[
+    [[\gamma']](\omega) = -[[\gamma]](\omega)
+    .
+  \]
+  This is exactly paper.tex line 1133: ``if the curve $\tilde\gamma$ is the curve $\gamma$
+  traversed in reverse order then $[[\tilde\gamma]](\omega)=-[[\gamma]](\omega)$ for all
+  $\omega \in \mathcal{D}^1(E)$'', and is the content of eq.~(2.5) via \noderef{GeodesicPairing}.
+
+  \paragraph{Modeling choice (interface decision, not a deviation).} Rather than constructing a
+  canonical ``reversal'' operation on curves, we state the reversal relationship as a hypothesis on
+  a second curve $\gamma'$ (specifying its values only on $[0,\length(\gamma)]$, which -- via the
+  clamping condition of \noderef{Curve} -- already determines $\gamma'$ uniquely as an element of
+  $\Theta(E)$). This is the same mathematical content as the paper's ``the curve $\tilde\gamma$''
+  and avoids introducing a separate constructor node purely for definitional bookkeeping.
+\end{lemma}
+\begin{proof}
+  \emph{Step 0: the hypothesis extends to all of $\mathbb{R}$.} We first show
+  $\gamma'(t) = \gamma(\length(\gamma)-t)$ for \emph{every} $t \in \mathbb{R}$, not just
+  $t \in [0,\length(\gamma)]$. Write $L := \length(\gamma) = \length(\gamma')$.
+  \begin{itemize}
+    \item If $t < 0$: by the clamping condition on $\gamma'$ (\noderef{Curve}),
+      $\gamma'(t) = \gamma'(\min(L,\max(0,t))) = \gamma'(0)$ (since $\max(0,t)=0$ and $\min(L,0)=0$
+      as $L \ge 0$). By hypothesis at $t=0 \in [0,L]$, $\gamma'(0) = \gamma(L-0) = \gamma(L)$. On the
+      other hand $L - t > L$ (as $t<0$), so by the clamping condition on $\gamma$,
+      $\gamma(L-t) = \gamma(\min(L,\max(0,L-t))) = \gamma(\min(L,L-t)) = \gamma(L)$ (since
+      $\max(0,L-t)=L-t$ as $L-t>L\ge0$, and $\min(L,L-t)=L$ as $L-t>L$). So both sides equal
+      $\gamma(L)$.
+    \item If $t > L$: by the clamping condition on $\gamma'$,
+      $\gamma'(t) = \gamma'(\min(L,\max(0,t))) = \gamma'(L)$ (since $\max(0,t)=t$ as $t>L\ge0$, and
+      $\min(L,t)=L$ as $t>L$). By hypothesis at $t=L \in [0,L]$, $\gamma'(L) = \gamma(L-L)=\gamma(0)$.
+      On the other hand $L-t<0$, so by the clamping condition on $\gamma$,
+      $\gamma(L-t) = \gamma(\min(L,\max(0,L-t))) = \gamma(\min(L,0)) = \gamma(0)$ (since
+      $\max(0,L-t)=0$ as $L-t<0$, and $\min(L,0)=0$ as $L\ge0$). So both sides equal $\gamma(0)$.
+    \item If $0 \le t \le L$: this is exactly the hypothesis.
+  \end{itemize}
+  So $\gamma' = \gamma(L - \cdot)$ as functions on all of $\mathbb{R}$; in particular
+  $\pi \circ \gamma' = (u \mapsto \pi(\gamma(L-u)))$ as functions on $\mathbb{R}$, for any
+  $\pi \colon E \to \mathbb{R}$.
+
+  \emph{Step 1: the derivative of the reflected composition.} Fix any $t \in \mathbb{R}$. Applying
+  Step~0 to $\pi = \omega.\pi$ and taking $\mathrm{deriv}$ at $t$,
+  \[
+    \mathrm{deriv}(\omega.\pi \circ \gamma')(t) = \mathrm{deriv}\bigl(u \mapsto \omega.\pi(\gamma(L-u))\bigr)(t)
+    = -\mathrm{deriv}(\omega.\pi\circ\gamma)(L-t)
+    ,
+  \]
+  where the last equality is the (unconditional) reflection rule for derivatives,
+  $\mathrm{deriv}(u \mapsto h(a-u))(x) = -\mathrm{deriv}(h)(a-x)$ (\texttt{deriv\_comp\_const\_sub},
+  \texttt{Preamble}), applied with $h = \omega.\pi\circ\gamma$, $a=L$. (This identity holds
+  unconditionally, including at points where $h$ fails to be differentiable, where both sides
+  equal $0$ by the junk-value convention for $\mathrm{deriv}$.)
+
+  \emph{Step 2: rewrite the integral defining $[[\gamma']](\omega)$.} By \noderef{curveCurrent}
+  (using $\length(\gamma')=L$) and Step~0/Step~1,
+  \[
+    [[\gamma']](\omega) = \int_0^{L} \omega.f(\gamma'(t)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma')(t)\,dt
+    = \int_0^{L} \omega.f(\gamma(L-t)) \cdot \bigl(-\mathrm{deriv}(\omega.\pi\circ\gamma)(L-t)\bigr)\,dt
+    = -\int_0^L \omega.f(\gamma(L-t)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma)(L-t)\,dt
+    .
+  \]
+
+  \emph{Step 3: substitute $s = L-t$.} By the reflection substitution rule for interval integrals,
+  $\int_a^b h(d-x)\,dx = \int_{d-b}^{d-a} h(x)\,dx$
+  (\texttt{intervalIntegral.integral\_comp\_sub\_left}, \texttt{Preamble}), applied with $a=0$,
+  $b=d=L$ (so $d-b=0$, $d-a=L$) and $h(s) = \omega.f(\gamma(s))\cdot\mathrm{deriv}(\omega.\pi\circ\gamma)(s)$,
+  \[
+    \int_0^L \omega.f(\gamma(L-t)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma)(L-t)\,dt
+    = \int_0^L \omega.f(\gamma(s)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma)(s)\,ds
+    = [[\gamma]](\omega)
+    ,
+  \]
+  the last equality again by \noderef{curveCurrent}. Combining with Step~2,
+  $[[\gamma']](\omega) = -[[\gamma]](\omega)$, as claimed.
+\end{proof}

@@ -1,0 +1,26 @@
+\begin{definition}[Geodesic pairing $G_{x,y}$]
+  Let $E$ be a metric space. A \emph{geodesic pairing} on $E$ consists of a choice, for every
+  ordered pair $(x,y) \in E \times E$, of a curve $G_{x,y} \in \Theta(E)$ (\noderef{Curve}) such
+  that:
+  \begin{itemize}
+    \item $\length(G_{x,y}) = d(x,y)$;
+    \item $G_{x,y}(0) = x$ and $G_{x,y}(\length(G_{x,y})) = y$;
+    \item $G_{x,y}$ is a geodesic on $[0,\length(G_{x,y})]$ (\noderef{IsGeodesicOn});
+    \item for all $t \in [0,d(x,y)]$, $G_{y,x}(t) = G_{x,y}(d(x,y)-t)$, i.e.\ $G_{y,x}$ is the
+      curve $G_{x,y}$ traversed in reverse.
+  \end{itemize}
+  This is exactly the data $G_{x,y}$ constructed in paper.tex lines 517--526: for each unordered
+  pair $\{x,y\}$, a chosen pair of geodesics $G_{x,y}, G_{y,x}$, both of length $d(x,y)$, from $x$
+  to $y$ and from $y$ to $x$ respectively, with $G_{y,x}$ the reversal of $G_{x,y}$. (The paper's
+  further assertion $[[G_{x,y}]]+[[G_{y,x}]]=0$, eq.~(2.5), is a consequence of this reversal
+  relationship together with \noderef{CurrentReverse}, not additional defining data.)
+
+  \paragraph{Modeling choice (interface decision, not a deviation).} The paper explains
+  (paper.tex line 526) that choosing such a family simultaneously for every pair may require the
+  axiom of choice, and does not assert its existence as a theorem; it is simply fixed once and used
+  throughout paper Section~3 (the Surgery Lemma). We accordingly formalize a geodesic pairing as a
+  hypothesis carrier: a
+  bundle of data with the properties above, to be assumed (alongside $E$ being a geodesic metric
+  space) wherever the paper uses $G_{x,y}$, rather than as something derived from a bare
+  geodesic-space assumption on $E$ within this tablet.
+\end{definition}

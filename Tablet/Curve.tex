@@ -1,0 +1,31 @@
+\begin{definition}[$\Theta(E)$, arc-length normal form]
+  Let $E$ be a metric space. A \emph{curve} $\gamma \in \Theta(E)$ (paper.tex lines 441--460)
+  consists of:
+  \begin{itemize}
+    \item a length $\length(\gamma) \in \mathbb{R}$ with $\length(\gamma) \ge 0$;
+    \item an underlying map $\gamma \colon \mathbb{R} \to E$;
+    \item a \emph{clamping} condition: for all $t \in \mathbb{R}$,
+      $\gamma(t) = \gamma(\min(\length(\gamma), \max(0,t)))$, i.e.\ $\gamma$ is determined by its
+      values on $[0,\length(\gamma)]$ and extends constantly outside that interval;
+    \item a \emph{unit-speed} condition on $[0,\length(\gamma)]$: for all $s,t \in [0,\length(\gamma)]$,
+      the total variation of $\gamma$ on $[0,\length(\gamma)] \cap [s,t]$ equals $|t-s|$ (via
+      Mathlib's \texttt{HasUnitSpeedOn}, see \texttt{Preamble}). This is exactly the paper's
+      requirement (line 453) that $\length(\gamma|_{[0,t]}) = t$ for all $t \in [0,\length(\gamma)]$,
+      generalized (equivalently, since length is additive over subintervals) to every
+      subinterval $[s,t] \subseteq [0,\length(\gamma)]$.
+  \end{itemize}
+  This represents $\gamma \in \Theta(E)$, the arc-length-parametrized representative of a
+  Lipschitz curve modulo increasing reparametrization (paper.tex lines 441--458).
+
+  \paragraph{Modeling choice (interface decision, not a deviation).} The paper's $\gamma$ is a
+  function on $[0,\length(\gamma)]$ only. We instead carry a globally-defined function on all of
+  $\mathbb{R}$ that is forced, via the clamping condition, to be constant outside
+  $[0,\length(\gamma)]$ and equal to the paper's $\gamma$ on $[0,\length(\gamma)]$. This changes no
+  mathematical content -- restricting our $\gamma$ to $[0,\length(\gamma)]$ recovers exactly the
+  paper's curve, and conversely any paper curve extends uniquely to a clamped global function --
+  but it lets every later construction (the pushforward measure, the current $[[\gamma]]$, curve
+  restriction) avoid ad hoc junk-value side conditions at the domain boundary. The clamping
+  condition also entails (see \noderef{CurveLipschitz}) that this global extension is
+  automatically $1$-Lipschitz on all of $\mathbb{R}$, not just on $[0,\length(\gamma)]$, which is
+  what makes the extension well behaved.
+\end{definition}

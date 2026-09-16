@@ -1,0 +1,23 @@
+\begin{definition}[Geodesic on a subinterval]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), and $a \le b$ real numbers.
+  We say $\gamma$ \emph{is a geodesic on $[a,b]$}, written $\mathrm{IsGeodesicOn}(\gamma,a,b)$, when
+  \[
+    d(\gamma(s), \gamma(t)) = |s - t| \quad \text{for all } s,t \in [a,b]
+    ,
+  \]
+  i.e.\ $\gamma$ restricted to $[a,b]$ is an isometric embedding of $[a,b]$ into $E$.
+
+  The paper (paper.tex line 496) calls $\gamma \in \Theta(E)$ itself a \emph{geodesic} when
+  $d(\gamma(s),\gamma(t)) = |s-t|$ for all $s,t \in [0,\length(\gamma)]$, i.e.\ when
+  $\mathrm{IsGeodesicOn}(\gamma, 0, \length(\gamma))$ holds. The paper separately calls a subcurve
+  $\gamma|_{[s_{i-1},s_i]}$ (reparametrized to start at $0$, per the restriction convention of
+  paper.tex line 459) a \emph{geodesic edge} when that reparametrized subcurve is a geodesic, i.e.\
+  when $d(\gamma(s_{i-1}+u), \gamma(s_{i-1}+v)) = |u-v|$ for $u,v \in [0, s_i-s_{i-1}]$; substituting
+  $s = s_{i-1}+u$, $t = s_{i-1}+v$, this is exactly
+  $d(\gamma(s),\gamma(t)) = |s-t|$ for $s,t \in [s_{i-1},s_i]$, i.e.\ exactly
+  $\mathrm{IsGeodesicOn}(\gamma, s_{i-1}, s_i)$ on the original (unshifted) domain of $\gamma$. Thus
+  $\mathrm{IsGeodesicOn}(\gamma,a,b)$ applied directly on $\gamma$'s own domain, without
+  reparametrizing subcurves to start at $0$, faithfully captures both uses of the paper's notion of
+  ``geodesic'' (the whole-curve case $a=0,b=\length(\gamma)$, and the geodesic-edge case
+  $a = s_{i-1}, b = s_i$) with the same mathematical content.
+\end{definition}

@@ -1,0 +1,301 @@
+\begin{lemma}[A circular arc inherits a geodesic resolution with the truncated edges first and last]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}) a closed curve
+  (\noderef{IsClosedCurve}), $k \in \mathbb{N}$, $s \colon \mathbb{N} \to \mathbb{R}$ a geodesic
+  resolution of $\gamma$ into $k$ edges (\noderef{IsGeodesicResolution}), and $t,t' \in
+  [0,\length(\gamma)]$ arbitrary (not necessarily breakpoints of $s$, and in either order). Then the
+  circular arc $\gamma|_{[t,t']}$ (\noderef{curveArc}) admits a geodesic resolution
+  $(k_A,s_A)$, i.e.\ $\mathrm{IsGeodesicResolution}(\gamma|_{[t,t']},k_A,s_A)$, with $k_A \ge 1$, such
+  that:
+  \begin{itemize}
+    \item \textbf{Ordinary case $t \le t'$.} There is $j_0 \in \mathbb{N}$ such that for every $i$
+      with $1 \le i \le k_A-1$, $j_0+(i-1) \le k$ and
+      \[
+        s_A(i) = s(j_0+(i-1)) - t
+        .
+      \]
+    \item \textbf{Wrap case $t' < t$.} There are $j_0,m \in \mathbb{N}$ such that for every $i$ with
+      $1 \le i \le m$, $j_0+(i-1) \le k$ and
+      \[
+        s_A(i) = s(j_0+(i-1)) - t
+        ,
+      \]
+      and for every $i$ with $m < i \le k_A - 1$, $i-m \le k$ and
+      \[
+        s_A(i) = (\length(\gamma)-t) + s(i-m)
+        ,
+      \]
+      and, whenever $m \ge 1$, the two halves of this correspondence meet at a genuine edge of
+      $\gamma$: the tail's own top breakpoint lands exactly on $\length(\gamma)$,
+      \[
+        s(j_0+(m-1)) = \length(\gamma)
+        .
+      \]
+  \end{itemize}
+  In both cases, $s_A(0)=0$ and $s_A(k_A) = \length(\gamma|_{[t,t']})$ (part of
+  $\mathrm{IsGeodesicResolution}$ itself), and no claim is made about $s_A$ at $i=0$ or $i=k_A$
+  beyond this: the two edges $[s_A(0),s_A(1)]$ and $[s_A(k_A-1),s_A(k_A)]$ -- the \emph{first} and
+  \emph{last} edges of $s_A$ -- carry the (up to two) truncated partial edges of $\gamma$, while
+  every breakpoint strictly between (indices $1,\dots,k_A-1$) is a genuine breakpoint of $s$,
+  merely shifted into the arc's own parametrization by an additive constant ($-t$ in the ordinary
+  case; $-t$ then $\length(\gamma)-t$, split at $m$, in the wrap case).
+
+  \paragraph{Why this placement is the content of the lemma.} This is the direct mechanization of
+  paper.tex 895-896: ``Let $\gamma|_{[u,u']}$ be the subcurve of $\gamma|_{[t,t']}$ formed by
+  concatenating those geodesic edges $\gamma_{[s_{j-1},s_j]}$ for which $[s_{j-1},s_j] \subseteq
+  [t,t']$, possibly excluding up to two partial edges of $\gamma$ that overlap the endpoints of
+  $[t,t']$.'' The paper's ``those edges $[s_{j-1},s_j] \subseteq [t,t']$'' are exactly the edges
+  indexed $2,\dots,k_A-1$ of $s_A$ above (each a literal shift of a full edge of $s$), and the
+  paper's ``up to two partial edges... that overlap the endpoints'' are exactly the first and last
+  edges of $s_A$, $[s_A(0),s_A(1)]$ and $[s_A(k_A-1),s_A(k_A)]$, about which the statement makes no
+  claim beyond what $\mathrm{IsGeodesicResolution}$ itself forces (they may be degenerate, of
+  length $0$, exactly when $t$ or $t'$ happens to land on a breakpoint of $s$ -- which
+  $\mathrm{IsGeodesicResolution}$ permits, via repeated consecutive values,
+  \noderef{IsGeodesicResolution}). This placement -- truncated edges first and last, genuine
+  $s$-edges strictly in between, indexed by a single shift $j_0$ (split at $m$ in the wrap case) --
+  is exactly what \Cref{cut-type-I}'s Branch~C needs: it drops precisely the (up to two) partial
+  edges by taking the sub-window between resolution indices $1$ and $k_A-1$, with no ``is this edge
+  of $s$ fully contained in $[t,t']$'' predicate appearing anywhere in the formalization.
+
+  \paragraph{Why the count is exactly $2$ more than the number of genuine interior $s$-edges (never
+  fewer).} Since $\mathrm{IsGeodesicResolution}$ permits $s_A$ to repeat consecutive values, the
+  first and last edges of $s_A$ may be degenerate; the lemma does \emph{not} assert $k_A$ equals the
+  number of genuine interior edges plus exactly $2$ as a strict count of \emph{non-degenerate}
+  edges -- only that the placement is first/last, with the count of $s_A$-indices used in between
+  ($k_A-2$, when $k_A \ge 2$) matching a contiguous run of $s$-breakpoints. In particular the two end
+  edges are never additionally split or padded: this is the entire point of citing $j_0$ (and $m$)
+  directly, rather than clamping every breakpoint of $s$ and re-counting which of the $k+1$ clamped
+  values coincide (a resolution of size depending on $k$, not on the genuine interior-edge count,
+  which is exactly the padding this lemma avoids).
+\end{lemma}
+\begin{proof}
+  \paragraph{A general fact: exhibiting a truncated sub-resolution using only genuinely-inside
+  breakpoints.} Fix any curve $\eta \in \Theta(E)$ with a geodesic resolution
+  $\mathrm{IsGeodesicResolution}(\eta,k,s)$, and any $a,b \in \mathbb{R}$ with $0 \le a \le b \le
+  \length(\eta)$. We exhibit a geodesic resolution of $\mathrm{curveRestrict}(\eta,a,b)$
+  (\noderef{curveRestrict}) using only the breakpoints of $s$ that already lie in $[a,b]$, plus at
+  most one clamp point at each end (never more, regardless of $k$).
+
+  \emph{Case $a=b$.} Then $\mathrm{curveRestrict}(\eta,a,a)$ has length $a-a=0$
+  (\noderef{curveRestrict}'s length formula), and the trivial resolution with $0$ edges,
+  $r\colon\{0\}\to\mathbb{R}$, $r(0):=0$, witnesses
+  $\mathrm{IsGeodesicResolution}(\mathrm{curveRestrict}(\eta,a,a),0,r)$: $\mathrm{MonotoneOn}$ on
+  $\{0\}$ is trivial, $r(0)=0$ matches both required boundary values (index $0$ is both the start
+  and the end index when $k=0$), and the edge clause $\forall i<0,\dots$ is vacuous.
+
+  \emph{Case $a<b$.} The construction below uses an index $j_A$ with $s(j_A)\le a$ and $a\le
+  s(j_A+1)$ (so $j_A\in\{0,\dots,k-1\}$), and an index $j_B$ with $s(j_B-1)\le b$ and $b\le
+  s(j_B)$ (so $j_B\in\{1,\dots,k\}$); nothing else about $j_A,j_B$ is used anywhere below this
+  point. We record the \emph{canonical} choice of such $j_A,j_B$, used at two of the three sites
+  where this general fact is applied later (the ordinary case and the wrap-case tail): let
+  $J_A := \{j \in \{0,\dots,k\} : s(j) \le a\}$ and $J_B := \{j \in \{0,\dots,k\} : s(j) \ge b\}$.
+  $J_A$ is non-empty ($0 \in J_A$, since $s(0)=0\le a$, \noderef{IsGeodesicResolution}) and finite,
+  so has a maximum; take $j_A := \max J_A$. Since $a<b\le\length(\eta)=s(k)$, $s(j_A)\le a<s(k)$
+  forces $j_A\ne k$, so $j_A\in\{0,\dots,k-1\}$; and $j_A+1\notin J_A$ (maximality of $j_A$) gives
+  $s(j_A+1)>a$, so in particular $a\le s(j_A+1)$. Dually, $J_B$ is non-empty ($k \in J_B$, since
+  $s(k)=\length(\eta)\ge b$) and finite, so has a minimum; take $j_B := \min J_B$. Since
+  $b>a\ge0=s(0)$, $s(j_B)\ge b>s(0)$ forces $j_B\ne0$, so $j_B\in\{1,\dots,k\}$; and $j_B-1\notin
+  J_B$ (minimality of $j_B$) gives $s(j_B-1)<b$, so in particular $s(j_B-1)\le b$. (The third
+  application site, the wrap-case head, instead takes $j_A:=0$ -- not necessarily $\max J_A$ for
+  that site's $J_A$, which need not be $0$ once $s$ is allowed to repeat consecutive values at
+  $0$ -- discharging $s(j_A)\le a$ and $a\le s(j_A+1)$ directly; see that case below for the
+  argument. Only the four inequalities on $j_A,j_B$ isolated above are used from here on, so the
+  rest of this general fact is unaffected by which valid choice is supplied.)
+
+  \emph{$j_A < j_B$.} Suppose $j_A \ge j_B$. By hypothesis, $s(j_A) \le a$ and $s(j_B) \ge b$; if
+  $j_A = j_B$ this directly gives $s(j_A) \le a < b \le s(j_A)$, absurd. If $j_A > j_B$,
+  $\mathrm{MonotoneOn}(s,\{0,\dots,k\})$ (\noderef{IsGeodesicResolution}, using $j_A\le k-1<k$ and
+  $j_B\le k$, so both are valid indices in $\{0,\dots,k\}$) gives $s(j_A) \ge s(j_B)
+  \ge b > a \ge s(j_A)$, likewise absurd. So $j_A < j_B$ in either case.
+
+  Set $K := j_B - j_A \ge 1$ and define $r \colon \mathbb{N} \to \mathbb{R}$ by $r(0) := 0$, $r(i) :=
+  s(j_A+i)-a$ for $1 \le i \le K-1$ (vacuous if $K \le 1$), and $r(K) := b-a$.
+
+  \emph{$r$ is well-defined and consistent at the boundary $i=K$ when $K\ge1$.} If $K=1$ this is
+  immediate ($r(0)=0,r(1)=b-a$, no intermediate values). If $K\ge 2$, note $r(K-1) = s(j_A+K-1)-a =
+  s(j_B-1)-a$, a genuine value distinct in general from $r(K)=b-a$; both are defined and no
+  conflict arises since the two formulas apply to disjoint index ranges ($1,\dots,K-1$ versus $K$
+  itself).
+
+  \emph{Monotonicity.} For $1 \le i < K-1$ (when $K \ge 3$): $r(i) \le r(i+1)$ since $s(j_A+i) \le
+  s(j_A+i+1)$ by $\mathrm{MonotoneOn}(s,\{0,\dots,k\})$ applied to the indices $j_A+i,j_A+i+1 \in
+  \{0,\dots,k\}$ (valid since $i+1\le K-1$ gives $j_A+i+1 \le j_A+(K-1) = j_B-1 \le k$, using
+  $j_B\le k$). For the boundary steps: $r(0)=0 \le r(1) = s(j_A+1)-a$ holds directly from $a \le
+  s(j_A+1)$, the defining property of $j_A$ fixed above; and $r(K-1) = s(j_B-1)-a \le r(K)=b-a$
+  holds directly from $s(j_B-1) \le b$, the defining property of $j_B$ fixed above. (When $K=1$,
+  both boundary estimates degenerate to the single check $r(0)=0\le r(1)=b-a$, true since $a<b$.)
+  Chaining these gives $r$ monotone on $\{0,\dots,K\}$, with $r(0)=0$ and
+  $r(K)=b-a=\length(\mathrm{curveRestrict}(\eta,a,b))$ (\noderef{curveRestrict}).
+
+  \emph{Edges.} Fix $i<K$.
+  \begin{itemize}
+    \item If $1 \le i \le K-2$ (only possible when $K\ge3$): $r(i)=s(j_A+i)-a$, $r(i+1)=s(j_A+i+1)-a$,
+      with $j_A+i, j_A+i+1 \in \{0,\dots,k\}$ and $j_A+i < j_A+i+1 \le j_B \le k$, so $j_A+i<k$ and
+      $\mathrm{IsGeodesicOn}(\eta,s(j_A+i),s(j_A+i+1))$ holds by hypothesis
+      (\noderef{IsGeodesicResolution}). For $p,q \in [r(i),r(i+1)]$, writing $p'=a+p,q'=a+q \in
+      [s(j_A+i),s(j_A+i+1)]$: by \noderef{curveRestrict}'s defining formula (unclamped on this
+      range, since $r(i),r(i+1)\in[0,b-a]$, shown by the monotone chain above),
+      $\mathrm{curveRestrict}(\eta,a,b)(p)=\eta(p')$, likewise at $q$, so
+      $\mathrm{dist}(\mathrm{curveRestrict}(\eta,a,b)(p),\mathrm{curveRestrict}(\eta,a,b)(q)) =
+      \mathrm{dist}(\eta(p'),\eta(q')) = |p'-q'|=|p-q|$, the middle equality by
+      $\mathrm{IsGeodesicOn}(\eta,s(j_A+i),s(j_A+i+1))$ (\noderef{IsGeodesicOn}: it asserts
+      $\mathrm{dist}=|\cdot|$ for every pair of arguments in the given range) applied to $p',q'$.
+      This is $\mathrm{IsGeodesicOn}(\mathrm{curveRestrict}(\eta,a,b),r(i),r(i+1))$.
+    \item If $i=0$ (the possibly-truncated first edge): if $r(0)=r(1)$ (possible only when $K\ge2$,
+      forcing $s(j_A+1)=a$), $\mathrm{IsGeodesicOn}$ on the single point $r(0)$ holds trivially
+      ($\mathrm{dist}=0=|r(0)-r(0)|$).
+      Otherwise $r(0)<r(1)$: since $s(j_A)\le a$ (the defining property of $j_A$) and
+      $r(1)=s(j_A+1)-a$ (if $K\ge2$) or $r(1)=r(K)=b-a$ with $s(j_A+1)>b$ possible (if $K=1$, in
+      which case $[a,b] \subseteq [s(j_A),s(j_A+1)]$ directly since $b\le s(j_B)=s(j_A+1)$ using
+      $j_B=j_A+1$), in either case $[a,a+r(1)] \subseteq [s(j_A),s(j_A+1)]$: for $K\ge2$ this is
+      $[a,s(j_A+1)]\subseteq [s(j_A),s(j_A+1)]$ (using $s(j_A)\le a$); for $K=1$ this is
+      $[a,b]\subseteq[s(j_A),s(j_A+1)]$ (using $s(j_A)\le a$ and $b \le s(j_A+1)$). Since $j_A<k$
+      (the defining property of $j_A$ places it in $\{0,\dots,k-1\}$),
+      $\mathrm{IsGeodesicOn}(\eta,s(j_A),s(j_A+1))$ holds by hypothesis, and restricting it to
+      $[a,a+r(1)]$ (as in the previous bullet, via \noderef{curveRestrict}'s formula) gives
+      $\mathrm{IsGeodesicOn}(\mathrm{curveRestrict}(\eta,a,b),r(0),r(1))$.
+    \item If $i=K-1$ (the possibly-truncated last edge, only possible when $K\ge1$): symmetric to
+      the previous bullet with the roles of $a,j_A$ and $b,j_B$ exchanged: $s(j_B)\ge b$
+      (the defining property of $j_B$) and $r(K-1) = s(j_B-1)-a$ (if $K\ge2$) or $r(K-1)=r(0)=0$
+      with $s(j_B-1)=s(j_A)\le a$ (if $K=1$, since then $j_B-1=j_A$), so $[a+r(K-1),b] \subseteq
+      [s(j_B-1),s(j_B)]$ in either case, and $j_B-1<k$ (the defining property of $j_B$ places it
+      in $\{1,\dots,k\}$), giving $\mathrm{IsGeodesicOn}(\eta,s(j_B-1),s(j_B))$ by hypothesis;
+      restricting as above gives $\mathrm{IsGeodesicOn}(\mathrm{curveRestrict}(\eta,a,b),r(K-1),r(K))$.
+  \end{itemize}
+  (When $K=1$, $i=0=K-1$ is covered by both of the last two bullets simultaneously, which agree.)
+  So $r$ witnesses $\mathrm{IsGeodesicResolution}(\mathrm{curveRestrict}(\eta,a,b),K,r)$, completing
+  the general fact.
+
+  \paragraph{A general fact: gluing two resolutions across a matched endpoint.} If $\eta_1,\eta_2 \in
+  \Theta(E)$ admit geodesic resolutions $\mathrm{IsGeodesicResolution}(\eta_1,K_1,r_1)$,
+  $\mathrm{IsGeodesicResolution}(\eta_2,K_2,r_2)$ and $\eta_1(\length(\eta_1))=\eta_2(0)$, then
+  $\eta_1 * \eta_2$ (\noderef{curveConcat}) admits the resolution $(K_1+K_2,r)$ with $r(i)=r_1(i)$
+  for $i\le K_1$, $r(i)=\length(\eta_1)+r_2(i-K_1)$ for $i>K_1$ (the two formulas agree at $i=K_1$,
+  both giving $\length(\eta_1)$, since $r_1(K_1)=\length(\eta_1)$ and $r_2(0)=0$,
+  \noderef{IsGeodesicResolution}). Indeed: $r$ is monotone on $\{0,\dots,K_1+K_2\}$ ($r_1,r_2$
+  monotone on their own ranges, meeting continuously at $i=K_1$); $r(0)=r_1(0)=0$;
+  $r(K_1+K_2)=\length(\eta_1)+r_2(K_2)=\length(\eta_1)+\length(\eta_2)=\length(\eta_1*\eta_2)$
+  (\noderef{curveConcat}). For $i<K_1$: on $[r_1(i),r_1(i+1)]\subseteq[0,\length(\eta_1)]$,
+  $\eta_1*\eta_2$ agrees with $\eta_1$ (\noderef{curveConcat}'s defining formula, first case), so
+  $\mathrm{IsGeodesicOn}(\eta_1*\eta_2,r(i),r(i+1))$ is literally
+  $\mathrm{IsGeodesicOn}(\eta_1,r_1(i),r_1(i+1))$, a hypothesis. For $K_1\le i<K_1+K_2$, writing
+  $i=K_1+j$ ($0\le j<K_2$): we show that $(\eta_1*\eta_2)(w)=\eta_2(w-\length(\eta_1))$ for every
+  $w\in[\length(\eta_1)+r_2(j),\length(\eta_1)+r_2(j+1)]$. By \noderef{curveConcat}'s defining
+  formula, $(\eta_1*\eta_2)(w)=\eta_1(w)$ if $w\le\length(\eta_1)$, and
+  $(\eta_1*\eta_2)(w)=\eta_2(w-\length(\eta_1))$ otherwise. If $w>\length(\eta_1)$ the second
+  branch applies directly, giving the claimed formula. The only remaining possibility is
+  $w=\length(\eta_1)$ exactly, which can only occur when $r_2(j)\le0$, i.e.\ $r_2(j)=0$ (since
+  $r_2(j)\ge r_2(0)=0$ by $\mathrm{MonotoneOn}$, \noderef{IsGeodesicResolution}) -- this may happen
+  for several $j$ if $r_2$ has a leading run of degenerate edges, and the argument below applies
+  identically to each: here the \emph{first} branch of \noderef{curveConcat}'s formula applies
+  ($w\le\length(\eta_1)$ holds with equality), giving
+  $(\eta_1*\eta_2)(\length(\eta_1))=\eta_1(\length(\eta_1))$, which equals $\eta_2(0)$ by exactly
+  the hypothesized endpoint match $\eta_1(\length(\eta_1))=\eta_2(0)$, and
+  $\eta_2(0)=\eta_2(\length(\eta_1)-\length(\eta_1))=\eta_2(w-\length(\eta_1))$ since
+  $w=\length(\eta_1)$ -- so the claimed formula $(\eta_1*\eta_2)(w)=\eta_2(w-\length(\eta_1))$ holds
+  here too, even though it is the \emph{other} branch of \noderef{curveConcat} that literally fires
+  at this single point. Hence for all
+  $u,v\in[\length(\eta_1)+r_2(j),\length(\eta_1)+r_2(j+1)]$,
+  $\mathrm{dist}((\eta_1*\eta_2)(u),(\eta_1*\eta_2)(v)) =
+  \mathrm{dist}(\eta_2(u-\length(\eta_1)),\eta_2(v-\length(\eta_1))) = |u-v|$ by
+  $\mathrm{IsGeodesicOn}(\eta_2,r_2(j),r_2(j+1))$ (a hypothesis) applied to
+  $u-\length(\eta_1),v-\length(\eta_1)\in[r_2(j),r_2(j+1)]$. So $r$ witnesses
+  $\mathrm{IsGeodesicResolution}(\eta_1*\eta_2,K_1+K_2,r)$.
+
+  \paragraph{Applying the two general facts.}
+
+  \emph{Ordinary case $t \le t'$.} By \noderef{curveArc}, $\gamma|_{[t,t']} =
+  \mathrm{curveRestrict}(\gamma,t,t')$. Apply the first general fact with $\eta:=\gamma$, $a:=t$,
+  $b:=t'$ (valid: $0\le t\le t'\le\length(\gamma)$). If $t=t'$: take $k_A:=1$, $s_A(0)=s_A(1):=0$
+  (matching $\length(\gamma|_{[t,t]})=0$); this trivially witnesses
+  $\mathrm{IsGeodesicResolution}(\gamma|_{[t,t]},1,s_A)$ ($\mathrm{MonotoneOn}$ and the edge clause
+  are both trivial on a single degenerate edge), and both correspondence clauses are vacuous (their
+  index ranges $1\le i\le k_A-1=0$ are empty), so any $j_0$ (say $j_0:=0$) works. If $t<t'$: apply
+  the general fact with $\eta:=\gamma,a:=t,b:=t'$, using the canonical choice of $j_A,j_B$
+  constructed above; take $k_A:=K=j_B-j_A$ (so $k_A\ge1$, by the case split $a<b$ of the general
+  fact) and $s_A:=r$ as constructed there, witnessing
+  $\mathrm{IsGeodesicResolution}(\gamma|_{[t,t']},k_A,s_A)$. Set $j_0:=j_A+1$; for $1\le i\le
+  k_A-1$, $j_0+(i-1)=j_A+i \le j_A+(k_A-1)=j_B-1\le k$, and $s_A(i)=r(i)=
+  s(j_A+i)-t=s(j_0+(i-1))-t$ by the general fact's formula, exactly the claimed correspondence.
+
+  \emph{Wrap case $t'<t$.} By \noderef{curveWrapRestrict} and \noderef{curveArc}, $\gamma|_{[t,t']}
+  = \mathrm{curveWrapRestrict}(\gamma,t,t') = \mathrm{curveRestrict}(\gamma,t,\length(\gamma)) *
+  \mathrm{curveRestrict}(\gamma,0,t')$, with the endpoint match
+  $\gamma(\length(\gamma))=\gamma(0)$ supplied by closedness of $\gamma$
+  (\noderef{IsClosedCurve}) -- the same identification \noderef{curveWrapRestrict} itself
+  establishes for this concatenation to be well-defined.
+
+  Apply the general fact twice. First with $\eta:=\gamma,a:=t,b:=\length(\gamma)$ (valid, $t \le
+  \length(\gamma)$), using the canonical choice $j_A^{\mathrm{tail}}:=\max J_A^{\mathrm{tail}}$,
+  $j_B^{\mathrm{tail}}:=\min J_B^{\mathrm{tail}}$ (the sets $J_A,J_B$ of the general fact's
+  construction, instantiated at this $a,b$), giving either the trivial $0$-edge witness (if
+  $t=\length(\gamma)$) or a $(K_{\mathrm{tail}},r_{\mathrm{tail}})$ witness of
+  $\mathrm{curveRestrict}(\gamma,t,\length(\gamma))$ with $K_{\mathrm{tail}}=j_B^{\mathrm{tail}}-
+  j_A^{\mathrm{tail}}$ (if $t<\length(\gamma)$).
+
+  Second, with $\eta:=\gamma,a:=0,b:=t'$ (valid, $0\le t'$), take instead
+  $j_A^{\mathrm{head}}:=0$ -- \emph{not} necessarily $\max J_A^{\mathrm{head}}$ for this site's
+  $J_A^{\mathrm{head}}:=\{j\in\{0,\dots,k\}:s(j)\le0\}$, which need not be $0$ once $s$ is allowed
+  to repeat consecutive values at $0$ -- and discharge the general fact's two required properties
+  of $j_A^{\mathrm{head}}$ directly: $s(0)\le a=0$ holds trivially (with equality,
+  \noderef{IsGeodesicResolution}), and $a=0\le s(1)=s(j_A^{\mathrm{head}}+1)$ follows from
+  $\mathrm{MonotoneOn}(s,\{0,\dots,k\})$ applied to the indices $0,1$, which is a legitimate
+  application because $k\ge1$: the wrap case has $t'<t\le\length(\gamma)$, so $\length(\gamma)>0$,
+  and $k=0$ would force $\length(\gamma)=s(k)=s(0)=0$ (\noderef{IsGeodesicResolution}), a
+  contradiction. Pair this with $j_B^{\mathrm{head}}:=\min J_B^{\mathrm{head}}$ (the canonical
+  choice, unaffected by the change to $j_A^{\mathrm{head}}$). This gives either the trivial
+  $0$-edge witness (if $t'=0$) or a $(K_{\mathrm{head}},r_{\mathrm{head}})$ witness of
+  $\mathrm{curveRestrict}(\gamma,0,t')$ with $K_{\mathrm{head}}=j_B^{\mathrm{head}}$ (if $t'>0$).
+
+  Write $m:=K_{\mathrm{tail}}$ (interpreting $K_{\mathrm{tail}}:=0$ in the trivial case
+  $t=\length(\gamma)$) and $j_0:=j_A^{\mathrm{tail}}+1$ (arbitrary, say $j_0:=0$, in the trivial
+  case, where it is unused).
+
+  \emph{Sub-case $t<\length(\gamma)$ or $t'>0$ (not both degenerate).} Apply the gluing fact to
+  $\eta_1:=\mathrm{curveRestrict}(\gamma,t,\length(\gamma))$ with resolution $(m,r_{\mathrm{tail}})$
+  (or the trivial $(0,\cdot)$ resolution if $t=\length(\gamma)$, i.e.\ $m=0$) and
+  $\eta_2:=\mathrm{curveRestrict}(\gamma,0,t')$ with resolution $(K_{\mathrm{head}},r_{\mathrm{head}})$
+  (or the trivial $(0,\cdot)$ resolution if $t'=0$), giving $k_A:=m+K_{\mathrm{head}}\ge1$ (at least
+  one of $m,K_{\mathrm{head}}$ is $\ge1$ by the sub-case hypothesis: if $t<\length(\gamma)$ then
+  $m=K_{\mathrm{tail}}\ge1$ by the $a<b$ case of the general fact applied to the tail; if $t'>0$ then
+  $K_{\mathrm{head}}\ge1$ similarly) and $s_A(i):=r_{\mathrm{tail}}(i)$ for $i\le m$,
+  $s_A(i):=(\length(\gamma)-t)+r_{\mathrm{head}}(i-m)$ for $i>m$, witnessing
+  $\mathrm{IsGeodesicResolution}(\gamma|_{[t,t']},k_A,s_A)$.
+
+  For $1\le i\le m$ (only non-vacuous if $m\ge1$, i.e.\ $t<\length(\gamma)$): $j_0+(i-1)=
+  j_A^{\mathrm{tail}}+i \le j_A^{\mathrm{tail}}+m = j_B^{\mathrm{tail}} \le k$ (using
+  $j_B^{\mathrm{tail}}\le k$, since $j_B^{\mathrm{tail}}=\min J_B^{\mathrm{tail}}\le k$ as $k\in
+  J_B^{\mathrm{tail}}$), and $s_A(i) = r_{\mathrm{tail}}(i) = s(j_A^{\mathrm{tail}}+i)-t =
+  s(j_0+(i-1))-t$ by the general fact's formula applied to the tail (valid for $1\le i\le
+  K_{\mathrm{tail}}-1$; at $i=K_{\mathrm{tail}}=m$ itself, the same formula \emph{also} gives the
+  correct value: $j_A^{\mathrm{tail}}+m=j_B^{\mathrm{tail}}$ directly from $m:=K_{\mathrm{tail}}=
+  j_B^{\mathrm{tail}}-j_A^{\mathrm{tail}}$, and $s(j_B^{\mathrm{tail}})=\length(\gamma)$ by a
+  squeeze -- not by asserting $j_B^{\mathrm{tail}}=k$, which need not hold when $s$ has trailing
+  degenerate edges at value $\length(\gamma)$: $s(j_B^{\mathrm{tail}})\ge b=\length(\gamma)$ since
+  $j_B^{\mathrm{tail}}\in J_B^{\mathrm{tail}}$, and $s(j_B^{\mathrm{tail}})\le
+  s(k)=\length(\gamma)$ by $\mathrm{MonotoneOn}(s,\{0,\dots,k\})$ applied to
+  $j_B^{\mathrm{tail}}\le k$; together these force $s(j_B^{\mathrm{tail}})=\length(\gamma)$. Hence
+  $s(j_0+(m-1))-t=s(j_B^{\mathrm{tail}})-t=\length(\gamma)-t$, which equals
+  $r_{\mathrm{tail}}(K_{\mathrm{tail}})=\length(\gamma)-t$ by the general fact's own boundary value
+  -- so the formula extends validly one step past its officially-asserted range, exactly covering
+  $i=m$ as claimed). This same squeeze -- $s(j_0+(m-1))=s(j_B^{\mathrm{tail}})=\length(\gamma)$,
+  established two sentences above from $j_B^{\mathrm{tail}}\in J_B^{\mathrm{tail}}$ together with
+  $\mathrm{MonotoneOn}(s,\{0,\dots,k\})$ applied to $j_B^{\mathrm{tail}}\le k$, with no further work
+  -- is exactly the split-point conjunct $s(j_0+(m-1))=\length(\gamma)$ (for $m\ge1$) claimed in the
+  statement above.
+
+  For $m<i\le k_A-1$: writing $i=m+i'$ with $1\le i'\le k_A-1-m=K_{\mathrm{head}}-1$, $i-m=i'\le k$
+  (as $i'\le K_{\mathrm{head}}-1=j_B^{\mathrm{head}}-1\le k-1<k$), and $s_A(i) = (\length(\gamma)-t)+
+  r_{\mathrm{head}}(i') = (\length(\gamma)-t) + \bigl(s(j_A^{\mathrm{head}}+i')-0\bigr) =
+  (\length(\gamma)-t)+s(i')= (\length(\gamma)-t)+s(i-m)$, using $j_A^{\mathrm{head}}=0$ and the
+  general fact's formula applied to the head (valid for $1\le i'\le K_{\mathrm{head}}-1$, exactly
+  the asserted range for $i$).
+
+  \emph{Sub-case $t=\length(\gamma)$ and $t'=0$ (both degenerate).} Then $\length(\gamma|_{[t,t']}) =
+  (\length(\gamma)-t)+t' = 0$, and, as in the ordinary degenerate case above, take $k_A:=1$,
+  $s_A(0)=s_A(1):=0$, which trivially witnesses $\mathrm{IsGeodesicResolution}
+  (\gamma|_{[t,t']},1,s_A)$; both correspondence clauses are vacuous ($m<i\le k_A-1=0$ and $1\le
+  i\le m\le k_A-1=0$ both force empty ranges once $m$ is taken to be $0$), so $j_0:=0,m:=0$ work;
+  the split-point conjunct $1\le m\to s(j_0+(m-1))=\length(\gamma)$ is vacuous with $m:=0$.
+
+  This exhausts all cases, completing the proof.
+\end{proof}

@@ -1,0 +1,28 @@
+\begin{definition}[Resolution into geodesic edges]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $k \in \mathbb{N}$, and
+  $s \colon \mathbb{N} \to \mathbb{R}$. We say $s$ is a \emph{resolution of $\gamma$ into $k$
+  geodesic edges}, written $\mathrm{IsGeodesicResolution}(\gamma,k,s)$, when:
+  \begin{itemize}
+    \item $s$ is monotone (non-decreasing) on $\set{0,1,\dots,k}$;
+    \item $s(0) = 0$ and $s(k) = \length(\gamma)$;
+    \item for every $i < k$, $\gamma$ is a geodesic on $[s(i), s(i+1)]$
+      (\noderef{IsGeodesicOn}).
+  \end{itemize}
+  This is the formalization of a \emph{resolution of $\gamma$ into geodesic edges}
+  (paper.tex lines 532--535): a partition $0 = s_0 \le s_1 \le \dots \le s_k = \length(\gamma)$
+  such that $\gamma|_{[s_{i-1},s_i]}$ is a geodesic edge for each $i$.
+
+  \paragraph{Deliberate weakening: non-strict monotonicity.} The paper's partitions are strictly
+  increasing, $s_0 < s_1 < \dots < s_k$ (paper.tex line 532), which forces every edge to have
+  positive length. We instead require only non-strict monotonicity, allowing consecutive values of
+  $s$ to coincide, i.e.\ allowing \emph{degenerate} edges $[s(i),s(i+1)]$ of length $0$. This is a
+  strictly weaker requirement on $s$ (every paper resolution is in particular a resolution in our
+  sense), and it is harmless: a degenerate edge $[a,a]$ trivially satisfies
+  $\mathrm{IsGeodesicOn}(\gamma,a,a)$ (the single condition $d(\gamma(a),\gamma(a)) = |a-a| = 0$
+  holds by reflexivity of $d$), so allowing degenerate edges neither creates new geodesic-edge
+  obligations nor changes which curves $\gamma$ admit a resolution. It exists purely so that a
+  resolution with fewer than $k$ genuine (non-degenerate) edges can always be padded, by repeating
+  the final value $\length(\gamma)$, to a resolution with exactly $k$ (possibly degenerate) edges;
+  see \noderef{IsPiecewiseGeodesicWith} for why this is exactly what is needed to formalize ``at
+  most $k$ geodesic pieces'' faithfully as ``exactly $k$ (possibly degenerate) pieces.''
+\end{definition}

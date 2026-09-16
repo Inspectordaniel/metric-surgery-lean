@@ -1,0 +1,43 @@
+\begin{definition}[Piecewise geodesic with $k$ pieces]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), and $k \in \mathbb{N}$. We say
+  $\gamma$ \emph{is piecewise geodesic with $k$ pieces}, written
+  $\mathrm{IsPiecewiseGeodesicWith}(\gamma,k)$, when there exists a resolution of $\gamma$ into $k$
+  geodesic edges: $\exists s, \mathrm{IsGeodesicResolution}(\gamma,k,s)$
+  (\noderef{IsGeodesicResolution}).
+
+  The paper's notion $\gamma \in \Xgeo$ (paper.tex lines 529--537) is: $\gamma$ can be written as
+  the concatenation of finitely many geodesic curves, equivalently (paper's own remark, line 532)
+  $\gamma$ admits a \emph{strict} resolution into geodesic edges,
+  $0 = s_0 < s_1 < \dots < s_{k'} = \length(\gamma)$. Corollary~2.6 of the paper (paper.tex lines
+  539--549, the target formalized by \noderef{C1SmallBall}) has as its hypothesis that $\gamma$ can
+  be written as such a concatenation of \emph{at most} $k$ geodesic curves (line 541), i.e.\
+  $\exists k' \le k$ with a strict resolution of length $k'$.
+
+  \paragraph{Claim: $\mathrm{IsPiecewiseGeodesicWith}(\gamma,k)$ is equivalent to this hypothesis.}
+  Both directions use that degenerate edges are always (trivially) geodesic
+  (\noderef{IsGeodesicResolution}).
+  \begin{itemize}
+    \item ($\Leftarrow$) Suppose $\gamma$ has a strict resolution $0=s_0<\dots<s_{k'}=\length(\gamma)$
+      with $k' \le k$. Pad it to length $k$ by repeating the final value: define
+      $s'_i = s_i$ for $i \le k'$ and $s'_i = \length(\gamma)$ for $k' < i \le k$. Then $s'$ is
+      (non-strictly) monotone on $\set{0,\dots,k}$, $s'_0=0$, $s'_k=\length(\gamma)$, and every edge
+      $[s'_i,s'_{i+1}]$ is either one of the original geodesic edges ($i<k'$) or degenerate
+      ($i \ge k'$, since $s'_i=s'_{i+1}=\length(\gamma)$), hence geodesic in both cases. So $s'$
+      witnesses $\mathrm{IsPiecewiseGeodesicWith}(\gamma,k)$.
+    \item ($\Rightarrow$) Suppose $s$ witnesses $\mathrm{IsPiecewiseGeodesicWith}(\gamma,k)$, i.e.\
+      $0=s_0\le s_1\le\dots\le s_k=\length(\gamma)$ with each $[s_i,s_{i+1}]$ a geodesic edge (some
+      possibly degenerate). Let $0=t_0<t_1<\dots<t_{k'}=\length(\gamma)$ be the strictly increasing
+      subsequence of the \emph{distinct} values among $s_0,\dots,s_k$, in order; since these are $k'$
+      of the (at most) $k+1$ values $s_0,\dots,s_k$, we have $k' \le k$. Because $(s_i)$ is
+      monotone, between two consecutive distinct values $t_j < t_{j+1}$ there is exactly one index
+      $i$ with $s_i = t_j$ and $s_{i+1} = t_{j+1}$ (all intermediate $s_i$'s, if any, are repeats of
+      $t_j$ or $t_{j+1}$ and contribute only degenerate edges that are skipped), so
+      $[t_j,t_{j+1}] = [s_i,s_{i+1}]$ is already known to be a geodesic edge of $\gamma$. Hence
+      $(t_j)_{j=0}^{k'}$ is a strict resolution of $\gamma$ into $k' \le k$ genuine geodesic edges,
+      i.e.\ $\gamma$ is the concatenation of at most $k$ geodesic curves.
+  \end{itemize}
+  This equivalence is why $\mathrm{IsPiecewiseGeodesicWith}(\gamma,k)$, using non-strict resolutions
+  of exact length $k$, is used directly (without an extra ``$\exists k'\le k$'' quantifier) as the
+  hypothesis of \noderef{C1SmallBall}: it is logically equivalent to, hence exactly as strong as,
+  the paper's ``concatenation of at most $k$ geodesic curves.''
+\end{definition}

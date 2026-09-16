@@ -1,0 +1,14 @@
+\begin{helper}[Length is measurable]
+  Let $E$ be a metric space equipped with a $\sigma$-algebra. Then $\gamma \mapsto \length(\gamma)$
+  is a measurable map $\Theta(E) \to \mathbb{R}$, with respect to the evaluation $\sigma$-algebra on
+  $\Theta(E)$ (\noderef{CurveMeasurableSpace}).
+\end{helper}
+\begin{proof}
+  By definition (\noderef{CurveMeasurableSpace}), $\Theta(E)$ carries the pullback $\sigma$-algebra
+  along $\gamma \mapsto (\length(\gamma),\gamma)$, so this evaluation map is measurable by the
+  universal property of the pullback $\sigma$-algebra (a map into a pullback-equipped space is
+  measurable with respect to the pullback exactly when the composite with the defining map is
+  measurable, applied here to the identity composite). Composing with the (measurable) first
+  coordinate projection $\mathbb{R} \times (\mathbb{R}\to E) \to \mathbb{R}$ gives that
+  $\gamma \mapsto \length(\gamma)$ is measurable.
+\end{proof}

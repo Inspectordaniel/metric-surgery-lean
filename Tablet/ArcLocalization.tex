@@ -1,0 +1,121 @@
+\begin{helper}[Interval localization of a circle-distance ball]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), and write $l :=
+  \length(\gamma)$. Let $u \in [0,l]$ and $\rho > 0$ satisfy $2\rho < l$, and set
+  \[
+    I := \set{v \in [0,l] : d_\gamma(u,v) < \rho}
+    ,
+  \]
+  where $d_\gamma$ is the circle distance (\noderef{dGamma}). Then at least one of the following
+  two statements holds.
+  \begin{enumerate}
+    \item[(A)] There are reals $t,t'$ with $0 \leq t \leq t' \leq l$ and $t' - t \leq 2\rho$ such
+      that $I \subseteq [t,t']$, and moreover ($t = 0$ or $d_\gamma(u,t) = \rho$) and ($t' = l$ or
+      $d_\gamma(u,t') = \rho$).
+    \item[(B)] $\gamma$ is closed (\noderef{IsClosedCurve}) and there are reals $t,t'$ with $0 \leq
+      t' < t \leq l$ and $(l-t) + t' \leq 2\rho$ such that $I \subseteq [t,l] \cup [0,t']$, and
+      moreover $d_\gamma(u,t) = \rho$ and $d_\gamma(u,t') = \rho$.
+  \end{enumerate}
+
+  This is the interval geometry that paper Lemma 3.7 leaves implicit when it introduces the set
+  $I$ at paper.tex line 762 and then asserts at line 776 that ``$I$ has length at most
+  $2\epsilon^{-1}\delta$'': alternative (A) is the statement that $I$ is caught in a genuine
+  subinterval of $[0,l]$ of length at most $2\rho$, and alternative (B) is the closed-curve
+  wrap-around case, in which $I$ is caught in a circular arc of total length at most $2\rho$. The
+  two alternatives are exactly the two shapes of parameter window over which \noderef{IsDeltaEpsN}
+  quantifies. The additional endpoint data ($t,t'$ are either clamped to the ends of $[0,l]$ or
+  sit at circle distance exactly $\rho$ from $u$, hence, $I$ being defined by a \emph{strict}
+  inequality, do not themselves lie in $I$) is what paper.tex line 778 uses when it says that the
+  covering may contain ``parts of up to 2 other edges, up to one edge containing each of the
+  endpoints''.
+\end{helper}
+\begin{proof}
+  Throughout, $l := \length(\gamma)$ and, since $\rho>0$ and $2\rho<l$,
+  \begin{equation}
+    \label{eq:al-gap}
+    0 < \rho < l - \rho
+    ,
+    \qquad\text{in particular } \rho < l \text{ and } \min(\rho,\,l-\rho) = \rho
+    .
+  \end{equation}
+
+  \textbf{Case 1: $\gamma$ is not closed.} By \noderef{dGamma}, $d_\gamma(u,v) = |u-v|$ for all
+  $v$. Put $t := \max(0,u-\rho)$ and $t' := \min(l,u+\rho)$. We verify alternative (A).
+
+  \emph{Ordering.} $0 \leq t$ holds since $t$ is a maximum with $0$ as one argument, and $t' \leq
+  l$ since $t'$ is a minimum with $l$ as one argument. For $t \leq t'$ it suffices, by the
+  defining properties of $\max$ and $\min$, to check the four inequalities $0 \leq l$ (true by
+  \eqref{eq:al-gap}, as $l > 2\rho > 0$), $0 \leq u+\rho$ (true since $u \geq 0$ and $\rho>0$),
+  $u-\rho \leq l$ (true since $u \leq l$ and $\rho > 0$) and $u - \rho \leq u+\rho$ (true since
+  $\rho>0$).
+
+  \emph{Length.} Since $t \geq u-\rho$ and $t' \leq u+\rho$, we get $t'-t \leq (u+\rho)-(u-\rho) =
+  2\rho$.
+
+  \emph{Containment.} Let $v \in I$, so $0 \leq v \leq l$ and $|u-v| < \rho$, i.e.\ $u - \rho < v <
+  u+\rho$. Then $v \geq 0$ and $v > u-\rho$ give $v \geq \max(0,u-\rho) = t$, and $v \leq l$ and $v
+  < u+\rho$ give $v \leq \min(l,u+\rho) = t'$. Hence $I \subseteq [t,t']$.
+
+  \emph{Endpoints.} If $u - \rho \leq 0$ then $t = \max(0,u-\rho) = 0$ and the first endpoint
+  alternative holds. Otherwise $0 \leq u-\rho$, so $t = u-\rho$ and $d_\gamma(u,t) = |u - (u-\rho)|
+  = |\rho| = \rho$. Symmetrically, if $l \leq u+\rho$ then $t' = \min(l,u+\rho) = l$; otherwise
+  $u+\rho \leq l$, so $t' = u+\rho$ and $d_\gamma(u,t') = |u-(u+\rho)| = |-\rho| = \rho$. This
+  establishes (A).
+
+  \textbf{Case 2: $\gamma$ is closed.} By \noderef{dGamma}, $d_\gamma(u,v) = \min\bigl(|u-v|,\,l -
+  |u-v|\bigr)$ for all $v$. We record two consequences of \eqref{eq:al-gap} used repeatedly below:
+  \begin{equation}
+    \label{eq:al-dist}
+    |u-w| = \rho \implies d_\gamma(u,w) = \min(\rho, l-\rho) = \rho
+    ,
+    \qquad
+    |u-w| = l-\rho \implies d_\gamma(u,w) = \min(l-\rho,\rho) = \rho
+    .
+  \end{equation}
+  (For the second implication note $l - |u-w| = l - (l-\rho) = \rho$.) Also, since $\min(a,b) <
+  \rho$ holds exactly when $a < \rho$ or $b < \rho$, membership $v \in I$ means: $0 \leq v \leq l$
+  and either
+  \begin{equation}
+    \label{eq:al-alt}
+    |u-v| < \rho
+    \qquad\text{or}\qquad
+    l - |u-v| < \rho,\ \text{i.e.}\ |u-v| > l - \rho
+    ,
+  \end{equation}
+  and in the second alternative $|u-v| > l-\rho$ means $v < u - l + \rho$ or $v > u + l - \rho$.
+
+  \emph{Sub-case (a): $\rho \leq u$ and $u + \rho \leq l$.} Put $t := u-\rho$ and $t' := u+\rho$.
+  Then $0 \leq t$ (as $\rho \leq u$), $t \leq t'$ (as $\rho>0$), $t' \leq l$ (by hypothesis of the
+  sub-case) and $t'-t = 2\rho$. For the containment, let $v \in I$ and use \eqref{eq:al-alt}. In
+  the first alternative, $u-\rho < v < u+\rho$ gives $v \in [t,t']$ at once. The second
+  alternative is impossible: if $v < u-l+\rho$ then, since $u + \rho \leq l$ gives $u-l+\rho \leq
+  0$, we would get $v < 0$, contradicting $v \geq 0$; and if $v > u+l-\rho$ then, since $\rho \leq
+  u$ gives $u+l-\rho \geq l$, we would get $v > l$, contradicting $v \leq l$. Hence $I \subseteq
+  [t,t']$. Finally $|u-t| = |{\rho}| = \rho$ and $|u-t'| = |-\rho| = \rho$, so by
+  \eqref{eq:al-dist} $d_\gamma(u,t) = d_\gamma(u,t') = \rho$; in particular the two endpoint
+  alternatives of (A) hold in their second form. This establishes (A).
+
+  \emph{Sub-case (c): $u < \rho$.} Put $t := u + l - \rho$ and $t' := u+\rho$. Then $0 \leq t'$ (as
+  $u \geq 0$, $\rho>0$); $t' < t$, because $t - t' = l - 2\rho > 0$; and $t \leq l$, because $u <
+  \rho$ gives $u + l - \rho < l$. Moreover $(l-t) + t' = (\rho - u) + (u+\rho) = 2\rho$. For the
+  containment, let $v \in I$ and use \eqref{eq:al-alt}. In the first alternative, $v < u + \rho =
+  t'$, and $v \geq 0$, so $v \in [0,t']$. In the second alternative, the possibility $v < u-l+\rho$
+  is excluded: $u<\rho$ and $l > 2\rho$ give $u - l + \rho < \rho - 2\rho + \rho = 0 \leq v$. So
+  $v > u+l-\rho = t$, and $v \leq l$, whence $v \in [t,l]$. Hence $I \subseteq [t,l]\cup[0,t']$.
+  Finally $|u - t| = |{-(l-\rho)}| = l-\rho$ (positive by \eqref{eq:al-gap}) and $|u-t'| = |-\rho|
+  = \rho$, so by \eqref{eq:al-dist} $d_\gamma(u,t) = \rho$ and $d_\gamma(u,t') = \rho$. This
+  establishes (B).
+
+  \emph{Sub-case (b): $\rho \leq u$ and $u+\rho > l$.} Put $t := u-\rho$ and $t' := u+\rho-l$. Then
+  $0 \leq t'$ (as $u+\rho > l$); $t' < t$, because $t - t' = l - 2\rho > 0$; and $t \leq l$,
+  because $u \leq l$ and $\rho>0$. Moreover $(l-t)+t' = (l-u+\rho) + (u+\rho-l) = 2\rho$. For the
+  containment, let $v \in I$ and use \eqref{eq:al-alt}. In the first alternative, $v > u-\rho = t$,
+  and $v \leq l$, so $v \in [t,l]$. In the second alternative, the possibility $v > u+l-\rho$ is
+  excluded: $\rho \leq u$ gives $u+l-\rho \geq l \geq v$. So $v < u-l+\rho = t'$, and $v \geq 0$,
+  whence $v \in [0,t']$. Hence $I \subseteq [t,l]\cup[0,t']$. Finally $|u-t| = |{\rho}| = \rho$ and
+  $|u-t'| = |l-\rho| = l-\rho$ (positive by \eqref{eq:al-gap}), so by \eqref{eq:al-dist}
+  $d_\gamma(u,t) = \rho$ and $d_\gamma(u,t') = \rho$. This establishes (B).
+
+  \emph{The three sub-cases are exhaustive.} If $\rho \leq u$ fails, sub-case (c) applies. If $\rho
+  \leq u$ holds, then either $u+\rho \leq l$, which is sub-case (a), or $u + \rho > l$, which is
+  sub-case (b). In every case one of (A), (B) has been established. \qedhere
+\end{proof}

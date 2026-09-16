@@ -1,0 +1,148 @@
+\begin{definition}[\texttt{eVariationOn}, Mathlib]
+  For $f : \mathbb{R} \to E$ into a pseudo-emetric space and $s \subseteq \mathbb{R}$,
+  \texttt{eVariationOn f s} is the extended-real total variation of $f$ on $s$:
+  the supremum, over finite increasing chains $x_0 \le x_1 \le \dots \le x_n$ in $s$, of
+  $\sum_i \mathrm{edist}(f(x_i), f(x_{i+1}))$. This is Mathlib's formalization of the
+  length of the (possibly non-injective) path traced by $f$ restricted to $s$.
+\end{definition}
+
+\begin{definition}[\texttt{HasConstantSpeedOnWith} / \texttt{HasUnitSpeedOn}, Mathlib]
+  \texttt{HasConstantSpeedOnWith f s l} means: for all $x,y \in s$,
+  $\texttt{eVariationOn}\, f\, (s \cap [x,y]) = l \cdot (y-x)$ (as extended reals, via
+  \texttt{ENNReal.ofReal}). \texttt{HasUnitSpeedOn f s} is the case $l=1$, i.e.\ $f$
+  traces out length exactly $y-x$ on every subinterval $[x,y]$ of $s$ -- Mathlib's
+  formalization of ``$f$ is parametrized by arc length on $s$.''
+\end{definition}
+
+\begin{proposition}[\texttt{eVariationOn.edist\_le}, Mathlib]
+  If $x, y \in s$ then $\mathrm{edist}(f(x),f(y)) \le \texttt{eVariationOn}\, f\, (s \cap [x,y])$
+  (with $[x,y]$ meaning $[\min(x,y),\max(x,y)]$ as needed): the displacement between two points
+  of $f$'s image is bounded by the variation of $f$ between them.
+\end{proposition}
+
+\begin{definition}[\texttt{LipschitzWith}, Mathlib]
+  \texttt{LipschitzWith K f} for $K : \mathbb{R}_{\ge 0}$ means
+  $\mathrm{edist}(f(x),f(y)) \le K \cdot \mathrm{edist}(x,y)$ for all $x,y$ in the domain of $f$.
+\end{definition}
+
+\begin{definition}[\texttt{Measure.map}, Mathlib]
+  For a (possibly non-measurable) function $f : X \to Y$ between measurable spaces and a measure
+  $\mu$ on $X$, \texttt{Measure.map f} $\mu$ is the pushforward measure: when $f$ is measurable,
+  $(\texttt{Measure.map}\, f\, \mu)(B) = \mu(f^{-1}(B))$ for Borel $B \subseteq Y$; when $f$ is not
+  measurable the pushforward is defined to be the zero measure (a junk value that is never invoked
+  in this tablet, since every curve's underlying map is shown Lipschitz, hence measurable).
+\end{definition}
+
+\begin{definition}[\texttt{deriv}, Mathlib]
+  For $f : \mathbb{R} \to \mathbb{R}$ and $x \in \mathbb{R}$, \texttt{deriv f x} is the derivative
+  of $f$ at $x$ if $f$ is differentiable at $x$, and the junk value $0$ otherwise.
+\end{definition}
+
+\begin{definition}[interval integral, Mathlib]
+  For $f : \mathbb{R} \to \mathbb{R}$ and $a, b \in \mathbb{R}$, the notation
+  $\int_a^b f(x)\,dx$ (Mathlib: \texttt{intervalIntegral}, written \texttt{$\int$ x in a..b, f x})
+  denotes the signed Lebesgue integral of $f$ on $[a,b]$: it equals
+  $\int_{[a,b]} f\,d\mathrm{Leb}$ when $a \le b$, and $-\int_{[b,a]} f\,d\mathrm{Leb}$ when $b < a$;
+  it is $0$ (a junk value) when $f$ is not integrable on the relevant interval.
+\end{definition}
+
+\begin{definition}[\texttt{AbsolutelyContinuousOnInterval}, Mathlib]
+  For $f : \mathbb{R} \to X$ into a (pseudo)metric space and $a,b \in \mathbb{R}$,
+  \texttt{AbsolutelyContinuousOnInterval f a b} means: $f$ is absolutely continuous on
+  $[\min(a,b),\max(a,b)]$, i.e.\ for every $\varepsilon>0$ there is $\delta>0$ such that for every
+  finite collection of pairwise-disjoint subintervals $(a_i,b_i)$, $i<n$, of $[\min(a,b),\max(a,b)]$
+  with $\sum_i d(a_i,b_i) < \delta$, we have $\sum_i d(f(a_i),f(b_i)) < \varepsilon$.
+\end{definition}
+
+\begin{proposition}[\texttt{LipschitzOnWith.absolutelyContinuousOnInterval}, Mathlib]
+  If $f$ is $K$-Lipschitz on $[\min(a,b),\max(a,b)]$ then
+  $\texttt{AbsolutelyContinuousOnInterval}\ f\ a\ b$.
+\end{proposition}
+
+\begin{proposition}[\texttt{AbsolutelyContinuousOnInterval.ae\_differentiableAt}, Mathlib]
+  If $f : \mathbb{R} \to \mathbb{R}$ satisfies $\texttt{AbsolutelyContinuousOnInterval}\ f\ a\ b$,
+  then $f$ is differentiable at $x$ for a.e.\ $x \in [\min(a,b),\max(a,b)]$.
+\end{proposition}
+
+\begin{proposition}[\texttt{AbsolutelyContinuousOnInterval.intervalIntegrable\_deriv}, Mathlib]
+  If $f : \mathbb{R} \to \mathbb{R}$ satisfies $\texttt{AbsolutelyContinuousOnInterval}\ f\ a\ b$,
+  then $x \mapsto \texttt{deriv}\ f\ x$ is interval-integrable on $a..b$.
+\end{proposition}
+
+\begin{proposition}[\texttt{HasDerivAt.le\_of\_lipschitz}, Mathlib]
+  If $f : \mathbb{R} \to \mathbb{R}$ has derivative $f'(x_0)$ at $x_0$ (in the sense of
+  \texttt{HasDerivAt}) and $f$ is $K$-Lipschitz (on all of $\mathbb{R}$), then $|f'(x_0)| \le K$.
+  In particular, if $f$ is differentiable at $x_0$ and $K$-Lipschitz, $|\texttt{deriv}\ f\ x_0| \le K$.
+\end{proposition}
+
+\begin{proposition}[\texttt{intervalIntegral.integral\_add\_adjacent\_intervals}, Mathlib]
+  If $f : \mathbb{R} \to \mathbb{R}$ is interval-integrable on $a..b$ and on $b..c$, then
+  $\int_a^b f + \int_b^c f = \int_a^c f$.
+\end{proposition}
+
+\begin{proposition}[\texttt{intervalIntegral.integral\_comp\_sub\_left}, Mathlib]
+  For $f : \mathbb{R} \to \mathbb{R}$ and $a,b,d \in \mathbb{R}$,
+  $\int_a^b f(d - x)\,dx = \int_{d-b}^{d-a} f(x)\,dx$.
+\end{proposition}
+
+\begin{proposition}[\texttt{intervalIntegral.norm\_integral\_le\_of\_norm\_le\_const}, Mathlib]
+  For $f : \mathbb{R} \to \mathbb{R}$ and $a \le b$, if $|f(x)| \le C$ for all $x \in [a,b]$, then
+  $\left|\int_a^b f(x)\,dx\right| \le C \cdot (b-a)$.
+\end{proposition}
+
+\begin{proposition}[\texttt{AbsolutelyContinuousOnInterval.integral\_deriv\_eq\_sub}, Mathlib]
+  If $f : \mathbb{R} \to \mathbb{R}$ satisfies $\texttt{AbsolutelyContinuousOnInterval}\ f\ a\ b$,
+  then $\int_a^b \mathrm{deriv}(f)(x)\,dx = f(b) - f(a)$ (the Fundamental Theorem of Calculus for
+  absolutely continuous functions).
+\end{proposition}
+
+\begin{proposition}[\texttt{deriv\_comp\_const\_sub}, Mathlib]
+  For $f : \mathbb{R} \to \mathbb{R}$ and $a,x \in \mathbb{R}$,
+  $\mathrm{deriv}(t \mapsto f(a-t))(x) = -\mathrm{deriv}(f)(a-x)$, unconditionally (including when $f$ fails to be
+  differentiable at $a-x$, in which case both sides are $0$ by the junk-value convention).
+\end{proposition}
+
+\begin{proposition}[\texttt{integral\_id}, Mathlib]
+  For $a,b \in \mathbb{R}$, $\int_a^b x\,dx = (b^2 - a^2)/2$; in particular, at $a=0$,
+  $\int_0^b x\,dx = b^2/2$.
+\end{proposition}
+
+\begin{proposition}[\texttt{measurable\_of\_tendsto\_metrizable}, Mathlib]
+  Let $\beta$ be a (pseudo-)metrizable Borel space and $(f_n)_{n\in\mathbb{N}}$, $g$ functions
+  $\alpha \to \beta$. If each $f_n$ is measurable and $f_n \to g$ pointwise (equivalently,
+  $\texttt{Filter.Tendsto}\ f\ \texttt{Filter.atTop}\ (\mathcal{N}\ g)$ in the topology of
+  pointwise convergence on $\alpha \to \beta$), then $g$ is measurable.
+\end{proposition}
+
+\begin{definition}[\texttt{Measure.infinitePi}, Mathlib]
+  For an index type $\iota$ and a family of probability measures $\mu_i$ on measurable spaces
+  $X_i$, $\iota \in \iota$, \texttt{Measure.infinitePi} $\mu$ is the unique probability measure
+  $P$ on $\prod_{i} X_i$ such that, for every finite $s \subseteq \iota$ and measurable
+  rectangle $\prod_{i \in s} t_i \times \prod_{i \notin s} X_i$ (with $t_i$ measurable),
+  $P$ assigns it mass $\prod_{i \in s} \mu_i(t_i)$: the countable (or arbitrary) product measure.
+\end{definition}
+
+\begin{proposition}[\texttt{measurePreserving\_eval\_infinitePi}, Mathlib]
+  For each coordinate $i$, the evaluation map $\mathrm{ev}_i \colon \prod_j X_j \to X_i$,
+  $\mathrm{ev}_i(\omega) = \omega_i$, is measure-preserving from $\texttt{Measure.infinitePi}\ \mu$
+  to $\mu_i$.
+\end{proposition}
+
+\begin{proposition}[\texttt{ProbabilityTheory.iIndepFun\_infinitePi}, Mathlib]
+  For any family of measurable maps $X_i \colon \Omega_i \to \beta_i$ (in particular the identity
+  maps used here), the coordinate maps $\omega \mapsto X_i(\omega_i)$, $i \in \iota$, are jointly
+  independent under $\texttt{Measure.infinitePi}\ \mu$.
+\end{proposition}
+
+\begin{proposition}[\texttt{ProbabilityTheory.strong\_law\_ae\_real}, Mathlib]
+  Let $(Y_i)_{i\in\mathbb{N}}$ be a pairwise-independent, identically-distributed sequence of
+  real-valued integrable random variables on a probability space $(\Omega,P)$. Then, for
+  $P$-almost every $\omega$, $\frac{1}{n}\sum_{i=0}^{n-1} Y_i(\omega) \to \mathbb{E}_P[Y_0]$ as
+  $n \to \infty$.
+\end{proposition}
+
+\begin{proposition}[\texttt{MeasureTheory.ae\_all\_iff}, Mathlib]
+  For a countable index type $\iota$ and a family of predicates $p_i \colon \alpha \to
+  \texttt{Prop}$, $(\forall^{a.e.} x,\ \forall i,\ p_i(x)) \iff (\forall i,\ \forall^{a.e.} x,\
+  p_i(x))$: in particular, a countable intersection of full-measure sets is full-measure.
+\end{proposition}

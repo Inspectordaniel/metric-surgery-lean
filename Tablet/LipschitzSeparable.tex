@@ -1,0 +1,239 @@
+\begin{lemma}[Lemma A.1, Lipschitz separability, bound idiom]
+  Let $E$ be a complete separable metric space. There is a countable family
+  $\{P_n\}_{n\in\mathbb{N}}$ of real-valued functions on $E$, together with nonnegative bound and
+  Lipschitz-constant fields $B_n, L_n$, such that:
+  \begin{itemize}
+  \item for every $n$, $|P_n(x)| \le B_n$ for all $x \in E$ and $P_n$ is Lipschitz with constant
+    $L_n$;
+  \item for every Lipschitz $\pi \colon E \to \mathbb{R}$ and every Lipschitz constant $K \ge 0$ for
+    $\pi$, there is a subsequence $\phi \colon \mathbb{N} \to \mathbb{N}$ such that
+    \begin{enumerate}
+    \item $P_{\phi(k)}$ is Lipschitz with constant $K$, for every $k$;
+    \item $P_{\phi(k)}(x) \to \pi(x)$ as $k \to \infty$, for every $x \in E$; and
+    \item for every $M \ge 0$ that bounds $\pi$ (i.e.\ $|\pi(x)| \le M$ for all $x$), $M$ also
+      bounds every member of the subsequence: $|P_{\phi(k)}(x)| \le M$ for all $k$ and all $x$.
+    \end{enumerate}
+  \end{itemize}
+
+  \paragraph{Relation to the paper's statement.} This is a deliberate weakening of paper Lemma A.1
+  (paper.tex 1602--1627). The paper additionally asserts $\mathrm{Lip}(\pi_{n_k}) \to \mathrm{Lip}(\pi)$
+  and, when $\pi$ is bounded, $\|\pi_{n_k}\|_\infty \to \|\pi\|_\infty$, both convergences of the
+  \emph{optimal} Lipschitz constant / sup-norm of $\pi$. This tablet has no notion of the optimal
+  Lipschitz constant of a function: the tablet's metric-$1$-form type carries a Lipschitz bound and
+  a sup-norm bound only as declared \emph{bounds} (arbitrary valid constants, not necessarily
+  tight), and every formalized use of Lemma A.1 works with such a bound $K$, never with an actual
+  infimum. Concretely, the only place Lemma A.1 is invoked in the body of the paper (paper.tex
+  1376--1414, immediately preceding \eqref{TfpiTfkpij}) uses exactly: a bound $C$ with $\|f\|_\infty,
+  \mathrm{Lip}(f), \mathrm{Lip}(\pi) \le C$ (eq.~\eqref{BoundByC}); membership of each $\pi_j$ in
+  the produced family with $\mathrm{Lip}(\pi_j) \le \mathrm{Lip}(\pi) \le C$ (not convergence of
+  $\mathrm{Lip}(\pi_j)$ to anything); and pointwise convergence $\pi_j \to \pi$
+  (eq.~\eqref{pi_converge}, used together with dominated convergence via \eqref{massmeasure} to
+  obtain \eqref{TfpiTfkpij}). The (upper half of the) lower bound in \eqref{closed2} likewise only
+  ever uses a uniform bound $C$ on the finitely many forms entering the mass-vs-sum comparison,
+  never a convergence of optimal constants. Hence dropping the two convergence-of-constants clauses
+  loses no content the paper's formalized argument actually consumes, while every remaining clause
+  -- membership of the subsequence in the family with the (non-optimal) Lipschitz bound $K$ carried
+  over intact, pointwise convergence, and inheritance of any given bound $M$ on $\pi$ -- is
+  retained at full strength.
+\end{lemma}
+\begin{proof}
+  \emph{Case $E$ empty.} Every quantifier over $x \in E$ is then vacuous, so any assignment of
+  values (there are none to make) trivially satisfies every clause; take $P_n$ to be the (unique,
+  vacuous) empty function for every $n$, with $B_n = L_n = 0$.
+
+  \emph{Case $E$ nonempty.} By separability, fix a dense sequence $(d_j)_{j \in \mathbb{N}}$ in $E$
+  (\texttt{exists\_dense\_seq}), and reindex it to start at $1$ by setting $e_j := d_{j-1}$ for $j
+  \ge 1$. The reindexed sequence $(e_j)_{j \ge 1}$ enumerates exactly the same set of points as
+  $(d_j)_{j \in \mathbb{N}}$ and hence is itself dense in $E$; every construction from this point
+  on uses only $e_j$ for $j \ge 1$ (never an index-$0$ term), so all subsequent ranges $1 \le j \le
+  k$, $1 \le j \le l$, etc.\ below are ranges over the \emph{whole} sequence actually in use, and
+  density of that sequence is exactly density of $(e_j)_{j \ge 1}$. This sequence need not be
+  injective (if $E$ is finite it cannot be), and nothing below requires it to be.
+
+  \paragraph{The countable family.} For $l \in \mathbb{N}$ with $l \ge 1$, $(c_1,\dots,c_l) \in
+  \mathbb{Q}^l$, and $M, C \in \mathbb{Q} \cap [0,\infty)$, define
+  \[
+    g_{l;c_1,\dots,c_l;M,C}(x) := \tau_M\Bigl(\max_{1 \le j \le l} \bigl(c_j - C\,d(x,e_j)\bigr)\Bigr)
+    , \qquad \tau_M(t) := \max\{-M,\min\{t,M\}\}
+    .
+  \]
+  Each map $x \mapsto c_j - C\,d(x,e_j)$ is $C$-Lipschitz (the reverse triangle inequality
+  $|d(x,e_j)-d(y,e_j)| \le d(x,y)$ gives $|(c_j-Cd(x,e_j))-(c_j-Cd(y,e_j))| \le C\,d(x,y)$); a
+  finite maximum of $C$-Lipschitz functions is $C$-Lipschitz (an elementary induction on the finite
+  index set: the base case is a single $C$-Lipschitz function, and the inductive step uses that
+  $\max$ of two $C$-Lipschitz functions is $C$-Lipschitz, itself immediate from
+  $|\max(a,b)-\max(a',b')| \le \max(|a-a'|,|b-b'|)$); and $\tau_M$ is $1$-Lipschitz (a composition
+  of the $1$-Lipschitz maps $t \mapsto \min(t,M)$ and $t \mapsto \max(-M,t)$). Hence
+  $g_{l;c_1,\dots,c_l;M,C}$ is $(1 \cdot C) = C$-Lipschitz, and takes values in $[-M,M]$ by
+  definition of $\tau_M$, so $|g_{l;\dots}(x)| \le M$ for every $x$.
+
+  The index set $I := \{(l,c_1,\dots,c_l,M,C) : l \ge 1,\ c_i \in \mathbb{Q},\ M,C \in \mathbb{Q}
+  \cap [0,\infty)\}$ is countable (a countable union, over $l \ge 1$, of countable sets
+  $\mathbb{Q}^l \times (\mathbb{Q}\cap[0,\infty))^2$), so fix a surjection $\iota \colon \mathbb{N}
+  \to I$, and set $P_n := g_{\iota(n)}$, $B_n := M(\iota(n))$, $L_n := C(\iota(n))$ (the $M$- and
+  $C$-components of $\iota(n)$, as nonnegative reals; indices $n$ whose $\iota(n)$ falls outside
+  $I$, if any, may be assigned an arbitrary member of the family with no effect on what follows).
+  By the previous paragraph, every $P_n$ is bounded by $B_n$ and $L_n$-Lipschitz, establishing the
+  family's own clause.
+
+  Fix $\pi \colon E \to \mathbb{R}$ and $K \ge 0$ with $\pi$ Lipschitz with constant $K$.
+
+  \paragraph{Case A: $\pi$ is constant, say $\pi(x) = y$ for all $x \in E$.} Choose a sequence
+  $(y_k)_{k \in \mathbb{N}}$ of rationals with $|y_k| \le |y|$ and $y_k \to y$ (if $y \ge 0$, choose
+  $y_k \in [0,y] \cap \mathbb{Q}$ with $y_k \to y$; if $y < 0$, choose $y_k \in [y,0]\cap\mathbb{Q}$
+  with $y_k \to y$; both are possible by density of $\mathbb{Q}$ in $\mathbb{R}$). For each $k$,
+  let $\phi(k)$ be any $n$ with $\iota(n) = (1, y_k, |y_k|, 0)$ (exists by surjectivity of $\iota$),
+  so $P_{\phi(k)} = g_{1;y_k;|y_k|,0} = \tau_{|y_k|}(y_k) = y_k$ (taking $M := |y_k|$, we have
+  $|y_k| \le M$ trivially, so $y_k$ lies inside $\tau_{|y_k|}$'s untruncated range $[-M,M]$) --
+  i.e.\ $P_{\phi(k)}$ is the constant function $y_k$.
+  \begin{enumerate}
+  \item $P_{\phi(k)}$ is constant, hence $0$-Lipschitz, hence $K$-Lipschitz for every $K \ge 0$
+    (weakening a $0$-Lipschitz bound to any larger bound).
+  \item $P_{\phi(k)}(x) = y_k \to y = \pi(x)$ for every $x$, since $y_k \to y$.
+  \item If $M \ge 0$ bounds $\pi$, then $|y| = |\pi(x)| \le M$ (any $x$), so $|P_{\phi(k)}(x)| =
+    |y_k| \le |y| \le M$ for every $k,x$.
+  \end{enumerate}
+
+  \paragraph{Case B: $\pi$ is not constant.} Fix $x_0 \ne y_0$ in $E$ with $\pi(x_0) \ne \pi(y_0)$.
+  Since $\pi$ is $K$-Lipschitz, $0 < |\pi(x_0)-\pi(y_0)| \le K\,d(x_0,y_0)$, and $d(x_0,y_0) > 0$
+  (as $x_0 \ne y_0$), forcing $K > 0$.
+
+  The construction below defines $\phi(k)$ for every $k \ge 1$; once it is complete, set $\phi(0)
+  := \phi(1)$, which extends $\phi$ to a total function $\mathbb{N} \to \mathbb{N}$ without
+  affecting any of Clauses 1--3: Clauses 1 and 3 are established below for each $k \ge 1$
+  individually (so reusing the $k=1$ value at $k=0$ inherits both), and Clause 2 is a statement
+  about the limit as $k \to \infty$, which does not see the value at any single finite index.
+
+  For $k \ge 1$, let
+  \[
+    r_k := \min\bigl(\{1\} \cup \{ d(e_j,e_{j'}) : j,j' \in \{1,\dots,k\},\ e_j \ne e_{j'}\}\bigr)
+    ,
+  \]
+  a minimum of a nonempty finite set of positive reals together with $1$, so $0 < r_k \le 1$.
+  Fix a sequence $(\epsilon_k)_{k\ge1}$ with $0 < \epsilon_k < 1$, $\epsilon_k \to 0$ (e.g.\
+  $\epsilon_k = 1/(k+1)$).
+
+  If $\pi$ is bounded, let $N := \sup_{x \in E} |\pi(x)|$ (a finite nonnegative real). Since
+  $\pi(x_0) \ne \pi(y_0)$, these two values are not both $0$, so $\max(|\pi(x_0)|,|\pi(y_0)|) > 0$,
+  and hence $N \ge \max(|\pi(x_0)|,|\pi(y_0)|) > 0$. Set $\delta_k := \epsilon_k \min\{N, r_kK/4\}$. If $\pi$ is unbounded, set $\delta_k := \epsilon_k r_k K/4$ instead (dropping
+  the $N$-term is legitimate here: as shown at the end of this proof, this case makes clause 3
+  vacuous, since no finite $M$ bounds an unbounded $\pi$). In either case $0 < \delta_k \le
+  \epsilon_k \max\{N, K/4\}$ (using $r_k \le 1$; interpret $N := 0$ formally in the unbounded
+  branch's upper bound, where only the $r_kK/4$ term is present), so $\delta_k \to 0$ as $k \to
+  \infty$ since $\epsilon_k \to 0$.
+
+  For each $k \ge 1$: pick a natural number $N_k \ge 1$ with $1/N_k \le \delta_k$, and define $c_{j,k}
+  := \lfloor (1-\epsilon_k)\pi(e_j) N_k \rfloor / N_k$ for $j = 1,\dots,k$ -- a rational depending
+  only on the real number $\pi(e_j)$, via the fixed function $h_k(t) := \lfloor t N_k \rfloor/N_k$.
+  Since $\lfloor s \rfloor \le s < \lfloor s\rfloor+1$, $|h_k(t)-t| \le 1/N_k \le \delta_k$ for every
+  real $t$, so
+  \begin{equation}\label{eq:approx}
+    |c_{j,k} - (1-\epsilon_k)\pi(e_j)| \le \delta_k
+    , \qquad j=1,\dots,k
+    .
+  \end{equation}
+  Crucially, since $c_{j,k} = h_k(\pi(e_j))$ is a function of the value $\pi(e_j)$ alone, $e_j =
+  e_{j'}$ (possible for $j \ne j'$ when $E$ is finite) forces $\pi(e_j)=\pi(e_{j'})$ and hence
+  $c_{j,k}=c_{j',k}$ automatically -- no injective enumeration of $E$ is needed.
+
+  Also pick a rational $C_k \in [(1-\epsilon_k/2)K,\,K]$ (a nondegenerate interval of length
+  $\epsilon_kK/2 > 0$, so it contains a rational), and set $M_k := \max_{1\le j\le k}|c_{j,k}|$.
+  Let $\phi(k)$ be any $n$ with $\iota(n) = (k,(c_{1,k},\dots,c_{k,k}),M_k,C_k)$, so $P_{\phi(k)} =
+  g_{k;c_{1,k},\dots,c_{k,k};M_k,C_k}$.
+
+  \emph{Claim: $|c_{j',k}-c_{j,k}| \le C_k\,d(e_{j'},e_j)$ for all $j,j' \in \{1,\dots,k\}$.} If
+  $e_j = e_{j'}$, both sides are $0$ (left side by the previous paragraph, right side since
+  $d(e_{j'},e_j)=0$). Otherwise $e_j \ne e_{j'}$, so $d(e_{j'},e_j) \ge r_k$ by definition of $r_k$
+  (as $j,j' \le k$). By \eqref{eq:approx} and the triangle inequality,
+  \[
+    |c_{j',k}-c_{j,k}| \le 2\delta_k + (1-\epsilon_k)|\pi(e_{j'})-\pi(e_j)|
+      \le 2\delta_k + (1-\epsilon_k)K\,d(e_{j'},e_j)
+    ,
+  \]
+  using that $\pi$ is $K$-Lipschitz. Since $\delta_k \le \epsilon_k r_k K/4$ (both the bounded and
+  unbounded definitions of $\delta_k$ satisfy this, as $\min\{N,r_kK/4\}\le r_kK/4$), and $r_k \le
+  d(e_{j'},e_j)$,
+  \[
+    2\delta_k \le \tfrac{1}{2}\epsilon_k r_k K \le \tfrac12 \epsilon_k K\,d(e_{j'},e_j)
+    ,
+  \]
+  so
+  \[
+    |c_{j',k}-c_{j,k}| \le \Bigl(\tfrac12\epsilon_k + (1-\epsilon_k)\Bigr)K\,d(e_{j'},e_j)
+      = \bigl(1-\tfrac12\epsilon_k\bigr)K\,d(e_{j'},e_j) \le C_k\,d(e_{j'},e_j)
+    ,
+  \]
+  using $C_k \ge (1-\epsilon_k/2)K$, proving the claim.
+
+  \emph{Consequence: $P_{\phi(k)}(e_{j'}) = c_{j',k}$ for $j' \in \{1,\dots,k\}$.} The claim gives,
+  for every $j \in \{1,\dots,k\}$, $c_{j,k} - C_k\,d(e_{j'},e_j) \le c_{j',k}$, with equality at
+  $j=j'$ (both sides equal $c_{j',k}$, since $d(e_{j'},e_{j'})=0$). So the maximum defining
+  $g_{k;\dots}(e_{j'}) = \max_{1\le j\le k}(c_{j,k}-C_k\,d(e_{j'},e_j))$ equals $c_{j',k}$, attained
+  at (at least) $j=j'$. Since $|c_{j',k}| \le M_k$ (definition of $M_k$), $\tau_{M_k}(c_{j',k}) =
+  c_{j',k}$, so $P_{\phi(k)}(e_{j'}) = \tau_{M_k}(c_{j',k}) = c_{j',k}$.
+
+  \emph{Clause 1.} $P_{\phi(k)}$ is $C_k$-Lipschitz (shown for the family in general) with $C_k \le
+  K$, so it is also $K$-Lipschitz (weakening).
+
+  \emph{Clause 2.} Fix $j \ge 1$. By \eqref{eq:approx}, for every $k \ge j$, $|c_{j,k} -
+  (1-\epsilon_k)\pi(e_j)| \le \delta_k \to 0$, and $(1-\epsilon_k)\pi(e_j) \to \pi(e_j)$ (as
+  $\epsilon_k \to 0$); by the triangle inequality, $c_{j,k} \to \pi(e_j)$ as $k \to \infty$. Since
+  $P_{\phi(k)}(e_j) = c_{j,k}$ for $k \ge j$ (shown above, valid once $j \le k$), $P_{\phi(k)}(e_j)
+  \to \pi(e_j)$ as $k \to \infty$, for every $j$.
+
+  Now fix an arbitrary $x \in E$ and $l \ge 1$. Fix also an arbitrary $j \in \{1,\dots,l\}$. Both
+  $\pi$ and, for $k \ge l$, $P_{\phi(k)}$ are Lipschitz with constant $K$ (the latter by Clause 1
+  just shown), so the elementary inequality (for any $K$-Lipschitz $u,v \colon E \to \mathbb{R}$
+  and any point $q$)
+  \[
+    |u(x)-v(x)| \le |u(q)-v(q)| + \bigl(\mathrm{Lip}(u)+\mathrm{Lip}(v)\bigr)\,d(x,q)
+  \]
+  (triangle inequality $|u(x)-v(x)| \le |u(x)-u(q)|+|u(q)-v(q)|+|v(q)-v(x)|$, then Lipschitz bounds
+  on the two outer terms), applied at $q = e_j$, gives
+  \begin{equation}\label{eq:fixedj}
+    |\pi(x)-P_{\phi(k)}(x)| \le |\pi(e_j)-P_{\phi(k)}(e_j)| + 2K\,d(x,e_j)
+    , \qquad k \ge l
+    .
+  \end{equation}
+  Fixing $j$ (hence $l$) and letting $k \to \infty$: the term $|\pi(e_j)-P_{\phi(k)}(e_j)|$ tends
+  to $0$ by Clause 2 (shown above), while $2K\,d(x,e_j)$ does not depend on $k$ at all. Taking
+  $\limsup_{k\to\infty}$ of both sides of \eqref{eq:fixedj} -- which is licit termwise, since the
+  right-hand side's first term is a convergent (hence honest $\lim$, not merely $\limsup$)
+  sequence and its second term is constant in $k$ -- therefore gives
+  \[
+    \limsup_{k\to\infty} |\pi(x)-P_{\phi(k)}(x)| \le 0 + 2K\,d(x,e_j) = 2K\,d(x,e_j)
+    .
+  \]
+  This bound holds for every $j \in \{1,\dots,l\}$ individually, and its left-hand side does not
+  depend on $j$; only \emph{now}, after the limit in $k$ has already been taken, do we minimize the
+  (constant-in-$k$) right-hand side over $j$, obtaining
+  \[
+    \limsup_{k\to\infty} |\pi(x)-P_{\phi(k)}(x)| \le \min_{1\le j\le l} \bigl(2K\,d(x,e_j)\bigr)
+      = 2K \min_{1\le j\le l} d(x,e_j)
+    .
+  \]
+  (No inequality between $\min_j$ of a sum and a sum of $\min_j$'s is used anywhere above: the
+  minimization over $j$ happens strictly after, never before, the limit in $k$.) The left side does
+  not depend on $l$; letting $l \to \infty$ and using that $(e_j)_{j \ge 1}$ is dense in $E$ (so
+  $\inf_{j\ge1} d(x,e_j) = 0$), the right side tends to $0$, giving
+  $\limsup_{k\to\infty}|\pi(x)-P_{\phi(k)}(x)| = 0$, i.e.\ $P_{\phi(k)}(x) \to \pi(x)$.
+
+  \emph{Clause 3.} Suppose $M \ge 0$ bounds $\pi$: $|\pi(x)| \le M$ for all $x$. Then $\pi$ is
+  bounded, so $\delta_k$ was defined via $N = \sup_x|\pi(x)| \le M$. For each $j \le k$, by
+  \eqref{eq:approx} and $\delta_k \le \epsilon_k N$ (from $\delta_k = \epsilon_k\min\{N,r_kK/4\} \le
+  \epsilon_k N$),
+  \[
+    |c_{j,k}| \le |c_{j,k}-(1-\epsilon_k)\pi(e_j)| + (1-\epsilon_k)|\pi(e_j)|
+      \le \delta_k + (1-\epsilon_k)N \le \epsilon_k N + (1-\epsilon_k)N = N
+    ,
+  \]
+  so $M_k = \max_{1\le j\le k}|c_{j,k}| \le N \le M$. Since $P_{\phi(k)} = \tau_{M_k}(\cdots)$ takes
+  values in $[-M_k,M_k] \subseteq [-M,M]$ (definition of $\tau_{M_k}$, $M_k \le M$),
+  $|P_{\phi(k)}(x)| \le M$ for every $k$ and every $x$, as required. (If instead $\pi$ is
+  unbounded, no $M$ satisfies the hypothesis of Clause 3 for this $\pi$, so the clause holds
+  vacuously; this is exactly the case excluded from needing the $N$-term in $\delta_k$'s
+  definition.)
+
+  This exhibits, for every Lipschitz $\pi$ and Lipschitz bound $K$, a subsequence $\phi$
+  satisfying Clauses 1--3, completing the proof.
+\end{proof}

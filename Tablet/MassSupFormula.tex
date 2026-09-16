@@ -1,0 +1,156 @@
+\begin{definition}[Ambrosio--Kirchheim mass-supremum formula, hard direction, finite form: the
+  statement, taken as an explicit hypothesis]
+  Let $E$ be a complete, separable metric space equipped with a compatible Borel $\sigma$-algebra.
+  We write $\mathrm{MassSupFormulaStatement}(E)$ for the following proposition about $E$:
+  \begin{quote}
+    for every $T \in \mathcal{M}_1(E)$ (\noderef{MetricCurrent1}) and every $c \in \mathbb{R}$
+    with $c \ge 0$: if for every $n \in \mathbb{N}$ and every finite family $(f_p,\pi_p)_{p<n}
+    \in \mathcal{D}^1(E)$ (\noderef{Form1}) with $\mathrm{Lip}(\pi_p) \le 1$ for all $p<n$ and
+    $\sum_{p<n} |f_p(x)| \le 1$ for every $x \in E$ one has
+    \[
+      \sum_{p<n} |T(f_p,\pi_p)| \le c
+      ,
+    \]
+    then $\mathbb{M}(T) \le c$, i.e.\ $\mathrm{massOfFunctional}(T) \le
+    \mathrm{ENNReal.ofReal}(c)$ (\noderef{massOfFunctional}).
+  \end{quote}
+
+  \textbf{Why this node is a statement rather than a theorem.} This node is a verbatim external
+  literature citation, \cite{AmbrosioKirchheim}*{Proposition 2.7}, which the tablet deliberately
+  does not reprove. Rather than record it as a theorem with an unproved body -- which would make
+  every downstream result depend on \texttt{sorryAx} -- it is recorded here as a named proposition
+  about $E$, and the nodes that consume it (\noderef{BBAssertion}, and through it
+  \noderef{ApproximationMetric}) carry $\mathrm{MassSupFormulaStatement}(E)$ as an explicit
+  hypothesis, discharged by whoever invokes them. The remainder of this node justifies that the
+  proposition displayed above is exactly the cited result, and records the reductions used to put
+  it in this form.
+
+  \textbf{Hypotheses supplied.} $E$ is complete and separable by the ambient
+  \texttt{[CompleteSpace E] [TopologicalSpace.SeparableSpace E]} instances, matching the paper's
+  standing assumption at paper.tex line 1096 (``Throughout this paper $E$ \dots\ denotes a
+  complete, separable, geodesic metric space'') under which \cite{AmbrosioKirchheim}*{Proposition
+  2.7} is invoked at paper.tex 1497--1501. We do \emph{not} add a geodesic hypothesis (e.g.\ a
+  geodesic-pairing structure on $E$) here: Proposition 2.7 is a statement purely about the mass
+  $\mathbb{M}(T)$ of a $1$-current $T \in \mathcal{M}_1(E)$ and its representation as a supremum
+  over $1$-forms, with no reference to geodesics anywhere in its statement or in
+  \cite{AmbrosioKirchheim}'s proof of it; the paper's standing assumption bundles geodesy into its
+  blanket hypothesis on $E$ only because $E$'s later role as the ambient space for curve
+  constructions (Section~2 onward) needs it, not because Proposition 2.7 does. (The tablet's other
+  citation-only external-input node for this same standing hypothesis, ``PaoliniStepanovExists'',
+  takes the same line: it carries completeness and separability but not geodesy.)
+
+  We also do not add continuity of $T$ in the $f$-slot as a hypothesis, even though
+  \cite{AmbrosioKirchheim}*{Definition 3.1} of a metric $1$-current includes it: as
+  \noderef{MetricCurrent1}'s own definition records, this continuity is not axiomatized there
+  because paper.tex line 1393 derives it from \texttt{finiteMass} together with Lebesgue's
+  dominated convergence theorem (a derivation the tablet supplies elsewhere, in a node named
+  ``CurrentContinuousF''). Since $T : \mathrm{MetricCurrent1}\ E$ already carries
+  \texttt{finiteMass}, this continuity is available whenever it is needed and need not be repeated
+  as a hypothesis of this node.
+
+  \textbf{The external theorem, verbatim.} \cite{AmbrosioKirchheim}*{Proposition 2.7} (paper.tex
+  1497--1501) asserts that for a $1$-current $T$,
+  \[
+    \mathbb{M}(T) = \sup \sum_{p=1}^\infty |T(f_p,\pi_p)|
+    ,
+  \]
+  where the supremum is over sequences $f_p \in \mathrm{Lip}_b(E)$, $\pi_p \in \mathrm{Lip}(E)$
+  with $\mathrm{Lip}(\pi_p) \le 1$ for all $p$ and $\sum_p |f_p| \le 1$ (i.e.\ $\sum_{p=1}^\infty
+  |f_p(x)| \le 1$ for every $x \in E$).
+
+  \textbf{Why only the hard direction is stated, and why this is a citation and not an omission.}
+  Writing this equality as two inequalities, $\sup \le \mathbb{M}(T)$ and $\mathbb{M}(T) \le \sup$:
+  the first is \emph{free} from the definition of $\mathbb{M}(T) = \mathrm{massOfFunctional}(T)$
+  as an infimum over admissible measures (\noderef{massOfFunctional}), and must be (and is)
+  re-derived at each use site rather than cited here: for admissible $\mu$ and any such sequence,
+  \[
+    \sum_{p=1}^\infty |T(f_p,\pi_p)|
+    \le \sum_{p=1}^\infty \mathrm{Lip}(\pi_p) \int_E |f_p| \, d\mu
+    \le \sum_{p=1}^\infty \int_E |f_p| \, d\mu
+    = \int_E \sum_{p=1}^\infty |f_p| \, d\mu
+    \le \mu(E)
+    ,
+  \]
+  using $\mathrm{Lip}(\pi_p) \le 1$, monotone convergence to interchange sum and integral, and
+  $\sum_p |f_p| \le 1$; taking the infimum over admissible $\mu$ gives $\sup \le \mathbb{M}(T)$
+  with no external input. The second direction, $\mathbb{M}(T) \le \sup$, is the content of this
+  node. With $\mathbb{M}(T)$ defined as an \emph{infimum} over admissible measures rather than as
+  the total mass of a known minimizer, this direction requires \emph{constructing} an admissible
+  measure of total mass $\le c$ out of a bound $c$ on the sup -- precisely the mass-measure
+  construction that is Ambrosio--Kirchheim's own achievement in proving Proposition 2.7, which this
+  tablet deliberately does not reprove (\noderef{massOfFunctional}'s modeling note). It is also not
+  recoverable by a soft argument from what the tablet already has: one might hope to obtain an
+  admissible measure of mass $\le c$ as a weak-* limit of a sequence of admissible measures with
+  masses decreasing to $\inf$, but weak-* compactness of a bounded set of finite Borel measures on
+  a general complete separable metric space requires \emph{tightness}, which is not available
+  without further hypotheses on $T$ or $E$; so lower semicontinuity of $\mu \mapsto \mu(E)$ under
+  such limits cannot be invoked either. Hence $\mathbb{M}(T) \le \sup$ is recorded here as the
+  genuine external input, matching the paper's own practice of citing Proposition 2.7 without
+  proof.
+
+  \textbf{Why the finite (\texttt{Fin n}-indexed) form is equivalent to, and sufficient in place
+  of, the countable form, and why a \texttt{tsum} formulation is avoided.} Since every term
+  $|T(f_p,\pi_p)|$ is nonnegative, the infinite series $\sum_{p=1}^\infty |T(f_p,\pi_p)|$ is by
+  definition the supremum over $n$ of its partial sums $\sum_{p<n} |T(f_p,\pi_p)|$, so
+  \[
+    \sup_{(f_p,\pi_p)_{p\ge 0}} \sum_{p=1}^\infty |T(f_p,\pi_p)|
+    = \sup_{(f_p,\pi_p)_{p \ge 0}} \ \sup_{n} \sum_{p<n} |T(f_p,\pi_p)|
+    = \sup_{n} \ \sup_{(f_p,\pi_p)_{p<n}} \sum_{p<n} |T(f_p,\pi_p)|
+    ,
+  \]
+  where the last equality exchanges the two suprema (valid since both are suprema of the same
+  jointly-indexed nonnegative quantity) and drops the dependence of the inner supremum on any
+  $\pi_p,f_p$ with $p \ge n$. Concretely: given a sequence $(f_p,\pi_p)_{p\ge 0}$ satisfying the
+  two side conditions, its length-$n$ truncation $(f_p,\pi_p)_{p<n}$ satisfies the same two
+  conditions restricted to $p<n$ (a sub-sum of a pointwise bound $\le 1$ is itself $\le 1$) and
+  realizes the same partial sum. Conversely, given a finite family $(f_p,\pi_p)_{p<n}$ satisfying
+  the two side conditions, extend it to a sequence by setting $f_p := 0$, $\pi_p := 0$ for $p \ge
+  n$ (valid witnesses: bound $0$, Lipschitz constant $0$); this preserves both side conditions
+  ($\mathrm{Lip}(0) = 0 \le 1$; the pointwise sum $\sum_p |f_p(x)|$ is unchanged since the added
+  terms are $0$) and contributes $0$ to every partial sum beyond $n$, since $T(0,0) = 0$ by
+  \noderef{MetricCurrent1}'s homogeneity in $f$ at scalar $c = 0$ (taking $\omega_c = (0,0)$ and
+  $\omega = \omega_c$: the hypotheses of that field hold with $\omega_c.f \equiv 0 = 0 \cdot
+  \omega_c.f$, giving $T(0,0) = 0 \cdot T(0,0) = 0$). Hence the two suprema -- over sequences of
+  the full series, and over $n$ and $\mathtt{Fin}\ n$-indexed families of the $n$-term partial sum
+  -- coincide, and the hypothesis $\mathtt{hsup}$ (a bound $c$ on every such finite partial sum,
+  for every $n$) is exactly the statement $\sup \le c$ in Proposition 2.7's formula. We index the
+  hypothesis over $\mathtt{Fin}\ n \to \mathrm{Form1}\ E$ rather than as a $\mathtt{tsum}$ over
+  $\mathbb{N}$: Lean's $\mathtt{tsum}$ of a non-summable family is $0$ by convention, so a
+  $\mathtt{tsum}$-indexed hypothesis $\sum'_p |f_p(x)| \le 1$ would be satisfied vacuously by
+  families that do not actually have $\sum_p |f_p(x)| \le 1$ as a genuine bound on partial sums,
+  silently weakening the hypothesis; the finite form has no such hazard, and is exactly what a
+  countable-indexed bound on partial sums (as produced, for instance, by Fatou's lemma for series
+  at the use site of this node) supplies directly.
+
+  \textbf{Conclusion.} By the equivalence above, $\mathtt{hsup}$ gives
+  $\sup \sum_{p=1}^\infty |T(f_p,\pi_p)| \le c$ over all admissible sequences $(f_p,\pi_p)$. By
+  Proposition 2.7's equality $\mathbb{M}_{\mathrm{AK}}(T) = \sup \sum_{p=1}^\infty
+  |T(f_p,\pi_p)|$ (writing $\mathbb{M}_{\mathrm{AK}}(T)$ for the paper's $\mu_T(E)$, paper.tex
+  1108--1109, to distinguish it notationally from $\mathrm{massOfFunctional}(T)$ in the next step),
+  this gives $\mathbb{M}_{\mathrm{AK}}(T) \le c$.
+
+  \textbf{The min-vs-inf bridge, as an explicit step.} It remains to identify
+  $\mathbb{M}_{\mathrm{AK}}(T)$ with $\mathrm{massOfFunctional}(T)$, since the two are defined
+  differently: $\mathbb{M}_{\mathrm{AK}}(T) := \mu_T(E)$ for the specific \emph{minimum} admissible
+  measure $\mu_T$ (paper.tex 1108, ``the minimum over all the finite positive Borel measure $\mu$
+  satisfying'' the admissibility inequality \eqref{massmeasure}), while
+  $\mathrm{massOfFunctional}(T)$ is by definition the \emph{infimum} of $\mu(E)$ over the class of
+  admissible measures (\noderef{massOfFunctional}). We need only the free direction of this
+  identification, and it costs nothing beyond existence-plus-admissibility of $\mu_T$: paper.tex
+  1103--1108 asserts, for every $T \in \mathcal{M}_1(E)$ (in particular for our $T$, since $T :
+  \mathrm{MetricCurrent1}\ E$), the existence of a finite positive Borel measure $\mu_T$ satisfying
+  \eqref{massmeasure} -- i.e.\ $\mu_T$ is admissible for $T$ in the sense of
+  \noderef{IsAdmissible} -- and paper.tex 1109 sets $\mathbb{M}_{\mathrm{AK}}(T) := \mu_T(E)$. Since
+  $\mathrm{massOfFunctional}(T)$ is an infimum over the (nonempty, by the above) class of
+  admissible measures, and $\mu_T(E)$ is the value of that same quantity $\mu(E)$ at one particular
+  admissible measure $\mu = \mu_T$, the infimum is $\le$ that value:
+  \[
+    \mathrm{massOfFunctional}(T) \le \mu_T(E) = \mathbb{M}_{\mathrm{AK}}(T) \le c
+    .
+  \]
+  (No attainment of the infimum and no minimality of $\mu_T$ among admissible measures is used
+  here -- only that $\mu_T$ \emph{is} admissible, which is exactly what paper.tex 1103--1108
+  quotes.) Converting the real inequality $\mathrm{massOfFunctional}(T) \le c$-bound into the
+  $\overline{\mathbb{R}}_{\ge 0}$-valued conclusion via $c \ge 0$ gives $\mathrm{massOfFunctional}(T)
+  \le \mathrm{ENNReal.ofReal}(c)$, as required.
+\end{definition}

@@ -1,0 +1,38 @@
+\begin{definition}[Piecewise-geodesic sampling $\gamma^\delta$]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}),
+  $\gamma \in \Theta(E)$ (\noderef{Curve}), and $\delta \in \mathbb{R}$ with
+  $0 < \delta < \length(\gamma)$. Set $k = \lceil \length(\gamma)/\delta \rceil$ and
+  $s_j = \min(j\delta,\length(\gamma))$ for $j = 0,\dotsc,k$. Define the \emph{piecewise-geodesic
+  sampling of $\gamma$ at scale $\delta$}, $\gamma^\delta \in \Theta(E)$, to be the concatenation
+  (\noderef{curveConcat})
+  \[
+    \gamma^\delta := G_{\gamma(s_0),\gamma(s_1)} * G_{\gamma(s_1),\gamma(s_2)} * \cdots *
+    G_{\gamma(s_{k-1}),\gamma(s_k)}
+    ,
+  \]
+  of the $k$ geodesics $G_{\gamma(s_{j-1}),\gamma(s_j)}$, $j=1,\dotsc,k$, where $G_{x,y}$ denotes
+  the geodesic pairing's chosen geodesic from $x$ to $y$ (\noderef{GeodesicPairing}). This is
+  exactly paper Definition~4.3 (paper.tex lines 1233--1237).
+
+  \paragraph{Well-definedness (the concatenation chain closes up).} Each successive pair of edges
+  in the chain shares an endpoint: $G_{\gamma(s_{j-1}),\gamma(s_j)}(\length(\cdot)) = \gamma(s_j) =
+  G_{\gamma(s_j),\gamma(s_{j+1})}(0)$, the first equality by \noderef{GeodesicPairing}'s
+  $\mathrm{end\_eq}$ field and the second by its $\mathrm{start\_eq}$ field, so
+  \noderef{curveConcat}'s endpoint-matching hypothesis holds at every step of the chain, built up
+  by induction on the number of edges already concatenated (base case: a single edge
+  $G_{\gamma(s_0),\gamma(s_1)}$, which trivially ends at $\gamma(s_1)$ by $\mathrm{end\_eq}$;
+  inductive step: if the chain built from the first $n$ edges ends at $\gamma(s_n)$, concatenating
+  the $(n{+}1)$-st edge $G_{\gamma(s_n),\gamma(s_{n+1})}$ is legal by the endpoint fact above, and
+  the resulting longer chain ends at $\gamma(s_{n+1})$ by \noderef{GeodesicPairing}'s
+  $\mathrm{end\_eq}$ field applied to that last edge). Taking $n = k-1$ produces $\gamma^\delta$ as
+  displayed above. ($k \ge 2$ under the standing hypothesis $0 < \delta < \length(\gamma)$, since
+  then $\length(\gamma)/\delta > 1$ forces $\lceil \length(\gamma)/\delta \rceil \ge 2$, so the
+  chain always has at least one internal join to verify; the induction above in fact establishes
+  well-definedness for every $k \ge 1$.)
+
+  \paragraph{Modeling choice: geodesic pairing as an explicit parameter (interface decision, not a
+  deviation).} As in \noderef{GeodesicPairing} and \noderef{BasicCut}, $\gamma^\delta$ is defined
+  relative to a fixed, explicitly supplied geodesic pairing $GP$ on $E$, matching the paper's
+  standing use of a once-and-for-all chosen family $G_{x,y}$ throughout the paper, rather than
+  being derived anew from a bare geodesic-space hypothesis on $E$.
+\end{definition}

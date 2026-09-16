@@ -1,0 +1,75 @@
+\begin{lemma}[Additivity of $[[\gamma]]$ over a resolution]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $\omega \in \mathcal{D}^1(E)$
+  (\noderef{Form1}), $k \in \mathbb{N}$, and $s \colon \mathbb{N} \to \mathbb{R}$ monotone
+  (non-decreasing) on $\set{0,\dots,k}$ with $s(0)=0$ and $s(k)=\length(\gamma)$. Then
+  \[
+    [[\gamma]](\omega) = \sum_{i=0}^{k-1} \int_{s(i)}^{s(i+1)} \omega.f(\gamma(t)) \cdot
+      \mathrm{deriv}(\omega.\pi\circ\gamma)(t)\,dt
+    .
+  \]
+  This is the current-additivity half of paper Lemma~2.1/eq.~(1129) (paper.tex line 1129: ``if
+  $\gamma$ is a concatenation of curves $\gamma_1,\dots,\gamma_k$ then we may split the
+  Riemann-Stieltjes integral \eqref{currentcurve} across the subintervals corresponding to the
+  concatenated curves, so that $[[\gamma]]=[[\gamma_1]]+\dotsb+[[\gamma_k]]$ follows immediately''),
+  specialized to a resolution into (possibly degenerate) edges rather than to an abstract
+  concatenation, and phrased -- exactly as \noderef{MorreyResolutionAdditive} does for the measure
+  $\mu_\gamma$ -- without first constructing the reparametrized restricted curves
+  $\gamma|_{[s(i),s(i+1)]}$ as objects of $\Theta(E)$: the un-reparametrized integral
+  $\int_{s(i)}^{s(i+1)} \omega.f(\gamma(t)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma)(t)\,dt$ used here
+  equals $[[\gamma|_{[s(i),s(i+1)]}]](\omega)$ for the reparametrized restricted curve, since
+  reparametrizing by the constant shift $u \mapsto s(i)+u$ changes the integration variable by
+  translation (which changes neither the value of $\omega.f\circ\gamma$ at corresponding points
+  nor, by the translation-invariance of the derivative, the value of
+  $\mathrm{deriv}(\omega.\pi\circ\gamma)$ there) and correspondingly relabels the bounds of integration
+  from $[0,s(i+1)-s(i)]$ to $[s(i),s(i+1)]$ -- exactly the substitution used explicitly in the
+  proof of \noderef{CurrentReverse}.
+\end{lemma}
+\begin{proof}
+  \emph{Integrability of the integrand on every subinterval.} By \noderef{CurveLipschitz}, $\gamma$
+  is globally $1$-Lipschitz, and $\omega.\pi$ is $\mathrm{Lip}(\omega.\pi)$-Lipschitz
+  (\noderef{Form1}), so $\omega.\pi\circ\gamma$ is globally $\mathrm{Lip}(\omega.\pi)$-Lipschitz,
+  hence Lipschitz (so absolutely continuous, \texttt{LipschitzOnWith.absolutelyContinuousOnInterval})
+  on every interval $[a,b]$; consequently $\mathrm{deriv}(\omega.\pi\circ\gamma)$ is interval-integrable on
+  every $a..b$ (\texttt{AbsolutelyContinuousOnInterval.intervalIntegrable\_deriv}, \texttt{Preamble}).
+  Also $\omega.f$ is Lipschitz (\noderef{Form1}), hence continuous, so $\omega.f\circ\gamma$ is
+  continuous on $\mathbb{R}$, hence continuous (and bounded) on every compact $[a,b]$. The product
+  of an interval-integrable function with a continuous function on $[a,b]$ is interval-integrable
+  on $a..b$; so $t \mapsto \omega.f(\gamma(t))\cdot\mathrm{deriv}(\omega.\pi\circ\gamma)(t)$ is
+  interval-integrable on $a..b$, for every $a,b \in \mathbb{R}$.
+
+  \emph{Reduction to a general additivity statement.} We prove, by induction on $n$, that for every
+  $n \in \mathbb{N}$ and every $t \colon \mathbb{N} \to \mathbb{R}$ monotone on $\set{0,\dots,n}$,
+  \[
+    \int_{t(0)}^{t(n)} \omega.f(\gamma(u)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma)(u)\,du
+    = \sum_{i=0}^{n-1} \int_{t(i)}^{t(i+1)} \omega.f(\gamma(u)) \cdot \mathrm{deriv}(\omega.\pi\circ\gamma)(u)\,du
+    . \tag{$\ast_n$}
+  \]
+  Given $(\ast_k)$ applied to $t=s$, substituting $s(0)=0$ and $s(k)=\length(\gamma)$ turns the
+  left-hand side into $[[\gamma]](\omega)$ (\noderef{curveCurrent}) and yields exactly the claimed
+  identity.
+
+  \emph{Base case $n=0$.} Both sides concern the single point $t(0)=t(0)$: the left side is
+  $\int_{t(0)}^{t(0)} (\cdots) = 0$ (an interval integral over a degenerate interval vanishes), and
+  the right side is an empty sum, also $0$. So $(\ast_0)$ holds.
+
+  \emph{Inductive step.} Assume $(\ast_m)$ holds for all monotone $t$ on $\set{0,\dots,m}$; let $t$
+  be monotone on $\set{0,\dots,m+1}$. Restricting to the subset $\set{0,\dots,m}$ shows $t$ is also
+  monotone on $\set{0,\dots,m}$, so $(\ast_m)$ applies to $t$ itself. By the integrability
+  established above, $u \mapsto \omega.f(\gamma(u))\cdot\mathrm{deriv}(\omega.\pi\circ\gamma)(u)$ is
+  interval-integrable on $t(0)..t(m)$ and on $t(m)..t(m+1)$, so the standard additivity of the
+  interval integral over adjacent intervals
+  (\texttt{intervalIntegral.integral\_add\_adjacent\_intervals}, \texttt{Preamble}) gives
+  \[
+    \int_{t(0)}^{t(m)} (\cdots)\,du + \int_{t(m)}^{t(m+1)} (\cdots)\,du
+    = \int_{t(0)}^{t(m+1)} (\cdots)\,du
+    .
+  \]
+  Combining this with $(\ast_m)$ (applied to the first term on the left) gives
+  \[
+    \int_{t(0)}^{t(m+1)} (\cdots)\,du
+    = \sum_{i=0}^{m-1} \int_{t(i)}^{t(i+1)} (\cdots)\,du + \int_{t(m)}^{t(m+1)} (\cdots)\,du
+    = \sum_{i=0}^{m} \int_{t(i)}^{t(i+1)} (\cdots)\,du
+    ,
+  \]
+  which is exactly $(\ast_{m+1})$. This completes the induction, hence the proof.
+\end{proof}

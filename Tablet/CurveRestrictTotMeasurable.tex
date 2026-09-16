@@ -1,0 +1,59 @@
+\begin{helper}[The total restriction map is measurable]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra, and let
+  $a,b \in \mathbb{R}$ be fixed constants. Then $\gamma \mapsto \gamma|^{\mathrm{tot}}_{[a,b]}$
+  (\noderef{curveRestrictTot}) is a measurable map $\Theta(E) \to \Theta(E)$, with $\Theta(E)$
+  carrying the evaluation $\sigma$-algebra on both sides (\noderef{CurveMeasurableSpace}).
+
+  This is the measurability fact genuinely needed by \noderef{EtaRepeats} and
+  \noderef{EtaRepeatsTilde}: those proofs restrict $\gamma$ to $[j-1,j]$ under an integral and then
+  need the \emph{restricted curve itself} (as an element of $\Theta(E)$, feeding into $\psi_{m,\dots}$
+  or $\tilde\psi_{m,\dots}$) to be a measurable function of $\gamma$. \noderef{CurveScaledEvalMeasurable}
+  cannot supply this: its statement is about the $E$-valued map $\gamma \mapsto \gamma(c\cdot\length(\gamma))$
+  for a \emph{fixed} real $c$, i.e.\ measurability of a single evaluation, whereas here the map is
+  $\Theta(E)$-valued and its two endpoints ($a' = \min(\max(a,0),\length(\gamma))$ and
+  $b' = \max(a',\min(\max(b,0),\length(\gamma)))$, \noderef{curveRestrictTot}) are themselves
+  non-constant clamped-affine functions of $\length(\gamma)$: measurability into
+  $\Theta(E)$ with the evaluation $\sigma$-algebra needs the whole trajectory of the restriction to be
+  a jointly measurable function of $(\gamma,u)$, not just two endpoint evaluations of $\gamma$.
+\end{helper}
+\begin{proof}
+  By the universal property of the evaluation (comap) $\sigma$-algebra on $\Theta(E)$
+  (\noderef{CurveMeasurableSpace}: the coarsest $\sigma$-algebra making $\eta \mapsto
+  (\length(\eta),\eta)$ measurable into $\mathbb{R}\times(\mathbb{R}\to E)$), a map $f \colon
+  \Theta(E) \to \Theta(E)$ is measurable exactly when $\gamma \mapsto (\length(f(\gamma)),
+  f(\gamma))$ is measurable into $\mathbb{R}\times(\mathbb{R}\to E)$ (with the product
+  $\sigma$-algebra on the target, so measurability of the second $(\mathbb{R}\to E)$-valued
+  coordinate means measurability of $\gamma \mapsto f(\gamma)(u)$ for every fixed $u \in
+  \mathbb{R}$). We apply this with $f(\gamma) := \gamma|^{\mathrm{tot}}_{[a,b]} =
+  \mathrm{curveRestrictTot}(\gamma,a,b)$.
+
+  \emph{Step 1: the endpoint functions are measurable.} By \noderef{CurveLenMeasurable}, $\gamma
+  \mapsto \length(\gamma)$ is measurable. Since $a,b$ are fixed constants, $\gamma \mapsto a' :=
+  \min(\max(a,0),\length(\gamma))$ is measurable, being $\min$ of the constant $\max(a,0)$ and the
+  measurable map $\gamma\mapsto\length(\gamma)$ (a constant function is measurable, and $\min$ of
+  two measurable real-valued functions is measurable). Likewise $\gamma \mapsto \min(\max(b,0),
+  \length(\gamma))$ is measurable, and hence so is $\gamma \mapsto b' := \max(a', \min(\max(b,0),
+  \length(\gamma)))$, being $\max$ of two measurable functions of $\gamma$.
+
+  \emph{Step 2: the length coordinate.} By \noderef{curveRestrictTot}, $\length(f(\gamma)) = b' -
+  a'$, which is measurable in $\gamma$ by Step~1 (difference of two measurable real-valued
+  functions).
+
+  \emph{Step 3: the trajectory coordinate.} Fix $u \in \mathbb{R}$. By \noderef{curveRestrictTot}
+  (unfolding through \noderef{curveRestrict}), $f(\gamma)(u) = \gamma\bigl(a' + \min(b'-a',
+  \max(0,u))\bigr)$. The argument $a' + \min(b'-a',\max(0,u))$ is measurable in $\gamma$: $b'-a'$ is
+  measurable by Step~1--2, $\max(0,u)$ is the fixed constant $\max(0,u)$ (since $u$ is fixed), so
+  $\min(b'-a',\max(0,u))$ is measurable (min of a measurable function and a constant), and adding
+  the measurable function $a'$ gives that $\gamma \mapsto a' + \min(b'-a',\max(0,u))$ is measurable.
+  Hence $\gamma \mapsto \bigl(a' + \min(b'-a',\max(0,u)),\, \gamma\bigr)$ is a measurable map
+  $\Theta(E) \to \mathbb{R}\times\Theta(E)$ (measurable first coordinate just shown, identity second
+  coordinate), and composing with the jointly measurable evaluation map $(t,\gamma)\mapsto\gamma(t)$
+  (\noderef{CurveEvalJointMeasurable}) shows $\gamma \mapsto f(\gamma)(u) = \gamma\bigl(a' +
+  \min(b'-a',\max(0,u))\bigr)$ is measurable, for this arbitrary fixed $u$.
+
+  \emph{Conclusion.} By Steps~2--3, $\gamma \mapsto (\length(f(\gamma)), f(\gamma))$ is measurable
+  into $\mathbb{R}\times(\mathbb{R}\to E)$ (measurable first coordinate by Step~2; measurable second
+  coordinate, in the product/function-space sense, by Step~3 applied at every $u$), so by the
+  universal property recalled above, $f = (\gamma \mapsto \gamma|^{\mathrm{tot}}_{[a,b]})$ is
+  measurable.
+\end{proof}

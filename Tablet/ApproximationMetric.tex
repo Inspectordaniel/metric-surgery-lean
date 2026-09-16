@@ -1,0 +1,321 @@
+\begin{theorem}[Paper Theorem 1.1]\label{approximationMetric}
+  Let $E$ be a complete, separable, geodesic metric space equipped with a compatible Borel
+  $\sigma$-algebra. Assume the two external literature citations on which this theorem rests, each
+  carried as an explicit hypothesis rather than asserted: $hAK \colon
+  \mathrm{MassSupFormulaStatement}(E)$ (\noderef{MassSupFormula}) and $hPS \colon
+  \mathrm{PaoliniStepanovExistsStatement}(E)$ (\noderef{PaoliniStepanovExists}); they are consumed
+  only by \noderef{BBAssertion}, to which they are passed on unchanged. Let $GP$ be a geodesic
+  pairing on $E$ (\noderef{GeodesicPairing}), let
+  $T \in \mathcal M_1(E)$ (\noderef{MetricCurrent1}) satisfy $\partial T=0$
+  (\noderef{BoundaryZero}), and let $0<\epsilon\le1$. Then there exist doubly-indexed curves
+  $\gamma_{n,i}\in\Theta(E)$ and scalars $\lambda_{n,i}\ge0$ ($n\in\mathbb N$, $i<n$) such that:
+  \begin{itemize}
+    \item[(a)] for every $n$ and $i<n$, $\gamma_{n,i}$ is a closed curve
+      (\noderef{IsClosedCurve}) that is piecewise geodesic (\noderef{IsPiecewiseGeodesic});
+    \item[(b)] (eq.~limit) for every $\omega\in\mathcal D^1(E)$,
+      \[
+        \lim_{n\to\infty}\sum_{i=0}^{n-1}\lambda_{n,i}\,
+          \frac{[[\gamma_{n,i}]](\omega)}{\length(\gamma_{n,i})}
+        = T(\omega)
+        \qquad\text{(\noderef{curveCurrent})}
+        ;
+      \]
+    \item[(c)] (eq.~mass) for every $n$,
+      \[
+        \sum_{i=0}^{n-1}\abs{\lambda_{n,i}} \le (1+\epsilon)\cdot\mathrm{toReal}(\mathbb M(T))
+        ;
+      \]
+    \item[(d)] (eq.~morrey\_bound) for every $n$ and $i<n$,
+      \[
+        \Morrey{\mu_{\gamma_{n,i}}} \le \frac{2088}{\epsilon^2}
+        \qquad\text{(\noderef{curveMeasure})}
+        .
+      \]
+  \end{itemize}
+
+  This is paper Theorem 1.1 (paper.tex 267--279). The paper's universal constant $C$ is pinned to
+  the numeral $C=2088=4\cdot522$ rather than left existentially quantified: paper.tex 268
+  quantifies $C$ \emph{outside} $E,T,\epsilon$ (``there is a universal constant $C$ such that if
+  \dots''), so re-quantifying it \emph{inside}, after $E$, would be a strictly weaker statement;
+  pinning a concrete value is at least as strong as the paper's existential, hence faithful. The
+  value $2088=4\cdot522$ matches paper.tex 1593's own closing remark ``we may take $C=4C'$'', with
+  $C'=522$ the pinned constant of \noderef{SurgeryEta}.
+
+  $[\mathrm{Nonempty}\ E]$ is required: the conclusion demands a \emph{total} function
+  $\gamma\colon\mathbb N\to\mathbb N\to\Theta(E)$ (in particular a value $\gamma_{1,0}$), and
+  $\Theta(E)$ is empty exactly when $E$ is (\noderef{Curve} carries $\mathrm{toFun}\colon\mathbb
+  R\to E$, so a curve supplies a point of $E$). Unlike \noderef{BBAssertion}, this theorem carries
+  no $T\ne0$ hypothesis, so that node's justification (which rests on $F.\mu_T(E)\ne0$) does not
+  apply here; the airtight argument for the present statement is: take $E=\emptyset$ with $T=0$.
+  Then $E$ is complete, separable, and (vacuously) geodesic, $T\in\mathcal M_1(E)$ with
+  $\partial T=0$ and $\mathbb M(T)=0\ne\infty$ all hold vacuously or trivially, so every hypothesis
+  of the theorem except $[\mathrm{Nonempty}\ E]$ is satisfiable with $E$ empty, while the
+  conclusion is unsatisfiable there since $\Theta(\emptyset)=\emptyset$.
+
+  \paragraph{Textual note, on record (not a repair).} Paper.tex 268 states the hypothesis as
+  $0<\epsilon\le1$, matching the statement above, while the paper's own proof (paper.tex 1534)
+  opens with the stronger hypothesis $0<\epsilon<1$. Nothing in the argument below needs strict
+  inequality: the surgery step is applied at $\eta:=\epsilon/2\le1/2<1$ regardless of whether
+  $\epsilon=1$ or $\epsilon<1$ (\noderef{SurgeryEta} only requires $0<\eta\le1$), so the proof below
+  formalizes the \emph{statement's} range $0<\epsilon\le1$ directly, with no separate treatment of
+  $\epsilon=1$.
+\end{theorem}
+\begin{proof}
+  Fix $E,GP,T,\epsilon$ as in the hypotheses, with $0<\epsilon\le1$.
+
+  \paragraph{Step 0: fix a basepoint and a padding curve.} By $[\mathrm{Nonempty}\ E]$ fix
+  $x_0\in E$. Let $\gamma_0\in\Theta(E)$ be the constant curve at $x_0$: $\length(\gamma_0)=0$,
+  $\gamma_0(t)=x_0$ for all $t$ (\noderef{Curve}; the unit-speed condition on $[0,0]$ holds since a
+  single point has zero variation, and the clamping condition holds since $\gamma_0$ is constant).
+  Then:
+  \begin{itemize}
+    \item $\gamma_0$ is closed (\noderef{IsClosedCurve}): $\gamma_0(0)=x_0=\gamma_0(\length(\gamma_0))$
+      directly from $\gamma_0$ constant.
+    \item $\gamma_0$ is piecewise geodesic with $0$ edges (\noderef{IsPiecewiseGeodesic}): take
+      $s\colon\mathbb N\to\mathbb R$, $s\equiv0$; $s$ is (vacuously) monotone on
+      $\set{0}=[0,0]\cap\mathbb N$, $s(0)=0=\length(\gamma_0)$, and the edge condition
+      ``$\forall i<0,\dots$'' is vacuous, so $s$ witnesses
+      $\mathrm{IsGeodesicResolution}(\gamma_0,0,s)$, hence $\mathrm{IsPiecewiseGeodesicWith}
+      (\gamma_0,0)$, hence $\mathrm{IsPiecewiseGeodesic}(\gamma_0)$.
+    \item $[[\gamma_0]](\omega)=0$ for every $\omega\in\mathcal D^1(E)$
+      (\noderef{curveCurrent}): the defining integral $\int_0^{\length(\gamma_0)}\dots\,dt$ is an
+      integral over the degenerate interval $[0,0]$, hence $0$.
+    \item $\mu_{\gamma_0}=0$ (\noderef{curveMeasure}): $\mu_{\gamma_0}$ is the pushforward of
+      Lebesgue measure restricted to $[0,\length(\gamma_0)]=[0,0]$, and Lebesgue measure of the
+      single point $\set0$ is $0$, so the restricted measure is the zero measure and its
+      pushforward is the zero measure. Consequently $\Morrey{\mu_{\gamma_0}}=0\le2088/\epsilon^2$
+      (\noderef{morreyNorm}: every term of the defining supremum is $0(\text{measure of a
+      ball})/(\text{positive radius})=0$).
+  \end{itemize}
+  These four facts about $\gamma_0$ are used repeatedly below without further comment.
+
+  \paragraph{Step 1: the case $T(\cdot)=0$.} Suppose $T=0$ as a functional. Take
+  $\lambda_{n,i}:=0$ and $\gamma_{n,i}:=\gamma_0$ for every $n,i<n$. Then:
+  \begin{itemize}
+    \item[(a)] holds by Step~0 ($\gamma_0$ closed and piecewise geodesic).
+    \item[(b)] For every $n$, $\sum_{i<n}\lambda_{n,i}\cdot\bigl([[\gamma_{n,i}]](\omega)/
+      \length(\gamma_{n,i})\bigr) = \sum_{i<n} 0\cdot\bigl([[\gamma_0]](\omega)/0\bigr) = 0$,
+      since $0$ times any real number (in particular the possibly ill-defined quotient
+      $[[\gamma_0]](\omega)/0$, which by convention evaluates to $[[\gamma_0]](\omega)/0=0$ but
+      whose exact value is irrelevant here) is $0$. So the sequence in $n$ is constantly $0$,
+      which trivially tends to $0=T(\omega)$.
+    \item[(c)] $\sum_{i<n}\abs{\lambda_{n,i}}=0$ for every $n$, and
+      $0\le(1+\epsilon)\cdot\mathrm{toReal}(\mathbb M(T))$ always holds since
+      $\mathrm{toReal}(\mathbb M(T))\ge0$ (the real part of an extended nonnegative real is always
+      $\ge0$) and $1+\epsilon>0$; no computation of $\mathbb M(T)$ itself is needed.
+    \item[(d)] holds by Step~0 ($\Morrey{\mu_{\gamma_0}}=0\le2088/\epsilon^2$).
+  \end{itemize}
+  This settles the theorem when $T=0$; assume from now on that $T\ne0$.
+
+  \paragraph{Step 2: apply \noderef{BBAssertion}.} By \noderef{BBAssertion} applied to
+  $hAK,hPS,GP,T,T\ne0,\partial T=0$, obtain a sequence of positive integers
+  $(\hat n_l)_{l\in\mathbb N}$ with $\hat n_l\to\infty$, and a doubly-indexed family
+  $\hat\gamma_{l,i}\in\Theta(E)$
+  ($l\in\mathbb N,i<\hat n_l$), such that (writing $M:=\mathrm{toReal}(\mathbb M(T))$, so $M>0$
+  since $T\ne0$):
+  \begin{itemize}
+    \item[(BB-a)] for every $l\ge1$, $i<\hat n_l$: $\hat\gamma_{l,i}$ is closed and piecewise
+      geodesic;
+    \item[(BB-b)] for every $l\ge1$, $i<\hat n_l$: $\length(\hat\gamma_{l,i})\le2l$;
+    \item[(BB-c)] for every $\omega\in\mathcal D^1(E)$,
+      \(
+        \dfrac{M}{\hat n_l\cdot l}\sum_{i<\hat n_l}[[\hat\gamma_{l,i}]](\omega)
+        \longrightarrow T(\omega)
+      \) as $l\to\infty$;
+    \item[(BB-len)] $\dfrac1{\hat n_l\cdot l}\sum_{i<\hat n_l}\length(\hat\gamma_{l,i})
+      \longrightarrow1$ as $l\to\infty$ (the length half of eq.~closed2; the mass half is not
+      needed below).
+  \end{itemize}
+
+  \paragraph{Step 3: apply \noderef{SurgeryEta} to each $\hat\gamma_{l,i}$ at $\eta=\epsilon/2$.}
+  Since $0<\epsilon\le1$, $0<\epsilon/2\le1/2\le1$. Fix $l\ge1$ and $i<\hat n_l$. By
+  \noderef{SurgeryEta} applied to $GP,\hat\gamma_{l,i},\eta:=\epsilon/2$ (legal by the previous
+  sentence, and $\hat\gamma_{l,i}$ closed and piecewise geodesic by (BB-a)), obtain
+  $\hat N_{l,i}\in\mathbb N$ with $\hat N_{l,i}\ge1$ and closed, piecewise-geodesic curves
+  $g_{l,i,1},\dots,g_{l,i,\hat N_{l,i}}$ such that
+  \begin{gather}
+    [[\hat\gamma_{l,i}]](\omega) = \sum_{j=1}^{\hat N_{l,i}} [[g_{l,i,j}]](\omega)
+      \quad\text{for every }\omega\in\mathcal D^1(E)
+      \label{eq:am-cur}
+      ,
+      \\
+    \sum_{j=1}^{\hat N_{l,i}}\length(g_{l,i,j}) \le (1+\epsilon/2)\length(\hat\gamma_{l,i})
+      \label{eq:am-len}
+      ,
+      \\
+    \Morrey{\mu_{g_{l,i,j}}} \le \frac{522}{(\epsilon/2)^2} = \frac{2088}{\epsilon^2}
+      \quad\text{for every }j
+      \label{eq:am-morrey}
+      ,
+  \end{gather}
+  the equality $522/(\epsilon/2)^2=2088/\epsilon^2$ by clearing denominators ($\epsilon\ne0$):
+  $522\cdot4=2088$.
+
+  For $l\ge1$, set $N_l:=\sum_{i<\hat n_l}\hat N_{l,i}$ and let
+  $(\bar\gamma_{l,k})_{0\le k<N_l}$ be the length-$N_l$ sequence obtained by concatenating, in
+  order of increasing $i<\hat n_l$ and then increasing $j\le\hat N_{l,i}$, the curves
+  $g_{l,i,1},\dots,g_{l,i,\hat N_{l,i}}$ (so each $\bar\gamma_{l,k}$ is some $g_{l,i,j}$, and every
+  $g_{l,i,j}$ occurs exactly once as some $\bar\gamma_{l,k}$). Since each $\hat N_{l,i}\ge1$
+  ($1\le i\le\hat n_l$ terms), $N_l\ge\hat n_l$. Every $\bar\gamma_{l,k}$ is closed, piecewise
+  geodesic, and satisfies $\Morrey{\mu_{\bar\gamma_{l,k}}}\le2088/\epsilon^2$, by
+  \eqref{eq:am-morrey} applied to the corresponding $g_{l,i,j}$.
+
+  \paragraph{Step 4: eq.~lengthlimsup.} Fix $l\ge1$. Summing \eqref{eq:am-len} over $i<\hat n_l$
+  and using that $(\bar\gamma_{l,k})_k$ is a reindexing of $(g_{l,i,j})_{i,j}$,
+  \[
+    \sum_{k<N_l}\length(\bar\gamma_{l,k}) = \sum_{i<\hat n_l}\sum_{j=1}^{\hat N_{l,i}}
+      \length(g_{l,i,j}) \le (1+\epsilon/2)\sum_{i<\hat n_l}\length(\hat\gamma_{l,i})
+    .
+  \]
+  Dividing by $\hat n_l\cdot l>0$,
+  \[
+    \frac1{\hat n_l\cdot l}\sum_{k<N_l}\length(\bar\gamma_{l,k})
+    \le (1+\epsilon/2)\cdot\frac1{\hat n_l\cdot l}\sum_{i<\hat n_l}\length(\hat\gamma_{l,i})
+    \qquad\text{for every }l\ge1
+    .
+  \]
+  By (BB-len) the right side tends to $(1+\epsilon/2)\cdot1=1+\epsilon/2$ as $l\to\infty$; a
+  sequence bounded above, for all $l\ge1$, by a sequence converging to $1+\epsilon/2$ has
+  $\limsup\le1+\epsilon/2$. Hence
+  \begin{equation}
+    \label{eq:am-lengthlimsup}
+    \limsup_{l\to\infty}\frac1{\hat n_l\cdot l}\sum_{k<N_l}\length(\bar\gamma_{l,k})
+    \le 1+\epsilon/2
+    .
+  \end{equation}
+
+  \paragraph{Step 5: extracting the subsequence $(l_r)$.} Since $N_l\ge\hat n_l$ for every $l\ge1$
+  (Step~3) and $\hat n_l\to\infty$, also $N_l\to\infty$ as $l\to\infty$. Since $1+\epsilon/2<1+
+  \epsilon$, \eqref{eq:am-lengthlimsup} gives $L_0\ge1$ such that
+  \begin{equation}
+    \label{eq:am-scaledlen}
+    \frac1{\hat n_l\cdot l}\sum_{k<N_l}\length(\bar\gamma_{l,k}) \le 1+\epsilon
+    \qquad\text{for every }l\ge L_0
+    .
+  \end{equation}
+  Construct $(l_r)_{r\in\mathbb N}$ recursively: set $l_0:=L_0$; given $l_r\ge L_0$, since
+  $N_l\to\infty$ as $l\to\infty$ choose $l_{r+1}>\max(l_r,L_0-1)$ with $N_{l_{r+1}}>N_{l_r}$ (such
+  $l_{r+1}$ exists since $N_l$ is eventually larger than the fixed value $N_{l_r}$). By
+  construction $(l_r)$ is strictly increasing, $l_r\ge L_0\ge1$ for every $r$, so $l_r\to\infty$,
+  and $(N_{l_r})_{r\in\mathbb N}$ is strictly increasing; and by \eqref{eq:am-scaledlen},
+  \begin{equation}
+    \label{eq:am-scaledlen-r}
+    \frac1{\hat n_{l_r}\cdot l_r}\sum_{k<N_{l_r}}\length(\bar\gamma_{l_r,k}) \le 1+\epsilon
+    \qquad\text{for every }r
+    .
+  \end{equation}
+
+  \paragraph{Step 6: constructing $\gamma_{n,i},\lambda_{n,i}$.} For $n<N_{l_0}$, set
+  $\lambda_{n,i}:=0$ and $\gamma_{n,i}:=\gamma_0$ for every $i<n$.
+
+  For $n\ge N_{l_0}$: since $(N_{l_r})_r$ is strictly increasing with $N_{l_0}\le n$, the set
+  $\set{r : N_{l_r}\le n}$ is a nonempty (contains $0$) subset of $\mathbb N$ bounded above (since
+  $N_{l_r}\to\infty$, eventually $N_{l_r}>n$), hence has a maximum; let $r(n)$ be that maximum, so
+  $N_{l_{r(n)}}\le n<N_{l_{r(n)+1}}$. Set, for $i<n$:
+  \[
+    (\lambda_{n,i},\gamma_{n,i}) :=
+    \begin{cases}
+      \Bigl(\dfrac{M\cdot\length(\bar\gamma_{l_{r(n)},i})}{\hat n_{l_{r(n)}}\cdot l_{r(n)}},\
+        \bar\gamma_{l_{r(n)},i}\Bigr) & \text{if } i<N_{l_{r(n)}} , \\[1.2em]
+      (0,\ \gamma_0) & \text{if } N_{l_{r(n)}}\le i<n .
+    \end{cases}
+  \]
+  (When $n=N_{l_r}$ for some $r$, necessarily $r(n)=r$ and the second case is vacuous, matching
+  paper.tex 1567--1568 exactly; the extension to $N_{l_r}<n<N_{l_{r+1}}$ matches paper.tex 1577.)
+
+  \paragraph{Step 7: clause (a), nonnegativity, closedness, piecewise-geodesicity.} Fix $n$,
+  $i<n$. If $\gamma_{n,i}=\gamma_0$ (the $n<N_{l_0}$ case, or the padding branch above), closedness,
+  piecewise-geodesicity, and $\lambda_{n,i}=0\ge0$ hold by Step~0. Otherwise
+  $\gamma_{n,i}=\bar\gamma_{l_{r(n)},i}$ for some $i<N_{l_{r(n)}}$, which is closed and piecewise
+  geodesic by Step~3 (it is some $g_{l,i',j'}$). For nonnegativity in this case,
+  $\lambda_{n,i}=M\cdot\length(\bar\gamma_{l_{r(n)},i})/(\hat n_{l_{r(n)}}\cdot l_{r(n)})$ is a
+  quotient of a product of nonnegative reals ($M\ge0$ since it is $\mathrm{toReal}$ of an extended
+  nonnegative real, $\length(\bar\gamma_{l_{r(n)},i})\ge0$ by \noderef{Curve}) by a positive real
+  ($\hat n_{l_{r(n)}}>0$ from \noderef{BBAssertion}, $l_{r(n)}\ge1$), hence nonnegative. This gives
+  clause (a) and $\lambda_{n,i}\ge0$ in full.
+
+  \paragraph{Step 8: the divided-term identity.} For every $M',n'_\ell,\ell,c\in\mathbb R$ with
+  $\ell=0\Rightarrow c=0$,
+  \[
+    \frac{M'\cdot\ell}{n'_\ell}\cdot\frac c\ell = \frac{M'}{n'_\ell}\cdot c
+    .
+  \]
+  Indeed, if $\ell=0$ both sides are $0$ (left side: $c=0$ by hypothesis, and the left side is
+  $(M'\cdot0/n'_\ell)\cdot(0/0)=0\cdot0=0$ regardless of the value of the ill-defined quotient
+  $0/0$, since it is multiplied by $0$; right side: $(M'/n'_\ell)\cdot0=0$); if $\ell\ne0$, clear
+  denominators directly. We use this with $c:=[[\bar\gamma_{l_r,i}]](\omega)$,
+  $\ell:=\length(\bar\gamma_{l_r,i})$, using that $\ell=0\Rightarrow c=0$ by
+  \noderef{curveCurrent} (the defining integral over $[0,\ell]=[0,0]$ vanishes when $\ell=0$,
+  exactly as for $\gamma_0$ in Step~0).
+
+  \paragraph{Step 9: clause (b), the limit.} Fix $\omega\in\mathcal D^1(E)$; write
+  $X_{n,i}:=[[\gamma_{n,i}]](\omega)/\length(\gamma_{n,i})$ and
+  $u_n:=\sum_{i<n}\lambda_{n,i}X_{n,i}$; we must show $u_n\to T(\omega)$ as $n\to\infty$.
+
+  \emph{Block constancy.} For $n<N_{l_0}$, every $\lambda_{n,i}=0$, so $u_n=0$ ($0\cdot X_{n,i}=0$
+  regardless of $X_{n,i}$'s value). For $n\ge N_{l_0}$ with $r:=r(n)$: for $N_{l_r}\le i<n$,
+  $\lambda_{n,i}=0$, so those terms contribute $0$ to $u_n$ regardless of $X_{n,i}$; for $i<N_{l_r}$,
+  $\lambda_{n,i}$ and $\gamma_{n,i}$ depend on $n$ only through $r(n)=r$, hence
+  \[
+    u_n = \sum_{i<N_{l_r}} \lambda_{n,i} X_{n,i}
+    = \sum_{i<N_{l_r}} \frac{M\cdot\length(\bar\gamma_{l_r,i})}{\hat n_{l_r}\cdot l_r}\cdot
+        \frac{[[\bar\gamma_{l_r,i}]](\omega)}{\length(\bar\gamma_{l_r,i})}
+    =: S_r
+    ,
+  \]
+  a quantity depending only on $r=r(n)$, not on $n$ itself. So $u_n=S_{r(n)}$ for every
+  $n\ge N_{l_0}$ (and $u_n=0$ for $n<N_{l_0}$; note also $S_0$ is exactly the value of $u_n$ for
+  $N_{l_0}\le n<N_{l_1}$, consistently).
+
+  \emph{Computing $S_r$.} By Step~8 applied termwise (with $M':=M$, $n'_\ell:=\hat n_{l_r}\cdot
+  l_r$, $\ell:=\length(\bar\gamma_{l_r,i})$, $c:=[[\bar\gamma_{l_r,i}]](\omega)$),
+  \[
+    S_r = \sum_{i<N_{l_r}} \frac{M}{\hat n_{l_r}\cdot l_r}\cdot[[\bar\gamma_{l_r,i}]](\omega)
+    = \frac{M}{\hat n_{l_r}\cdot l_r}\sum_{i<N_{l_r}}[[\bar\gamma_{l_r,i}]](\omega)
+    .
+  \]
+  Since $(\bar\gamma_{l_r,k})_{k<N_{l_r}}$ reindexes $(g_{l_r,i,j})_{i<\hat n_{l_r},
+  j\le\hat N_{l_r,i}}$ (Step~3), $\sum_{k<N_{l_r}}[[\bar\gamma_{l_r,k}]](\omega) =
+  \sum_{i<\hat n_{l_r}}\sum_{j=1}^{\hat N_{l_r,i}}[[g_{l_r,i,j}]](\omega) =
+  \sum_{i<\hat n_{l_r}}[[\hat\gamma_{l_r,i}]](\omega)$, the last equality by \eqref{eq:am-cur} at
+  $l=l_r$, summed over $i<\hat n_{l_r}$. Hence
+  \[
+    S_r = \frac{M}{\hat n_{l_r}\cdot l_r}\sum_{i<\hat n_{l_r}}[[\hat\gamma_{l_r,i}]](\omega)
+    ,
+  \]
+  which is exactly the $l=l_r$ term of the sequence in (BB-c).
+
+  \emph{Passing to the limit.} By (BB-c), the full sequence
+  $l\mapsto\frac M{\hat n_l\cdot l}\sum_{i<\hat n_l}[[\hat\gamma_{l,i}]](\omega)$ tends to $T(\omega)$
+  as $l\to\infty$; since $(l_r)_r$ is a subsequence of indices tending to $\infty$ (Step~5), the
+  subsequence $(S_r)_r$ of this sequence also tends to $T(\omega)$ as $r\to\infty$. Finally,
+  $r(n)\to\infty$ as $n\to\infty$: for every $R$, all $n\ge N_{l_{R+1}}$ have $r(n)\ge R+1>R$ (since
+  $r(n)$ is the maximum $r$ with $N_{l_r}\le n$, and $N_{l_{R+1}}\le n$ forces $r(n)\ge R+1$), so
+  $r(n)$ is eventually $>R$ for every $R$. Composing $S_r\to T(\omega)$ with $r(n)\to\infty$ gives
+  $u_n=S_{r(n)}\to T(\omega)$ as $n\to\infty$ (for $n<N_{l_0}$, finitely many terms, which do not
+  affect the limit). This is exactly clause (b).
+
+  \paragraph{Step 10: clause (c), the mass bound.} Fix $n$. For $n<N_{l_0}$,
+  $\sum_{i<n}\abs{\lambda_{n,i}}=0\le(1+\epsilon)M$ since $M\ge0$ and $\epsilon>0$ (as in Step~1).
+  For $n\ge N_{l_0}$, $r:=r(n)$: by the same block-constancy as in Step~9 (only the $i<N_{l_r}$
+  terms are nonzero) and $\lambda_{n,i}\ge0$ (Step~7, so $\abs{\lambda_{n,i}}=\lambda_{n,i}$),
+  \[
+    \sum_{i<n}\abs{\lambda_{n,i}} = \sum_{i<N_{l_r}}\lambda_{n,i}
+    = \frac M{\hat n_{l_r}\cdot l_r}\sum_{i<N_{l_r}}\length(\bar\gamma_{l_r,i})
+    \le \frac M{\hat n_{l_r}\cdot l_r}\cdot(1+\epsilon)\hat n_{l_r}\cdot l_r
+    = (1+\epsilon) M
+    ,
+  \]
+  the inequality by \eqref{eq:am-scaledlen-r} (rearranged: $\sum_{k<N_{l_r}}\length(\bar\gamma_{l_r,k})
+  \le(1+\epsilon)\hat n_{l_r}l_r$, valid since $\hat n_{l_r}l_r>0$) multiplied by the nonnegative
+  constant $M/(\hat n_{l_r}l_r)$. This is exactly clause (c).
+
+  \paragraph{Step 11: clause (d), the Morrey bound.} Fix $n$, $i<n$. If $\gamma_{n,i}=\gamma_0$,
+  $\Morrey{\mu_{\gamma_0}}=0\le2088/\epsilon^2$ by Step~0. Otherwise $\gamma_{n,i}=
+  \bar\gamma_{l_{r(n)},i}$ for some $i<N_{l_{r(n)}}$, and $\Morrey{\mu_{\gamma_{n,i}}}\le
+  2088/\epsilon^2$ directly by Step~3's Morrey bound on $\bar\gamma_{l_{r(n)},i}$. This is exactly
+  clause (d).
+
+  All four clauses (a)--(d) have been established for the constructed $\gamma_{n,i},\lambda_{n,i}$,
+  completing the proof.
+\end{proof}

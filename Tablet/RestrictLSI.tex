@@ -1,0 +1,85 @@
+\begin{lemma}[Large-scale invertibility passes from a window to a non-closed sub-window]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $\delta,\epsilon \in
+  \mathbb{R}$, and $t,t',u,u' \in \mathbb{R}$ with $0 \le t \le u \le u' \le t' \le \length(\gamma)$.
+  Write $\gamma|_{[t,t']} := \mathrm{curveRestrict}(\gamma,t,t')$ and $\gamma|_{[u,u']} :=
+  \mathrm{curveRestrict}(\gamma,u,u')$ (\noderef{curveRestrict}), both direct restrictions of the
+  ambient curve $\gamma$. Suppose
+  \begin{itemize}
+    \item $\gamma|_{[t,t']}$ is $(\delta,\epsilon)$-large-scale-invertible (\noderef{IsLSI}),
+    \item $\gamma|_{[t,t']}$ is not a closed curve (\noderef{IsClosedCurve}),
+    \item $\gamma|_{[u,u']}$ is not a closed curve, and
+    \item $\gamma|_{[u,u']}$ is piecewise geodesic (\noderef{IsPiecewiseGeodesic}).
+  \end{itemize}
+  Then $\gamma|_{[u,u']}$ is $(\delta,\epsilon)$-large-scale-invertible.
+
+  \paragraph{Why the conclusion is stated as a direct restriction of $\gamma$, not a nested
+  restriction of $\gamma|_{[t,t']}$.} Read completely literally, paper.tex line 900's phrase
+  ``since $\gamma|_{[t,t']}$ is $(\delta,\epsilon)$-l.s.i.\ it follows that $\gamma|_{[u,u']}$ is
+  too'' would produce a claim about the \emph{nested} restriction
+  $(\gamma|_{[t,t']})|_{[u-t,u'-t]}$, since $\gamma|_{[u,u']}$ is built there as a sub-curve of
+  $\gamma|_{[t,t']}$. But \noderef{RestrictDeltaEpsNAtBreakpoints} concludes about the
+  \emph{direct} restriction $\mathrm{curveRestrict}(\gamma,u,u')$ of $\gamma$ itself (matching how
+  breakpoints of a resolution of $\gamma$ are indexed). Using the nested reading here would force
+  every downstream use (in particular \Cref{cut-type-I}'s application of \noderef{FullBallLem},
+  which needs $\mathrm{IsDeltaEpsN}$ and $\mathrm{IsLSI}$ of \emph{one and the same} curve) to
+  first prove a $\mathrm{Curve}$-valued equality between the nested and the direct restriction --
+  an unfolding of two clamps with no mathematical content. Stating the conclusion directly, as
+  above, avoids this entirely; the proof below shows the direct statement follows from exactly the
+  same mathematical content the paper uses (the transport of the large-scale-invertibility
+  inequality by a shift of parameters).
+
+  \paragraph{Why non-closedness of both windows is a hypothesis.} $d_\gamma(\cdot,\cdot)$
+  (\noderef{dGamma}) is defined by cases on whether its curve argument is closed. Making this
+  lemma's content purely the pointwise transport of the l.s.i.\ inequality requires knowing, for
+  \emph{both} $\gamma|_{[t,t']}$ and $\gamma|_{[u,u']}$, which branch of that case split applies;
+  supplying non-closedness as a hypothesis for each is exactly what pins both branches to the
+  non-closed (absolute-value) case, after which the inequality transports by direct substitution
+  of parameters. These hypotheses are discharged at the call site: non-closedness of
+  $\gamma|_{[t,t']}$ is the amended conjunct of \noderef{TypeICutPointExists}, and non-closedness
+  of $\gamma|_{[u,u']}$ is established there from it (the excised window is at least $\delta$
+  long, the ambient window is $(\delta,\epsilon)$-l.s.i.\ and non-closed, hence so is the excised
+  sub-window). The piecewise-geodesic hypothesis on $\gamma|_{[u,u']}$ is likewise not re-derived
+  here (which would need to reconstruct a resolution) but discharged at the call site by
+  \noderef{RestrictPiecewiseGeodesic}; since $\mathrm{IsPiecewiseGeodesic}$ is a definition node,
+  taking it as a hypothesis is not an appeal to a theorem node's hypotheses by citation.
+\end{lemma}
+\begin{proof}
+  By $\mathrm{IsLSI}$'s definition (\noderef{IsLSI}), it suffices to exhibit the piecewise-geodesic
+  conjunct for $\gamma|_{[u,u']}$ (supplied by hypothesis) together with the large-scale
+  inequality: for all $x,y \in [0,\length(\gamma|_{[u,u']})] = [0,u'-u]$ with $\delta \le
+  d_{\gamma|_{[u,u']}}(x,y)$, we have $\epsilon \cdot d_{\gamma|_{[u,u']}}(x,y) \le
+  \mathrm{dist}(\gamma|_{[u,u']}(x),\gamma|_{[u,u']}(y))$.
+
+  Fix such $x,y \in [0,u'-u]$ with $\delta \le d_{\gamma|_{[u,u']}}(x,y)$. Since
+  $\gamma|_{[u,u']}$ is not closed, $d_{\gamma|_{[u,u']}}(x,y) = |x-y|$
+  (\noderef{dGamma}'s defining case split), so the hypothesis reads $\delta \le |x-y|$; write $R$
+  for this quantity. By \noderef{curveRestrict}'s defining formula, since $x,y \in [0,u'-u]$ the
+  clamp is the identity, so $\gamma|_{[u,u']}(x) = \gamma(u+x)$ and $\gamma|_{[u,u']}(y) =
+  \gamma(u+y)$.
+
+  Set $\sigma := (u-t)+x$ and $\tau := (u-t)+y$. Since $0 \le x,y \le u'-u$ and $t \le u$, $u' \le
+  t'$, we get $0 \le \sigma,\tau \le t'-t$: indeed $\sigma = (u-t)+x \ge u-t \ge 0$ and $\sigma =
+  (u-t)+x \le (u-t)+(u'-u) = u'-t \le t'-t$, and likewise for $\tau$. So $\sigma,\tau \in
+  [0,\length(\gamma|_{[t,t']})]$. Since $\gamma|_{[t,t']}$ is not closed,
+  $d_{\gamma|_{[t,t']}}(\sigma,\tau) = |\sigma-\tau|$; and $\sigma-\tau = x-y$ by construction
+  (the $u-t$ shift cancels), so $d_{\gamma|_{[t,t']}}(\sigma,\tau) = |x-y| = R \ge \delta$. By the
+  large-scale inequality of $\mathrm{IsLSI}(\gamma|_{[t,t']},\delta,\epsilon)$ applied to
+  $\sigma,\tau$,
+  \[
+    \epsilon \cdot R = \epsilon \cdot d_{\gamma|_{[t,t']}}(\sigma,\tau)
+      \le \mathrm{dist}\bigl(\gamma|_{[t,t']}(\sigma), \gamma|_{[t,t']}(\tau)\bigr)
+    .
+  \]
+  Again by \noderef{curveRestrict}'s defining formula, since $\sigma,\tau \in [0,t'-t]$ the clamp
+  is the identity, so $\gamma|_{[t,t']}(\sigma) = \gamma(t+\sigma) = \gamma(u+x)$ and
+  $\gamma|_{[t,t']}(\tau) = \gamma(t+\tau) = \gamma(u+y)$ (using $t+\sigma = t+(u-t)+x = u+x$ and
+  likewise for $\tau$). Substituting,
+  \[
+    \epsilon \cdot R \le \mathrm{dist}\bigl(\gamma(u+x),\gamma(u+y)\bigr)
+      = \mathrm{dist}\bigl(\gamma|_{[u,u']}(x),\gamma|_{[u,u']}(y)\bigr)
+    ,
+  \]
+  which is exactly $\epsilon \cdot d_{\gamma|_{[u,u']}}(x,y) \le
+  \mathrm{dist}(\gamma|_{[u,u']}(x),\gamma|_{[u,u']}(y))$, as required. Since $x,y$ were arbitrary
+  subject to the hypotheses, $\gamma|_{[u,u']}$ is $(\delta,\epsilon)$-large-scale-invertible.
+\end{proof}

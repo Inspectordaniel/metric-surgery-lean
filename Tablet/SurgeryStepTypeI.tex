@@ -1,0 +1,155 @@
+\begin{helper}[Amortization step for a Type I cut]
+  Let $\delta,\epsilon \in \mathbb{R}$ and $n \in \mathbb{N}$ with $0<\epsilon<1$, $\delta>0$ and
+  $n>0$, let $L,L',L_d,\beta \in \mathbb{R}$, and let $m,m' \in \mathbb{N}$. Assume
+  \[
+    L' \ge 0
+    , \qquad
+    \beta \ge \delta
+    , \qquad
+    L' \le L - (1-\epsilon)\beta
+    , \qquad
+    L' + L_d \le L + 2\epsilon\beta
+    , \qquad
+    m' \le m + 3
+    .
+  \]
+  Then both of the following hold:
+  \begin{align}
+    \label{eq:StepI-measure}
+    (n+3)\left\lfloor \frac{L'}{(1-\epsilon)\delta} \right\rfloor + m' + n
+      &\le (n+3)\left\lfloor \frac{L}{(1-\epsilon)\delta} \right\rfloor + m
+    ,\\
+    \label{eq:StepI-length}
+    L_d + \mathrm{surgeryPotential}(\epsilon,\delta,n,L',m')
+      &\le \mathrm{surgeryPotential}(\epsilon,\delta,n,L,m)
+    \quad\text{(\noderef{surgeryPotential})}
+    .
+  \end{align}
+  Here $\lfloor\cdot\rfloor$ denotes the natural-number floor of a real number (which is $0$ on
+  negative inputs).
+
+  \paragraph{Role.} This is the purely numerical content of the Type I branch of the paper's
+  surgery algorithm (paper.tex lines 1005--1075, ``Algorithm 1''), with $L,m$ the length and
+  small-edge count of the curve entering the branch, $L',m'$ those of the kept curve, $L_d$ the
+  length of the discarded curve and $\beta$ the cut scale; the five hypotheses are exactly the
+  numerical conclusions of the Type I cut (together with the nonnegativity of a curve's length).
+  Unlike the Type II branch, a Type I cut may \emph{increase} the small-edge count, by at most $3$;
+  the point of \eqref{eq:StepI-measure} is that the guaranteed drop of one full step
+  $(1-\epsilon)\delta$ in length lowers the floor term by at least one, and the weight $n+3$
+  attached to that term absorbs the $+3$ slack and still leaves a net drop of at least $n>0$.
+  Correspondingly, in \eqref{eq:StepI-length} the $\beta\ge\delta$ hypothesis is used a second,
+  independent time, to absorb the potential cost $3C$ of those three new small edges.
+\end{helper}
+\begin{proof}
+  Write $c := (1-\epsilon)\delta$. Since $0<\epsilon<1$ we have $1-\epsilon>0$, and since
+  $\delta>0$ we get $c>0$. Write
+  \[
+    A := 1 + \frac{2\epsilon}{1-\epsilon} + \frac{12\epsilon^{-1}}{n(1-\epsilon)}
+    , \qquad
+    C := \frac{4\epsilon^{-1}\delta}{n}
+    , \qquad
+    K := \frac{12\epsilon^{-1}}{n}
+    ,
+  \]
+  so that, by \noderef{surgeryPotential},
+  $\mathrm{surgeryPotential}(\epsilon,\delta,n,X,k) = A\,X + C\,k$ for all $X \in \mathbb{R}$,
+  $k \in \mathbb{N}$. Since $n>0$ we have $n \ne 0$ as a real number, and $1-\epsilon\ne0$, so
+  $A$, $C$ and $K$ are well defined; moreover $\epsilon^{-1}>0$, $n>0$ and $\delta>0$ give
+  $C>0$ and $K>0$.
+
+  \emph{The length gap.} From $\beta\ge\delta$ and $1-\epsilon>0$ we get
+  $(1-\epsilon)\delta \le (1-\epsilon)\beta$, and combining with the hypothesis
+  $L' \le L - (1-\epsilon)\beta$,
+  \begin{equation}
+    \label{eq:StepI-gap}
+    c = (1-\epsilon)\delta \le (1-\epsilon)\beta \le L - L'
+    .
+  \end{equation}
+
+  \emph{Proof of \eqref{eq:StepI-measure}.} Dividing \eqref{eq:StepI-gap} by the positive number
+  $c$ gives $1 \le (L-L')/c$, i.e.\ $L'/c + 1 \le L/c$. Since $L'\ge0$ and $c>0$ we have
+  $L'/c \ge 0$, so the floor of $L'/c + 1$ equals $\lfloor L'/c\rfloor + 1$; by monotonicity of
+  the floor applied to $L'/c+1 \le L/c$,
+  \[
+    \left\lfloor \frac{L'}{c} \right\rfloor + 1
+      = \left\lfloor \frac{L'}{c} + 1 \right\rfloor
+      \le \left\lfloor \frac{L}{c} \right\rfloor
+    .
+  \]
+  Multiplying this inequality of natural numbers by $n+3$ and expanding the left-hand side gives
+  \begin{equation}
+    \label{eq:StepI-floorstep}
+    (n+3)\left\lfloor \frac{L'}{c} \right\rfloor + (n+3)
+      \le (n+3)\left\lfloor \frac{L}{c} \right\rfloor
+    .
+  \end{equation}
+  Adding the hypothesis $m' \le m+3$ to \eqref{eq:StepI-floorstep} gives
+  \[
+    (n+3)\left\lfloor \frac{L'}{c} \right\rfloor + m' + n + 3
+      \le (n+3)\left\lfloor \frac{L}{c} \right\rfloor + m + 3
+    ,
+  \]
+  and cancelling the common summand $3$ (all quantities being natural numbers) yields
+  \eqref{eq:StepI-measure}.
+
+  \emph{Proof of \eqref{eq:StepI-length}.} Since $0<\epsilon<1$ and $n>0$, each of
+  $2\epsilon/(1-\epsilon)$ and $12\epsilon^{-1}/(n(1-\epsilon))$ is nonnegative, so
+  \begin{equation}
+    \label{eq:StepI-Age1}
+    A - 1 = \frac{2\epsilon}{1-\epsilon} + \frac{12\epsilon^{-1}}{n(1-\epsilon)} \ge 0
+    .
+  \end{equation}
+  Clearing the denominators $1-\epsilon\ne0$ and $n\ne0$ gives the two identities
+  \begin{equation}
+    \label{eq:StepI-ids}
+    (A-1)\bigl((1-\epsilon)\beta\bigr) = 2\epsilon\beta + K\beta
+    , \qquad\qquad
+    3C = \frac{12\epsilon^{-1}\delta}{n} = K\delta
+    .
+  \end{equation}
+  (The first is $\bigl(\tfrac{2\epsilon}{1-\epsilon}+\tfrac{12\epsilon^{-1}}{n(1-\epsilon)}\bigr)
+  (1-\epsilon) = 2\epsilon + \tfrac{12\epsilon^{-1}}{n}$, multiplied by $\beta$.)
+
+  By \eqref{eq:StepI-gap} we have $(1-\epsilon)\beta \le L - L'$, and multiplying by the
+  nonnegative number $A-1$ (\eqref{eq:StepI-Age1}) and then using the first identity of
+  \eqref{eq:StepI-ids},
+  \begin{equation}
+    \label{eq:StepI-Apart}
+    2\epsilon\beta + K\beta = (A-1)\bigl((1-\epsilon)\beta\bigr) \le (A-1)(L-L')
+    .
+  \end{equation}
+  Next, casting $m'\le m+3$ into the reals and multiplying by $C>0$ gives
+  $C m' \le C m + 3C$, so by the second identity of \eqref{eq:StepI-ids},
+  \begin{equation}
+    \label{eq:StepI-Cpart}
+    C m' \le C m + K\delta
+    .
+  \end{equation}
+  Since $K>0$ and $\delta\le\beta$, we also have
+  \begin{equation}
+    \label{eq:StepI-Kpart}
+    K\delta \le K\beta
+    .
+  \end{equation}
+  Finally the hypothesis $L'+L_d \le L + 2\epsilon\beta$ rearranges to
+  \begin{equation}
+    \label{eq:StepI-tot}
+    L_d \le (L-L') + 2\epsilon\beta
+    .
+  \end{equation}
+  Now combine: by \eqref{eq:StepI-tot}, then \eqref{eq:StepI-Cpart} and \eqref{eq:StepI-Kpart},
+  \[
+    L_d + A L' + C m'
+      \le \bigl[(L-L') + 2\epsilon\beta\bigr] + A L' + C m + K\beta
+    .
+  \]
+  By \eqref{eq:StepI-Apart}, $2\epsilon\beta + K\beta \le (A-1)(L-L') = A(L-L') - (L-L')$, so the
+  right-hand side is at most
+  \[
+    (L-L') + \bigl[A(L-L') - (L-L')\bigr] + A L' + C m
+      = A(L-L') + A L' + C m
+      = A L + C m
+    .
+  \]
+  Hence $L_d + A L' + C m' \le A L + C m$, which is exactly \eqref{eq:StepI-length}.
+\end{proof}

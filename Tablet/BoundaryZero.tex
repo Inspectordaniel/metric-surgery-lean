@@ -1,0 +1,20 @@
+\begin{definition}[Boundary-zero condition $\partial T = 0$]
+  Let $E$ be a metric space and $T \colon \mathcal{D}^1(E) \to \mathbb{R}$ a functional
+  (\noderef{Form1}). We say $T$ satisfies the \emph{boundary-zero condition} when
+  \[
+    T(1,f) = 0
+  \]
+  for every $f \in \operatorname{Lip_b}(E,\mathbb{R})$, i.e.\ every bounded function
+  $f\colon E \to \mathbb{R}$ with a witnessed bound $b \ge 0$ (so $|f(x)| \le b$ for all $x$) and a
+  witnessed Lipschitz constant $L \ge 0$ (so $f$ is $L$-Lipschitz), where $(1,f) \in
+  \mathcal{D}^1(E)$ is the $1$-form whose $f$-component is the constant function $1$ (bounded by
+  $1$, $0$-Lipschitz) and whose $\pi$-component is $f$ itself (witnessed by $L$).
+
+  This is exactly the specialization to $k=1$ of the condition $\partial T = 0$, i.e.\
+  $T(d\omega)=0$ for every $\omega \in \mathcal{D}^0(E)$ (paper.tex lines 1112--1120): with
+  $\omega = f \in \mathcal{D}^0(E) = \operatorname{Lip_b}(E,\mathbb{R})$, the metric exterior
+  derivative is $d(f) := (1,f)$ (paper.tex line 1119, the $k=1$ instance of
+  $d(f,\pi_1,\dotsc,\pi_{k-1}) := (1,f,\pi_1,\dotsc,\pi_{k-1})$, with the tuple
+  $(\pi_1,\dotsc,\pi_{k-1})$ empty), so $\partial T(f) = T(1,f)$ and the condition
+  $\partial T = 0$ reads exactly as displayed above.
+\end{definition}

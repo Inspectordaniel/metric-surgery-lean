@@ -1,0 +1,31 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "AtomicDecomposition.ApproximationMetric",
+    "AtomicDecomposition.BBAssertion",
+    "AtomicDecomposition.SurgeryEta",
+    "AtomicDecomposition.C1SmallBall",
+    "AtomicDecomposition.EtaRepeats"
+  ],
+  "definition_names": [
+    "Curve",
+    "Form1",
+    "MetricCurrent1",
+    "BoundaryZero",
+    "massOfFunctional",
+    "curveCurrent",
+    "curveMeasure",
+    "morreyNorm",
+    "IsClosedCurve",
+    "IsPiecewiseGeodesic",
+    "IsPiecewiseGeodesicWith",
+    "GeodesicPairing",
+    "MassSupFormulaStatement",
+    "PaoliniStepanovExistsStatement",
+    "PSFamily",
+    "psi"
+  ],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": true
+}

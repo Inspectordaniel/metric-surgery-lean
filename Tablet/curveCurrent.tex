@@ -1,0 +1,30 @@
+\begin{definition}[$[[\gamma]]$, the current of a curve]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), and
+  $\omega = (f,\pi) \in \mathcal{D}^1(E)$ (\noderef{Form1}). Define
+  \[
+    [[\gamma]](\omega) := \int_0^{\length(\gamma)} f(\gamma(t)) \cdot \frac{d(\pi\circ\gamma)}{dt}(t)\,dt
+    ,
+  \]
+  the ordinary Lebesgue integral of $t \mapsto f(\gamma(t)) \cdot \mathrm{deriv}(\pi\circ\gamma)(t)$ over
+  $[0,\length(\gamma)]$ (where $\mathrm{deriv}$ takes the junk value $0$ at any point of
+  non-differentiability). This is exactly paper eq.~(4.3) (paper.tex line 1125), which defines
+  $[[\gamma]](f,\pi)$ as the Riemann-Stieltjes integral
+  $\int_0^{\length(\gamma)} (f\circ\gamma)(t)\,d(\pi\circ\gamma)(t)$.
+
+  \paragraph{Why the Lebesgue integral of $\mathrm{deriv}(\pi\circ\gamma)$ computes the paper's
+  Riemann-Stieltjes integral.} By \noderef{CurveLipschitz}, $\gamma \colon \mathbb{R} \to E$ is
+  globally $1$-Lipschitz; since $\pi$ is $\mathrm{Lip}(\pi)$-Lipschitz (\noderef{Form1}), the
+  composite $\pi\circ\gamma \colon \mathbb{R} \to \mathbb{R}$ is globally $\mathrm{Lip}(\pi)$-Lipschitz.
+  A Lipschitz real function on an interval is absolutely continuous there
+  (\texttt{LipschitzOnWith.absolutelyContinuousOnInterval}, \texttt{Preamble}), and for an
+  absolutely continuous function $g$ on $[0,\length(\gamma)]$, the Riemann-Stieltjes integral of
+  $f\circ\gamma$ against $g = \pi\circ\gamma$ coincides with the Lebesgue integral
+  $\int_0^{\length(\gamma)} (f\circ\gamma)(t)\,\mathrm{deriv}(g)(t)\,dt$ -- this is the standard fact that
+  for absolutely continuous $g$, $dg = g'(t)\,dt$ as measures, which is exactly the content of the
+  Fundamental Theorem of Calculus for absolutely continuous functions
+  (\texttt{AbsolutelyContinuousOnInterval.integral\_deriv\_eq\_sub}, \texttt{Preamble}) together with
+  linearity of the integral. We therefore take the Lebesgue form as the definition of $[[\gamma]](\omega)$
+  directly, rather than formalizing a general Riemann-Stieltjes integral (which Mathlib does not
+  provide); this is a definitional presentation choice, not a change to the mathematical content
+  of eq.~(4.3).
+\end{definition}

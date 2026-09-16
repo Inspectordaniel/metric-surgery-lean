@@ -1,0 +1,145 @@
+\begin{lemma}[Lemma A.2, $f$-perturbation estimate]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $m \in \mathbb{N}$ with
+  $m \ge 1$, $Q \subset E$ a nonempty finite set, $\epsilon,C \in \mathbb{R}$ with $\epsilon>0$,
+  $C>0$, and $\omega=(f,\pi), \omega' \in \mathcal{D}^1(E)$ (\noderef{Form1}) two metric $1$-forms,
+  write $f' := \omega'.\mathrm{f}$ for $\omega'$'s $f$-part (only $\omega'$'s $f$-part, its
+  sup-bound, and its Lipschitz constant enter below; $\omega'$'s $\pi$-part is unconstrained and
+  irrelevant), such that
+  \[
+    \norm{f}_\infty \le C, \quad \norm{f'}_\infty \le C, \quad \mathrm{Lip}(f) \le C, \quad
+    \mathrm{Lip}(f') \le C, \quad \mathrm{Lip}(\pi) \le C, \quad
+    \sup_{q \in Q} |f(q)-f'(q)| \le \epsilon
+    .
+  \]
+  Then
+  \[
+    \bigl| [[\gamma]](f-f',\pi) \bigr| \le \tilde\psi_{m,Q,\epsilon,C}(\gamma)
+    ,
+  \]
+  where $\tilde\psi_{m,Q,\epsilon,C}$ is \noderef{psiTilde} and $[[\gamma]](f-f',\pi)$ denotes
+  \noderef{curveCurrent} applied to $\gamma$ and the metric $1$-form with $f$-part $f-f'$
+  (bound field $\norm{f}_\infty+\norm{f'}_\infty$, Lipschitz constant
+  $\mathrm{Lip}(f)+\mathrm{Lip}(f')$) and $\pi$-part $\pi$ inherited unchanged from $\omega$. This
+  is paper eq.~\eqref{f_estimate} (paper.tex line 1728), from Lemma A.2 (paper.tex 1716-1760,
+  1791-1814).
+
+  \paragraph{Why $1 \le m$ and $Q$ nonempty are required.} At $m=0$, \noderef{psiTilde}'s literal
+  definition (division by $(m:\mathbb{R})=0$ and a sum over $\mathtt{Finset.Icc\ 1\ 0}=\emptyset$)
+  is $0$ identically by the junk-value convention, so the bound would be vacuously false whenever
+  $[[\gamma]](f-f',\pi)\ne0$. At $Q=\emptyset$, $\mathrm{infDist}(x,\emptyset)=0$ in Lean (the
+  opposite of the paper's intended $d(x,\emptyset)=+\infty$), which collapses \noderef{psiTilde}'s
+  min to its small branch instead of falling back to the large branch $2C$: concretely, take
+  $E=\mathbb{R}$, $\gamma$ the unit-speed identity curve of length $1$, $f=\mathrm{id}$,
+  $f'\equiv0$, $\pi\equiv1$, $C=1$, $Q=\emptyset$, $\epsilon=1/m^2$. Then $\norm{f}_\infty=1\le C$,
+  $\norm{f'}_\infty=0\le C$, $\mathrm{Lip}(f)=1\le C$, $\mathrm{Lip}(f')=0\le C$,
+  $\mathrm{Lip}(\pi)=0\le C$, and $\sup_{q\in\emptyset}|f(q)-f'(q)|\le\epsilon$ is vacuously true.
+  Since $\pi\equiv1$ is constant, $\deriv(\pi\circ\gamma)\equiv0$ and
+  $[[\gamma]](f-f',\pi)=\int_0^1 (f-f')(\gamma(t))\cdot 0\,dt=0$, so this particular instance does
+  not falsify the bound; taking instead $\pi=\mathrm{id}$ (so $\mathrm{Lip}(\pi)=1\le C$, and
+  $\deriv(\pi\circ\gamma)\equiv1$) gives $[[\gamma]](f-f',\pi)=\int_0^1 1\cdot1\,dt=1$, while
+  $\tilde\psi_{m,\emptyset,1/m^2,1}(\gamma) = 2/m + \tfrac1m\sum_{i=1}^m\min\{2,1/m^2+0\} =
+  2/m+1/m^2 \to 0$ as $m\to\infty$, so $\tilde\psi_{m,\emptyset,1/m^2,1}(\gamma) < 1$ for $m\ge3$:
+  the literal transcription of eq.~\eqref{f_estimate} without $Q$ nonempty is false at $Q=\emptyset$.
+  $Q$ nonempty is exactly what makes $d(x,Q)$ attained at an actual point of $Q$ (a finite nonempty
+  set is compact), the only place this hypothesis is used in the proof below.
+\end{lemma}
+\begin{proof}
+  Write $L := \length(\gamma)$ and $h := L/m$ ($\ge 0$ since $m \ge 1$, $L \ge 0$). Define
+  $s_i := i\cdot L/m$ for $i=0,\dots,m$, so $s_0=0$, $s_m=L$, $s$ monotone on $\{0,\dots,m\}$.
+
+  \emph{Step 0: the case $L=0$.} If $L=0$ then $[[\gamma]](f-f',\pi)=\int_0^0(\dots)=0$
+  (\noderef{curveCurrent}), and every summand of $\tilde\psi_{m,Q,\epsilon,C}(\gamma)$ is a
+  nonnegative $\min$ multiplied by $C\cdot0/m=0$ (from the outer factor $C\length(\gamma)/m$), and
+  the additive term $2C^2\cdot0^2/m=0$; so $\tilde\psi_{m,Q,\epsilon,C}(\gamma)=0$ and the claim
+  holds as $0\le0$. Assume from now on $L>0$, so $h>0$.
+
+  \emph{Step 1: resolve the current into $m$ pieces.} By \noderef{CurrentResolutionAdditive}
+  applied to $\gamma$, the form with $f$-part $f-f'$, $k=m$, and the partition $s$,
+  \[
+    [[\gamma]](f-f',\pi) = \sum_{i=0}^{m-1} \int_{s_i}^{s_{i+1}} (f-f')(\gamma(t)) \cdot
+      \mathrm{deriv}(\pi\circ\gamma)(t)\,dt
+    . \tag{A}
+  \]
+  For each $i\in\{0,\dots,m-1\}$, $0\le s_i\le s_{i+1}\le L$, so $\sigma_i:=\gamma|_{[s_i,s_{i+1}]}$
+  (\noderef{curveRestrict}) is defined, with $\length(\sigma_i)=h$, $\sigma_i(0)=\gamma(s_i)$,
+  $\sigma_i(h)=\gamma(s_{i+1})$ (\noderef{curveRestrict}'s defining formula). By
+  \noderef{RestrictCurrentFormula},
+  \[
+    [[\sigma_i]](f-f',\pi) = \int_{s_i}^{s_{i+1}} (f-f')(\gamma(t)) \cdot
+      \mathrm{deriv}(\pi\circ\gamma)(t)\,dt
+    , \tag{B}
+  \]
+  so combining (A) and (B), $[[\gamma]](f-f',\pi) = \sum_{i=0}^{m-1}[[\sigma_i]](f-f',\pi)$.
+
+  \emph{Step 2: chord estimate at the RIGHT endpoint of each piece.} The form $(f-f',\pi)$ has
+  $(f-f')$-Lipschitz constant $\mathrm{Lip}(f-f') \le \mathrm{Lip}(f)+\mathrm{Lip}(f') \le 2C$ and
+  $\pi$-Lipschitz constant $\mathrm{Lip}(\pi)\le C$. Paper.tex line 1791 specifies, for
+  eq.~\eqref{f_estimate}, sampling at $s_i^*=s_i$, i.e.\ the \emph{right} endpoint of the piece
+  $[s_{i-1},s_i]$ (equivalently, of $[s_i,s_{i+1}]$ in the $0$-indexed convention used here, the
+  right endpoint is $s_{i+1}=\sigma_i(h)$, i.e.\ $u=h=\length(\sigma_i)$). By
+  \noderef{CurrentChordEstimate} applied to $\sigma_i$ and the form $(f-f',\pi)$ at the sample
+  point $u=h$ (legal since $0\le h\le h=\length(\sigma_i)$),
+  \[
+    \Bigl|[[\sigma_i]](f-f',\pi) - (f-f')(\sigma_i(h)) \cdot
+      \bigl(\pi(\sigma_i(h))-\pi(\sigma_i(0))\bigr)\Bigr|
+      \le \mathrm{Lip}(f-f')\cdot\mathrm{Lip}(\pi)\cdot h^2/2 \le 2C\cdot C\cdot h^2/2 = C^2h^2
+    . \tag{$C_i$}
+  \]
+  Substituting $\sigma_i(0)=\gamma(s_i)$, $\sigma_i(h)=\gamma(s_{i+1})$, the chord main term is
+  \[
+    D_i := (f-f')(\gamma(s_{i+1})) \cdot \bigl(\pi(\gamma(s_{i+1}))-\pi(\gamma(s_i))\bigr)
+    .
+  \]
+
+  \emph{Step 3: bound each $D_i$ by the corresponding term of $\tilde\psi$.} Write
+  $x_i:=\gamma(s_i)$, $y_i:=\gamma(s_{i+1})$, so $D_i=(f-f')(y_i)\cdot(\pi(y_i)-\pi(x_i))$. Since
+  $\pi$ is $\mathrm{Lip}(\pi)$-Lipschitz ($\le C$) and $\gamma$ is globally $1$-Lipschitz
+  (\noderef{CurveLipschitz}), $|\pi(y_i)-\pi(x_i)| \le \mathrm{Lip}(\pi)\cdot d(x_i,y_i) \le
+  C\cdot(s_{i+1}-s_i) = C h = CL/m$. Hence $|D_i| \le |(f-f')(y_i)| \cdot CL/m$.
+
+  We bound $|(f-f')(y_i)|$ by two independent estimates and take the minimum.
+
+  \emph{(a) The density-replacement bound.} $g:=f-f'$ is $(\mathrm{Lip}(f)+\mathrm{Lip}(f'))$-Lipschitz
+  with $\sup_{q\in Q}|g(q)|\le\epsilon$ (hypothesis). Since $Q$ is finite and nonempty, hence
+  compact, $\mathrm{infDist}(y_i,Q)$ is attained at some $q_0 \in Q$
+  (\texttt{IsCompact.exists\_infDist\_eq\_dist}), so
+  \[
+    |g(y_i)| \le |g(y_i)-g(q_0)| + |g(q_0)| \le (\mathrm{Lip}(f)+\mathrm{Lip}(f'))\cdot d(y_i,q_0)
+      +\epsilon = \epsilon + (\mathrm{Lip}(f)+\mathrm{Lip}(f'))\cdot d(y_i,Q) \le \epsilon + 2C\cdot
+      d(y_i,Q)
+    ,
+  \]
+  using $\mathrm{Lip}(f),\mathrm{Lip}(f')\le C$.
+
+  \emph{(b) The direct uniform bound.} Since $f,f'$ are each bounded by $\le C$ in sup norm
+  (hypothesis, \noderef{Form1}'s $f\_bounded$ field), $|g(y_i)|=|f(y_i)-f'(y_i)| \le
+  |f(y_i)|+|f'(y_i)| \le \norm{f}_\infty + \norm{f'}_\infty \le 2C$.
+
+  Combining (a) and (b), $|g(y_i)| = |(f-f')(y_i)| \le \min\{2C,\ \epsilon+2Cd(y_i,Q)\}$, hence
+  \[
+    |D_i| \le \frac{CL}{m}\cdot\min\{2C,\ \epsilon+2C\,d(\gamma(s_{i+1}),Q)\}
+    .
+  \]
+  Reindexing $j:=i+1\in\{1,\dots,m\}$ (so $y_i=\gamma(s_j)$), this is exactly the $j$-th summand of
+  $\tilde\psi$'s defining sum (paper.tex line 1722):
+  $\frac{C\length(\gamma)}{m}\cdot\min\{2C,\ \epsilon+2Cd(\gamma(s_j),Q)\}$.
+
+  \emph{Step 4: assemble.} By the triangle inequality applied to
+  $[[\gamma]](f-f',\pi)=\sum_{i=0}^{m-1}[[\sigma_i]](f-f',\pi)$ (Step 1) and $(C_i)$ (Step 2),
+  \[
+    \Bigl|[[\gamma]](f-f',\pi) - \sum_{i=0}^{m-1}D_i\Bigr| \le \sum_{i=0}^{m-1}C^2h^2 = mC^2h^2
+      = C^2L^2/m
+    ,
+  \]
+  using $h=L/m$. Combining with the triangle inequality and Step 3,
+  \[
+    |[[\gamma]](f-f',\pi)| \le \Bigl|\sum_iD_i\Bigr|+C^2L^2/m \le \sum_i|D_i|+C^2L^2/m
+      \le \frac{CL}{m}\sum_{j=1}^m\min\{2C,\epsilon+2Cd(\gamma(s_j),Q)\}+C^2L^2/m
+    .
+  \]
+  Since $C^2L^2/m \le 2C^2L^2/m$ (as $C^2L^2/m\ge0$), the right-hand side is bounded above by
+  $2C^2L^2/m + \frac{CL}{m}\sum_{j=1}^m\min\{2C,\epsilon+2Cd(\gamma(s_j),Q)\} =
+  \tilde\psi_{m,Q,\epsilon,C}(\gamma)$ (\noderef{psiTilde}), giving the claim (with room to spare
+  relative to the paper's own looser bound \eqref{mSumBound}, $\mathrm{Lip}(f)\mathrm{Lip}(\pi)L^2/m$,
+  because \noderef{CurrentChordEstimate}'s constant is the sharper $/2$).
+\end{proof}

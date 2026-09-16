@@ -1,0 +1,16 @@
+\begin{definition}[$\mu_\gamma$, the measure of a curve]
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, and let $\gamma \in \Theta(E)$
+  (\noderef{Curve}). Define $\mu_\gamma$ to be the pushforward, under $\gamma \colon \mathbb{R} \to E$,
+  of one-dimensional Lebesgue measure restricted to $[0,\length(\gamma)]$. Concretely, for Borel
+  $B \subseteq E$,
+  \[
+    \mu_\gamma(B) = \abs{\set{t \in [0,\length(\gamma)] : \gamma(t) \in B}}
+    ,
+  \]
+  where $\abs{\cdot}$ is Lebesgue measure -- exactly paper eq.~(2.1) (paper.tex line 468), with
+  $\gamma$ read via its clamped global extension (\noderef{Curve}) so that the pushforward is an
+  honest measure-theoretic construction (\texttt{Measure.map}) rather than a partial function.
+  Every $\gamma \in \Theta(E)$ is continuous (in fact globally $1$-Lipschitz), hence Borel
+  measurable, so this pushforward genuinely computes the displayed formula and is never the
+  \texttt{Measure.map} junk value.
+\end{definition}

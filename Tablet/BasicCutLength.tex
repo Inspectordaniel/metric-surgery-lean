@@ -1,0 +1,110 @@
+\begin{lemma}[The basic cut's outputs have controlled lengths]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}), $\gamma \in
+  \Theta(E)$ (\noderef{Curve}) a closed curve (\noderef{IsClosedCurve}), and $t,t' \in
+  [0,\length(\gamma)]$ with $t \ne t'$. Writing $(\gamma',g) := C(\gamma,t,t')$
+  (\noderef{BasicCut}),
+  \[
+    A := \begin{cases} t'-t & \text{if } t \le t' \\ (\length(\gamma)-t)+t' & \text{if } t'<t
+    \end{cases}
+    , \qquad
+    d := \mathrm{dist}(\gamma(t),\gamma(t'))
+    ,
+  \]
+  ($A$ is the length of the excised arc $\gamma|_{[t,t']}$ in the ordinary-or-wrap sense of
+  \noderef{BasicCut}'s own case split, and $d$ is the length of the single closing geodesic edge
+  $G_{\gamma(t),\gamma(t')}$ used to build both outputs, \noderef{GeodesicPairing}), then
+  \begin{align}
+    \label{eq:kept-len}
+    \length(\gamma') &= \length(\gamma) - A + d , \\
+    \label{eq:discarded-len}
+    \length(g) &= A + d , \\
+    \label{eq:closing-le-arc}
+    d &\le A .
+  \end{align}
+
+  \paragraph{Why this is needed.} Nothing currently in the tablet states the length of either
+  output of \noderef{BasicCut}. Both of paper Lemma 3.10's length bounds
+  (\eqref{LengthBoundTypeIIgamma}, \eqref{LengthBoundTypeIItotal}, paper.tex lines 932-939) and both
+  of paper Lemma 3.8's length bounds (\eqref{LengthBoundTypeIgamma}, \eqref{LengthBoundTypeItotal})
+  need exactly these two length formulas together with the comparison $d \le A$ (paper.tex line
+  959, ``two additional geodesic edges each of length $d(\gamma(t),\gamma(t'))\le
+  \length(\gamma|_{[t,t']})$''); we record all three facts here, once, rather than re-deriving them
+  separately inside the Type~I and Type~II cut nodes.
+
+  \paragraph{On the hypothesis $t \ne t'$.} As recorded in \noderef{BasicCutClosed}, at $t=t'$ both
+  of \noderef{BasicCut}'s outputs degenerate to length-$0$ curves (both restrictions used there
+  become the degenerate, length-$0$ restriction $\mathrm{curveRestrict}(\gamma,t,t)$), so
+  \eqref{eq:kept-len} would force $0 = \length(\gamma) - 0 + 0 = \length(\gamma)$, false for any
+  curve of positive length; the case $t=t'$ genuinely falls outside the uniform formula above and is
+  excluded by the same hypothesis \noderef{BasicCutClosed} and \noderef{BasicCutCurrent} already
+  carry.
+\end{lemma}
+\begin{proof}
+  Since $t \ne t'$, by \noderef{BasicCut}'s three-way case split, exactly one of $t<t'$ or $t'<t$
+  holds (the middle case $t=t'$ is excluded by hypothesis).
+
+  \paragraph{Case $t<t'$ (so $A=t'-t$, $\mathrm{inArc}$ as in \noderef{BasicCut}'s case split).} By
+  \noderef{BasicCut}, $\gamma' = \mathrm{curveWrapRestrict}(\gamma,t',t) *
+  G_{\gamma(t),\gamma(t')}$ and $g = \mathrm{curveRestrict}(\gamma,t,t') *
+  G_{\gamma(t'),\gamma(t)}$, where $*$ is \noderef{curveConcat}.
+
+  \emph{Length of $g$.} By \noderef{curveConcat}'s length formula,
+  $\length(g) = \length(\mathrm{curveRestrict}(\gamma,t,t')) + \length(G_{\gamma(t'),\gamma(t)})$.
+  By \noderef{curveRestrict}'s length formula (valid since $0\le t\le t'\le\length(\gamma)$),
+  $\length(\mathrm{curveRestrict}(\gamma,t,t')) = t'-t = A$. By \noderef{GeodesicPairing}'s
+  $\mathrm{len\_eq}$ field, $\length(G_{\gamma(t'),\gamma(t)}) = \mathrm{dist}(\gamma(t'),\gamma(t))
+  = \mathrm{dist}(\gamma(t),\gamma(t')) = d$ (symmetry of $\mathrm{dist}$). Hence
+  $\length(g) = A+d$, proving \eqref{eq:discarded-len} in this case.
+
+  \emph{Length of $\gamma'$.} By \noderef{curveConcat}'s length formula, $\length(\gamma') =
+  \length(\mathrm{curveWrapRestrict}(\gamma,t',t)) + \length(G_{\gamma(t),\gamma(t')})$. By
+  \noderef{curveWrapRestrict}'s own defining formula, $\mathrm{curveWrapRestrict}(\gamma,t',t) =
+  \mathrm{curveRestrict}(\gamma,t',\length(\gamma)) * \mathrm{curveRestrict}(\gamma,0,t)$ (valid
+  since $0\le t'<t\le\length(\gamma)$ here plays the role of \noderef{curveWrapRestrict}'s
+  hypothesis ``second argument strictly less than the first'', with its own first/second arguments
+  being $t',t$), so by \noderef{curveConcat}'s length formula again and \noderef{curveRestrict}'s
+  length formula twice, $\length(\mathrm{curveWrapRestrict}(\gamma,t',t)) =
+  (\length(\gamma)-t')+(t-0) = \length(\gamma)-t'+t$. By \noderef{GeodesicPairing}'s
+  $\mathrm{len\_eq}$ field, $\length(G_{\gamma(t),\gamma(t')}) = \mathrm{dist}(\gamma(t),\gamma(t'))
+  = d$. Hence $\length(\gamma') = (\length(\gamma)-t'+t)+d = \length(\gamma)-(t'-t)+d =
+  \length(\gamma)-A+d$, proving \eqref{eq:kept-len} in this case.
+
+  \emph{The comparison $d \le A$.} By \noderef{CurveLipschitz}, $\gamma$ is $1$-Lipschitz, so
+  $d = \mathrm{dist}(\gamma(t),\gamma(t')) \le |t-t'| = t'-t = A$ (using $t<t'$), proving
+  \eqref{eq:closing-le-arc} in this case.
+
+  \paragraph{Case $t'<t$ (so $A=(\length(\gamma)-t)+t'$).} By \noderef{BasicCut}, $\gamma' =
+  \mathrm{curveRestrict}(\gamma,t',t) * G_{\gamma(t),\gamma(t')}$ and $g =
+  \mathrm{curveWrapRestrict}(\gamma,t,t') * G_{\gamma(t'),\gamma(t)}$.
+
+  \emph{Length of $\gamma'$.} By \noderef{curveConcat}'s length formula and
+  \noderef{curveRestrict}'s length formula (valid since $0\le t'\le t\le\length(\gamma)$),
+  $\length(\gamma') = \length(\mathrm{curveRestrict}(\gamma,t',t)) +
+  \length(G_{\gamma(t),\gamma(t')}) = (t-t') + d$ (the geodesic edge's length again $d$ by
+  $\mathrm{len\_eq}$). Since $A = (\length(\gamma)-t)+t'$, $\length(\gamma)-A =
+  \length(\gamma)-(\length(\gamma)-t)-t' = t-t'$, so $\length(\gamma)-A+d = (t-t')+d = \length(\gamma')$,
+  proving \eqref{eq:kept-len} in this case.
+
+  \emph{Length of $g$.} By \noderef{curveConcat}'s length formula, $\length(g) =
+  \length(\mathrm{curveWrapRestrict}(\gamma,t,t')) + \length(G_{\gamma(t'),\gamma(t)})$. By
+  \noderef{curveWrapRestrict}'s defining formula (valid, $0\le t'<t\le\length(\gamma)$),
+  $\mathrm{curveWrapRestrict}(\gamma,t,t') = \mathrm{curveRestrict}(\gamma,t,\length(\gamma)) *
+  \mathrm{curveRestrict}(\gamma,0,t')$, so as in the previous case,
+  $\length(\mathrm{curveWrapRestrict}(\gamma,t,t')) = (\length(\gamma)-t)+t' = A$. By
+  $\mathrm{len\_eq}$, $\length(G_{\gamma(t'),\gamma(t)}) = \mathrm{dist}(\gamma(t'),\gamma(t)) = d$.
+  Hence $\length(g) = A+d$, proving \eqref{eq:discarded-len} in this case.
+
+  \emph{The comparison $d \le A$.} By closedness of $\gamma$ (\noderef{IsClosedCurve}),
+  $\gamma(\length(\gamma)) = \gamma(0)$. By the triangle inequality in $E$,
+  \[
+    d = \mathrm{dist}(\gamma(t),\gamma(t')) \le \mathrm{dist}(\gamma(t),\gamma(\length(\gamma)))
+    + \mathrm{dist}(\gamma(0),\gamma(t'))
+    .
+  \]
+  By \noderef{CurveLipschitz}, $\mathrm{dist}(\gamma(t),\gamma(\length(\gamma))) \le
+  |t-\length(\gamma)| = \length(\gamma)-t$ (using $t\le\length(\gamma)$) and
+  $\mathrm{dist}(\gamma(0),\gamma(t')) \le |0-t'| = t'$ (using $t'\ge0$). Hence $d \le
+  (\length(\gamma)-t)+t' = A$, proving \eqref{eq:closing-le-arc} in this case.
+
+  In either case all three claimed identities/inequalities hold, completing the proof.
+\end{proof}

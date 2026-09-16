@@ -1,0 +1,233 @@
+\begin{lemma}[A short interior window of the arc's own resolution bounds its edge count]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}) a closed curve
+  (\noderef{IsClosedCurve}), $\delta,\epsilon \in \mathbb{R}$ with $\delta>0$, $0<\epsilon<1$,
+  and $n,k \in \mathbb{N}$, $s \colon \mathbb{N} \to \mathbb{R}$ a geodesic resolution of $\gamma$
+  into $k$ edges (\noderef{IsGeodesicResolution}) satisfying, for this particular $s$, the two
+  counting clauses of the paper's $(\delta,\epsilon,n)$-curve condition (Definition delta-def,
+  paper.tex 716--729):
+  \[
+    \text{(linear)}\quad \forall\, a,b,\ 0 \le a \le b \le \length(\gamma),\ b-a \le
+    2\epsilon^{-1}\delta \implies \#\{j\in\set{1,\dots,k} : a\le s(j-1),\ s(j)\le b,\ s(j)-s(j-1)<\delta\}
+    \le n
+    ,
+  \]
+  \[
+    \text{(wrap)}\quad \forall\, a,b,\ 0 \le b < a \le \length(\gamma),\
+    (\length(\gamma)-a)+b \le 2\epsilon^{-1}\delta \implies
+    \#\{j\in\set{1,\dots,k} : (a\le s(j-1) \vee s(j)\le b),\ s(j)-s(j-1)<\delta\} \le n
+    .
+  \]
+  Let $t,t'\in[0,\length(\gamma)]$ and let $A := \gamma|_{[t,t']}$ be the circular arc
+  (\noderef{curveArc}). Let $(k_A,s_A)$ be any geodesic resolution of $A$
+  (\noderef{IsGeodesicResolution}) with $k_A \ge 1$ carrying the same correspondence data as in
+  \noderef{ArcDeltaEpsNCount}: in the ordinary case $t\le t'$, there is $j_0$ with
+  $s_A(i) = s(j_0+(i-1))-t$ (and $j_0+(i-1)\le k$) for every $i\in\set{1,\dots,k_A-1}$; in the wrap
+  case $t'<t$, there are $j_0,m$ with $s_A(i)=s(j_0+(i-1))-t$ (and $j_0+(i-1)\le k$) for
+  $1\le i\le m$, $s_A(i)=(\length(\gamma)-t)+s(i-m)$ (and $i-m\le k$) for $m<i\le k_A-1$, and
+  $s(j_0+(m-1))=\length(\gamma)$ whenever $m\ge1$.
+
+  If the interior window of $A$'s own resolution, between its breakpoints $s_A(1)$ and
+  $s_A(k_A-1)$, has length at most $\delta$, i.e.\ $s_A(k_A-1)-s_A(1)\le\delta$, then
+  \[
+    k_A \le n+3
+    .
+  \]
+
+  \paragraph{Why this is not a consequence of \noderef{ArcDeltaEpsNCount}.} That lemma bounds the
+  \emph{content} of the sub-window's own resolution (it shows the sub-window is itself a
+  $(\delta,\epsilon,n)$-curve), which is an existential statement about \emph{some} resolution of
+  the sub-window and provably says nothing about the number of edges $k_A$ of the \emph{given}
+  resolution $s_A$: a short window can contain arbitrarily many edges, each individually shorter
+  than $\delta$ (e.g.\ $100$ edges of length $\delta/1000$ packed into a window of length $\delta/10$).
+  What makes $k_A$ itself bounded is that \emph{these edges are also edges of $\gamma$}, hence at
+  most $n$ of them can be short by $\gamma$'s own $(\delta,\epsilon,n)$-curve property, and (a fact
+  needing no correspondence with $\gamma$ at all) at most one of them can have length $\ge\delta$,
+  since two such edges could not both fit disjointly inside a window of length at most $\delta$.
+
+  \paragraph{This is the fact consumed by \Cref{cut-type-I}'s short-window branch.} There, the
+  window $[s_A(1),s_A(k_A-1)]$ is exactly the interior window of the Type~I cut's minimizing arc,
+  and $\delta \le \beta(\gamma) \le \length(\gamma)/2$ makes the hypotheses of the present lemma
+  available whenever that window turns out to be no longer than $\delta$.
+\end{lemma}
+\begin{proof}
+  Write $W := s_A(k_A-1)-s_A(1)$; the hypothesis is $W\le\delta$.
+
+  \emph{Case $k_A\le3$.} Since $n\ge0$, $k_A\le3\le n+3$ trivially.
+
+  \emph{Case $k_A\ge4$.} By \noderef{IsGeodesicResolution} applied to $(k_A,s_A)$: $s_A$ is
+  monotone on $\set{0,\dots,k_A}$, $s_A(0)=0$, $s_A(k_A)=\length(A)$. Since
+  $0\le1\le k_A-1\le k_A$ (using $k_A\ge4$), monotonicity gives
+  $0=s_A(0)\le s_A(1)\le s_A(k_A-1)\le s_A(k_A)=\length(A)$; in particular $0\le W\le\length(A)$.
+
+  \textbf{Step 1: at most one long interior edge, directly from $s_A$'s own monotonicity.} Call
+  $i\in\set{2,\dots,k_A-1}$ \emph{long} if $\delta\le s_A(i)-s_A(i-1)$, and write
+  $S_{lg} := \set{i\in\set{2,\dots,k_A-1} : \delta\le s_A(i)-s_A(i-1)}$. Suppose $x,y\in S_{lg}$
+  with $x<y$; then $x\le y-1$, and since $x,y-1\in\set{0,\dots,k_A}$, monotonicity of $s_A$ gives
+  $s_A(x)\le s_A(y-1)$. Also $x\ge2$ gives $s_A(x-1)\ge s_A(1)$, and $y\le k_A-1$ gives
+  $s_A(y)\le s_A(k_A-1)$, both by monotonicity. Hence
+  \[
+    2\delta \;\le\; \bigl(s_A(x)-s_A(x-1)\bigr)+\bigl(s_A(y)-s_A(y-1)\bigr)
+    \;\le\; s_A(y)-s_A(x-1) \;\le\; s_A(k_A-1)-s_A(1) \;=\; W \;\le\; \delta
+    ,
+  \]
+  contradicting $\delta>0$. So $S_{lg}$ has at most one element: $\#S_{lg}\le1$.
+
+  \textbf{Step 2: the window budget.} Since $0<\epsilon<1$, $\epsilon^{-1}>1$, so
+  $2\epsilon^{-1}\delta > 2\delta \ge \delta$ (using $\delta>0$ for the last step, in fact
+  $\delta \ge \delta$ trivially and $2\delta > \delta$). In particular $W\le\delta\le2\epsilon^{-1}\delta$
+  strictly-or-equal, i.e.\ $W\le2\epsilon^{-1}\delta$. We record this as it is used identically in
+  every sub-case below, each time we invoke (linear) or (wrap): the pair $(a,b)$ constructed always
+  satisfies $b-a=W$ or $(\length(\gamma)-a)+b=W$, both $\le\delta\le2\epsilon^{-1}\delta$.
+
+  \textbf{Step 3: at most $n$ short interior edges, via correspondence with $\gamma$.} Write
+  $S_{sh} := \set{i\in\set{2,\dots,k_A-1} : s_A(i)-s_A(i-1)<\delta}$; we show $\#S_{sh}\le n$ by
+  exhibiting an injective map from $S_{sh}$ into a subset of $\set{1,\dots,k}$ of cardinality
+  $\le n$, using (linear) or (wrap).
+
+  \emph{Ordinary case $t\le t'$.} Take $j_0$ from the hypothesis. For $i\in\set{1,\dots,k_A-1}$,
+  $s_A(i)=s(j_0+(i-1))-t$. Set $\varphi(i):=j_0+(i-1)$; $\varphi$ is strictly increasing
+  (hence injective), $\varphi(i)\ge1$ for $i\ge2$ (as $j_0+(i-1)\ge j_0+1\ge1$), and
+  $\varphi(k_A-1)=j_0+(k_A-2)\le k$ by the side condition at $i=k_A-1$, so $\varphi(i)\le k$ for
+  all $i\le k_A-1$ by monotonicity of $\varphi$. Set $a:=s_A(1)+t$, $b:=s_A(k_A-1)+t$; note
+  $a=s(\varphi(1))=s(j_0)$ and $b=s(\varphi(k_A-1))=s(j_0+(k_A-2))$.
+
+  Then $0\le a$ (as $s_A(1)\ge0$, $t\ge0$); $b-a=W\ge0$ so $a\le b$; and, since $A=\gamma|_{[t,t']}$
+  in the ordinary case has $\length(A)=t'-t$ (unfolding \noderef{curveArc}'s ordinary branch and
+  \noderef{curveRestrict}'s length field, both definitional),
+  $b=s_A(k_A-1)+t\le\length(A)+t=(t'-t)+t=t'\le\length(\gamma)$. Finally $b-a=W\le2\epsilon^{-1}\delta$
+  by Step~2. So (linear) applies at $(a,b)$, giving
+  \[
+    S_\gamma := \#\{j\in\set{1,\dots,k} : a\le s(j-1),\ s(j)\le b,\ s(j)-s(j-1)<\delta\} \le n
+    .
+  \]
+  We claim $\varphi$ sends $S_{sh}$ injectively into the filtered set defining $S_\gamma$. Fix
+  $i\in S_{sh}$ (so $2\le i\le k_A-1$). Using the correspondence at indices $i-1$ and $i$ (both in
+  $\set{1,\dots,k_A-1}$, since $1\le i-1$): $s(\varphi(i)-1)=s(j_0+(i-2))=s_A(i-1)+t$ and
+  $s(\varphi(i))=s(j_0+(i-1))=s_A(i)+t$. Since $i-1\ge1$, monotonicity of $s_A$ gives
+  $s_A(i-1)\ge s_A(1)$, so $s(\varphi(i)-1)=s_A(i-1)+t\ge s_A(1)+t=a$. Since $i\le k_A-1$,
+  monotonicity gives $s_A(i)\le s_A(k_A-1)$, so $s(\varphi(i))=s_A(i)+t\le s_A(k_A-1)+t=b$. And
+  $s(\varphi(i))-s(\varphi(i)-1)=s_A(i)-s_A(i-1)<\delta$ since $i\in S_{sh}$. So $\varphi(i)$ lies
+  in the filtered set, and $\varphi$ is injective (being strictly increasing). Hence
+  $\#S_{sh}\le S_\gamma\le n$.
+
+  \emph{Wrap case $t'<t$.} Take $j_0,m$ from the hypothesis. Since $t'<t$, unfolding
+  \noderef{curveArc}'s wrap branch together with \noderef{curveWrapRestrict},
+  \noderef{curveConcat}, and \noderef{curveRestrict}'s length fields (all definitional),
+  $\length(A)=(\length(\gamma)-t)+t'$, and since $t'<t$ this is strictly less than
+  $\length(\gamma)$: $\length(A)<\length(\gamma)$. Combined with $W\le\length(A)$ from the
+  preamble of this case, $W<\length(\gamma)$, so
+  \begin{equation}\label{ASWEC-margin}
+    \length(\gamma)-W>0
+    .
+  \end{equation}
+  We split on the value of $m$ into three exhaustive, mutually exclusive sub-cases.
+
+  \emph{Sub-case (i): $m=0$.} Then the tail correspondence ($1\le i\le m$) is vacuous, and the
+  head correspondence ($m<i\le k_A-1$, i.e.\ $1\le i\le k_A-1$ since $m=0$) covers every index
+  $i\in\set{1,\dots,k_A-1}$: $s_A(i)=(\length(\gamma)-t)+s(i)$ (using $i-m=i$), with side condition
+  $i\le k$. Set $a:=s(1)$, $b:=s(k_A-1)$; by the head formula at $i=1$ and $i=k_A-1$,
+  $a=s_A(1)-(\length(\gamma)-t)$ and $b=s_A(k_A-1)-(\length(\gamma)-t)$, so $b-a=W$.
+  By \noderef{IsGeodesicResolution} for $s$, $s$ is monotone on $\set{0,\dots,k}$ with $s(0)=0$,
+  $s(k)=\length(\gamma)$; as $1\le k_A-1\le k$ (the latter from the side condition at $i=k_A-1$),
+  monotonicity gives $0=s(0)\le s(1)\le s(k_A-1)\le s(k)=\length(\gamma)$, i.e.\ $0\le a\le b\le
+  \length(\gamma)$. And $b-a=W\le2\epsilon^{-1}\delta$ by Step~2. So (linear) applies at $(a,b)$,
+  giving $S_\gamma:=\#\{j\in\set{1,\dots,k}:a\le s(j-1),\ s(j)\le b,\ s(j)-s(j-1)<\delta\}\le n$.
+  Define $\psi(i):=i$ for $i\in\set{2,\dots,k_A-1}$ (the identity, hence injective, into
+  $\set{1,\dots,k}$ since $i\le k_A-1\le k$). For $i\in S_{sh}$: by the head formula at $i-1$ and
+  $i$ (both in range as $i\ge2$, so $i-1\ge1>0=m$), $s(i)-s(i-1)=s_A(i)-s_A(i-1)<\delta$; and
+  $a=s(1)\le s(i-1)$ (monotone, $i-1\ge1$), $s(i)\le s(k_A-1)=b$ (monotone, $i\le k_A-1$). So
+  $\psi(i)$ lies in the filtered set. Hence $\#S_{sh}\le S_\gamma\le n$.
+
+  \emph{Sub-case (ii): $m\ge k_A-1$.} Then every $i\in\set{1,\dots,k_A-1}$ satisfies $i\le m$, so
+  the tail correspondence covers all of them: $s_A(i)=s(j_0+(i-1))-t$, with side condition
+  $j_0+(i-1)\le k$. This is exactly the ordinary case's formula, and the entire ordinary-case
+  argument above applies verbatim with the same $\varphi(i):=j_0+(i-1)$, $a:=s_A(1)+t=s(j_0)$,
+  $b:=s_A(k_A-1)+t=s(j_0+(k_A-2))$ (using the tail formula at $i=1$, valid since $1\le m$, and at
+  $i=k_A-1$, valid since $k_A-1\le m$); the only fact used from the ordinary case beyond the
+  correspondence identities was $b\le\length(\gamma)$, which we re-derive here directly:
+  $b=s(j_0+(k_A-2))\le s(k)=\length(\gamma)$ by monotonicity of $s$, using the side condition
+  $j_0+(k_A-2)\le k$ at $i=k_A-1$. So (linear) applies at $(a,b)$ exactly as before, and $\varphi$
+  injects $S_{sh}$ into a subset of $\gamma$'s edges of size $\le n$. Hence $\#S_{sh}\le n$.
+
+  \emph{Sub-case (iii): $1\le m\le k_A-2$.} Both the tail correspondence (at $i\le m$) and the
+  head correspondence (at $i>m$) are genuinely available, and (since $m\ge1$) the splice identity
+  $s(j_0+(m-1))=\length(\gamma)$ holds. Set
+  \[
+    a := s_A(1)+t, \qquad b := s_A(k_A-1)-(\length(\gamma)-t)
+    .
+  \]
+  By the tail formula at $i=1$ (valid, $1\le m$), $a=s(j_0)$; by the head formula at $i=k_A-1$
+  (valid, $m<k_A-1$ since $m\le k_A-2$), $b=s(k_A-1-m)$.
+
+  \emph{Bounds on $a,b$.} $0\le a$: $a=s(j_0)\ge s(0)=0$ by monotonicity of $s$ ($j_0\ge0$).
+  $a\le\length(\gamma)$: $a=s(j_0)\le s(k)=\length(\gamma)$ by monotonicity, using $j_0\le k$ (the
+  side condition of the tail formula at $i=1$, namely $j_0+(1-1)=j_0\le k$). $0\le b$:
+  $b=s(k_A-1-m)\ge s(0)=0$ by monotonicity, since $k_A-1-m\ge0$ (as $m\le k_A-2<k_A-1$).
+
+  \emph{$b<a$.} Directly, $a-b = [s_A(1)+t]-[s_A(k_A-1)-(\length(\gamma)-t)] =
+  \length(\gamma)-\bigl(s_A(k_A-1)-s_A(1)\bigr) = \length(\gamma)-W$, which is $>0$ by
+  \eqref{ASWEC-margin}. So $b<a$.
+
+  \emph{The window budget.} $(\length(\gamma)-a)+b = \length(\gamma)-[s_A(1)+t] +
+  [s_A(k_A-1)-(\length(\gamma)-t)] = s_A(k_A-1)-s_A(1) = W \le 2\epsilon^{-1}\delta$ by Step~2.
+
+  So (wrap) applies at $(a,b)$, giving
+  \[
+    S_\gamma := \#\{j\in\set{1,\dots,k} : (a\le s(j-1)\vee s(j)\le b),\ s(j)-s(j-1)<\delta\} \le n
+    .
+  \]
+
+  \emph{The combined injection.} Define $\Phi:\set{2,\dots,k_A-1}\to\set{1,\dots,k}$ by
+  $\Phi(i):=j_0+(i-1)$ if $i\le m$, and $\Phi(i):=i-m$ if $i>m$.
+
+  For $i\le m$ (so also $i-1\ge1$, $i-1\le m$, both in the tail range): by the tail formula at
+  $i-1$ and $i$, $s(\Phi(i)-1)=s(j_0+(i-2))=s_A(i-1)+t$ and $s(\Phi(i))=s(j_0+(i-1))=s_A(i)+t$.
+  Since $i-1\ge1$, monotonicity of $s_A$ gives $s_A(i-1)\ge s_A(1)$, so
+  $s(\Phi(i)-1)\ge s_A(1)+t=a$ — the first disjunct of (wrap)'s filter. And
+  $s(\Phi(i))-s(\Phi(i)-1)=s_A(i)-s_A(i-1)$. Also $\Phi(i)=j_0+(i-1)\ge1$ (as $i\ge2$) and
+  $\Phi(i)\le j_0+(m-1)\le k$ (monotone in $i\le m$, and the tail side condition at $i=m$, valid
+  since $1\le m\le m$).
+
+  For $i>m$ (so $i\in\set{m+1,\dots,k_A-1}$): if $i\ge m+2$, then $i-1>m$ too, and the head
+  formula applies to both $i-1,i$: $s(\Phi(i)-1)=s(i-1-m)=s_A(i-1)-(\length(\gamma)-t)$ and
+  $s(\Phi(i))=s(i-m)=s_A(i)-(\length(\gamma)-t)$, so $s(\Phi(i))-s(\Phi(i)-1)=s_A(i)-s_A(i-1)$,
+  and $s(\Phi(i))=s_A(i)-(\length(\gamma)-t)\le s_A(k_A-1)-(\length(\gamma)-t)=b$ (monotone,
+  $i\le k_A-1$) — the second disjunct of (wrap)'s filter. If instead $i=m+1$: the head formula at
+  $i=m+1$ (valid, $m<m+1\le k_A-1$) gives $s_A(m+1)=(\length(\gamma)-t)+s(1)$, so
+  $s(\Phi(m+1))=s(1)=s_A(m+1)-(\length(\gamma)-t)$; and the tail formula at $i=m$ (valid, $1\le
+  m\le m$) together with the splice identity ($1\le m$) gives
+  $s_A(m)=s(j_0+(m-1))-t=\length(\gamma)-t$. Hence
+  \[
+    s(\Phi(m+1))-s(\Phi(m+1)-1) = s(1)-s(0) = s(1) =
+    \bigl[(\length(\gamma)-t)+s(1)\bigr]-\bigl[\length(\gamma)-t\bigr] = s_A(m+1)-s_A(m)
+    ,
+  \]
+  using $s(0)=0$; and $s(\Phi(m+1))=s(1)\le s(k_A-1-m)=b$ by monotonicity, since $1\le k_A-1-m$
+  (as $m\le k_A-2$) — again the second disjunct. So in every case $i>m$, $s(\Phi(i))\le b$ and
+  $s(\Phi(i))-s(\Phi(i)-1)=s_A(i)-s_A(i-1)$. Also $\Phi(i)=i-m\ge1$ (as $i>m$) and
+  $\Phi(i)\le k_A-1-m\le k$ (the head side condition at $i=k_A-1$, valid since $m<k_A-1$).
+
+  \emph{$\Phi$ is injective.} It is strictly increasing (hence injective) on each of
+  $\set{2,\dots,m}$ and $\set{m+1,\dots,k_A-1}$ separately. Suppose $\Phi(i_1)=\Phi(i_2)=:j$ for
+  some $i_1\le m<i_2$. By the computation above (applied to $i_1$), $a\le s(j-1)$; by the
+  computation above (applied to $i_2$), $s(j)\le b$. Monotonicity of $s$ gives $s(j-1)\le s(j)$, so
+  $a\le s(j-1)\le s(j)\le b$, i.e.\ $a\le b$ — contradicting $b<a$ established above. So no such
+  coincidence occurs, and $\Phi$ is injective on all of $\set{2,\dots,k_A-1}$.
+
+  \emph{Conclusion of Step 3 in this sub-case.} For $i\in S_{sh}$, the computations above show
+  $\Phi(i)$ satisfies $(a\le s(\Phi(i)-1)\vee s(\Phi(i))\le b)$ (the first disjunct when $i\le m$,
+  the second when $i>m$) and $s(\Phi(i))-s(\Phi(i)-1)=s_A(i)-s_A(i-1)<\delta$. So $\Phi$ sends
+  $S_{sh}$ injectively into the filtered set defining $S_\gamma$, giving $\#S_{sh}\le S_\gamma\le n$.
+
+  In every sub-case of the wrap case, and in the ordinary case, we have shown $\#S_{sh}\le n$.
+
+  \textbf{Step 4: assembly.} The predicates "$s_A(i)-s_A(i-1)<\delta$" and
+  "$\delta\le s_A(i)-s_A(i-1)$" are complementary, so $S_{sh}$ and $S_{lg}$ partition
+  $\set{2,\dots,k_A-1}$ exactly: every $i$ in this range lies in exactly one of the two sets. Hence
+  \[
+    (k_A-2) = \#\set{2,\dots,k_A-1} = \#S_{sh}+\#S_{lg} \le n+1
+    ,
+  \]
+  using Step~3 ($\#S_{sh}\le n$) and Step~1 ($\#S_{lg}\le1$). So $k_A\le n+3$, completing the case
+  $k_A\ge4$ and the proof.
+\end{proof}

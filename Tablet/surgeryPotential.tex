@@ -1,0 +1,24 @@
+\begin{definition}[Surgery potential, $\mathrm{surgeryPotential}(\epsilon,\delta,n,L,m)$]
+  \label{surgery-potential}
+  For $0<\epsilon<1$, $\delta>0$, $n \in \mathbb{N}$, $L \in \mathbb{R}$ and $m \in \mathbb{N}$,
+  define
+  \[
+    \mathrm{surgeryPotential}(\epsilon,\delta,n,L,m) :=
+    \left( 1 + \frac{2\epsilon}{1-\epsilon} + \frac{12\epsilon^{-1}}{n(1-\epsilon)} \right) L
+    + \frac{4\epsilon^{-1}\delta}{n} \, m
+    .
+  \]
+  This is exactly the right-hand side of paper Lemma~3.1's clause~(2)
+  (\eqref{item:SurgeryTotalLength}, paper.tex line 612), read as a two-variable function of a
+  length $L$ and a small-edge count $m$ rather than fixed at $L=\length(\gamma)$, $m=0$: the
+  algorithm's termination argument (\noderef{SurgeryInduction}) tracks
+  $\mathrm{surgeryPotential}$ applied to the \emph{current} kept curve at each stage, and the
+  paper's stated bound is recovered at the algorithm's start, where $m=0$
+  (\noderef{InitialDeltaExists}).
+
+  \paragraph{No division by zero.} The formula divides by $n$ and by $1-\epsilon$; every use of
+  $\mathrm{surgeryPotential}$ in this tablet supplies $n\ge1$ (indeed $n>0$ is a mandatory
+  hypothesis of \noderef{SurgeryInduction}, since the coefficient
+  $12\epsilon^{-1}/(n(1-\epsilon))$ is otherwise undefined) and $0<\epsilon<1$, so both
+  denominators are nonzero wherever $\mathrm{surgeryPotential}$ is applied.
+\end{definition}

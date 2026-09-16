@@ -1,0 +1,44 @@
+\begin{lemma}[Measurability of $\tilde\psi$]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra, let
+  $m \in \mathbb{N}$, $Q \subset E$ a finite set, and $\epsilon, C \in \mathbb{R}$. Then
+  $\gamma \mapsto \tilde\psi_{m,Q,\epsilon,C}(\gamma)$ (\noderef{psiTilde}) is a measurable map
+  $\Theta(E) \to \mathbb{R}$, where $\Theta(E)$ carries the evaluation $\sigma$-algebra of
+  \noderef{CurveMeasurableSpace}.
+
+  \paragraph{Why this node is needed.} A planned downstream lemma (paper Lemma A.3, paper.tex 1817)
+  will state an inequality between Bochner integrals of $\psi_{m,Q,\epsilon,C}$ and
+  $\tilde\psi_{m,Q,\epsilon,C}$ against a finite Borel measure on $\Theta(E)$. Lean's Bochner
+  integral of a non-measurable function is $0$ by the junk-value convention, so without
+  measurability established here such an integral inequality would be satisfiable vacuously by a
+  $\tilde\psi$ that is not measurable at all. This lemma closes that gap for $\tilde\psi$, for a
+  general fixed $(m,Q,\epsilon,C)$.
+\end{lemma}
+\begin{proof}
+  Write $L(\gamma) := \length(\gamma)$. By \noderef{CurveLenMeasurable}, $\gamma \mapsto L(\gamma)$
+  is measurable. For any fixed constant $c \in \mathbb{R}$, \noderef{CurveScaledEvalMeasurable}
+  (at that constant $c$) gives that $\gamma \mapsto \gamma(c \cdot L(\gamma))$ is measurable, and
+  composing with the continuous (hence measurable) map $x \mapsto \mathrm{infDist}(x,Q)$ gives that
+  \[
+    \gamma \;\longmapsto\; \mathrm{infDist}\bigl(\gamma(c \cdot L(\gamma)), Q\bigr)
+  \]
+  is measurable, for every fixed real constant $c$.
+
+  Recall \noderef{psiTilde}'s definition:
+  \[
+    \tilde\psi_{m,Q,\epsilon,C}(\gamma) = \frac{2C^2 L(\gamma)^2}{m}
+      + \frac{C L(\gamma)}{m} \cdot \sum_{i=1}^{m} \min\Bigl\{ 2C,\;
+        \epsilon + 2C\cdot\mathrm{infDist}\bigl(\gamma(\tfrac{i}{m}L(\gamma)),Q\bigr) \Bigr\}
+    .
+  \]
+  The first summand $2C^2L(\gamma)^2/m$ is measurable as a constant multiple of a power of the
+  measurable function $L$, divided by the constant $m$. For the second summand, the prefactor
+  $CL(\gamma)/m$ is measurable as a constant multiple of $L$ divided by the constant $m$. For each
+  fixed $i \in \{1,\dots,m\}$, applying the previous paragraph at $c = i/m$ gives that
+  $\gamma \mapsto \mathrm{infDist}(\gamma(\tfrac{i}{m}L(\gamma)),Q)$ is measurable, hence so is its
+  product by the measurable constant $2C$, its sum with the measurable constant $\epsilon$, and its
+  minimum with the measurable constant function $2C$; so each summand of the finite sum over
+  $i \in \{1,\dots,m\}$ is measurable, and the finite sum itself is measurable. The product of the
+  measurable prefactor $CL(\gamma)/m$ with this measurable sum is measurable, and adding the first
+  summand $2C^2L(\gamma)^2/m$ preserves measurability. Hence
+  $\gamma \mapsto \tilde\psi_{m,Q,\epsilon,C}(\gamma)$ is measurable, as claimed.
+\end{proof}

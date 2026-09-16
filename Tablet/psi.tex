@@ -1,0 +1,22 @@
+\begin{definition}[$\psi_{m,Q,\epsilon,C}$]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $m \in \mathbb{N}$,
+  $Q \subset E$ a finite set, and $\epsilon, C \in \mathbb{R}$. Write $s_i := i \cdot
+  \length(\gamma)/m$ for $i = 0,\dotsc,m$. Define
+  \[
+    \psi_{m,Q,\epsilon,C}(\gamma) := C\sum_{i=1}^m \min \left\{ 2C \frac{\length(\gamma)}{m}, \,
+      2\epsilon+ 2C\bigl(d(\gamma(s_i),Q) + d(\gamma(s_{i-1}),Q)\bigr) \right\}
+      + 2C^2\frac{\length(\gamma)^2}{m}
+    ,
+  \]
+  where $d(x,Q) = \inf_{q \in Q} d(x,q)$ (Mathlib's \texttt{Metric.infDist}, with the convention
+  $d(x,\emptyset) = 0$). This is exactly the first display of paper Lemma~A.2 (paper.tex line
+  1718--1721), transcribed with $Q$ ranging over arbitrary finite subsets of $E$ (rather than of a
+  fixed countable dense $E_{\mathbb{Q}} \subset E$) and $\epsilon, C$ ranging over all of
+  $\mathbb{R}$ (rather than only $\mathbb{Q}_{>0}$): the paper's restriction to rational $\epsilon,
+  C$ and to $Q \subset E_{\mathbb{Q}}$ (paper.tex line 1292) is a countability device used only for
+  the Strong-Law-of-Large-Numbers step of Section~4.2 (paper.tex line 1291--1295), not part of the
+  mathematical content of $\psi_{m,Q,\epsilon,C}$'s definition or of Lemma~A.2 / Corollary~A.6, both
+  of which hold verbatim for arbitrary real $\epsilon, C$ and arbitrary finite $Q \subset E$; using
+  the wider (paper-justified) quantification here is therefore a strengthening the paper itself
+  licenses, not an unexplained one.
+\end{definition}

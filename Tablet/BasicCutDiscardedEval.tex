@@ -1,0 +1,78 @@
+\begin{lemma}[Pointwise description of the discarded output of a basic cut]
+  Let $E$ be a metric space, $GP$ a geodesic pairing on $E$ (\noderef{GeodesicPairing}), $\gamma \in
+  \Theta(E)$ (\noderef{Curve}) a closed curve (\noderef{IsClosedCurve}), and $t,t' \in
+  [0,\length(\gamma)]$. Write $(\gamma',g) := C(\gamma,t,t')$ (\noderef{BasicCut}) and set
+  \[
+    A := \gamma|_{[t,t']} \quad (\noderef{curveArc}) , \qquad
+    C := G_{\gamma(t'),\gamma(t)} \quad (\noderef{GeodesicPairing}) ,
+  \]
+  so that $A$ is the excised counter-clockwise circular arc and $C$ is the single closing geodesic
+  edge appended to it. Then
+  \begin{align}
+    \label{eq:discarded-eval-len}
+    \length(g) &= \length(A) + \length(C) , \\
+    \label{eq:discarded-eval-agree}
+    g(v) &= A(v) \qquad \text{for every } v \in \mathbb{R} \text{ with } v \le \length(A) , \\
+    \label{eq:discarded-eval-geo}
+    &\mathrm{IsGeodesicOn}(g,\length(A),\length(g)) \quad (\noderef{IsGeodesicOn}) .
+  \end{align}
+
+  \paragraph{Why this is needed, and why it is not subsumed.} Paper Lemma~3.8's Morrey bound
+  (paper.tex 879-907) decomposes the discarded curve $g$ into the two geodesic end edges of the
+  excised arc, the arc's interior window, and the closing edge, and bounds each block separately;
+  to do this the interior window's own Morrey bound -- which is a statement about a restriction of
+  $A$ -- has to be transported to the corresponding block of $g$, and the two end blocks and the
+  closing block have to be recognised as geodesic blocks \emph{of $g$}. All three steps need the
+  pointwise dictionary \eqref{eq:discarded-eval-agree} together with the placement
+  \eqref{eq:discarded-eval-len} of the closing edge's block, and \eqref{eq:discarded-eval-geo} for
+  the closing block itself. Neither fact is available elsewhere: \noderef{BasicCutLength} records
+  $\length(g)$ only in the shape $(\text{if } t\le t' \text{ then } t'-t \text{ else }
+  (\length(\gamma)-t)+t') + \mathrm{dist}(\gamma(t),\gamma(t'))$, i.e.\ with the two summands
+  expanded into ambient-parameter arithmetic rather than as $\length(A)$ and $\length(C)$, and says
+  nothing at all about the \emph{values} of $g$; and \noderef{BasicCutDiscardedResolutionGeneral}
+  records only the \emph{existence} of a geodesic resolution of $g$ into $k_A+1$ pieces, with no
+  identification of any of those pieces, or of any value of $g$, with $A$.
+\end{lemma}
+\begin{proof}
+  By the definition of the basic cut (\noderef{BasicCut}), the discarded output is exactly the
+  concatenation $g = A * C$ (\noderef{curveConcat}) of the circular arc $A = \gamma|_{[t,t']}$ with
+  the closing geodesic edge $C = G_{\gamma(t'),\gamma(t)}$; the endpoint-matching hypothesis
+  required by \noderef{curveConcat} holds because $A(\length(A)) = \gamma(t')$ (the arc ends at
+  $\gamma(t')$, which is the ordinary restriction's endpoint value in the case $t \le t'$ and, in
+  the wrap case $t'<t$, the endpoint value of the second factor $\gamma|_{[0,t']}$ of
+  \noderef{curveWrapRestrict}, by \noderef{CurveConcatEndpoints}) while $C(0) = \gamma(t')$ by
+  \noderef{GeodesicPairing}'s $\mathrm{start\_eq}$ field. So it suffices to prove the three claims
+  for an arbitrary concatenation $A * C$ of curves whose endpoints match and whose second factor
+  $C$ is a geodesic on $[0,\length(C)]$; the instance we need then follows by taking $C$ to be the
+  geodesic edge $G_{\gamma(t'),\gamma(t)}$, which is a geodesic on $[0,\length(C)]$ by
+  \noderef{GeodesicPairing}'s $\mathrm{isGeodesic}$ field.
+
+  \emph{Proof of \eqref{eq:discarded-eval-len}.} By \noderef{curveConcat}'s defining length field,
+  $\length(A * C) = \length(A) + \length(C)$.
+
+  \emph{Proof of \eqref{eq:discarded-eval-agree}.} By \noderef{curveConcat}'s defining formula,
+  $(A*C)(v) = A(v)$ if $v \le \length(A)$, and $(A*C)(v) = C(v-\length(A))$ otherwise. For
+  $v \le \length(A)$ the first branch is taken, giving $(A*C)(v) = A(v)$ as claimed. (Note that no
+  lower bound $0 \le v$ is required: the formula's case split is on $v \le \length(A)$ alone.)
+
+  \emph{Proof of \eqref{eq:discarded-eval-geo}.} We first record that
+  \[
+    (A*C)(x) = C(x-\length(A)) \qquad \text{for every } x \ge \length(A) .
+  \]
+  Indeed, for $x > \length(A)$ this is the second branch of \noderef{curveConcat}'s formula; and at
+  $x = \length(A)$ the first branch is taken instead, giving $(A*C)(\length(A)) = A(\length(A)) =
+  C(0) = C(\length(A)-\length(A))$, where the middle equality is the endpoint-matching hypothesis of
+  \noderef{curveConcat}. So the displayed identity holds on all of $[\length(A),\infty)$.
+
+  Now let $x,y \in [\length(A),\length(A*C)]$. By \eqref{eq:discarded-eval-len},
+  $\length(A*C) = \length(A)+\length(C)$, so $x - \length(A)$ and $y - \length(A)$ both lie in
+  $[0,\length(C)]$. Since $C$ is a geodesic on $[0,\length(C)]$ (\noderef{IsGeodesicOn}), the
+  displayed identity gives
+  \[
+    d\bigl((A*C)(x),(A*C)(y)\bigr) = d\bigl(C(x-\length(A)),C(y-\length(A))\bigr)
+      = \abs{(x-\length(A)) - (y-\length(A))} = \abs{x-y} .
+  \]
+  As $x,y \in [\length(A),\length(A*C)]$ were arbitrary, this is precisely
+  $\mathrm{IsGeodesicOn}(A*C,\length(A),\length(A*C))$ (\noderef{IsGeodesicOn}), which is
+  \eqref{eq:discarded-eval-geo}.
+\end{proof}

@@ -1,0 +1,93 @@
+\begin{helper}[Covering by finitely many geodesic edges bounds a ball's measure]
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, let $\gamma \in \Theta(E)$
+  (\noderef{Curve}) and write $l := \length(\gamma)$. Let $k \in \mathbb{N}$ and
+  $s \colon \mathbb{N} \to \mathbb{R}$ be such that $(k,s)$ is a geodesic resolution of $\gamma$
+  (\noderef{IsGeodesicResolution}). Let $J$ be a finite set of indices with
+  $J \subseteq \set{1,\dots,k}$, let $x \in E$ and let $r \in \mathbb{R}$ with $r > 0$. Assume that
+  the part of $\gamma$'s parameter interval that $\gamma$ maps into the closed ball
+  $\bar{B}_r(x)$ is covered by the edges indexed by $J$:
+  \[
+    \set{ u \in [0,l] \colon \gamma(u) \in \bar{B}_r(x) } \;\subseteq\;
+      \bigcup_{j \in J} [s(j-1), s(j)]
+    .
+  \]
+  Then
+  \[
+    \mu_\gamma\bigl(\bar{B}_r(x)\bigr) \;\leq\; 2 \, \#J \cdot r
+    ,
+  \]
+  where $\mu_\gamma$ is $\gamma$'s measure (\noderef{curveMeasure}). (Here $j-1$ denotes truncated
+  natural-number subtraction; since $j \ge 1$ for $j \in J$, this is ordinary subtraction.)
+
+  \paragraph{Role.} This is the step that converts a purely combinatorial edge count into a
+  measure estimate: once one knows that the part of $\gamma$ lying in a ball is covered by at most
+  $N$ geodesic edges, the ball has $\mu_\gamma$-measure at most $2Nr$.
+\end{helper}
+\begin{proof}
+  \emph{Step 1: rewriting the left-hand side as a Lebesgue measure.} By \noderef{CurveLipschitz},
+  $\gamma$ is $1$-Lipschitz as a map $\mathbb{R} \to E$, hence continuous, hence Borel measurable;
+  and $\bar{B}_r(x)$ is closed, hence Borel. By the defining formula for $\mu_\gamma$
+  (\noderef{curveMeasure}) as the pushforward under $\gamma$ of Lebesgue measure restricted to
+  $[0,l]$, the pushforward and restriction formulas give
+  \[
+    \mu_\gamma\bigl(\bar{B}_r(x)\bigr)
+      = \abs{\gamma^{-1}\bigl(\bar{B}_r(x)\bigr) \cap [0,l]}
+      = \abs{\set{ u \in [0,l] \colon \gamma(u) \in \bar{B}_r(x) }}
+    ,
+  \]
+  where $\abs{\cdot}$ denotes Lebesgue measure on $\mathbb{R}$ (the two displayed sets are equal,
+  both consisting of the $u$ satisfying $0 \le u \le l$ and $\gamma(u) \in \bar{B}_r(x)$).
+
+  \emph{Step 2: refining the covering.} Let $u \in \set{ u \in [0,l] \colon \gamma(u) \in
+  \bar{B}_r(x)}$. By the covering hypothesis there is $j \in J$ with $u \in [s(j-1),s(j)]$, and by
+  assumption $\gamma(u) \in \bar{B}_r(x)$, i.e.\ $u \in \gamma^{-1}(\bar{B}_r(x))$. Hence
+  \[
+    \set{ u \in [0,l] \colon \gamma(u) \in \bar{B}_r(x) } \;\subseteq\;
+      \bigcup_{j \in J} \Bigl( \gamma^{-1}\bigl(\bar{B}_r(x)\bigr) \cap [s(j-1),s(j)] \Bigr)
+    .
+  \]
+  By monotonicity of Lebesgue measure and its finite subadditivity over the finite index set $J$,
+  \[
+    \abs{\set{ u \in [0,l] \colon \gamma(u) \in \bar{B}_r(x)}}
+      \;\leq\; \sum_{j \in J} \abs{ \gamma^{-1}\bigl(\bar{B}_r(x)\bigr) \cap [s(j-1),s(j)] }
+    .
+  \]
+
+  \emph{Step 3: each edge contributes at most $2r$.} Fix $j \in J$; then $1 \le j \le k$, so
+  writing $i := j-1$ we have $i < k$ and $i+1 = j$. Since $(k,s)$ is a geodesic resolution of
+  $\gamma$ (\noderef{IsGeodesicResolution}), $\gamma$ is a geodesic on $[s(i),s(i+1)] =
+  [s(j-1),s(j)]$ (\noderef{IsGeodesicOn}). Moreover $s$ is monotone on $\set{0,\dots,k}$ and
+  $s(k) = l$, so $s(j-1) \le s(j)$ and $s(j) \le s(k) = l$. Therefore \noderef{GeodesicMorreyLeTwo}
+  applies and gives
+  \[
+    \Morrey{\gamma_\#\bigl(\mathrm{Leb}\vert_{[s(j-1),s(j)]}\bigr)} \leq 2
+    .
+  \]
+  By the definition of the Morrey norm (\noderef{morreyNorm}) as the supremum of
+  $\nu(\bar{B}_\rho(y))/\rho$ over all centres $y \in E$ and all radii $\rho > 0$, the particular
+  choice $y := x$, $\rho := r$ (legitimate since $r > 0$) is bounded by that supremum, so
+  \[
+    \frac{\gamma_\#\bigl(\mathrm{Leb}\vert_{[s(j-1),s(j)]}\bigr)\bigl(\bar{B}_r(x)\bigr)}{r}
+      \leq 2
+    ,
+  \]
+  and since $0 < r < \infty$ this rearranges to
+  $\gamma_\#\bigl(\mathrm{Leb}\vert_{[s(j-1),s(j)]}\bigr)(\bar{B}_r(x)) \leq 2r$. Finally, by the
+  pushforward and restriction formulas again (using measurability of $\gamma$ and of
+  $\bar{B}_r(x)$ as in Step 1),
+  \[
+    \gamma_\#\bigl(\mathrm{Leb}\vert_{[s(j-1),s(j)]}\bigr)\bigl(\bar{B}_r(x)\bigr)
+      = \abs{ \gamma^{-1}\bigl(\bar{B}_r(x)\bigr) \cap [s(j-1),s(j)] }
+    ,
+  \]
+  so $\abs{ \gamma^{-1}(\bar{B}_r(x)) \cap [s(j-1),s(j)] } \leq 2r$ for every $j \in J$.
+
+  \emph{Step 4: summing.} Combining Steps 1--3,
+  \[
+    \mu_\gamma\bigl(\bar{B}_r(x)\bigr)
+      \leq \sum_{j \in J} \abs{ \gamma^{-1}\bigl(\bar{B}_r(x)\bigr) \cap [s(j-1),s(j)] }
+      \leq \sum_{j \in J} 2r = 2\,\#J \cdot r
+    ,
+  \]
+  which is the claim.
+\end{proof}

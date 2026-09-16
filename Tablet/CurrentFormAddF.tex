@@ -1,0 +1,70 @@
+\begin{lemma}[Additivity of $[[\gamma]]$ in the $f$ slot]\label{CurrentFormAddF}
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), and $\omega_1, \omega_2,
+  \omega_{12} \in \mathcal{D}^1(E)$ (\noderef{Form1}) with $\omega_1.\pi = \omega_{12}.\pi$,
+  $\omega_2.\pi = \omega_{12}.\pi$, and $\omega_{12}.f(x) = \omega_1.f(x) + \omega_2.f(x)$ for every
+  $x \in E$. Then
+  \[
+    [[\gamma]](\omega_{12}) = [[\gamma]](\omega_1) + [[\gamma]](\omega_2)
+    .
+  \]
+
+  \paragraph{Provenance.} Paper.tex 1382--1407, in the proof of Theorem~4.4, introduces the
+  estimate
+  \[
+    \bigl|[[\gamma]](f,\pi) - [[\gamma]](f_k,\pi_j)\bigr|
+    \le \bigl|[[\gamma]](f-f_k,\pi_j)\bigr| + \bigl|[[\gamma]](f,\pi_j-\pi)\bigr|
+  \]
+  (paper.tex 1399--1407) with the words ``use multilinearity'' (paper.tex 1398). This is exactly
+  the $f$-slot half of that multilinearity, applied with $\omega_{12} := (f,\pi_j)$,
+  $\omega_1 := (f-f_k,\pi_j)$, $\omega_2 := (f_k,\pi_j)$ (so that $\omega_{12}.f = \omega_1.f +
+  \omega_2.f$ pointwise and all three share the $\pi$-component $\pi_j$). No tablet node states
+  this fact as of the writing of this node; \noderef{PiBoundsF} bounds
+  $\bigl|[[\gamma]](f-f_k,\pi_j)\bigr|$ directly but does not connect that quantity to a
+  \emph{difference of two currents} $[[\gamma]](f,\pi_j) - [[\gamma]](f_k,\pi_j)$, which is what
+  this lemma supplies.
+\end{lemma}
+\begin{proof}
+  Write $F(t) := \omega_1.\pi(\gamma(t)) = \omega_2.\pi(\gamma(t)) = \omega_{12}.\pi(\gamma(t))$ for
+  $t \in \mathbb{R}$ (using $\omega_1.\pi = \omega_2.\pi = \omega_{12}.\pi$). By
+  \noderef{CurveLipschitz}, $\gamma$ is globally $1$-Lipschitz, and $\omega_1.\pi$ is
+  $\mathrm{Lip}(\omega_1.\pi)$-Lipschitz (\noderef{Form1}), so $F = \omega_1.\pi\circ\gamma$ is
+  globally $\mathrm{Lip}(\omega_1.\pi)$-Lipschitz, hence Lipschitz (so absolutely continuous,
+  \texttt{LipschitzOnWith.absolutelyContinuousOnInterval}) on every interval $[a,b]$; consequently
+  $\mathrm{deriv}(F)$ is interval-integrable on every $a..b$
+  (\texttt{AbsolutelyContinuousOnInterval.intervalIntegrable\_deriv}, \texttt{Preamble}). Also
+  $\omega_1.f$ and $\omega_2.f$ are each Lipschitz (\noderef{Form1}), hence continuous, so
+  $\omega_1.f\circ\gamma$ and $\omega_2.f\circ\gamma$ are continuous on $\mathbb{R}$, hence
+  continuous (and bounded) on every compact $[a,b]$. The product of an interval-integrable function
+  with a continuous function on $[a,b]$ is interval-integrable on $a..b$, so
+  \[
+    t \mapsto \omega_1.f(\gamma(t))\cdot\mathrm{deriv}(F)(t)
+    \quad\text{and}\quad
+    t \mapsto \omega_2.f(\gamma(t))\cdot\mathrm{deriv}(F)(t)
+  \]
+  are each interval-integrable on $a..b$, for every $a,b \in \mathbb{R}$; in particular on
+  $0..\length(\gamma)$.
+
+  By the standard additivity of the interval integral over a sum of integrands
+  (\texttt{intervalIntegral.integral\_add}, \texttt{Preamble}), applied to the two integrable
+  functions of the previous paragraph,
+  \[
+    \int_0^{\length(\gamma)} \omega_1.f(\gamma(t))\cdot\mathrm{deriv}(F)(t)\,dt
+    + \int_0^{\length(\gamma)} \omega_2.f(\gamma(t))\cdot\mathrm{deriv}(F)(t)\,dt
+    = \int_0^{\length(\gamma)} \bigl(\omega_1.f(\gamma(t))+\omega_2.f(\gamma(t))\bigr)\cdot
+      \mathrm{deriv}(F)(t)\,dt
+    .
+  \]
+  For every $t$, $\omega_1.f(\gamma(t))+\omega_2.f(\gamma(t)) = \omega_{12}.f(\gamma(t))$ (the
+  pointwise hypothesis, evaluated at $\gamma(t)$) and $F(t) = \omega_{12}.\pi(\gamma(t))$
+  (definition of $F$), so the right-hand integrand equals
+  $\omega_{12}.f(\gamma(t))\cdot\mathrm{deriv}(\omega_{12}.\pi\circ\gamma)(t)$ pointwise, and the
+  integral congruence lemma (\texttt{intervalIntegral.integral\_congr}, \texttt{Preamble}) turns the
+  right-hand side into $[[\gamma]](\omega_{12})$ (\noderef{curveCurrent}). Similarly, since $F(t) =
+  \omega_1.\pi(\gamma(t))$, the first integral on the left is exactly $[[\gamma]](\omega_1)$, and
+  since $F(t) = \omega_2.\pi(\gamma(t))$, the second is exactly $[[\gamma]](\omega_2)$. This gives
+  \[
+    [[\gamma]](\omega_1) + [[\gamma]](\omega_2) = [[\gamma]](\omega_{12})
+    ,
+  \]
+  which is the claimed identity.
+\end{proof}

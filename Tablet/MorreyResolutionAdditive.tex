@@ -1,0 +1,65 @@
+\begin{lemma}[Additivity of $\mu_\gamma$ over a resolution]
+  Let $E$ be a metric space equipped with its Borel $\sigma$-algebra, $\gamma \in \Theta(E)$
+  (\noderef{Curve}), $k \in \mathbb{N}$, and $s \colon \mathbb{N} \to \mathbb{R}$ monotone
+  (non-decreasing) on $\set{0,\dots,k}$ with $s(0)=0$ and $s(k)=\length(\gamma)$. Then
+  \[
+    \mu_\gamma = \sum_{i=0}^{k-1} \nu_i
+    , \qquad \text{where } \nu_i \text{ is the pushforward under $\gamma$ of Lebesgue measure
+    restricted to } [s(i),s(i+1)]
+    ,
+  \]
+  i.e.\ $\mu_\gamma = \sum_{i=0}^{k-1} (\gamma_\# (\mathrm{Leb}|_{[s(i),s(i+1)]}))$
+  (\noderef{curveMeasure}). This is the measure-additivity half of paper Lemma~2.1
+  (paper.tex lines 480--482), specialized to a resolution into (possibly degenerate) edges rather
+  than to an abstract concatenation, and phrased without first constructing the reparametrized
+  restricted curves $\gamma|_{[s(i-1),s(i)]}$ as objects of $\Theta(E)$ -- the un-reparametrized
+  restricted pushforward $\gamma_\#(\mathrm{Leb}|_{[s(i),s(i+1)]})$ used here coincides with the
+  reparametrized one because Lebesgue measure is translation invariant and pushforward only depends
+  on which points of $E$ the parameter values are mapped to, not on how the domain is labeled.
+\end{lemma}
+\begin{proof}
+  We prove the following more general real-line-and-pushforward statement by induction on $n$, for
+  all $n \in \mathbb{N}$ and all $t \colon \mathbb{N} \to \mathbb{R}$ monotone on $\set{0,\dots,n}$:
+  \[
+    \gamma_\#\!\left(\mathrm{Leb}|_{[t(0),t(n)]}\right)
+    = \sum_{i=0}^{n-1} \gamma_\#\!\left(\mathrm{Leb}|_{[t(i),t(i+1)]}\right)
+    . \tag{$\ast_n$}
+  \]
+  Given $(\ast_k)$ applied to $t=s$, substituting $s(0)=0$ and $s(k)=\length(\gamma)$ turns the
+  left-hand side into $\gamma_\#(\mathrm{Leb}|_{[0,\length(\gamma)]}) = \mu_\gamma$
+  (\noderef{curveMeasure}) and yields exactly the claimed identity.
+
+  \emph{Base case $n=0$.} Both sides concern the single interval $[t(0),t(0)] = \set{t(0)}$, resp.\
+  an empty sum. Lebesgue measure of the single point $t(0)$ is $0$, so
+  $\mathrm{Leb}|_{\set{t(0)}}$ is the zero measure, and its pushforward under any map is again the
+  zero measure; the empty sum on the right is also the zero measure. So $(\ast_0)$ holds.
+
+  \emph{Inductive step.} Assume $(\ast_m)$ holds for all monotone $t$ on $\set{0,\dots,m}$; let
+  $t$ be monotone on $\set{0,\dots,m+1}$. Restricting the monotonicity hypothesis to the subset
+  $\set{0,\dots,m} \subseteq \set{0,\dots,m+1}$ shows $t$ is also monotone on $\set{0,\dots,m}$, so
+  $(\ast_m)$ applies to $t$ itself. Since $0,m,m+1$ all lie in $\set{0,\dots,m+1}$ and
+  $0 \le m \le m+1$, monotonicity of $t$ gives $t(0) \le t(m)$ and $t(m) \le t(m+1)$. Hence
+  $[t(0),t(m+1)] = [t(0),t(m)] \cup [t(m),t(m+1)]$ (a real interval splits at any interior point
+  $t(m)$ lying between its endpoints). These two subintervals intersect only in $\set{t(m)}$ (if
+  $x$ lies in both $[t(0),t(m)]$ and $[t(m),t(m+1)]$ then $x \le t(m)$ and $t(m) \le x$, forcing
+  $x = t(m)$), a set of Lebesgue measure $0$. Consequently Lebesgue measure restricted to the union
+  splits additively over the two (measurable) pieces:
+  \[
+    \mathrm{Leb}|_{[t(0),t(m+1)]} = \mathrm{Leb}|_{[t(0),t(m)]} + \mathrm{Leb}|_{[t(m),t(m+1)]}
+    ,
+  \]
+  since two sets whose intersection is $\mathrm{Leb}$-null contribute independently and without
+  double-counting under restriction (a standard measure-restriction identity: restricting to a
+  union of a.e.-disjoint measurable sets sums the restrictions). Since $\gamma$ is (globally)
+  Lipschitz, hence continuous, hence Borel measurable (\noderef{CurveLipschitz}), pushforward of a
+  sum of measures under $\gamma$ is the sum of the pushforwards, so
+  \[
+    \gamma_\#\!\left(\mathrm{Leb}|_{[t(0),t(m+1)]}\right)
+    = \gamma_\#\!\left(\mathrm{Leb}|_{[t(0),t(m)]}\right) + \gamma_\#\!\left(\mathrm{Leb}|_{[t(m),t(m+1)]}\right)
+    \overset{(\ast_m)}{=} \sum_{i=0}^{m-1} \gamma_\#\!\left(\mathrm{Leb}|_{[t(i),t(i+1)]}\right)
+      + \gamma_\#\!\left(\mathrm{Leb}|_{[t(m),t(m+1)]}\right)
+    = \sum_{i=0}^{m} \gamma_\#\!\left(\mathrm{Leb}|_{[t(i),t(i+1)]}\right)
+    ,
+  \]
+  which is exactly $(\ast_{m+1})$. This completes the induction, hence the proof.
+\end{proof}

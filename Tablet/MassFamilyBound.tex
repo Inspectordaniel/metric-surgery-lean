@@ -1,0 +1,75 @@
+\begin{lemma}[Ambrosio--Kirchheim mass-supremum formula, easy direction, finite form]
+  Let $E$ be a metric space equipped with a compatible Borel $\sigma$-algebra and $T \colon
+  \mathcal{D}^1(E) \to \mathbb{R}$ a functional (\noderef{Form1}). Let $n\in\mathbb{N}$ and let
+  $(\omega_p)_{p<n}$ be a finite family of metric $1$-forms with $\mathrm{Lip}(\pi_p)\le 1$ for
+  every $p<n$ and $\sum_{p<n}|f_p(x)|\le 1$ for every $x\in E$, where $\omega_p=(f_p,\pi_p)$. Then
+  \[
+    \sum_{p<n} |T(\omega_p)| \le \mathbb{M}(T)
+  \]
+  (\noderef{massOfFunctional}), i.e.\ $\mathrm{ENNReal.ofReal}\bigl(\sum_{p<n}|T(\omega_p)|\bigr)
+  \le \mathrm{massOfFunctional}(T)$.
+
+  \paragraph{This is the complement of \noderef{MassSupFormula}, not a restatement of it.}
+  \noderef{MassSupFormula} records the equality
+  $\mathbb{M}(T) = \sup\sum_{p}|T(f_p,\pi_p)|$ of Ambrosio--Kirchheim, Proposition 2.7, but states
+  \emph{only} the hard direction $\mathbb{M}(T)\le\sup(\cdots)$ as an external citation, because that
+  direction requires constructing an admissible measure of small total mass out of a bound on the
+  sup -- genuinely new content beyond $\mathbb{M}(T)$'s definition as an infimum. The present lemma
+  is the opposite inequality, $\sup(\cdots)\le\mathbb{M}(T)$ (here in finite, non-supremal form:
+  a bound on one finite family transfers to a bound on $\mathbb{M}(T)$), and it is \emph{free} from
+  $\mathbb{M}(T)$'s definition as an infimum over admissible measures: no compactness, no
+  measure-construction, and no citation are needed. The two lemmas are not duplicates: one is an
+  external input recording the deep half of an equality; this one is an elementary consequence of
+  unwinding a definition. This lemma takes no hypothesis on $T$ beyond being a function
+  $\mathcal{D}^1(E)\to\mathbb{R}$: when $T$ admits no admissible measure at all,
+  $\mathrm{massOfFunctional}(T)=\infty$ by \noderef{massOfFunctional}'s convention for the infimum
+  of the empty set, and the claimed inequality holds vacuously (the right side is $\infty$).
+\end{lemma}
+\begin{proof}
+  If $T$ admits no admissible measure (\noderef{IsAdmissible}), then by
+  \noderef{massOfFunctional}'s convention $\mathbb{M}(T)=\infty\ge\sum_{p<n}|T(\omega_p)|$ (every
+  extended nonnegative real is $\le\infty$), and the claim holds vacuously. Assume now some
+  admissible measure exists, and let $\mu$ be an arbitrary one; it suffices to show
+  \[
+    \sum_{p<n}|T(\omega_p)| \le \mu(E)
+    , \tag{$\ast$}
+  \]
+  since $\mathbb{M}(T)$ is by definition the infimum of $\mu(E)$ over all admissible $\mu$
+  (\noderef{massOfFunctional}), so $(\ast)$ for every admissible $\mu$ gives
+  $\sum_{p<n}|T(\omega_p)|$ as a lower bound holding for the infimum too, i.e.\ $\sum_{p<n}
+  |T(\omega_p)| \le \mathbb{M}(T)$.
+
+  \emph{Step 1: bound each term by admissibility.} By \noderef{IsAdmissible}'s defining inequality
+  applied to $\omega_p$ for each $p<n$,
+  \[
+    |T(\omega_p)| \le \mathrm{Lip}(\pi_p) \int_E |f_p|\,d\mu
+    .
+  \]
+
+  \emph{Step 2: use $\mathrm{Lip}(\pi_p)\le 1$.} By hypothesis $\mathrm{Lip}(\pi_p)\le 1$ and
+  $\int_E|f_p|\,d\mu\ge 0$, so
+  \[
+    \mathrm{Lip}(\pi_p)\int_E|f_p|\,d\mu \le \int_E |f_p|\,d\mu
+    .
+  \]
+  Combining with Step 1, $|T(\omega_p)|\le\int_E|f_p|\,d\mu$ for every $p<n$.
+
+  \emph{Step 3: sum over $p$ and interchange with the integral.} Summing the Step 2 bound over the
+  finite index set $p<n$ and using that each $f_p$ is measurable
+  (a Lipschitz function on a Borel-compatible metric space is continuous, hence measurable) to
+  interchange the finite sum with the integral,
+  \[
+    \sum_{p<n}|T(\omega_p)| \le \sum_{p<n}\int_E|f_p|\,d\mu = \int_E \Bigl(\sum_{p<n}|f_p(x)|\Bigr)\,d\mu(x)
+    .
+  \]
+  (The interchange of a \emph{finite} sum with the integral is immediate additivity of the
+  integral in the integrand, requiring no convergence theorem.)
+
+  \emph{Step 4: use the pointwise bound $\sum_{p<n}|f_p|\le 1$.} By hypothesis $\sum_{p<n}|f_p(x)|
+  \le 1$ for every $x\in E$, so monotonicity of the integral against the finite measure $\mu$ gives
+  \[
+    \int_E \Bigl(\sum_{p<n}|f_p(x)|\Bigr)\,d\mu(x) \le \int_E 1 \, d\mu = \mu(E)
+    .
+  \]
+  Combining Steps 3 and 4 gives $(\ast)$, completing the proof.
+\end{proof}

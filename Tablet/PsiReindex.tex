@@ -1,0 +1,81 @@
+\begin{helper}[Reindexing identity for $\psi$]
+  Let $E$ be a metric space, $m, l \in \mathbb{N}$ with $m,l \ge 1$, $Q \subset E$ finite,
+  $\epsilon, C \in \mathbb{R}$, and $\gamma \in \Theta(E)$ (\noderef{Curve}) with
+  $\length(\gamma) = l$. Then
+  \[
+    \psi_{m\cdot l,Q,\epsilon,C}(\gamma) = \sum_{j=1}^l \psi_{m,Q,\epsilon,C}\bigl(
+      \gamma|^{\mathrm{tot}}_{[j-1,j]}\bigr)
+    ,
+  \]
+  using the total restriction $\gamma|^{\mathrm{tot}}_{[j-1,j]}$ (\noderef{curveRestrictTot}). This
+  isolates the reindexing computation of paper Corollary~A.6's proof (paper.tex line 1893--1914) as
+  a standalone pointwise (non-measure-theoretic) identity, so that it can be applied
+  $\overline{\eta}_l$-a.e.\ (where $\length(\gamma) = l$ holds only almost everywhere,
+  eq.~(4.8)) rather than everywhere.
+\end{helper}
+\begin{proof}
+  Fix $j \in \{1,\dotsc,l\}$. Since $1 \le j \le l = \length(\gamma)$, we have
+  $0 \le j-1 \le j \le \length(\gamma)$, so by \noderef{CurveRestrictTotAgrees},
+  $\gamma|^{\mathrm{tot}}_{[j-1,j]}$ equals the proof-carrying restriction $\gamma|_{[j-1,j]}$
+  (\noderef{curveRestrict}), which by its defining formula has length $j-(j-1)=1$ and underlying
+  map $u \mapsto \gamma(j-1+u)$ on $[0,1]$ (\noderef{curveRestrict}). Write $\delta_j :=
+  \gamma|^{\mathrm{tot}}_{[j-1,j]}$; thus $\length(\delta_j) = 1$ and $\delta_j(u) = \gamma(j-1+u)$
+  for $u \in [0,1]$.
+
+  \emph{Unwinding $\psi_{m,Q,\epsilon,C}(\delta_j)$.} By \noderef{psi} applied to $\delta_j$, whose
+  length is $1$, the sample points are $s_k = k \cdot \length(\delta_j)/m = k/m$ for
+  $k=0,\dotsc,m$, all of which lie in $[0,1]$, so
+  \[
+    \psi_{m,Q,\epsilon,C}(\delta_j) = C \sum_{k=1}^m \min\left\{\frac{2C}{m}, \; 2\epsilon +
+      2C\bigl(d(\delta_j(k/m),Q) + d(\delta_j((k-1)/m),Q)\bigr)\right\} + \frac{2C^2}{m}
+    ,
+  \]
+  using $\length(\delta_j)=1$ in both the first argument of $\min$ (which becomes
+  $2C\cdot 1/m = 2C/m$) and in the tail term (which becomes $2C^2\cdot 1^2/m = 2C^2/m$). Since
+  $\delta_j(u) = \gamma(j-1+u)$ for $u \in [0,1] \ni k/m,(k-1)/m$,
+  \[
+    \psi_{m,Q,\epsilon,C}(\delta_j) = C \sum_{k=1}^m \min\left\{\frac{2C}{m}, \; 2\epsilon +
+      2C\bigl(d(\gamma(j-1+\tfrac{k}{m}),Q) + d(\gamma(j-1+\tfrac{k-1}{m}),Q)\bigr)\right\}
+      + \frac{2C^2}{m}
+    .
+  \]
+
+  \emph{Unwinding $\psi_{m\cdot l,Q,\epsilon,C}(\gamma)$.} By \noderef{psi} applied to $\gamma$
+  directly (with parameter $m\cdot l$ in place of $m$), whose length is $l$, the sample points are
+  $s_i = i\cdot l/(m\cdot l) = i/m$ for $i=0,\dotsc,m\cdot l$, so
+  \[
+    \psi_{m\cdot l,Q,\epsilon,C}(\gamma) = C \sum_{i=1}^{m\cdot l} \min\left\{2C \frac{l}{m\cdot
+      l}, \; 2\epsilon + 2C\bigl(d(\gamma(i/m),Q) + d(\gamma((i-1)/m),Q)\bigr)\right\}
+      + 2C^2 \frac{l^2}{m\cdot l}
+    ,
+  \]
+  and $2C\cdot l/(m\cdot l) = 2C/m$, $2C^2 l^2/(m\cdot l) = 2C^2 l/m$.
+
+  \emph{Matching the two sides term by term.} The map $(j,k) \mapsto i := (j-1)m+k$ is a bijection
+  from $\{1,\dotsc,l\}\times\{1,\dotsc,m\}$ onto $\{1,\dotsc,m\cdot l\}$: for $j\in\{1,\dotsc,l\}$
+  and $k\in\{1,\dotsc,m\}$, $1 \le (j-1)m+1 \le i \le (j-1)m+m = jm \le lm$, and conversely every
+  $i\in\{1,\dotsc,ml\}$ is uniquely $i=(j-1)m+k$ with $j = \lceil i/m \rceil \in \{1,\dotsc,l\}$ and
+  $k = i-(j-1)m \in \{1,\dotsc,m\}$ (Euclidean division of $i-1$ by $m$). Under this substitution,
+  $i/m = j-1+k/m$ and $(i-1)/m = j-1+(k-1)/m$ (since $i-1=(j-1)m+(k-1)$), so the $i$-th summand of
+  $\psi_{m\cdot l,Q,\epsilon,C}(\gamma)$'s sum,
+  $\min\{2C/m,\, 2\epsilon+2C(d(\gamma(i/m),Q)+d(\gamma((i-1)/m),Q))\}$, equals the $k$-th summand of
+  $\psi_{m,Q,\epsilon,C}(\delta_j)$'s sum,
+  $\min\{2C/m,\,2\epsilon+2C(d(\gamma(j-1+k/m),Q)+d(\gamma(j-1+(k-1)/m),Q))\}$, term for term.
+  Reindexing the single sum $\sum_{i=1}^{ml}$ over the bijection as the iterated sum
+  $\sum_{j=1}^l\sum_{k=1}^m$ (a finite sum is invariant under reindexing by a bijection of its index
+  set) therefore gives
+  \[
+    C\sum_{i=1}^{ml}(\cdots) = \sum_{j=1}^l \Bigl[C\sum_{k=1}^m(\cdots)\Bigr]
+    = \sum_{j=1}^l \bigl(\psi_{m,Q,\epsilon,C}(\delta_j) - \tfrac{2C^2}{m}\bigr)
+    ,
+  \]
+  using the unwound form of $\psi_{m,Q,\epsilon,C}(\delta_j)$ from above to subtract off its tail
+  term. Adding the tail term $2C^2l/m = \sum_{j=1}^l \tfrac{2C^2}{m}$ to both sides gives
+  \[
+    \psi_{m\cdot l,Q,\epsilon,C}(\gamma) = C\sum_{i=1}^{ml}(\cdots) + \frac{2C^2l}{m}
+    = \sum_{j=1}^l \psi_{m,Q,\epsilon,C}(\delta_j)
+    = \sum_{j=1}^l \psi_{m,Q,\epsilon,C}\bigl(\gamma|^{\mathrm{tot}}_{[j-1,j]}\bigr)
+    ,
+  \]
+  which is the claimed identity.
+\end{proof}

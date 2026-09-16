@@ -1,0 +1,79 @@
+\begin{definition}[$(\delta,\epsilon,n)$-curve, $\Xden(\delta,\epsilon,n)$]
+  Let $E$ be a metric space, $\gamma \in \Theta(E)$ (\noderef{Curve}), $\delta,\epsilon > 0$, and
+  $n \in \mathbb{N}$. We say $\gamma$ \emph{is a $(\delta,\epsilon,n)$-curve}, written
+  $\mathrm{IsDeltaEpsN}(\gamma,\delta,\epsilon,n)$, when there exist $k \in \mathbb{N}$ and a
+  resolution $s$ of $\gamma$ into $k$ geodesic edges (\noderef{IsGeodesicResolution}) such that
+  both:
+  \begin{enumerate}
+    \item[(i)] for every subinterval $[t,t'] \subseteq [0,\length(\gamma)]$ with $0 \leq t \leq t'
+    \leq \length(\gamma)$ and $t' - t \leq 2\epsilon^{-1}\delta$,
+    \[
+      \#\set{j \in \set{1,\dotsc,k} : [s(j-1),s(j)] \subseteq [t,t'] \text{ and } s(j)-s(j-1) < \delta}
+      \leq n
+      ;
+    \]
+    \item[(ii)] \emph{when $\gamma$ is closed} (\noderef{IsClosedCurve}), the same bound holds for
+    every wrap-around circle arc $[t,\length(\gamma)] \cup [0,t']$ with $0 \leq t' < t \leq
+    \length(\gamma)$ and $(\length(\gamma) - t) + t' \leq 2\epsilon^{-1}\delta$:
+    \[
+      \#\set{j \in \set{1,\dotsc,k} :
+        \bigl(t \leq s(j-1) \text{ or } s(j) \leq t'\bigr) \text{ and } s(j)-s(j-1) < \delta}
+      \leq n
+      .
+    \]
+  \end{enumerate}
+  We denote by $\Xden(\delta,\epsilon,n)$ the set of all $(\delta,\epsilon,n)$-curves.
+
+  \paragraph{Why clause (ii) is needed: the paper identifies $[0,\length(\gamma)]$ with the circle.}
+  Paper Def.~3.5 (paper.tex lines 717--726) quantifies over ``subintervals $[t,t'] \subseteq
+  [0,\length(\gamma)]$,'' but its own first remark (paper.tex line 729) makes explicit what this
+  is intended to mean: an equivalent definition results from additionally requiring $t,t' \in
+  \set{s_0,\dotsc,s_k}$, ``i.e., that $\gamma|_{[t,t']}$ should be a concatenation of geodesic
+  edges.'' That is, the object being quantified over is not a literal real subinterval but the
+  \emph{subcurve} $\gamma|_{[t,t']}$, and paper Section~3 treats the parametrizing interval
+  $[0,\length(\gamma)]$ as a circle throughout for closed curves: $d_\gamma$ is the circle distance
+  (paper line 573), and $\gamma|_{[t,t']}$ for $t' < t$ is the wrap-around arc obtained by
+  traversing past the identified endpoint (paper lines 557--568; formalized here as
+  \noderef{curveWrapRestrict}). For a closed curve, the subcurves of this circle therefore include
+  the wrap-around arcs $[t,\length(\gamma)]\cup[0,t']$ with $t' < t$, alongside the ordinary
+  (non-wrapping) subintervals already covered by clause~(i); clause~(ii) is exactly the same
+  small-edge bound applied to those arcs.
+
+  Two further passages of the paper confirm that this arc reading, not the literal-subinterval
+  reading, is what the paper's own proofs actually use. The proof of Lemma~3.7 (paper.tex line 762,
+  777; \noderef{FullBallLem}) applies Def.~3.5 to $I = \set{t\in[0,\length(\gamma)] :
+  d_\gamma(s,t) < \epsilon^{-1}\delta}$, a set which is a genuine wrap-around arc exactly when
+  $\gamma$ is closed and $s$ lies within $\epsilon^{-1}\delta$ of a parametrization endpoint. The
+  proof of Lemma~3.8 (paper.tex lines 880, 900) applies Def.~3.5 first to the subcurve
+  $\gamma|_{[t,t']}$, where $(t,t')$ realizes the cut construction's minimizing pair and may itself
+  wrap, and then to a sub-subcurve $\gamma|_{[u,u']}\subseteq\gamma|_{[t,t']}$ formed by
+  concatenating whole geodesic edges of $\gamma|_{[t,t']}$ (which may again wrap). Without
+  clause~(ii), $\mathrm{IsDeltaEpsN}$ would say nothing about any of these arcs, and the cited
+  steps of the paper's own arguments would not be available to a formalization built on it.
+
+  Clause~(ii)'s length budget $(\length(\gamma)-t)+t'$ is exactly the total length of the two
+  pieces $[t,\length(\gamma)]$ and $[0,t']$ making up the wrap-around arc. Its edge test
+  ``$t \leq s(j-1)$ or $s(j) \leq t'$'' selects exactly the edges $[s(j-1),s(j)]$ fully contained
+  in that arc: an edge is a connected subinterval of $[0,\length(\gamma)]$, so it cannot itself
+  straddle the gap $(t',t)$ excluded from the arc, and hence is fully contained in the arc iff it
+  lies entirely in $[t,\length(\gamma)]$ (equivalently $t \leq s(j-1)$, since always $s(j) \leq
+  \length(\gamma)$) or entirely in $[0,t']$ (equivalently $s(j) \leq t'$, since always $0 \leq
+  s(j-1)$).
+
+  \paragraph{Interaction with the non-strict resolutions of \noderef{IsGeodesicResolution}.} As
+  recorded there, our resolutions allow consecutive partition points to repeat, giving degenerate
+  edges of length $0$, whereas the paper's resolutions are strictly increasing. Every strictly
+  increasing resolution is in particular a resolution in our (non-strict) sense, so the existential
+  witness in $\mathrm{IsDeltaEpsN}(\gamma,\delta,\epsilon,n)$ above ranges over a strictly larger
+  class of candidate resolutions than the paper's Def.~3.5. Consequently, whenever $\gamma$ admits
+  a strictly increasing witness satisfying the paper's bound (both clauses, in the closed case),
+  that very witness also satisfies our (non-strict) definition, so the paper's $\gamma \in
+  \Xden(\delta,\epsilon,n)$ implies $\mathrm{IsDeltaEpsN}(\gamma,\delta,\epsilon,n)$. Thus
+  $\mathrm{IsDeltaEpsN}$ is a (weakly) wider class than the paper's $\Xden(\delta,\epsilon,n)$: it
+  only weakens the hypothesis of \noderef{FullBallLem}, which is what is needed there, and
+  correspondingly strengthens (makes more broadly applicable) that lemma's conclusion. The
+  weakening is harmless for the intended use: a degenerate edge has length $0 < \delta$, so it is
+  automatically counted among the ``short'' edges on the left-hand side of both displays above,
+  and the $\leq n$ bound continues to constrain exactly the geometrically meaningful short edges
+  regardless of how many degenerate edges a particular witness resolution happens to carry.
+\end{definition}
