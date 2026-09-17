@@ -1,0 +1,5 @@
+/-- **Theorem 4.4** (`BBAssertion`). A nonzero boundaryless `1`-dimensional metric current `T`
+on a complete, separable, geodesic metric space admits a normalized decomposition along a
+doubly-indexed family of closed piecewise-geodesic curves `ghat l i` of length at most `2l`,
+with `𝕄([[ghat l i]]) ≤ len (ghat l i)`, such that the normalized sums converge to `T ω` for
+every `1`-form `ω` and the mass and length averages both tend to `1`. -/

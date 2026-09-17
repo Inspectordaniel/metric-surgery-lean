@@ -1,0 +1,5 @@
+/-- **Corollary A.6** (`EtaRepeats`), the `ψ` display: the rescaling identity relating the
+measures `eta l` and `eta 1` of a Paolini--Stepanov family, tested against `ψ`.
+
+The companion `ψ̃` display of the same corollary is formalized separately, as
+`EtaRepeatsTilde` in the proof development, and is not part of this compared surface. -/

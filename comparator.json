@@ -8,24 +8,7 @@
     "AtomicDecomposition.C1SmallBall",
     "AtomicDecomposition.EtaRepeats"
   ],
-  "definition_names": [
-    "Curve",
-    "Form1",
-    "MetricCurrent1",
-    "BoundaryZero",
-    "massOfFunctional",
-    "curveCurrent",
-    "curveMeasure",
-    "morreyNorm",
-    "IsClosedCurve",
-    "IsPiecewiseGeodesic",
-    "IsPiecewiseGeodesicWith",
-    "GeodesicPairing",
-    "MassSupFormulaStatement",
-    "PaoliniStepanovExistsStatement",
-    "PSFamily",
-    "psi"
-  ],
+  "definition_names": [],
   "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
   "enable_nanoda": true
 }

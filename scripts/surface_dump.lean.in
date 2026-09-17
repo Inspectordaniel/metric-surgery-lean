@@ -1,0 +1,102 @@
+open Lean
+
+namespace SurfaceDump
+
+/-- The five compared declarations, as named in `comparator.json`. -/
+def targets : List Name :=
+  [`AtomicDecomposition.ApproximationMetric,
+   `AtomicDecomposition.BBAssertion,
+   `AtomicDecomposition.SurgeryEta,
+   `AtomicDecomposition.C1SmallBall,
+   `AtomicDecomposition.EtaRepeats]
+
+/-- A constant declared by this submission rather than by Lean core or Mathlib. Mathlib cannot
+refer back to these, so the closure walk can stop at anything that is not one. -/
+def ours (env : Environment) (n : Name) : Bool :=
+  match env.getModuleFor? n with
+  | some m => m == `Challenge || m == `Tablet || (`Tablet).isPrefixOf m
+  | none => false
+
+def binder : BinderInfo → String
+  | .default => "d" | .implicit => "i"
+  | .strictImplicit => "s" | .instImplicit => "c"
+
+def lit : Literal → String
+  | .natVal n => s!"n{n}"
+  | .strVal s => s!"s{s.quote}"
+
+/-- A faithful structural rendering of an expression: any difference Comparator's structural
+equality would see shows up as a textual difference here. `mdata` is dropped, as the exporter
+drops it. -/
+partial def ser : Expr → String
+  | .bvar i => s!"#{i}"
+  | .fvar id => s!"fv:{id.name}"
+  | .mvar id => s!"mv:{id.name}"
+  | .sort u => s!"(Sort {u})"
+  | .const n us => s!"(K {n} [{", ".intercalate (us.map toString)}])"
+  | .app f a => s!"({ser f} {ser a})"
+  | .lam n t b bi => s!"(fun {n}:{binder bi} {ser t} => {ser b})"
+  | .forallE n t b bi => s!"(all {n}:{binder bi} {ser t} => {ser b})"
+  | .letE n t v b _ => s!"(let {n} {ser t} := {ser v} in {ser b})"
+  | .lit l => s!"(lit {lit l})"
+  | .mdata _ e => ser e
+  | .proj s i e => s!"(proj {s} {i} {ser e})"
+
+def kind : ConstantInfo → String
+  | .axiomInfo _ => "axiom" | .defnInfo _ => "def" | .thmInfo _ => "theorem"
+  | .opaqueInfo _ => "opaque" | .quotInfo _ => "quot"
+  | .inductInfo _ => "inductive" | .ctorInfo _ => "ctor" | .recInfo _ => "rec"
+
+/-- Mirrors `Comparator.runForUsedConsts`. -/
+def usedConsts (info : ConstantInfo) : Array Name := Id.run do
+  let mut out := info.type.getUsedConstants
+  if let some val := info.value? (allowOpaque := true) then
+    out := out ++ val.getUsedConstants
+  match info with
+  | .inductInfo i => out := out ++ i.ctors.toArray ++ i.all.toArray
+  | .ctorInfo i => out := out.push i.induct
+  | .recInfo i => for rule in i.rules do out := out.push rule.ctor ++ rule.rhs.getUsedConstants
+  | _ => pure ()
+  return out
+
+partial def walk (env : Environment) (seen : NameSet) (found : NameSet) :
+    List Name → NameSet × NameSet
+  | [] => (seen, found)
+  | n :: rest =>
+    if seen.contains n then walk env seen found rest
+    else
+      let seen := seen.insert n
+      if !ours env n then walk env seen found rest
+      else match env.find? n with
+        | none => walk env seen found rest
+        | some info => walk env seen (found.insert n) ((usedConsts info).toList ++ rest)
+
+/-- Render one declaration exactly as Comparator would compare it: kind, name, universe
+parameters, type, and (where there is one) value. -/
+def render (env : Environment) (n : Name) : String :=
+  match env.find? n with
+  | none => s!"{n} :: MISSING"
+  | some info =>
+    let ls := ", ".intercalate (info.levelParams.map toString)
+    let val := match info.value? (allowOpaque := true) with
+      | some v => s!"\n  value {ser v}"
+      | none => ""
+    s!"{kind info} {n} [{ls}]\n  type  {ser info.type}{val}"
+
+def run : CoreM Unit := do
+  let env ← getEnv
+  -- Comparator compares theorem targets by `toConstantVal`, then walks the used constants of
+  -- the *type* only; the Challenge value is a `sorry`, which is not part of the comparison.
+  let mut start : List Name := []
+  for t in targets do
+    let some info := env.find? t | throwError "missing target {t}"
+    start := start ++ info.type.getUsedConstants.toList
+    println! "{kind info} {t} [{", ".intercalate (info.levelParams.map toString)}]"
+    println! "  type  {ser info.type}"
+  let (_, found) := walk env {} {} start
+  for n in found.toList.mergeSort (fun a b => a.toString ≤ b.toString) do
+    println! "{render env n}"
+
+end SurfaceDump
+
+#eval SurfaceDump.run

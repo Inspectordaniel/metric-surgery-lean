@@ -1,0 +1,7 @@
+/-- **Corollary 3.2** (`SurgeryEta`). A closed piecewise-geodesic curve `γ` splits into
+finitely many closed piecewise-geodesic curves carrying the same current, of total length at
+most `(1 + η)` times the length of `γ`, each of Morrey norm at most `522 / η²`.
+
+The paper's absolute constant `c` in the prescription `ε = cη`, `n = ⌈ε⁻²⌉` is pinned to
+`1/15`, which is sharp at `η = 1` for this argument, and the universal constant `C'` is
+pinned to the numeral `522`. -/

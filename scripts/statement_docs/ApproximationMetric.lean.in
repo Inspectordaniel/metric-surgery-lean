@@ -1,0 +1,12 @@
+/-- **Theorem 1.1** (`ApproximationMetric`). Every boundaryless `1`-dimensional metric current
+`T` on a complete, separable, geodesic metric space `E` is a limit of finite nonnegative
+combinations of closed piecewise-geodesic curves, with total weight at most `(1 + ε)` times
+the mass of `T` and each curve's Morrey norm at most `2088 / ε²`.
+
+The paper's universal constant `C` is pinned here to the numeral `2088 = 4 · 522`. Because
+the paper quantifies `C` universally, outside the data, pinning a concrete value is at least
+as strong as the paper's existential form.
+
+`[Nonempty E]` is needed because the conclusion asserts a total function `γ : ℕ → ℕ → Curve E`
+while `Curve E` is uninhabited exactly when `E` is, and no other hypothesis forces `E`
+nonempty (this statement, unlike Theorem 4.4, carries no `T ≠ 0` hypothesis). -/

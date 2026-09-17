@@ -1,0 +1,52 @@
+/-!
+# Advertised statements
+
+The five main results of arXiv:2502.09871, "An atomic decomposition of one-dimensional
+metric currents without boundary" (Chen, Goodman, Hernandez, Spector).
+
+This module is the small, trusted surface a mathematical reader should audit against the
+paper. It is self-contained: it imports Mathlib and nothing else, defines every notion the
+five statements mention, and then states the five results, each body a deliberate `sorry`.
+The proofs live in `Solution.lean`.
+
+Comparator compiles this module and `Solution.lean` separately and in mutually invisible
+environments, then requires the five compared theorems to have structurally identical types
+and every constant reachable from those types to be identical in both. The definitions below
+are therefore not a paraphrase of the proof development's definitions: they are the very same
+declarations, at the very same root-namespace names, generated verbatim from the `Tablet`
+node files by `scripts/gen-surface.py`. That script also takes the five statements from the
+`Tablet` theorem sources and their docstrings below from `scripts/statement_docs/`. Running it
+with `--check` fails if any of this has drifted from the proof development.
+
+The definitions are:
+
+* `Curve E` -- a Lipschitz curve in `E`, parametrized by arc length on `[0, len]` and
+  clamped to a total function `ℝ → E` outside that interval.
+* `Form1 E` -- a metric `1`-form `ω = (f, π) ∈ 𝒟¹(E)`, a bounded Lipschitz `f` paired with
+  a Lipschitz `π`.
+* `IsAdmissible T μ` -- `μ` dominates the functional `T` in the sense of the mass-measure
+  inequality; `massOfFunctional T` -- the mass `𝕄(T)`, the infimum of `μ(E)` over admissible `μ`.
+* `MetricCurrent1 E` -- a metric `1`-current: a functional on `Form1 E` that is multilinear,
+  continuous and local, with finite mass.
+* `BoundaryZero T` -- the current `T` has vanishing boundary, `∂T = 0`.
+* `curveCurrent γ` -- the current `[[γ]]` carried by the curve `γ`; `curveMeasure γ` -- the
+  measure `‖γ‖` carried by `γ`; `morreyNorm μ` -- the Morrey norm `sup_{x, r} μ(B(x, r)) / r`.
+* `IsGeodesicOn`, `IsGeodesicResolution`, `IsPiecewiseGeodesicWith γ k`, `IsPiecewiseGeodesic γ`,
+  `IsClosedCurve γ` -- `γ` is a concatenation of (at most `k`) geodesics, and is closed.
+* `GeodesicPairing E` -- a choice of geodesic between each pair of points, i.e. the witness
+  that `E` is a geodesic space.
+* `ThetaL l`, `curveRestrict`, `curveRestrictTot`, `CurveMeasurableSpace`, `PSFamily T` --
+  the Paolini--Stepanov family of curves representing `T` together with its rescaled measures
+  `eta l`, and the σ-algebra on `Curve E` with respect to which those measures are taken.
+* `psi m Q ε C γ` -- the test functional `ψ_{m,Q,ε,C}` of Appendix A.
+
+Two results the paper cites rather than proves appear as explicit hypotheses rather than as
+axioms, so that nothing here is assumed silently:
+
+* `MassSupFormulaStatement E` -- Ambrosio--Kirchheim Proposition 2.7, the hard direction of
+  the mass supremum formula. Used by Theorem 1.1 and Theorem 4.4 only.
+* `PaoliniStepanovExistsStatement E` -- Paolini--Stepanov Theorem 3.1 with Proposition 4.2,
+  existence of a mass-realizing family of curves. Used by Theorem 1.1 and Theorem 4.4 only.
+
+Corollaries 2.6, 3.2 and A.6 below are unconditional.
+-/

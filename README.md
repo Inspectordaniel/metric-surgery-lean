@@ -9,16 +9,37 @@ Packaged for submission to the [Palomar registry](https://palomar-registry.org/)
 
 ## Repository map
 
-- `Challenge.lean` — the advertised statement surface: the five theorems stated with
-  `sorry` bodies, importing only the modules carrying the definitions they mention.
-  This is the module to audit against the paper.
+- `Challenge.lean` — the advertised statement surface: the definitions the five results
+  mention, then the five theorems stated with `sorry` bodies. It imports Mathlib and
+  nothing else. This is the module to audit against the paper.
 - `Solution.lean` — the same five declarations, with identical names and types, each
   proved by the corresponding theorem of `Tablet/`. No `sorry`, no new axioms.
 - `Tablet/` — the proof development (133 modules).
 - `comparator.json` — the declarations Comparator must compare.
+- `scripts/` — the generator that keeps the two surfaces in step, and the two checks
+  described under **Verification** below.
 - `formalization.yaml` — project, source, authorship, automation, fidelity and review
   metadata.
 - `LICENSE` — Apache License 2.0.
+
+## How the two surfaces fit together
+
+Comparator builds `Challenge.lean` and `Solution.lean` separately, into environments that
+cannot see each other, and the canonical Palomar verifier goes further: it recompiles
+`Challenge.lean` on its own, without this repository's Lake configuration and against the
+allowlisted dependencies alone, under a per-run namespace of its own. So `Challenge.lean`
+may not import `Tablet`, and `Solution.lean` may not import `Challenge`. Neither module
+can borrow a definition from the other.
+
+What Comparator then checks is that the five compared theorems have equal types *and*
+that every constant reachable from those types is equal in both environments. The shared
+notions — `Curve`, `Form1`, `MetricCurrent1`, `massOfFunctional`, `PSFamily`, `psi` and
+the rest of their closure — therefore have to exist twice, at the same root-namespace
+names, as the same declarations. In `Solution.lean` they are the `Tablet` declarations
+themselves; in `Challenge.lean` they are a verbatim copy, generated from the same `Tablet`
+node files by `scripts/gen-surface.py`, which also generates the five statements in both
+modules from the `Tablet` theorem sources. `scripts/gen-surface.py --check` fails if any
+of it has drifted, so the two copies cannot diverge unnoticed.
 
 The compared declarations live in the `AtomicDecomposition` namespace, so that
 `Challenge.lean` and `Solution.lean` can state them under one set of names while
@@ -48,7 +69,7 @@ of Theorems 1.1 and 4.4, rather than as axioms, so that nothing is assumed silen
 
 Corollaries 2.6, 3.2 and A.6 are unconditional. Both hypotheses are ordinary `def`s with
 docstrings, in `Tablet/MassSupFormula.lean` and `Tablet/PaoliniStepanovExists.lean`, and
-`Challenge.lean` imports them so a reader can see exactly what is being assumed.
+`Challenge.lean` carries them in full so a reader can see exactly what is being assumed.
 
 ## Build
 
@@ -75,6 +96,21 @@ LEAN
 ```
 
 Each reports exactly `[propext, Classical.choice, Quot.sound]`.
+
+## Verification
+
+```
+python3 scripts/gen-surface.py --check   # the two surfaces still match the Tablet sources
+./scripts/check-challenge-standalone.sh  # Challenge.lean builds against the packages alone
+./scripts/check-surface-match.sh         # the two environments agree, as Comparator requires
+```
+
+The first is a source check. The second compiles `Challenge.lean` with only
+`.lake/packages/*` on the search path and no Lake configuration, which is how the
+canonical verifier compiles it; a Challenge that builds only under `lake build` can still
+fail there. The third reproduces Comparator's own comparison inside Lean — it walks the
+closure of the five compared types in each environment and diffs the two structurally —
+so it can be run without Go, Rust or a working Landrun sandbox.
 
 ## How the formalization was produced
 

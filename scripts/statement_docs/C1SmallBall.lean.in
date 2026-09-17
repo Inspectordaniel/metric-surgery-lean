@@ -1,0 +1,5 @@
+/-- **Corollary 2.6** (`C1SmallBall`). A concatenation of at most `k` geodesics has Morrey
+norm at most `2k`.
+
+Stated for an arbitrary metric space, since the proof uses neither completeness, nor
+separability, nor ambient geodesy. -/

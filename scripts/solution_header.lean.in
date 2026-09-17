@@ -1,0 +1,20 @@
+/-!
+# Proved solutions
+
+The same five declarations as `Challenge.lean`, with identical names and identical types,
+each discharged by the corresponding theorem of the `Tablet` proof development. No `sorry`
+and no new axioms: every declaration below depends only on `propext`, `Classical.choice` and
+`Quot.sound`.
+
+This module may import the full proof development, and does. It deliberately does **not**
+import `Challenge`: Comparator builds and exports the two modules in separate, mutually
+invisible environments, and the canonical Palomar verifier recompiles `Challenge.lean` under
+a per-run namespace of its own, so a `Solution` that imported `Challenge` would either fail
+to build or prove the wrong thing. The shared notions (`Curve`, `MetricCurrent1`, ...) are
+instead the `Tablet` declarations themselves, which `Challenge.lean` reproduces verbatim at
+the same root-namespace names; `scripts/gen-surface.py --check` enforces that.
+
+The `Tablet` theorems live in the root namespace, so they are referred to below as
+`_root_.ApproximationMetric` and so on, and the advertised declarations are placed in the
+`AtomicDecomposition` namespace to keep the two sets of names distinct.
+-/
