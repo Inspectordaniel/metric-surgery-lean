@@ -40,6 +40,41 @@ sources:
     license: "arXiv.org perpetual non-exclusive license"
     author_endorsement: "participated"
 
+  - title: "Currents in metric spaces"
+    authors:
+      - "Luigi Ambrosio"
+      - "Bernd Kirchheim"
+    id: "doi:10.1007/BF02392711"
+    type: "article"
+    location: "https://doi.org/10.1007/BF02392711"
+    relationship: "background"
+    note: >-
+      Acta Math. 185 (2000), no. 1, 1-80. Proposition 2.7, the mass supremum formula in
+      its hard direction, is not proved in this development. It is recorded as the
+      Prop-valued definition MassSupFormulaStatement and appears as an explicit
+      hypothesis of AtomicDecomposition.ApproximationMetric and
+      AtomicDecomposition.BBAssertion, so it is discharged by the caller rather than
+      assumed as an axiom. The formalized preprint cites the same result at the same
+      point in its argument.
+    license: "unknown"
+    author_endorsement: "not-contacted"
+  - title: "Structure of metric cycles and normal one-dimensional currents"
+    authors:
+      - "Emanuele Paolini"
+      - "Eugene Stepanov"
+    id: "doi:10.1016/j.jfa.2012.12.007"
+    type: "article"
+    location: "https://doi.org/10.1016/j.jfa.2012.12.007"
+    relationship: "background"
+    note: >-
+      J. Funct. Anal. 264 (2013), no. 6, 1269-1295. Theorem 3.1 together with Proposition
+      4.2, the existence of a mass-realizing family of curves, is not proved in this
+      development. It is recorded as the Prop-valued definition
+      PaoliniStepanovExistsStatement and appears as an explicit hypothesis of
+      AtomicDecomposition.ApproximationMetric and AtomicDecomposition.BBAssertion.
+    license: "unknown"
+    author_endorsement: "not-contacted"
+
 related_formalizations: []
 
 status:
