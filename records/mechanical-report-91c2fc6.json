@@ -1,0 +1,688 @@
+{
+  "challenge": {
+    "bytes": 30276,
+    "canonical_olean_sha256": "69f9ef9b22a9e5dd5a139f21be2bbb10dc8637b60c73afea9c3f8b105c55c8c6",
+    "dependencies": [
+      {
+        "provenance": "allowlisted",
+        "repository": "leanprover-community/mathlib4"
+      }
+    ],
+    "direct_imports": [
+      "Mathlib.Analysis.Calculus.Deriv.Basic",
+      "Mathlib.Analysis.Calculus.Deriv.Shift",
+      "Mathlib.Analysis.ConstantSpeed",
+      "Mathlib.Analysis.SpecialFunctions.Integrals.Basic",
+      "Mathlib.MeasureTheory.Constructions.BorelSpace.Metric",
+      "Mathlib.MeasureTheory.Function.AbsolutelyContinuous",
+      "Mathlib.MeasureTheory.Integral.Bochner.Basic",
+      "Mathlib.MeasureTheory.Integral.IntervalIntegral.AbsolutelyContinuousFun",
+      "Mathlib.MeasureTheory.Integral.IntervalIntegral.Basic",
+      "Mathlib.MeasureTheory.Integral.IntervalIntegral.DerivIntegrable",
+      "Mathlib.MeasureTheory.Integral.Lebesgue.Basic",
+      "Mathlib.MeasureTheory.Measure.Lebesgue.Basic",
+      "Mathlib.Probability.Independence.InfinitePi",
+      "Mathlib.Probability.ProductMeasure",
+      "Mathlib.Probability.StrongLaw",
+      "Mathlib.Topology.MetricSpace.HausdorffDistance",
+      "Mathlib.Topology.MetricSpace.Lipschitz"
+    ],
+    "lines": 569,
+    "module": "Challenge",
+    "path": "Challenge.lean",
+    "sha256": "d0586dc6150de1aee51c02677c72a887ebb61ec48018a5f7f1091c868a58c028",
+    "transitive_source_count": 18,
+    "trust_level": "high",
+    "untrusted_sources": []
+  },
+  "checked_at": "2026-09-17T05:22:59Z",
+  "classification": {
+    "arxiv": [
+      {
+        "code": "math.FA",
+        "name": "Functional Analysis"
+      }
+    ],
+    "msc2020": [
+      {
+        "code": "49Q15",
+        "name": "Geometric measure and integration theory, integral and normal currents in optimization"
+      },
+      {
+        "code": "30L99",
+        "name": "Analysis on metric spaces"
+      },
+      {
+        "code": "28A75",
+        "name": "Length, area, volume, other geometric measure theory"
+      }
+    ]
+  },
+  "comparator": {
+    "challenge_module": "Challenge",
+    "definition_names": [],
+    "path": "comparator.json",
+    "permitted_axioms": [
+      "propext",
+      "Quot.sound",
+      "Classical.choice"
+    ],
+    "sha256": "7386886c9c08c6055245731a865ac2957f11dbc33b8691f5917dc8a3e6eab9b8",
+    "solution_module": "Solution",
+    "theorem_names": [
+      "AtomicDecomposition.ApproximationMetric",
+      "AtomicDecomposition.BBAssertion",
+      "AtomicDecomposition.SurgeryEta",
+      "AtomicDecomposition.C1SmallBall",
+      "AtomicDecomposition.EtaRepeats"
+    ]
+  },
+  "comparator_commit": "575674928e239f5bc452aab72d1dd7b0f1326494",
+  "comparator_log_tail": "dBreakpointShortEdgeCount (6.2s)\n\u2714 [3104/3228] Built Tablet.surgeryPotential (3.4s)\n\u2714 [3105/3228] Built Tablet.morreyNorm (3.3s)\n\u2714 [3106/3228] Built Tablet.ConeInterpolation (3.7s)\n\u2714 [3107/3228] Built Tablet.CountableDiagonalExtraction (3.6s)\n\u2714 [3108/3228] Built Tablet.SamplingRealizesAverages (3.5s)\n\u2714 [3109/3228] Built Tablet.Curve (3.1s)\n\u2714 [3110/3228] Built Tablet.Form1 (3.0s)\n\u2714 [3111/3228] Built Tablet.SurgeryStepTypeII (5.7s)\n\u2714 [3112/3228] Built Tablet.MorreySubadditive (3.7s)\n\u2714 [3113/3228] Built Tablet.curveMeasure (2.0s)\n\u2714 [3114/3228] Built Tablet.RationalCompatibleValues (13s)\n\u2714 [3115/3228] Built Tablet.IsClosedCurve (2.0s)\n\u2714 [3116/3228] Built Tablet.SurgeryStepTypeI (8.8s)\n\u2714 [3117/3228] Built Tablet.psiTilde (3.1s)\n\u2714 [3118/3228] Built Tablet.psi (3.0s)\n\u2714 [3119/3228] Built Tablet.curveConcat (3.9s)\n\u2714 [3120/3228] Built Tablet.IsGeodesicOn (2.9s)\n\u2714 [3121/3228] Built Tablet.CurveLipschitz (4.1s)\n\u2714 [3122/3228] Built Tablet.curveRestrict (3.9s)\n\u2714 [3123/3228] Built Tablet.curveCurrent (3.0s)\n\u2714 [3124/3228] Built Tablet.BoundaryZero (2.9s)\n\u2714 [3125/3228] Built Tablet.IsAdmissible (2.0s)\n\u2714 [3126/3228] Built Tablet.dGamma (3.0s)\n\u2714 [3127/3228] Built Tablet.PsiTildeUniformBound (4.5s)\n\u2714 [3128/3228] Built Tablet.CurveConcatEndpoints (3.2s)\n\u2714 [3129/3228] Built Tablet.PsiUniformBound (4.7s)\n\u2714 [3130/3228] Built Tablet.IsGeodesicResolution (2.0s)\n\u2714 [3131/3228] Built Tablet.GeodesicPairing (3.3s)\n\u26a0 [3132/3228] Built Tablet.GeodesicMorreyLeTwo (3.5s)\nwarning: Tablet/GeodesicMorreyLeTwo.lean:10:29: Variable name `hab` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hab\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Tablet/GeodesicMorreyLeTwo.lean:10:43: Variable name `hbnd` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hbnd\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n\u2714 [3133/3228] Built Tablet.curveWrapRestrict (3.1s)\n\u2714 [3134/3228] Built Tablet.RestrictMeasureFormula (3.4s)\n\u2714 [3135/3228] Built Tablet.LipschitzSeparable (13s)\n\u2714 [3136/3228] Built Tablet.RestrictFullIsSelf (3.3s)\n\u2714 [3137/3228] Built Tablet.curveRestrictTot (2.0s)\n\u2714 [3138/3228] Built Tablet.CurrentReverse (3.6s)\n\u2714 [3139/3228] Built Tablet.CurrentFormAddPi (3.6s)\n\u2714 [3140/3228] Built Tablet.CurrentFormAddF (3.2s)\n\u2714 [3141/3228] Built Tablet.CurrentConcatAdditive (3.7s)\n\u2714 [3142/3228] Built Tablet.massOfFunctional (2.9s)\n\u2714 [3143/3228] Built Tablet.CurveCurrentBound (3.6s)\n\u2714 [3144/3228] Built Tablet.ArcLocalization (4.7s)\n\u2714 [3145/3228] Built Tablet.DGammaBallMeasure (4.3s)\n\u2714 [3146/3228] Built Tablet.CurrentResolutionAdditive (3.3s)\n\u2714 [3147/3228] Built Tablet.TypeICutMinimalPair (4.5s)\n\u2714 [3148/3228] Built Tablet.MorreyResolutionAdditive (3.6s)\n\u2714 [3149/3228] Built Tablet.RestrictGeodesicResolutionTruncated (5.6s)\n\u2714 [3150/3228] Built Tablet.RestrictPiecewiseGeodesic (4.2s)\n\u2714 [3151/3228] Built Tablet.ConcatGeodesicResolution (4.8s)\n\u2714 [3152/3228] Built Tablet.IsDeltaEpsN (2.0s)\n\u2714 [3153/3228] Built Tablet.IsPiecewiseGeodesicWith (2.9s)\n\u2714 [3154/3228] Built Tablet.smallPieceCount (3.2s)\n\u26a0 [3155/3228] Built Tablet.curveSampling (3.1s)\nwarning: Tablet/curveSampling.lean:12:13: Variable name `h\u03b40` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _h\u03b40\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Tablet/curveSampling.lean:12:27: Variable name `h\u03b4len` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _h\u03b4len\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n\u2714 [3156/3228] Built Tablet.curveArc (2.0s)\n\u2714 [3157/3228] Built Tablet.CurveMeasurableSpace (2.9s)\n\u26a0 [3158/3228] Built Tablet.ResolutionCoverBallMeasure (3.8s)\nwarning: Tablet/ResolutionCoverBallMeasure.lean:34:52: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead\n\u2714 [3159/3228] Built Tablet.CurveRestrictTotAgrees (3.2s)\n\u2714 [3160/3228] Built Tablet.ThetaL (2.0s)\n\u2714 [3161/3228] Built Tablet.RestrictCurrentFormula (3.4s)\n\u26a0 [3162/3228] Built Tablet.MetricCurrent1 (3.2s)\nwarning: Tablet/MetricCurrent1.lean:30:18: Variable name `hbound` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hbound\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Tablet/MetricCurrent1.lean:31:7: Variable name `hconv` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hconv\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n\u2714 [3163/3228] Built Tablet.EasyEstimateForMass (4.0s)\n\u2714 [3164/3228] Built Tablet.C1SmallBall (3.1s)\n\u2714 [3165/3228] Built Tablet.GeodesicIsPiecewiseGeodesic (3.1s)\n\u2714 [3166/3228] Built Tablet.IsPiecewiseGeodesic (3.0s)\n\u2714 [3167/3228] Built Tablet.CurrentChordEstimate (7.3s)\n\u2714 [3168/3228] Built Tablet.ConcatPiecewiseGeodesic (4.8s)\n\u26a0 [3169/3228] Built Tablet.MinimizingResolutionStrict (5.5s)\nwarning: Tablet/MinimizingResolutionStrict.lean:18:2: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nwarning: Tablet/MinimizingResolutionStrict.lean:100:6: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nwarning: Tablet/MinimizingResolutionStrict.lean:125:6: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nwarning: Tablet/MinimizingResolutionStrict.lean:140:6: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nwarning: Tablet/MinimizingResolutionStrict.lean:156:6: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nwarning: Tablet/MinimizingResolutionStrict.lean:166:6: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n\u2714 [3170/3228] Built Tablet.SamplingEndpoints (3.6s)\n\u2714 [3171/3228] Built Tablet.BasicCut (4.0s)\n\u2714 [3172/3228] Built Tablet.CurveArcEval (4.5s)\n\u2714 [3173/3228] Built Tablet.CurveEvalJointMeasurable (3.3s)\n\u2714 [3174/3228] Built Tablet.ArcGeodesicResolution (6.1s)\n\u2714 [3175/3228] Built Tablet.CurveLenMeasurable (3.4s)\n\u26a0 [3176/3228] Built Tablet.ArcShortWindowEdgeCount (10s)\nwarning: Tablet/ArcShortWindowEdgeCount.lean:44:2: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n\u2714 [3177/3228] Built Tablet.PSFamily (4.1s)\n\u2714 [3178/3228] Built Tablet.MassFamilyBound (3.7s)\n\u2714 [3179/3228] Built Tablet.PsiReindex (7.6s)\n\u26a0 [3180/3228] Built Tablet.MassPosOfNonzero (3.8s)\nwarning: Tablet/MassPosOfNonzero.lean:27:2: Try this: \n  haveI\u0335\n\nThe goal is a proposition, so `have` is preferred over `haveI`.\nThe difference between `have` and `haveI` is that `haveI` inlines the value.\nBut this is not relevant for proofs because of proof irrelevance.\n\nNote: This linter can be disabled with `set_option linter.style.haveILetI false`\n\u2714 [3181/3228] Built Tablet.MassSupFormula (3.5s)\n\u2714 [3182/3228] Built Tablet.CurrentContinuousF (4.8s)\n\u2714 [3183/3228] Built Tablet.IsLSI (3.1s)\n\u2714 [3184/3228] Built Tablet.SamplingPiecewiseGeodesic (3.4s)\n\u2714 [3185/3228] Built Tablet.StrictResolutionExists (3.2s)\n\u2714 [3186/3228] Built Tablet.PartitionChordSum (6.2s)\n\u2714 [3187/3228] Built Tablet.GeodesicSampledCurrent (9.7s)\n\u2714 [3188/3228] Built Tablet.BasicCutResolutionAtBreakpoints (5.1s)\n\u2714 [3189/3228] Built Tablet.BasicCutDiscardedResolution (4.2s)\n\u2714 [3190/3228] Built Tablet.BasicCutDiscardedEval (3.8s)\n\u2714 [3191/3228] Built Tablet.BasicCutLength (3.6s)\n\u2714 [3192/3228] Built Tablet.BasicCutCurrent (4.7s)\n\u26a0 [3193/3228] Built Tablet.BasicCutDiscardedResolutionGeneral (4.0s)\nwarning: Tablet/BasicCutDiscardedResolutionGeneral.lean:23:43: Variable name `hne` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hne\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n\u26a0 [3194/3228] Built Tablet.BasicCutResolutionGeneral (5.2s)\nwarning: Tablet/BasicCutResolutionGeneral.lean:23:85: Variable name `h\u03b4` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _h\u03b4\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Tablet/BasicCutResolutionGeneral.lean:25:5: Variable name `hne` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hne\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n\u2714 [3195/3228] Built Tablet.CurveScaledEvalMeasurable (3.4s)\n\u2714 [3196/3228] Built Tablet.CurveRestrictTotMeasurable (3.5s)\n\u26a0 [3197/3228] Built Tablet.DeltaEpsNFailureAtBreakpoints (18s)\nwarning: Tablet/DeltaEpsNFailureAtBreakpoints.lean:188:6: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nwarning: Tablet/DeltaEpsNFailureAtBreakpoints.lean:223:6: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nwarning: Tablet/DeltaEpsNFailureAtBreakpoints.lean:284:8: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nwarning: Tablet/DeltaEpsNFailureAtBreakpoints.lean:303:14: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nwarning: Tablet/DeltaEpsNFailureAtBreakpoints.lean:16:5: Variable name `h\u03b5` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _h\u03b5\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Tablet/DeltaEpsNFailureAtBreakpoints.lean:16:31: Variable name `hclosed` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hclosed\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n\u2714 [3198/3228] Built Tablet.PaoliniStepanovExists (3.2s)\n\u2714 [3199/3228] Built Tablet.ArcDeltaEpsNCount (10s)\n\u2714 [3200/3228] Built Tablet.PsiReindexTilde (5.1s)\n\u2714 [3201/3228] Built Tablet.LargeBallLem (4.6s)\n\u2714 [3202/3228] Built Tablet.RestrictLSI (3.7s)\n\u26a0 [3203/3228] Built Tablet.InitialDeltaExists (3.4s)\nwarning: Tablet/InitialDeltaExists.lean:14:5: Variable name `hclosed` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hclosed\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\nwarning: Tablet/InitialDeltaExists.lean:14:60: Variable name `h\u03b5` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _h\u03b5\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n\u2714 [3204/3228] Built Tablet.TypeICutPointExists (12s)\n\u26a0 [3205/3228] Built Tablet.PiBoundsPi (7.6s)\nwarning: Tablet/PiBoundsPi.lean:15:50: Variable name `h\u03b5` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _h\u03b5\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n\u2714 [3206/3228] Built Tablet.PsiTildeMeasurable (3.2s)\n\u2714 [3207/3228] Built Tablet.BasicCutClosed (3.5s)\n\u2714 [3208/3228] Built Tablet.PiBoundsF (8.9s)\n\u26a0 [3209/3228] Built Tablet.ClosingUp (10s)\nwarning: Tablet/ClosingUp.lean:160:10: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nwarning: Tablet/ClosingUp.lean:235:17: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead\nwarning: Tablet/ClosingUp.lean:243:4: Try this: \n  haveI\u0335\n\nThe goal is a proposition, so `have` is preferred over `haveI`.\nThe difference between `have` and `haveI` is that `haveI` inlines the value.\nBut this is not relevant for proofs because of proof irrelevance.\n\nNote: This linter can be disabled with `set_option linter.style.haveILetI false`\n\u2714 [3210/3228] Built Tablet.PsiMeasurable (3.2s)\n\u2714 [3211/3228] Built Tablet.CurveCurrentMeasurable (6.0s)\n\u2714 [3212/3228] Built Tablet.CurrentTwoFormEstimate (3.4s)\n\u26a0 [3213/3228] Built Tablet.CutTypeII (4.3s)\nwarning: Tablet/CutTypeII.lean:25:18: Variable name `h\u03b51` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _h\u03b51\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n\u26a0 [3214/3228] Built Tablet.SLLNCurves (4.6s)\nwarning: Tablet/SLLNCurves.lean:81:53: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead\n\u2714 [3215/3228] Built Tablet.EtaRepeats (6.1s)\n\u2714 [3216/3228] Built Tablet.EtaRepeatsTilde (5.2s)\n\u26a0 [3217/3228] Built Tablet.FullBallLem (17s)\nwarning: Tablet/FullBallLem.lean:83:4: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\nwarning: Tablet/FullBallLem.lean:98:56: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead\nwarning: Tablet/FullBallLem.lean:320:21: `Set.mem_setOf_eq` has been deprecated: Use `Set.mem_ofPred_eq` instead\n\u2714 [3218/3228] Built Tablet.PsiVanishes (17s)\n\u26a0 [3219/3228] Built Tablet.BBSamplingDiagonal (7.2s)\nwarning: Tablet/BBSamplingDiagonal.lean:33:57: Variable name `hDd` is not explicitly referenced.\n\nHint: The binding can be removed (if unused) or named `_` (if used implicitly). Alternatively, prefix the name with `_` to silence this warning:\n  [apply] _hDd\n\nNote: This linter can be disabled with `set_option linter.unusedVariables false`\n\u26a0 [3220/3228] Built Tablet.CutTypeI (8.9s)\nwarning: Tablet/CutTypeI.lean:115:8: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n\u26a0 [3221/3228] Built Tablet.DiagonalizationGeneral (4.4s)\nwarning: Tablet/DiagonalizationGeneral.lean:69:2: Try this: \n  haveI\u0335\n\nThe goal is a proposition, so `have` is preferred over `haveI`.\nThe difference between `have` and `haveI` is that `haveI` inlines the value.\nBut this is not relevant for proofs because of proof irrelevance.\n\nNote: This linter can be disabled with `set_option linter.style.haveILetI false`\nwarning: Tablet/DiagonalizationGeneral.lean:70:2: Try this: \n  haveI\u0335\n\nThe goal is a proposition, so `have` is preferred over `haveI`.\nThe difference between `have` and `haveI` is that `haveI` inlines the value.\nBut this is not relevant for proofs because of proof irrelevance.\n\nNote: This linter can be disabled with `set_option linter.style.haveILetI false`\n\u2714 [3222/3228] Built Tablet.SurgeryInduction (3.8s)\n\u2714 [3223/3228] Built Tablet.BBAssertion (3.9s)\n\u2714 [3224/3228] Built Tablet.SurgeryLem (2.4s)\n\u2714 [3225/3228] Built Tablet.SurgeryEta (5.8s)\n\u26a0 [3226/3228] Built Tablet.ApproximationMetric (4.2s)\nwarning: Tablet/ApproximationMetric.lean:87:6: try 'simp' instead of 'simpa'\n\nNote: This linter can be disabled with `set_option linter.unnecessarySimpa false`\nwarning: Tablet/ApproximationMetric.lean:231:4: `push_neg` has been deprecated. Prefer using `push Not` instead.\nIf you'd rather continue using `push_neg` in your project, you can implement it as follows:\n```\nopen Lean.Parser.Tactic in\nmacro \"push_neg\" cfg:optConfig loc:(location)? : tactic =>\n  `(tactic| push $cfg:optConfig Not $[$loc]?)\n```\n\u2714 [3227/3228] Built Solution (2.1s)\nBuild completed successfully (3228 jobs).\nExporting #[Nat, String, String.mk, Char, Quot, Quot.mk, Quot.lift, Quot.ind, AtomicDecomposition.ApproximationMetric, AtomicDecomposition.BBAssertion, AtomicDecomposition.SurgeryEta, AtomicDecomposition.C1SmallBall, AtomicDecomposition.EtaRepeats, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce] from Solution\nRunning nanoda kernel on solution\nnanoda kernel accepts the solution\nRunning Lean default kernel on solution.\nLean default kernel accepts the solution\nYour solution is okay!",
+  "errors": [],
+  "existing_id": null,
+  "formalization": {
+    "automation_method_count": 1,
+    "path": "formalization.yaml",
+    "project_name": "An atomic decomposition of one-dimensional metric currents without boundary",
+    "review_status": "preprint under review; formalization not independently peer reviewed",
+    "sha256": "5e80ed2ccae495217c3f8db3fe29069a56d9478af8a8a6febcc0193172b808ca",
+    "source_count": 3
+  },
+  "lake_manifest": {
+    "path": "lake-manifest.json",
+    "sha256": "4fdd7a6e1c7682fa953f455afd57a10bd36dc86744f743504f5d6add3370bee1"
+  },
+  "lakefile": {
+    "format": "lean",
+    "path": "lakefile.lean",
+    "sha256": "e074997384c9941297148281688fe4ac797880939fcd6bd9c4e07ce5ba9ff1ec"
+  },
+  "landrun_commit": "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4",
+  "lean4export_commit": "15f6055e299ad5b89345e533cc2192f4cc00f659",
+  "lean_toolchain": "leanprover/lean4:v4.33.0",
+  "lean_toolchain_path": "lean-toolchain",
+  "license": {
+    "declared_identifier": "Apache-2.0",
+    "detected_identifier": "Apache-2.0",
+    "path": "LICENSE",
+    "sha256": "b91a13bb417a3b532e7848da0ca7dcfc9c686733563210b6ec6666ff022e90e2"
+  },
+  "mathlib_cache": {
+    "available": true,
+    "required": true
+  },
+  "nanoda_commit": "68d5ca9db226849b41a6fff59d796ff19d0a8840",
+  "orcid_validation": {
+    "checked_at": "2026-09-17T05:13:13Z",
+    "records": [],
+    "registry": "https://orcid.org",
+    "schema_version": 1
+  },
+  "phase": "verification",
+  "project_dependencies": [
+    {
+      "name": "mathlib",
+      "repository": "leanprover-community/mathlib4",
+      "revision": "db584cd6d46c92f209a44c0f1c829460d327499d",
+      "url": "https://github.com/leanprover-community/mathlib4"
+    },
+    {
+      "name": "plausible",
+      "repository": "leanprover-community/plausible",
+      "revision": "b7eb3304aeae834b12dda98993a37f6a41f6f0bb",
+      "url": "https://github.com/leanprover-community/plausible"
+    },
+    {
+      "name": "LeanSearchClient",
+      "repository": "leanprover-community/LeanSearchClient",
+      "revision": "5f4d51b81cbd3f6b32b156bfad9056621a040404",
+      "url": "https://github.com/leanprover-community/LeanSearchClient"
+    },
+    {
+      "name": "importGraph",
+      "repository": "leanprover-community/import-graph",
+      "revision": "16f02aa7642864af59f1ff0e384a015994db9118",
+      "url": "https://github.com/leanprover-community/import-graph"
+    },
+    {
+      "name": "proofwidgets",
+      "repository": "leanprover-community/ProofWidgets4",
+      "revision": "4be2e3d5087eeb272cf5a8853b8f9dd025ef5957",
+      "url": "https://github.com/leanprover-community/ProofWidgets4"
+    },
+    {
+      "name": "aesop",
+      "repository": "leanprover-community/aesop",
+      "revision": "3448c0bcc5ce01b2d1546e483ec3620e32df3d0e",
+      "url": "https://github.com/leanprover-community/aesop"
+    },
+    {
+      "name": "Qq",
+      "repository": "leanprover-community/quote4",
+      "revision": "92c15be17b7caf78c2ad767ec40f89052d908d81",
+      "url": "https://github.com/leanprover-community/quote4"
+    },
+    {
+      "name": "batteries",
+      "repository": "leanprover-community/batteries",
+      "revision": "4488d40d070b9700d4d5a6aa342f0d40c31b2a2d",
+      "url": "https://github.com/leanprover-community/batteries"
+    },
+    {
+      "name": "Cli",
+      "repository": "leanprover/lean4-cli",
+      "revision": "6130a47896ce867c6a4a55373441e59e565bad0f",
+      "url": "https://github.com/leanprover/lean4-cli"
+    }
+  ],
+  "provenance": {
+    "mathematical_sources": [
+      {
+        "author_endorsement": "participated",
+        "authors": [
+          {
+            "name": "You-Wei Benson Chen"
+          },
+          {
+            "name": "Jesse Goodman"
+          },
+          {
+            "name": "Felipe Hernandez"
+          },
+          {
+            "name": "Daniel Spector"
+          }
+        ],
+        "identifier": "arXiv:2502.09871",
+        "license": "arXiv.org perpetual non-exclusive license",
+        "location": "https://arxiv.org/abs/2502.09871",
+        "note": "Daniel Spector, the author and maintainer of this formalization, is an author of the paper, which is why author_endorsement is participated. The preprint is under review and is not yet accepted for publication. The formalization covers all five main results of the paper; see status.scope and fidelity.divergences.",
+        "relationship": "formalizes",
+        "title": "An atomic decomposition of one-dimensional metric currents without boundary",
+        "type": "preprint"
+      },
+      {
+        "author_endorsement": "not-contacted",
+        "authors": [
+          {
+            "name": "Luigi Ambrosio"
+          },
+          {
+            "name": "Bernd Kirchheim"
+          }
+        ],
+        "identifier": "doi:10.1007/BF02392711",
+        "license": "unknown",
+        "location": "https://doi.org/10.1007/BF02392711",
+        "note": "Acta Math. 185 (2000), no. 1, 1-80. Proposition 2.7, the mass supremum formula in its hard direction, is not proved in this development. It is recorded as the Prop-valued definition MassSupFormulaStatement and appears as an explicit hypothesis of AtomicDecomposition.ApproximationMetric and AtomicDecomposition.BBAssertion, so it is discharged by the caller rather than assumed as an axiom. The formalized preprint cites the same result at the same point in its argument.",
+        "relationship": "background",
+        "title": "Currents in metric spaces",
+        "type": "article"
+      },
+      {
+        "author_endorsement": "not-contacted",
+        "authors": [
+          {
+            "name": "Emanuele Paolini"
+          },
+          {
+            "name": "Eugene Stepanov"
+          }
+        ],
+        "identifier": "doi:10.1016/j.jfa.2012.12.007",
+        "license": "unknown",
+        "location": "https://doi.org/10.1016/j.jfa.2012.12.007",
+        "note": "J. Funct. Anal. 264 (2013), no. 6, 1269-1295. Theorem 3.1 together with Proposition 4.2, the existence of a mass-realizing family of curves, is not proved in this development. It is recorded as the Prop-valued definition PaoliniStepanovExistsStatement and appears as an explicit hypothesis of AtomicDecomposition.ApproximationMetric and AtomicDecomposition.BBAssertion.",
+        "relationship": "background",
+        "title": "Structure of metric cycles and normal one-dimensional currents",
+        "type": "article"
+      }
+    ],
+    "related_formalizations": [],
+    "repository_role": "substantive-development",
+    "responsible_maintainers": [
+      {
+        "name": "Daniel Spector (NTNU, Taipei)"
+      }
+    ],
+    "result_origin": "source-based"
+  },
+  "resource_usage": [
+    {
+      "elapsed_seconds": 0.004,
+      "max_rss_kib": 13368,
+      "peak_tasks_observed": 1,
+      "phase": "touch",
+      "returncode": 0,
+      "system_cpu_seconds": 0.002,
+      "user_cpu_seconds": 0.002,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.007,
+      "max_rss_kib": 13180,
+      "peak_tasks_observed": 1,
+      "phase": "landrun",
+      "returncode": 0,
+      "system_cpu_seconds": 0.007,
+      "user_cpu_seconds": 0.001,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.004,
+      "max_rss_kib": 13368,
+      "peak_tasks_observed": 1,
+      "phase": "touch",
+      "returncode": 1,
+      "system_cpu_seconds": 0.003,
+      "user_cpu_seconds": 0.002,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_usage_nanoseconds": 52061000,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 262144,
+      "phase": "touch:cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 0.024,
+      "max_rss_kib": 13368,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 0,
+      "system_cpu_seconds": 0.008,
+      "user_cpu_seconds": 0.017,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.026,
+      "max_rss_kib": 13368,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.007,
+      "user_cpu_seconds": 0.019,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_usage_nanoseconds": 74679000,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 262144,
+      "phase": "python3.11:cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 0.026,
+      "max_rss_kib": 13368,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.008,
+      "user_cpu_seconds": 0.018,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_usage_nanoseconds": 74465000,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 520192,
+      "phase": "python3.11:cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 0.022,
+      "max_rss_kib": 13252,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.007,
+      "user_cpu_seconds": 0.015,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_usage_nanoseconds": 71244000,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 524288,
+      "phase": "python3.11:cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 2.491,
+      "max_rss_kib": 893772,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 0.496,
+      "user_cpu_seconds": 2.053,
+      "workspace_disk_peak_bytes": 864256
+    },
+    {
+      "elapsed_seconds": 0.072,
+      "max_rss_kib": 91860,
+      "peak_tasks_observed": 1,
+      "phase": "lean",
+      "returncode": 0,
+      "system_cpu_seconds": 0.035,
+      "user_cpu_seconds": 0.051,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 49.394,
+      "max_rss_kib": 1026388,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 43.274,
+      "user_cpu_seconds": 72.855,
+      "workspace_disk_peak_bytes": 7787696128
+    },
+    {
+      "elapsed_seconds": 7.311,
+      "max_rss_kib": 1019972,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 3.491,
+      "user_cpu_seconds": 7.598,
+      "workspace_disk_peak_bytes": 1466368
+    },
+    {
+      "elapsed_seconds": 2.712,
+      "max_rss_kib": 892760,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 0.615,
+      "user_cpu_seconds": 2.054,
+      "workspace_disk_peak_bytes": 700416
+    },
+    {
+      "elapsed_seconds": 5.995,
+      "max_rss_kib": 3395272,
+      "peak_tasks_observed": 1,
+      "phase": "lean",
+      "returncode": 0,
+      "system_cpu_seconds": 1.091,
+      "user_cpu_seconds": 3.138,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.078,
+      "max_rss_kib": 92156,
+      "peak_tasks_observed": 1,
+      "phase": "lean",
+      "returncode": 0,
+      "system_cpu_seconds": 0.051,
+      "user_cpu_seconds": 0.044,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.068,
+      "max_rss_kib": 92196,
+      "peak_tasks_observed": 1,
+      "phase": "lean",
+      "returncode": 0,
+      "system_cpu_seconds": 0.037,
+      "user_cpu_seconds": 0.047,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.004,
+      "max_rss_kib": 13076,
+      "peak_tasks_observed": 1,
+      "phase": "touch",
+      "returncode": 0,
+      "system_cpu_seconds": 0.001,
+      "user_cpu_seconds": 0.003,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.008,
+      "max_rss_kib": 13204,
+      "peak_tasks_observed": 1,
+      "phase": "landrun",
+      "returncode": 0,
+      "system_cpu_seconds": 0.007,
+      "user_cpu_seconds": 0.002,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.004,
+      "max_rss_kib": 13240,
+      "peak_tasks_observed": 1,
+      "phase": "touch",
+      "returncode": 1,
+      "system_cpu_seconds": 0.005,
+      "user_cpu_seconds": 0.0,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_usage_nanoseconds": 53610000,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 262144,
+      "phase": "touch:cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 0.025,
+      "max_rss_kib": 13232,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 0,
+      "system_cpu_seconds": 0.009,
+      "user_cpu_seconds": 0.016,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.025,
+      "max_rss_kib": 13184,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 0,
+      "system_cpu_seconds": 0.008,
+      "user_cpu_seconds": 0.018,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 0.025,
+      "max_rss_kib": 13204,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.007,
+      "user_cpu_seconds": 0.018,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_usage_nanoseconds": 74792000,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 524288,
+      "phase": "python3.11:cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 0.025,
+      "max_rss_kib": 13240,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.003,
+      "user_cpu_seconds": 0.022,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_usage_nanoseconds": 75282000,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 262144,
+      "phase": "python3.11:cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 0.024,
+      "max_rss_kib": 13076,
+      "peak_tasks_observed": 1,
+      "phase": "python3.11",
+      "returncode": 1,
+      "system_cpu_seconds": 0.009,
+      "user_cpu_seconds": 0.015,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "cpu_usage_nanoseconds": 72554000,
+      "exec_main_code": "1",
+      "exec_main_status": "1",
+      "memory_events": {
+        "oom": 0,
+        "oom_kill": 0
+      },
+      "memory_peak_bytes": 557056,
+      "phase": "python3.11:cgroup",
+      "supervisor_timeout": false,
+      "systemd_active_state": "failed",
+      "systemd_result": "exit-code"
+    },
+    {
+      "elapsed_seconds": 1.305,
+      "max_rss_kib": 845968,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 0.631,
+      "user_cpu_seconds": 0.706,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 1.314,
+      "max_rss_kib": 846048,
+      "peak_tasks_observed": 1,
+      "phase": "lake",
+      "returncode": 0,
+      "system_cpu_seconds": 0.628,
+      "user_cpu_seconds": 0.727,
+      "workspace_disk_peak_bytes": 0
+    },
+    {
+      "elapsed_seconds": 318.323,
+      "max_rss_kib": 3537768,
+      "peak_tasks_observed": 1,
+      "phase": "comparator",
+      "returncode": 0,
+      "system_cpu_seconds": 134.152,
+      "user_cpu_seconds": 628.8,
+      "workspace_disk_peak_bytes": 667381760
+    }
+  ],
+  "schema_version": 1,
+  "solution": {
+    "module": "Solution",
+    "path": "Solution.lean",
+    "sha256": "2cfdf1adb774e95132d236946f0f6071f5bdc34399e2ab26df4a79286380f783"
+  },
+  "source": {
+    "bytes": 1620106,
+    "commit": "91c2fc65884c9b284fdc6ba4071aa63c12ded471",
+    "repository": "Inspectordaniel/metric-surgery-lean",
+    "repository_url": "https://github.com/Inspectordaniel/metric-surgery-lean",
+    "tree_url": "https://github.com/Inspectordaniel/metric-surgery-lean/tree/91c2fc65884c9b284fdc6ba4071aa63c12ded471"
+  },
+  "stage": "complete",
+  "status": "pass",
+  "submission": {
+    "authorization": {
+      "relationship": "maintainer"
+    },
+    "requested_paths": {
+      "comparator_config_path": "comparator.json",
+      "formalization_metadata_path": "",
+      "project_path": ""
+    },
+    "submission_id": "ccst66gimwk4"
+  },
+  "verification_profile": {
+    "id": "palomar-standard-v1",
+    "limits": {
+      "execution_budget_seconds": 19800,
+      "file_size_max_bytes": 1099511627776,
+      "job_timeout_minutes": 350,
+      "memory_high_percent": 95,
+      "memory_max_percent": 98,
+      "minimum_host_memory_bytes": 15032385536,
+      "minimum_workspace_free_bytes": 21474836480,
+      "open_files_max": 1048576,
+      "tasks_max": 32768
+    },
+    "observed_host": {
+      "architecture": "x86_64",
+      "memory_bytes": 16766414848,
+      "memory_high_bytes": 15928094105,
+      "memory_max_bytes": 16431086551,
+      "workspace_free_bytes": 115223236608
+    },
+    "runner": {
+      "architecture": "x86_64",
+      "label": "ubuntu-24.04",
+      "provider": "github-hosted"
+    },
+    "sha256": "4131827553c344dc2bd49853ed3c1e651cdf74c5fb9cb2034ad90a38b9385c99",
+    "trusted_tools": {
+      "comparator_commit": "575674928e239f5bc452aab72d1dd7b0f1326494",
+      "landrun_commit": "811cfff51ceaf3d9843708aa6d22e9b84ccac8b4",
+      "lean4export": "release derived from the submitted Lean toolchain",
+      "nanoda_commit": "68d5ca9db226849b41a6fff59d796ff19d0a8840"
+    }
+  },
+  "warnings": [
+    "configured Challenge source exceeds the preferred 32 KiB / 300-line review surface"
+  ],
+  "workflow_url": "https://github.com/PalomarRegistry/PalomarSubmission/actions/runs/35184849682"
+}
